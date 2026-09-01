@@ -1,6 +1,6 @@
 // src/domain/empty.test.ts
 import { describe, it, expect } from 'vitest'
-import { emptyDocument, SEEDED_SITES } from './empty'
+import { emptyDocument, SELF_PERSON_ID, SEEDED_SITES } from './empty'
 import { CURRENT_SCHEMA_VERSION } from './schema'
 
 describe('emptyDocument', () => {
@@ -13,11 +13,25 @@ describe('emptyDocument', () => {
     expect(nombres).toEqual(['Igualada', 'Tarrega', 'Agramunt'])
   })
 
-  it('no trae globos, personas ni vuelos', () => {
+  it('no trae globos ni vuelos', () => {
     const d = emptyDocument()
     expect(d.balloons).toEqual([])
-    expect(d.people).toEqual([])
     expect(d.flights).toEqual([])
+  })
+
+  it('trae al titular como persona, y enlazado desde pilot', () => {
+    const d = emptyDocument()
+    expect(d.people).toHaveLength(1)
+    expect(d.people[0].id).toBe(SELF_PERSON_ID)
+    expect(d.people[0].roles).toEqual(['pilot'])
+    expect(d.pilot.personId).toBe(SELF_PERSON_ID)
+  })
+
+  it('el titular NO arranca con rol de instructor ni de examinador', () => {
+    // Si el usuario se los añade a mano, hasRoleAndIsNotThePilot lo frena.
+    // Pero no se los damos nosotros de salida.
+    expect(emptyDocument().people[0].roles).not.toContain('instructor')
+    expect(emptyDocument().people[0].roles).not.toContain('examiner')
   })
 
   it('deja los datos del piloto en blanco para que los rellene el asistente', () => {

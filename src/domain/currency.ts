@@ -26,6 +26,13 @@ export interface ExcludedFlight {
   reason: CurrencyExclusionReason
 }
 
+/** Un tramo de tiempo en el que rige un mismo grupo maximo de globo. */
+export interface GroupWindow {
+  maxGroup: BalloonGroup
+  /** Ultimo dia de este tramo. */
+  until: IsoDate
+}
+
 export interface CurrencyReport {
   /**
    * false mientras el piloto no tenga licencia emitida.
@@ -43,15 +50,23 @@ export interface CurrencyReport {
   /** La mas temprana de las caducidades. null si algo ya no se cumple. */
   currentUntil: IsoDate | null
   /**
-   * BFCL.160(d): grupo maximo de globo de aire caliente en el que se pueden
-   * ejercer las atribuciones.
+   * BFCL.160(d): grupo maximo de globo de aire caliente **hoy**.
    *
-   * null significa "no hay atribucion de grupo que dar": porque la clase no es
-   * aire caliente, porque la vigencia no se cumple, o porque el globo que
-   * fijaria el grupo tiene un volumen invalido. En los dos ultimos casos hay
-   * un aviso en `warnings` que lo explica.
+   * Atajo del primer tramo de `groupSchedule`. null si la clase no es aire
+   * caliente, si la vigencia no se cumple, o si el globo que fijaria el grupo
+   * tiene un volumen invalido, y en ese ultimo caso hay un aviso.
    */
   maxGroup: BalloonGroup | null
+  /**
+   * Como se estrecha el grupo maximo con el tiempo, en tramos ordenados.
+   *
+   * Existe porque `currentUntil` y `maxGroup` pueden venir de vias distintas
+   * de BFCL.160(a), y publicarlos como un par miente. Un piloto con la via
+   * (a)(1) en grupo A hasta 2028 y una verificacion en grupo D que caduca en
+   * 2027 NO puede volar un grupo D en 2027, aunque siga vigente. Cada tramo
+   * dice hasta cuando rige su grupo.
+   */
+  groupSchedule: GroupWindow[]
   /**
    * Vuelos descartados por un PROBLEMA del dato: fecha futura o globo que no
    * esta en el catalogo.
@@ -133,14 +148,24 @@ function countsAsPic(f: Flight, doc: LogbookDoc): boolean {
  */
 function countsForTakeoffs(f: Flight, doc: LogbookDoc): boolean {
   switch (f.pilotFunction) {
-    case 'PIC':
     case 'FI_B':
     case 'FE_B':
       return true
+    case 'PIC':
+      // Misma regla que en countsAsPic. Si el examen suspendido le quita las
+      // horas porque no fue PIC, tampoco puede darle el despegue "as PIC".
+      // Que las dos funciones respondan distinto a la misma pregunta es lo que
+      // deja colar un contador por cumplido sin estarlo.
+      return f.check === null || f.check.result === 'passed'
     case 'DUAL':
+      // El doble mando SI cuenta aqui, lo dice el texto, y no necesita examen.
+      return f.signatureStatus === 'signed'
+        && hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')
+        && (f.check === null || f.check.result === 'passed')
     case 'PIC_SOLO_SUPERVISED':
       return f.signatureStatus === 'signed'
         && hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')
+        && (f.check === null || f.check.result === 'passed')
   }
 }
 
@@ -157,6 +182,11 @@ function isValidCheck(f: Flight, doc: LogbookDoc): boolean {
   if (f.check === null) return false
   if (f.check.type !== 'proficiency_check') return false
   if (f.check.result !== 'passed') return false
+  // BFCL.160(e) nombra la verificacion de forma explicita y le da firmante
+  // propio: "the proficiency check as specified in paragraph (c) shall be
+  // entered in the logbook of the pilot and signed by ... the responsible
+  // FE(B)". El vuelo de instruccion ya lo exigia, esto lo iguala.
+  if (f.signatureStatus !== 'signed') return false
   return hasRoleAndIsNotThePilot(doc, f.check.examinerId, 'examiner')
 }
 
@@ -307,26 +337,34 @@ export function currency(
   // manda la mayor: GM1 BFCL.015(c) dice que las atribuciones del grupo mayor
   // "can be exercised once the recency requirements are complied with in that
   // bigger group".
-  let maxGroup: BalloonGroup | null = null
-  if (forClass === 'hot_air' && met) {
-    const fuentes: (Flight | null)[] = []
-    if (metViaA1) fuentes.push(ultimoTraining)
-    if (metViaA2) fuentes.push(ultimoCheck)
-    let sinGrupo = false
-    for (const f of fuentes) {
-      if (f === null) continue
-      const g = groupOfFlight(f, doc.balloons)
-      if (g === null) { sinGrupo = true; continue }
-      if (maxGroup === null || GROUP_ORDER[g] > GROUP_ORDER[maxGroup]) maxGroup = g
+  // Cada via cumplida aporta una caducidad y un grupo. Van juntos: el grupo de
+  // una via solo rige mientras esa via siga viva.
+  const rutas: { expiry: IsoDate; group: BalloonGroup | null }[] = []
+  if (metViaA1) {
+    const fechas = items.map(i => i.expiresOn).filter((d): d is IsoDate => d !== null).sort()
+    if (fechas.length === items.length) {
+      rutas.push({
+        expiry: fechas[0],
+        group: ultimoTraining === null ? null : groupOfFlight(ultimoTraining, doc.balloons),
+      })
     }
-    if (sinGrupo) {
+  }
+  if (metViaA2 && ultimoCheck !== null) {
+    rutas.push({ expiry: expiry24(ultimoCheck), group: groupOfFlight(ultimoCheck, doc.balloons) })
+  }
+
+  let groupSchedule: GroupWindow[] = []
+  if (forClass === 'hot_air' && rutas.length > 0) {
+    if (rutas.some(r => r.group === null)) {
       warnings.push(
         'No se puede determinar el grupo maximo de BFCL.160(d): el globo del vuelo que lo '
         + 'fija no tiene un volumen de envolvente valido.',
       )
-      maxGroup = null
+    } else {
+      groupSchedule = buildGroupSchedule(rutas as { expiry: IsoDate; group: BalloonGroup }[])
     }
   }
+  const maxGroup: BalloonGroup | null = groupSchedule[0]?.maxGroup ?? null
 
   if (doc.pilot.medicalExpiry !== null && doc.pilot.medicalExpiry < asOf) {
     warnings.push(
@@ -345,19 +383,14 @@ export function currency(
     )
   }
 
-  // La caducidad de cada via, y se queda la mas tardia de las cumplidas.
-  const caducidades: IsoDate[] = []
-  if (metViaA1) {
-    const fechas = items.map(i => i.expiresOn).filter((d): d is IsoDate => d !== null).sort()
-    if (fechas.length === items.length) caducidades.push(fechas[0])
-  }
-  if (metViaA2 && ultimoCheck !== null) caducidades.push(expiry24(ultimoCheck))
-  caducidades.sort()
+  // Vigente hasta que caduque la ultima via que quede en pie.
+  const caducidades = rutas.map(r => r.expiry).sort()
   const currentUntil = caducidades.length > 0 ? caducidades[caducidades.length - 1] : null
 
   return {
     applicable, balloonClass: forClass, viaProficiencyCheck, items, met,
-    currentUntil, maxGroup, excluded, warnings, notModelled: [...NO_MODELADO],
+    currentUntil, maxGroup, groupSchedule, excluded, warnings,
+    notModelled: [...NO_MODELADO],
   }
 }
 
@@ -371,6 +404,30 @@ export function currency(
 function globosVolados(doc: LogbookDoc, asOf: IsoDate): Balloon[] {
   const ids = new Set(doc.flights.filter(f => f.date <= asOf).map(f => f.balloonId))
   return doc.balloons.filter(b => ids.has(b.id))
+}
+
+/**
+ * La escalera de grupos.
+ *
+ * Se ordenan las vias por caducidad ascendente. En cada tramo rige el mayor de
+ * los grupos de las vias que siguen vivas, es decir la propia y las
+ * posteriores. Tramos consecutivos con el mismo grupo se funden.
+ */
+function buildGroupSchedule(
+  rutas: { expiry: IsoDate; group: BalloonGroup }[],
+): GroupWindow[] {
+  const ord = [...rutas].sort((a, b) => (a.expiry < b.expiry ? -1 : a.expiry > b.expiry ? 1 : 0))
+  const out: GroupWindow[] = []
+  for (let i = 0; i < ord.length; i++) {
+    let g = ord[i].group
+    for (let j = i + 1; j < ord.length; j++) {
+      if (GROUP_ORDER[ord[j].group] > GROUP_ORDER[g]) g = ord[j].group
+    }
+    const prev = out[out.length - 1]
+    if (prev !== undefined && prev.maxGroup === g) prev.until = ord[i].expiry
+    else out.push({ maxGroup: g, until: ord[i].expiry })
+  }
+  return out
 }
 
 function mostRecent(flights: Flight[]): Flight | null {

@@ -1,6 +1,6 @@
 // src/domain/empty.ts
 import { CURRENT_SCHEMA_VERSION } from './schema'
-import type { LogbookDoc, Site } from './types'
+import type { LogbookDoc, Person, Site } from './types'
 
 /**
  * Campos de despegue habituales.
@@ -15,12 +15,22 @@ export const SEEDED_SITES: readonly Site[] = [
     permitStatus: 'unknown', accessNotes: '' },
 ]
 
+/**
+ * El titular, como Person.
+ *
+ * Existe desde el primer arranque para que `pilot.personId` nunca sea null en
+ * un documento real. Sin el, `hasRoleAndIsNotThePilot` no puede distinguir al
+ * titular de nadie y degrada silenciosamente a `hasRole`, o sea que la guarda
+ * contra autoexaminarse no protege nada.
+ */
+export const SELF_PERSON_ID = 'me'
+
 /** Documento de arranque. Devuelve una copia nueva en cada llamada. */
 export function emptyDocument(): LogbookDoc {
   return {
     schemaVersion: CURRENT_SCHEMA_VERSION,
     pilot: {
-      personId: null,
+      personId: SELF_PERSON_ID,
       name: '',
       address: '',
       licenceNumber: null,
@@ -29,7 +39,11 @@ export function emptyDocument(): LogbookDoc {
     },
     balloons: [],
     sites: SEEDED_SITES.map(s => ({ ...s })),
-    people: [],
+    people: [selfPerson()],
     flights: [],
   }
+}
+
+function selfPerson(): Person {
+  return { id: SELF_PERSON_ID, name: '', roles: ['pilot'], licenceNumber: null }
 }

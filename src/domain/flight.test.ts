@@ -110,3 +110,23 @@ describe('flightDurationMin, anulacion negativa', () => {
     expect(flightDurationMin(flight({ durationOverrideMin: -400 }))).toBe(0)
   })
 })
+
+describe('marcas de tiempo ilegibles y vuelos de duracion cero', () => {
+  it('una salida ilegible da duracion 0 y horas incoherentes', () => {
+    const f = flight({ departure: { siteId: 's1', coords: null, timestamp: 'martes' } })
+    expect(flightDurationMin(f)).toBe(0)
+    expect(hasConsistentTimes(f)).toBe(false)
+  })
+
+  it('una llegada ilegible tambien', () => {
+    const f = flight({ arrival: { siteId: 's1', coords: null, timestamp: '' } })
+    expect(flightDurationMin(f)).toBe(0)
+    expect(hasConsistentTimes(f)).toBe(false)
+  })
+
+  it('un vuelo de duracion cero es coherente, solo dura cero', () => {
+    const f = flight({ arrival: { siteId: 's1', coords: null, timestamp: '2026-08-31T05:00:00Z' } })
+    expect(flightDurationMin(f)).toBe(0)
+    expect(hasConsistentTimes(f)).toBe(true)
+  })
+})

@@ -70,3 +70,15 @@ describe('migrate', () => {
     expect(() => migrate(makeDoc({ schemaVersion: 9 }), 1, {})).toThrow(/mas nueva/i)
   })
 })
+
+describe('migrate, guardas del bucle', () => {
+  it('falla si una migracion devuelve la MISMA version, en vez de girar sin fin', () => {
+    const quieta: Record<number, Migration> = { 1: (d: any) => ({ ...d, schemaVersion: 1 }) }
+    expect(() => migrate(makeDoc({ schemaVersion: 1 }), 2, quieta)).toThrow(/no ha subido/i)
+  })
+
+  it('falla si una migracion RETROCEDE la version', () => {
+    const atras: Record<number, Migration> = { 1: (d: any) => ({ ...d, schemaVersion: 0 }) }
+    expect(() => migrate(makeDoc({ schemaVersion: 1 }), 2, atras)).toThrow(/no ha subido/i)
+  })
+})

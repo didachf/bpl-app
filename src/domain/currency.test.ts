@@ -600,3 +600,123 @@ describe('el reconocimiento medico', () => {
     expect(currency(doc, HOY, 'hot_air').warnings).toEqual([])
   })
 })
+
+describe('el grupo maximo cambia con el tiempo, no es un escalar', () => {
+  const doc = conLicencia([
+    ...makeFlights(10, { date: '2026-06-01', pilotFunction: 'PIC', durationMin: 40,
+      takeoffs: 1, landings: 1 }),
+    vueloDeRecencia({ date: '2026-06-01' }),
+    makeFlight({ date: '2025-01-10', pilotFunction: 'PIC', balloonId: 'bD',
+      durationOverrideMin: 30,
+      check: { type: 'proficiency_check', examinerId: 'p3', result: 'passed' } }),
+  ], {
+    balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: 2000 }),
+               makeBalloon({ id: 'bD', envelopeVolumeM3: 12000 })],
+  })
+
+  it('publica la escalera completa, no solo el grupo de hoy', () => {
+    const r = currency(doc, HOY, 'hot_air')
+    expect(r.groupSchedule).toEqual([
+      { maxGroup: 'D', until: '2027-01-09' },
+      { maxGroup: 'A', until: '2028-05-31' },
+    ])
+  })
+
+  it('maxGroup es el de hoy, el primer escalon', () => {
+    expect(currency(doc, HOY, 'hot_air').maxGroup).toBe('D')
+    expect(currency(doc, '2027-01-10', 'hot_air').maxGroup).toBe('A')
+  })
+
+  it('el grupo de hoy nunca sobrevive a su propia ventana', () => {
+    const r = currency(doc, HOY, 'hot_air')
+    const ventana = r.groupSchedule[0]
+    expect(currency(doc, ventana.until, 'hot_air').maxGroup).toBe(ventana.maxGroup)
+    expect(currency(doc, '2027-01-10', 'hot_air').maxGroup).not.toBe(ventana.maxGroup)
+  })
+
+  it('con las dos vias en el mismo grupo hay un solo escalon', () => {
+    const igual = conLicencia([
+      ...makeFlights(10, { date: '2026-06-01', pilotFunction: 'PIC', durationMin: 40,
+        takeoffs: 1, landings: 1 }),
+      vueloDeRecencia({ date: '2026-06-01' }),
+      makeFlight({ date: '2025-01-10', pilotFunction: 'PIC', durationOverrideMin: 30,
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'passed' } }),
+    ])
+    expect(currency(igual, HOY, 'hot_air').groupSchedule).toEqual([
+      { maxGroup: 'A', until: '2028-05-31' },
+    ])
+  })
+
+  it('la clase de gas no tiene escalera ni aviso de grupo', () => {
+    const gas = conLicencia(
+      makeFlights(10, { date: '2026-06-01', pilotFunction: 'PIC', durationMin: 40,
+        takeoffs: 1, landings: 1 }),
+      { balloons: [makeBalloon({ id: 'b1', balloonClass: 'gas', envelopeVolumeM3: 1000 })] },
+    )
+    const r = currency(gas, HOY, 'gas')
+    expect(r.groupSchedule).toEqual([])
+    expect(r.maxGroup).toBe(null)
+    expect(r.warnings).toEqual([])
+  })
+})
+
+describe('la verificacion tambien necesita firma, BFCL.160(e)', () => {
+  it('una verificacion sin firmar no da vigencia', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-08-01', pilotFunction: 'PIC', durationOverrideMin: 30,
+        signatureStatus: 'pending',
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'passed' } }),
+    ])
+    expect(currency(doc, HOY, 'hot_air').viaProficiencyCheck).toBe(false)
+    expect(currency(doc, HOY, 'hot_air').met).toBe(false)
+  })
+})
+
+describe('coherencia entre horas y despegues', () => {
+  it('si un examen suspendido no da horas, tampoco da despegues', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC', durationOverrideMin: 120,
+        takeoffs: 1, landings: 1,
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'failed' } }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(0)
+    expect(item(doc, 'takeoffs').current).toBe(0)
+  })
+
+  it('un solo supervisado con examen suspendido tampoco cuenta', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC_SOLO_SUPERVISED',
+        durationOverrideMin: 400, takeoffs: 1, landings: 1,
+        check: { type: 'skill_test', examinerId: 'p3', result: 'failed' } }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(0)
+    expect(item(doc, 'takeoffs').current).toBe(0)
+  })
+})
+
+describe('bordes que la mutacion dejo al descubierto', () => {
+  it('un vuelo con la fecha de HOY cuenta', () => {
+    const doc = conLicencia([
+      makeFlight({ date: HOY, pilotFunction: 'PIC', durationOverrideMin: 400,
+        takeoffs: 10, landings: 10 }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(400)
+    expect(currency(doc, HOY, 'hot_air').excluded).toEqual([])
+  })
+
+  it('currentUntil es null cuando no se cumple', () => {
+    expect(currency(conLicencia([]), HOY, 'hot_air').currentUntil).toBe(null)
+  })
+
+  it('un medico que caduca HOY sigue valiendo hoy', () => {
+    const doc = conLicencia([], { pilot: makePilot({ licenceIssued: '2026-01-01',
+      medicalExpiry: HOY }) })
+    expect(currency(doc, HOY, 'hot_air').warnings).toEqual([])
+  })
+
+  it('un medico que caduco ayer ya avisa', () => {
+    const doc = conLicencia([], { pilot: makePilot({ licenceIssued: '2026-01-01',
+      medicalExpiry: '2026-08-31' }) })
+    expect(currency(doc, HOY, 'hot_air').warnings.join(' ')).toContain('medico')
+  })
+})

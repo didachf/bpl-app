@@ -36,6 +36,10 @@ export function hasConsistentTimes(f: Flight): boolean {
   if (f.durationOverrideMin !== null) return f.durationOverrideMin >= 0
   const from = Date.parse(f.departure.timestamp)
   const to = Date.parse(f.arrival.timestamp)
+  // Esta guarda es redundante y se deja por claridad: cualquier comparacion con
+  // NaN devuelve false, asi que el return de abajo ya daria false. En
+  // flightDurationMin la guarda equivalente SI hace falta, porque alli la
+  // aritmetica propagaria el NaN hasta el resultado.
   if (Number.isNaN(from) || Number.isNaN(to)) return false
   return to >= from
 }

@@ -285,3 +285,28 @@ describe('bplProgress, el doble mando tambien necesita instructor real', () => {
     expect(bplProgress(doc, HOY).excluded[0].reason).toBe('instructor_unknown')
   })
 })
+
+describe('bplProgress, bordes que la mutacion dejo al descubierto', () => {
+  it('un vuelo con la fecha de HOY cuenta', () => {
+    const doc = makeDoc({ flights: [makeFlight({ date: HOY, durationOverrideMin: 120 })] })
+    expect(req(doc, 'instructionMinutes').current).toBe(120)
+    expect(bplProgress(doc, HOY).excluded).toEqual([])
+  })
+
+  it('un globo de aire caliente con volumen cero se excluye, no revienta', () => {
+    const doc = makeDoc({
+      balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: 0 })],
+      flights: [makeFlight({ durationOverrideMin: 120 })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('balloon_not_eligible')
+    expect(req(doc, 'instructionMinutes').current).toBe(0)
+  })
+
+  it('un volumen negativo tambien', () => {
+    const doc = makeDoc({
+      balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: -100 })],
+      flights: [makeFlight({ durationOverrideMin: 120 })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('balloon_not_eligible')
+  })
+})

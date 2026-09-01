@@ -357,10 +357,26 @@ automáticamente.** Se avisa y el usuario elige. Una fusión automática silenci
 logbook es peor que un aviso.
 
 **Token.** PAT de grano fino de GitHub, con permiso de contenido restringido a
-`bpl-logbook`, guardado en el almacenamiento local del teléfono.
+`bpl-logbook`, **con fecha de caducidad de un año**, guardado en `localStorage`. Decidido el
+2026-09-02 tras la revisión de seguridad.
 
-`WARNING:` Riesgo asumido. Quien acceda al teléfono desbloqueado puede leerlo. Se acota a
-un repositorio y es revocable en un clic.
+`WARNING:` **El origen de GitHub Pages es compartido.** La app se sirve en
+`didachf.github.io/bpl-app/`, pero el origen del navegador es `didachf.github.io` entero, no
+la subcarpeta. `localStorage`, IndexedDB y cookies se comparten con cualquier otro proyecto
+que se publique con Pages en esa cuenta. Comprobado el 2026-09-02: hoy no hay ninguno, nueve
+repositorios y cero sitios de Pages, así que el riesgo es futuro y no presente.
+
+Lo que acota el daño: el permiso del token alcanza solo a `bpl-logbook`. Robarlo cuesta el
+logbook, no la cuenta de GitHub. Y caduca en un año.
+
+Si algún día se publica un segundo sitio de Pages en esa cuenta, hay que mover esta app a un
+dominio propio o a una organización aparte.
+
+`WARNING:` Quien acceda al teléfono desbloqueado puede leer el token. Es revocable en un
+clic desde la configuración de GitHub.
+
+**Consecuencia para la interfaz:** nunca `dangerouslySetInnerHTML` ni equivalentes. Preact
+escapa por defecto, y esa es la única barrera entre una nota de vuelo y el token.
 
 ---
 

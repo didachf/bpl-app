@@ -41,8 +41,17 @@ export function fromBase64(b64: string): string {
   return new TextDecoder().decode(bytes)
 }
 
+/**
+ * Construye la URL de la API.
+ *
+ * Cada segmento se codifica. Hoy la ruta la genera la app y no es explotable,
+ * pero un dia sera `tracks/${flightId}.json` con un id venido del documento, y
+ * un id con .. o con / se saldria de la ruta prevista. Los / de la ruta se
+ * conservan a proposito, son separadores de carpeta reales.
+ */
 function url(cfg: GithubConfig, path: string): string {
-  return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`
+  const seg = (s: string) => s.split('/').map(encodeURIComponent).join('/')
+  return `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${seg(path)}`
 }
 
 function headers(cfg: GithubConfig): Record<string, string> {

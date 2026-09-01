@@ -91,3 +91,28 @@ describe('putFile', () => {
     await expect(p).rejects.not.toBeInstanceOf(ConflictError)
   })
 })
+
+describe('construccion de la URL', () => {
+  beforeEach(() => { vi.stubGlobal('fetch', vi.fn()) })
+  afterEach(() => { vi.unstubAllGlobals() })
+
+  it('conserva las barras de carpeta de la ruta', async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('{}', { status: 404 }))
+    await fetchFile(cfg, 'tracks/abc-123.json')
+    expect(vi.mocked(fetch).mock.calls[0][0]).toContain('/contents/tracks/abc-123.json')
+  })
+
+  it('codifica un identificador que intente salirse de la ruta', async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('{}', { status: 404 }))
+    await fetchFile(cfg, 'tracks/..%2F..%2Fsecret.json')
+    const u = String(vi.mocked(fetch).mock.calls[0][0])
+    expect(u).toContain('/contents/tracks/')
+    expect(u).not.toContain('/contents/tracks/../')
+  })
+
+  it('codifica el propietario y el repositorio', async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('{}', { status: 404 }))
+    await fetchFile({ ...cfg, repo: 'con espacio' }, 'logbook.json')
+    expect(String(vi.mocked(fetch).mock.calls[0][0])).toContain('con%20espacio')
+  })
+})

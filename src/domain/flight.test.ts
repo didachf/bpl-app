@@ -1,6 +1,6 @@
 // src/domain/flight.test.ts
 import { describe, it, expect } from 'vitest'
-import { flightDurationMin } from './flight'
+import { flightDurationMin, hasConsistentTimes } from './flight'
 import type { Flight } from './types'
 
 function flight(partial: Partial<Flight>): Flight {
@@ -19,8 +19,9 @@ function flight(partial: Partial<Flight>): Flight {
     takeoffs: 1,
     landings: 1,
     instructorId: 'p2',
-    signatureStatus: 'pending',
-    checkType: 'none',
+    signatureStatus: 'signed',
+    check: null,
+    recencyTrainingFlight: false,
     crewIds: [],
     passengerIds: [],
     observedWeather: '',
@@ -69,5 +70,37 @@ describe('flightDurationMin', () => {
       arrival: { siteId: 's1', coords: null, timestamp: '2026-08-31T04:00:00Z' },
     })
     expect(flightDurationMin(f)).toBe(0)
+  })
+})
+
+describe('hasConsistentTimes', () => {
+  it('acepta un vuelo normal', () => {
+    expect(hasConsistentTimes(flight({}))).toBe(true)
+  })
+
+  it('rechaza una llegada anterior a la salida', () => {
+    const f = flight({ arrival: { siteId: 's1', coords: null, timestamp: '2026-08-31T04:00:00Z' } })
+    expect(hasConsistentTimes(f)).toBe(false)
+  })
+
+  it('rechaza una anulacion manual negativa', () => {
+    expect(hasConsistentTimes(flight({ durationOverrideMin: -30 }))).toBe(false)
+  })
+
+  it('acepta una anulacion manual de cero', () => {
+    expect(hasConsistentTimes(flight({ durationOverrideMin: 0 }))).toBe(true)
+  })
+
+  it('la anulacion manual gana sobre unas marcas de tiempo incoherentes', () => {
+    const f = flight({
+      durationOverrideMin: 60,
+      arrival: { siteId: 's1', coords: null, timestamp: '2026-08-31T04:00:00Z' },
+    })
+    expect(hasConsistentTimes(f)).toBe(true)
+  })
+
+  it('rechaza una marca de tiempo que no se puede parsear', () => {
+    const f = flight({ departure: { siteId: 's1', coords: null, timestamp: 'no es una fecha' } })
+    expect(hasConsistentTimes(f)).toBe(false)
   })
 })

@@ -1,6 +1,6 @@
-// src/domain/progress.ts
-import { flightDurationMin } from './flight'
-import type { Flight, LogbookDoc, PilotFunction } from './types'
+import { groupFromVolume } from './balloon'
+import { flightDurationMin, hasConsistentTimes } from './flight'
+import type { Balloon, Flight, LogbookDoc, PilotFunction, Uuid } from './types'
 
 export type RequirementUnit = 'minutes' | 'count'
 
@@ -11,13 +11,31 @@ export interface Requirement {
   required: number
   unit: RequirementUnit
   met: boolean
-  /** Cierto si algun vuelo que aporta a este contador esta marcado incompleto. */
+  /** Cierto si algun vuelo candidato esta incompleto o tiene las horas incoherentes. */
   partial: boolean
+}
+
+export type ExclusionReason =
+  | 'balloon_unknown'
+  | 'balloon_not_eligible'
+  | 'not_signed'
+  | 'solo_without_supervisor'
+
+export interface ExcludedFlight {
+  flightId: Uuid
+  reason: ExclusionReason
 }
 
 export interface BplProgress {
   requirements: Requirement[]
   allMet: boolean
+  /**
+   * Vuelos de instruccion que NO cuentan, y por que.
+   *
+   * Existe para que ninguna exclusion sea silenciosa. Un vuelo que desaparece
+   * del contador sin explicacion es peor que uno que no cuenta y lo dice.
+   */
+  excluded: ExcludedFlight[]
 }
 
 /** Funciones que cuentan como instruccion dentro del curso de BFCL.130. */
@@ -27,16 +45,45 @@ function isInstruction(f: Flight): boolean {
   return INSTRUCTION.includes(f.pilotFunction)
 }
 
+/**
+ * Por que este vuelo de instruccion no cuenta, o null si cuenta.
+ *
+ * Tres condiciones, las tres del reglamento:
+ *
+ * 1. BFCL.130(b): las 16 h son "in either hot-air balloons that represent
+ *    group A of that class, or gas balloons". El credito para horas fuera del
+ *    grupo A del Articulo 3c.1(b) era transitorio y expiro el 08/04/2021.
+ * 2. AMC1 BFCL.050(b)(2): el tiempo de instruccion se anota "if certified by
+ *    the appropriately rated or authorised instructor". Y AMC1
+ *    BFCL.160(a)(1)(ii)(c) explica por que importa: si el instructor considera
+ *    que el alumno no estuvo a la altura "they should not sign the logbook".
+ *    Un vuelo sin firmar es el vuelo que el instructor no dio por bueno.
+ * 3. BFCL.130(b)(3): "one SUPERVISED solo flight". Sin supervisor identificado
+ *    no es un vuelo solo supervisado.
+ */
+function exclusionReason(f: Flight, balloons: Balloon[]): ExclusionReason | null {
+  const b = balloons.find(x => x.id === f.balloonId)
+  if (!b) return 'balloon_unknown'
+  if (b.balloonClass === 'hot_air') {
+    if (!(b.envelopeVolumeM3 > 0)) return 'balloon_not_eligible'
+    if (groupFromVolume(b.envelopeVolumeM3) !== 'A') return 'balloon_not_eligible'
+  }
+  if (f.signatureStatus !== 'signed') return 'not_signed'
+  if (f.pilotFunction === 'PIC_SOLO_SUPERVISED' && f.instructorId === null) {
+    return 'solo_without_supervisor'
+  }
+  return null
+}
+
 function build(
   key: string,
   label: string,
   required: number,
   unit: RequirementUnit,
-  contributing: Flight[],
+  candidatos: Flight[],
   value: (f: Flight) => number,
 ): Requirement {
-  const aportan = contributing.filter(f => value(f) > 0)
-  const current = aportan.reduce((sum, f) => sum + value(f), 0)
+  const current = candidatos.reduce((sum, f) => sum + value(f), 0)
   return {
     key,
     label,
@@ -44,7 +91,10 @@ function build(
     required,
     unit,
     met: current >= required,
-    partial: aportan.some(f => !f.complete),
+    // Sobre TODOS los candidatos, no solo los que aportan un valor positivo.
+    // Un vuelo con las horas incoherentes aporta 0, y si se filtrara antes de
+    // esta linea desapareceria del contador sin dejar ninguna señal.
+    partial: candidatos.some(f => !f.complete || !hasConsistentTimes(f)),
   }
 }
 
@@ -56,19 +106,27 @@ function build(
  * ambos forman parte del curso.
  *
  * "20 despegues y aterrizajes" se interpreta como 20 de cada uno. Es la
- * lectura conservadora: equivocarse al otro lado significa presentarse sin
- * cumplir.
+ * lectura conservadora: en globo todo vuelo libre tiene un despegue y un
+ * aterrizaje, asi que la otra lectura daria 10 vuelos, la mitad.
  */
 export function bplProgress(doc: LogbookDoc): BplProgress {
-  const instruccion = doc.flights.filter(isInstruction)
-  const solos = doc.flights.filter(f => f.pilotFunction === 'PIC_SOLO_SUPERVISED')
-  const soloValido = solos.filter(f => flightDurationMin(f) >= 30)
+  const excluded: ExcludedFlight[] = []
+  const instruccion: Flight[] = []
+
+  for (const f of doc.flights) {
+    if (!isInstruction(f)) continue
+    const reason = exclusionReason(f, doc.balloons)
+    if (reason) excluded.push({ flightId: f.id, reason })
+    else instruccion.push(f)
+  }
+
+  const solos = instruccion.filter(f => f.pilotFunction === 'PIC_SOLO_SUPERVISED')
 
   const requirements: Requirement[] = [
     build('instructionMinutes', 'Instruccion de vuelo', 16 * 60, 'minutes',
       instruccion, flightDurationMin),
     build('dualMinutes', 'De ellas, doble mando', 12 * 60, 'minutes',
-      doc.flights.filter(f => f.pilotFunction === 'DUAL'), flightDurationMin),
+      instruccion.filter(f => f.pilotFunction === 'DUAL'), flightDurationMin),
     build('inflations', 'Inflados', 10, 'count',
       instruccion, f => f.inflations),
     build('takeoffs', 'Despegues', 20, 'count',
@@ -76,8 +134,8 @@ export function bplProgress(doc: LogbookDoc): BplProgress {
     build('landings', 'Aterrizajes', 20, 'count',
       instruccion, f => f.landings),
     build('soloFlight', 'Vuelo solo supervisado de 30 min', 1, 'count',
-      soloValido, () => 1),
+      solos, f => (flightDurationMin(f) >= 30 ? 1 : 0)),
   ]
 
-  return { requirements, allMet: requirements.every(r => r.met) }
+  return { requirements, allMet: requirements.every(r => r.met), excluded }
 }

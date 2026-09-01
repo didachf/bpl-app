@@ -62,12 +62,28 @@ export type PilotFunction = 'PIC' | 'PIC_SOLO_SUPERVISED' | 'DUAL' | 'FI_B' | 'F
 
 export type SignatureStatus = 'not_required' | 'pending' | 'signed'
 
+export type CheckType = 'skill_test' | 'proficiency_check'
+export type CheckResult = 'passed' | 'failed'
+
 /**
- * Vuelo de verificacion. BFCL.160(a)(2) permite que una verificacion de
- * competencia en los ultimos 24 meses sustituya a todos los demas contadores
- * de vigencia, asi que hay que poder anotarla.
+ * Vuelo de verificacion.
+ *
+ * BFCL.160(a)(2) permite que una verificacion de competencia en los ultimos 24
+ * meses sustituya a todos los demas contadores de vigencia, pero BFCL.160(c)
+ * la define como "shall PASS a proficiency check with an FE(B) in a balloon
+ * that represents the relevant class". Las tres condiciones importan, asi que
+ * las tres se anotan.
+ *
+ * Es un objeto unico y no tres campos sueltos en Flight, para que no se pueda
+ * representar un estado ilegal: ni examinador sin verificacion, ni resultado
+ * sin tipo.
  */
-export type CheckType = 'none' | 'skill_test' | 'proficiency_check'
+export interface CheckRecord {
+  type: CheckType
+  /** El FE(B) que la paso. Referencia a Person. */
+  examinerId: Uuid
+  result: CheckResult
+}
 
 export interface Coords {
   lat: number
@@ -104,7 +120,17 @@ export interface Flight {
   /** BFCL.160(e) exige firma del FI(B) en dobles mando y supervisados. */
   instructorId: Uuid | null
   signatureStatus: SignatureStatus
-  checkType: CheckType
+  check: CheckRecord | null
+  /**
+   * Este vuelo de doble mando cumple AMC1 BFCL.160(a)(1)(ii)(a): sigue el
+   * contenido del examen practico y se hace uno a uno entre un piloto y un
+   * instructor, sin otro piloto a bordo que se acredite el vuelo.
+   *
+   * No es inferible de los demas datos, es un juicio del instructor, asi que
+   * se marca a mano. Sin el, cualquier doble mando servia para la vigencia de
+   * 48 meses, que era un falso positivo.
+   */
+  recencyTrainingFlight: boolean
   crewIds: Uuid[]
   passengerIds: Uuid[]
   /** Meteo que hubo de verdad, para contrastar con la pronosticada. */

@@ -22,3 +22,19 @@ export function flightDurationMin(f: Flight): number {
   if (Number.isNaN(from) || Number.isNaN(to)) return 0
   return Math.max(0, Math.round((to - from) / 60000))
 }
+
+/**
+ * Las dos marcas de tiempo del vuelo son coherentes entre si.
+ *
+ * `flightDurationMin` devuelve 0 ante una llegada anterior a la salida, para
+ * que un dato mal metido no reste horas del acumulado. Pero ese 0 hace que el
+ * vuelo desaparezca del contador sin dejar rastro, asi que los contadores
+ * necesitan poder distinguirlo de un vuelo legitimamente corto y avisar.
+ */
+export function hasConsistentTimes(f: Flight): boolean {
+  if (f.durationOverrideMin !== null) return f.durationOverrideMin >= 0
+  const from = Date.parse(f.departure.timestamp)
+  const to = Date.parse(f.arrival.timestamp)
+  if (Number.isNaN(from) || Number.isNaN(to)) return false
+  return to >= from
+}

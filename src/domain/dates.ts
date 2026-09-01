@@ -26,3 +26,29 @@ export function toIsoDate(d: Date): IsoDate {
 function format(y: number, m: number, d: number): IsoDate {
   return `${String(y).padStart(4, '0')}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`
 }
+
+/**
+ * Ultimo dia del mes de una fecha.
+ *
+ * Hace falta por AMC1 BFCL.160(a)(1)(ii)(e): "The 48-month period should be
+ * counted from the last day of the month in which the preceding training
+ * flight took place." Contarlo desde la fecha del vuelo pierde hasta 30 dias
+ * de vigencia.
+ */
+export function endOfMonth(date: IsoDate): IsoDate {
+  const [y, m] = date.split('-').map(Number)
+  return format(y, m, new Date(y, m, 0).getDate())
+}
+
+/**
+ * Suma (o resta) dias a una fecha.
+ *
+ * Opera en UTC a proposito. Construir la fecha en horario local y sumarle un
+ * dia puede caer dentro de un cambio de hora y devolver el dia anterior a las
+ * 23:00, que es un error de un dia dificil de ver.
+ */
+export function addDays(date: IsoDate, n: number): IsoDate {
+  const [y, m, d] = date.split('-').map(Number)
+  const dt = new Date(Date.UTC(y, m - 1, d + n))
+  return format(dt.getUTCFullYear(), dt.getUTCMonth() + 1, dt.getUTCDate())
+}

@@ -1,6 +1,6 @@
 // src/domain/fixtures.ts
 // Constructores para pruebas. No se importa desde la interfaz.
-import type { Flight, LogbookDoc, Pilot, PilotFunction } from './types'
+import type { Balloon, Flight, LogbookDoc, Person, Pilot, PilotFunction } from './types'
 
 export function makePilot(over: Partial<Pilot> = {}): Pilot {
   return {
@@ -36,8 +36,9 @@ export function makeFlight(over: Partial<Flight> = {}): Flight {
     takeoffs: 1,
     landings: 1,
     instructorId: 'p2',
-    signatureStatus: 'pending',
-    checkType: 'none',
+    signatureStatus: 'signed',
+    check: null,
+    recencyTrainingFlight: false,
     crewIds: [],
     passengerIds: [],
     observedWeather: '',
@@ -64,13 +65,42 @@ export function makeFlights(
   )
 }
 
+/** Globo de aire caliente de grupo A por defecto, que es el que sirve para el BPL. */
+export function makeBalloon(over: Partial<Balloon> = {}): Balloon {
+  return {
+    id: 'b1',
+    registration: 'EC-PRU',
+    manufacturer: 'Ultramagic',
+    model: 'M-105',
+    balloonClass: 'hot_air',
+    envelopeVolumeM3: 2900,
+    ...over,
+  }
+}
+
+export function makePerson(over: Partial<Person> = {}): Person {
+  return { id: 'p1', name: 'Persona de prueba', roles: ['pilot'], licenceNumber: null, ...over }
+}
+
+/**
+ * Documento de prueba.
+ *
+ * Trae por defecto un globo de grupo A con id 'b1' y las personas 'p1' piloto,
+ * 'p2' instructor y 'p3' examinadora, porque son los ids que usa makeFlight.
+ * Sin ellos los contadores excluyen todos los vuelos por globo desconocido, y
+ * las pruebas medirian otra cosa de la que dicen medir.
+ */
 export function makeDoc(over: Partial<LogbookDoc> = {}): LogbookDoc {
   return {
     schemaVersion: 1,
     pilot: makePilot(),
-    balloons: [],
+    balloons: [makeBalloon()],
     sites: [],
-    people: [],
+    people: [
+      makePerson({ id: 'p1', name: 'Didac', roles: ['pilot'] }),
+      makePerson({ id: 'p2', name: 'Instructor', roles: ['instructor'] }),
+      makePerson({ id: 'p3', name: 'Examinadora', roles: ['examiner'] }),
+    ],
     flights: [],
     ...over,
   }

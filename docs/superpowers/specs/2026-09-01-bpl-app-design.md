@@ -150,10 +150,20 @@ cuando aplique.
 - `inflations`, `takeoffs`, `landings`, como contadores enteros. Un vuelo de instrucción
   puede llevar varios
 - `instructorId` y `signatureStatus`.
-- `checkType`: `none`, `skill_test` o `proficiency_check`. Añadido el 2026-09-01 al
-  escribir el plan A1: BFCL.160(a)(2) permite que una verificación de competencia en los
-  últimos 24 meses sustituya a todos los demás contadores de vigencia, y no había dónde
-  anotarla. BFCL.160(e) exige firma del FI(B) responsable para
+- `check`: `null`, o un objeto `{ type, examinerId, result }` donde `type` es `skill_test`
+  o `proficiency_check`, y `result` es `passed` o `failed`. **Enmendado el 2026-09-02 tras
+  la auditoría.** La primera versión era un simple `checkType`, que aceptaba una
+  verificación sin examinador y sin saber si se aprobó. BFCL.160(c) exige "shall **pass** a
+  proficiency check **with an FE(B)** in a balloon that represents the relevant class", y
+  AMC1 BFCL.050(b)(1)(ii) habla de "**successfully completed** skill tests and proficiency
+  checks". Un objeto único en lugar de tres campos sueltos hace imposible representar los
+  estados ilegales: no puede haber examinador sin verificación, ni resultado sin tipo.
+- `recencyTrainingFlight`: booleano. Marca que este vuelo de doble mando cumple las
+  condiciones de AMC1 BFCL.160(a)(1)(ii)(a): sigue el contenido del examen práctico y se
+  hace uno a uno entre un piloto y un instructor, sin otro piloto a bordo que se acredite
+  el vuelo. **No es inferible de los demás datos**, es un juicio del instructor, así que se
+  marca a mano. Sin este campo cualquier doble mando servía para la vigencia de 48 meses,
+  que era un falso positivo. BFCL.160(e) exige firma del FI(B) responsable para
   los vuelos de doble mando y los supervisados
 
 **Bloque operacional.** Validado con el usuario el 2026-09-01:
@@ -200,7 +210,24 @@ Texto verificado contra el Balloon Rulebook local:
 | De ellas, doble mando | 12 h |
 | Inflados | 10 |
 | Despegues y aterrizajes | 20 |
-| Vuelo solo supervisado | 1, de al menos 30 min |
+| Vuelo solo supervisado y firmado | 1, de al menos 30 min |
+
+**Qué vuelos cuentan.** Enmendado el 2026-09-02 tras la auditoría. Antes contaba cualquier
+vuelo, que era un falso positivo de los caros. Un vuelo aporta a estos contadores solo si:
+
+1. **Es del globo correcto.** BFCL.130(b) dice "at least 16 hours of flight instruction **in
+   either hot-air balloons that represent group A of that class, or gas balloons**". Así que
+   cuenta si el globo es de gas, o si es de aire caliente **de grupo A**, es decir hasta
+   3.400 m³ de envolvente. El crédito para horas fuera del grupo A que daba el Artículo
+   3c.1(b) era transitorio y expiró el 8 de abril de 2021.
+2. **Está firmado por el instructor**, cuando la función lo requiere. AMC1
+   BFCL.050(b)(1)(ii) permite anotar el solo supervisado como PIC "provided that ... the
+   logbook entry is **signed by the supervising instructor**". Y AMC1 BFCL.160(a)(1)(ii)(c)
+   deja claro por qué importa: si el instructor considera que el alumno no estuvo a la
+   altura, "they should **not** sign the logbook". Un vuelo sin firmar es exactamente el
+   vuelo que el instructor no dio por bueno.
+3. **Tiene supervisor identificado**, si se anota como solo supervisado. BFCL.130(b)(3) dice
+   "one **supervised** solo flight".
 
 ### Vigencia, contra BFCL.160(a)
 
@@ -208,14 +235,49 @@ Empieza a contar el día de la emisión de la licencia.
 
 | Requisito | Ventana |
 |---|---|
-| 6 h como PIC (o dual o solo bajo supervisión de FI(B)) | últimos 24 meses |
-| 10 despegues y aterrizajes | últimos 24 meses |
+| 6 h como PIC | últimos 24 meses |
+| 10 despegues y aterrizajes, como PIC o en doble mando o solo bajo supervisión de FI(B) | últimos 24 meses |
 | 1 vuelo de instrucción con FI(B) | últimos 48 meses |
 
-Alternativa de BFCL.160(a)(2): una verificación de competencia en los últimos 24 meses
-sustituye a lo anterior.
+Alternativa de BFCL.160(a)(2): una verificación de competencia **aprobada, ante un FE(B) y
+en la clase pertinente** en los últimos 24 meses sustituye a lo anterior.
 
 El panel muestra **la fecha exacta en que cada contador caduca**, no solo si se cumple hoy.
+
+#### La vigencia es por clase de globo
+
+Enmendado el 2026-09-02. BFCL.160(a) dice "shall only exercise the privileges ... if he or
+she has completed **in the relevant balloon class**". No hay un contador de vigencia, hay uno
+por clase. La función recibe la clase para la que se pregunta.
+
+#### Límite de grupo tras recuperar la vigencia, BFCL.160(d)
+
+Tras cumplir (a), (b) o (c), las atribuciones en aire caliente quedan limitadas al **grupo
+del vuelo de instrucción o de la verificación, o a uno de envolvente menor**. El panel
+devuelve ese grupo máximo, no solo un sí o un no. Estaba en el spec desde el principio como
+la razón de ser de `groupFromVolume`, y la primera implementación no lo cableó.
+
+#### BFCL.160(b) no se modela, y se dice
+
+Los apartados (b), tres horas en cada clase adicional en 24 meses, y (f), las equivalencias
+con el habilitamiento comercial, **no están implementados**. En lugar de ignorarlos en
+silencio, el informe de vigencia lleva una lista de avisos que los nombra cuando el
+documento contiene vuelos de más de una clase. La app nunca dice "cumples" tapando un
+requisito que no ha mirado.
+
+### Interpretaciones resueltas
+
+Puntos donde el reglamento admite lectura y hubo que elegir. Se dejan por escrito para que
+nadie los "corrija" en la dirección contraria sin saber que fue deliberado.
+
+| Punto | Elección | Motivo |
+|---|---|---|
+| "20 take-offs and landings" de BFCL.130(b)(2) | 20 despegues **y** 20 aterrizajes | Lectura conservadora. En globo todo vuelo libre tiene un despegue y un aterrizaje, así que la otra lectura daría 10 vuelos, la mitad |
+| "16 hours of flight instruction" | Doble mando **más** solo supervisado | El contraste con "12 hours of **dual** flight instruction" solo tiene sentido si las 4 h restantes pueden no ser doble mando |
+| "6 hours of flight time as PIC" de BFCL.160(a)(1)(i) | Solo funciones que se anotan como PIC. **El doble mando no** | La coletilla "as PIC or flying dual or solo under the supervision of an FI(B)" modifica a "10 take-offs and landings", no a las 6 h. El spec lo tuvo mal hasta el 2026-09-02 |
+| Periodo de 48 meses | Desde el **último día del mes** del vuelo de instrucción | AMC1 BFCL.160(a)(1)(ii)(e), literal. Contarlo desde la fecha del vuelo pierde hasta 30 días de vigencia |
+| Vuelo exactamente en el borde de la ventana de 24 meses | **No cuenta** | El reglamento no lo resuelve. Ante la duda, la opción que nunca dice "puedes volar" de más. Cuesta un día |
+| Vuelo con hora de llegada anterior a la de salida | Aporta 0 y **marca el contador como parcial** | Un dato malo no puede restar horas, pero tampoco puede desaparecer en silencio |
 
 ---
 

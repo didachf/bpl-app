@@ -1988,7 +1988,7 @@ export async function putFile(
 - [ ] **Step 4: Verificar que pasa**
 
 Run: `cd ~/code/bpl-app && npm test -- github`
-Expected: PASS, 10 pruebas
+Expected: PASS, 11 pruebas
 
 - [ ] **Step 5: Pasar la batería entera**
 

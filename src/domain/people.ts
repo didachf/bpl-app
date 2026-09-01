@@ -16,3 +16,17 @@ export function hasRole(doc: LogbookDoc, id: Uuid | null, role: PersonRole): boo
   const p = doc.people.find(x => x.id === id)
   return p !== undefined && p.roles.includes(role)
 }
+
+/**
+ * Existe, tiene el rol, y NO es el propio titular del cuaderno.
+ *
+ * El reglamento exige una segunda persona: BFCL.160(c) "a proficiency check
+ * with an FE(B)", BFCL.130(b)(3) "one SUPERVISED solo flight". Un piloto que
+ * ademas sea instructor no puede supervisarse a si mismo.
+ */
+export function hasRoleAndIsNotThePilot(
+  doc: LogbookDoc, id: Uuid | null, role: PersonRole,
+): boolean {
+  if (id !== null && doc.pilot.personId !== null && id === doc.pilot.personId) return false
+  return hasRole(doc, id, role)
+}

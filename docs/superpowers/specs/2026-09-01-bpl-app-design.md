@@ -239,8 +239,20 @@ Empieza a contar el día de la emisión de la licencia.
 | 10 despegues y aterrizajes, como PIC o en doble mando o solo bajo supervisión de FI(B) | últimos 24 meses |
 | 1 vuelo de instrucción con FI(B) | últimos 48 meses |
 
-Alternativa de BFCL.160(a)(2): una verificación de competencia **aprobada, ante un FE(B) y
-en la clase pertinente** en los últimos 24 meses sustituye a lo anterior.
+**BFCL.160(a) son dos vías alternativas, no una principal y una de rescate.** Corregido el
+2026-09-02 en la tercera auditoría. El texto dice "(1) **either** (i) … and (ii); **or** (2)
+… a proficiency check". El apartado (c) solo define qué es esa verificación y cuándo es
+obligatoria, no convierte a (a)(2) en subsidiaria.
+
+Vía (a)(2): una verificación de competencia **aprobada, ante un FE(B) que no sea el propio
+piloto, y en la clase pertinente**, en los últimos 24 meses.
+
+Quien cumple las dos está cubierto por **la que dure más**, y el grupo máximo de BFCL.160(d)
+es **el mayor** de los dos, porque GM1 BFCL.015(c) dice que las atribuciones del grupo mayor
+"can be exercised once the recency requirements are complied with in that bigger group".
+
+Tratarlas como excluyentes hacía que el informe se contradijera solo: anunciaba una
+caducidad y seguía diciendo "cumples" al día siguiente.
 
 El panel muestra **la fecha exacta en que cada contador caduca**, no solo si se cumple hoy.
 

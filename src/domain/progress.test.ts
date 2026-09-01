@@ -1,7 +1,7 @@
 // src/domain/progress.test.ts
 import { describe, it, expect } from 'vitest'
 import { bplProgress } from './progress'
-import { makeBalloon, makeDoc, makeFlight, makeFlights } from './fixtures'
+import { makeBalloon, makeDoc, makeFlight, makeFlights, makePerson, makePilot } from './fixtures'
 
 const HOY = '2026-09-01'
 
@@ -245,5 +245,43 @@ describe('bplProgress, validacion de personas y fechas', () => {
     const avisos = bplProgress(makeDoc(), HOY).notModelled.join(' ')
     expect(avisos).toContain('ATO')
     expect(avisos).toContain('BFCL.135')
+  })
+})
+
+describe('bplProgress, el doble mando tambien necesita instructor real', () => {
+  it('excluye un doble mando sin instructor, AMC1 BFCL.050(b)(2)', () => {
+    const doc = makeDoc({
+      flights: [makeFlight({ pilotFunction: 'DUAL', durationOverrideMin: 960,
+        instructorId: null })],
+    })
+    const p = bplProgress(doc, HOY)
+    expect(req(doc, 'dualMinutes').current).toBe(0)
+    expect(p.excluded[0].reason).toBe('instructor_unknown')
+  })
+
+  it('excluye un doble mando cuyo instructor no esta en el documento', () => {
+    const doc = makeDoc({
+      flights: [makeFlight({ pilotFunction: 'DUAL', durationOverrideMin: 960,
+        instructorId: 'fantasma' })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('instructor_unknown')
+  })
+
+  it('excluye un doble mando cuyo instructor existe pero no tiene el rol', () => {
+    const doc = makeDoc({
+      flights: [makeFlight({ pilotFunction: 'DUAL', durationOverrideMin: 960,
+        instructorId: 'p3' })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('instructor_unknown')
+  })
+
+  it('el alumno no puede ser su propio instructor', () => {
+    const doc = makeDoc({
+      pilot: makePilot({ personId: 'px' }),
+      people: [makePerson({ id: 'px', roles: ['pilot', 'instructor'] })],
+      flights: [makeFlight({ pilotFunction: 'DUAL', durationOverrideMin: 960,
+        instructorId: 'px' })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('instructor_unknown')
   })
 })

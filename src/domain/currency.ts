@@ -1,7 +1,7 @@
 import { groupFromVolume } from './balloon'
 import { addDays, addMonths, endOfMonth } from './dates'
 import { flightDurationMin, hasConsistentTimes } from './flight'
-import { hasRole } from './people'
+import { hasRoleAndIsNotThePilot } from './people'
 import type {
   Balloon, BalloonClass, BalloonGroup, Flight, IsoDate, LogbookDoc, Uuid,
 } from './types'
@@ -52,7 +52,13 @@ export interface CurrencyReport {
    * un aviso en `warnings` que lo explica.
    */
   maxGroup: BalloonGroup | null
-  /** Vuelos que no se han mirado, y por que. Ninguna exclusion es silenciosa. */
+  /**
+   * Vuelos descartados por un PROBLEMA del dato: fecha futura o globo que no
+   * esta en el catalogo.
+   *
+   * Los vuelos de otra clase de globo no salen aqui: no son un problema, es
+   * que la pregunta era por otra clase.
+   */
   excluded: ExcludedFlight[]
   /** Problemas concretos de ESTE documento. */
   warnings: string[]
@@ -67,7 +73,16 @@ const NO_MODELADO = [
   + 'BFCL.215. Esta app no modela ese habilitamiento.',
   'BFCL.160(d)(ii), el grupo A por defecto cuando el vuelo de instruccion se hizo en '
   + 'otra clase de globo, no esta implementado.',
+  'BFCL.200(d) exige, con habilitacion de vuelo cautivo, al menos un vuelo cautivo en '
+  + 'los ultimos 48 meses. Esta app no lleva ese contador.',
+  'BFCL.210(a) exige habilitacion de noche para volar de noche en VFR. Esta app no '
+  + 'modela las habilitaciones.',
+  'BFCL.045 exige llevar a bordo licencia y certificado medico validos. Esta app solo '
+  + 'avisa si la fecha del medico ya paso.',
 ]
+
+/** Orden de los grupos por tamaño de envolvente, para poder quedarse con el mayor. */
+const GROUP_ORDER: Record<BalloonGroup, number> = { A: 0, B: 1, C: 2, D: 3 }
 
 function balloonOf(f: Flight, balloons: Balloon[]): Balloon | null {
   return balloons.find(b => b.id === f.balloonId) ?? null
@@ -89,13 +104,19 @@ function balloonOf(f: Flight, balloons: Balloon[]): Balloon | null {
  */
 function countsAsPic(f: Flight, doc: LogbookDoc): boolean {
   switch (f.pilotFunction) {
-    case 'PIC':
     case 'FI_B':
     case 'FE_B':
+      // Instruye o examina: el examen no es suyo, asi que su resultado no le
+      // quita horas. Apartados (iii) y (iv), que no condicionan al resultado.
       return true
+    case 'PIC':
+      // Si el vuelo lleva examen, el titular es el candidato, y (ii) solo
+      // permite anotar los "successfully completed".
+      return f.check === null || f.check.result === 'passed'
     case 'PIC_SOLO_SUPERVISED':
-      // AMC1 BFCL.050(b)(1)(ii) lo condiciona a la firma del supervisor.
-      return f.signatureStatus === 'signed' && hasRole(doc, f.instructorId, 'instructor')
+      return f.signatureStatus === 'signed'
+        && hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')
+        && (f.check === null || f.check.result === 'passed')
     case 'DUAL':
       return f.check !== null && f.check.result === 'passed'
   }
@@ -118,7 +139,8 @@ function countsForTakeoffs(f: Flight, doc: LogbookDoc): boolean {
       return true
     case 'DUAL':
     case 'PIC_SOLO_SUPERVISED':
-      return f.signatureStatus === 'signed' && hasRole(doc, f.instructorId, 'instructor')
+      return f.signatureStatus === 'signed'
+        && hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')
   }
 }
 
@@ -135,7 +157,7 @@ function isValidCheck(f: Flight, doc: LogbookDoc): boolean {
   if (f.check === null) return false
   if (f.check.type !== 'proficiency_check') return false
   if (f.check.result !== 'passed') return false
-  return hasRole(doc, f.check.examinerId, 'examiner')
+  return hasRoleAndIsNotThePilot(doc, f.check.examinerId, 'examiner')
 }
 
 /**
@@ -148,7 +170,7 @@ function isRecencyTrainingFlight(f: Flight, doc: LogbookDoc): boolean {
   return f.pilotFunction === 'DUAL'
     && f.recencyTrainingFlight
     && f.signatureStatus === 'signed'
-    && hasRole(doc, f.instructorId, 'instructor')
+    && hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')
 }
 
 /**
@@ -264,30 +286,57 @@ export function currency(
       trainingFlights, () => 1, expiry48),
   ]
 
-  // BFCL.160(c) es la via de recuperacion: se activa cuando el piloto NO
-  // cumple (a)(1). Asi que la verificacion solo "manda" si (a)(1) falla.
+  // BFCL.160(a) ofrece DOS VIAS ALTERNATIVAS, no una principal y una de
+  // rescate: "(1) either: (i) ... and (ii) ...; OR (2) ... a proficiency
+  // check". El apartado (c) solo define que es esa verificacion y cuando es
+  // obligatoria; no convierte a (a)(2) en subsidiaria.
+  //
+  // Consecuencia: quien cumple las dos esta cubierto por la que dure mas.
+  // Tratarlas como excluyentes hacia que el informe se contradijera consigo
+  // mismo, anunciando una caducidad y siguiendo en verde al dia siguiente.
   const metViaA1 = items.every(i => i.met)
-  const viaProficiencyCheck = !metViaA1 && checks.length > 0
-  const met = metViaA1 || viaProficiencyCheck
+  const metViaA2 = checks.length > 0
+  const viaProficiencyCheck = metViaA2
+  const met = metViaA1 || metViaA2
+
+  const ultimoCheck = mostRecent(checks)
+  const ultimoTraining = mostRecent(trainingFlights)
 
   // BFCL.160(d): el grupo lo fija el vuelo de instruccion de (a)(1)(ii) o la
-  // verificacion de (c), "as applicable". Lo aplicable es lo que sostiene la
-  // vigencia, no lo mas reciente que haya en el cuaderno.
+  // verificacion de (c). Si las dos vias estan cumplidas, valen las dos, y
+  // manda la mayor: GM1 BFCL.015(c) dice que las atribuciones del grupo mayor
+  // "can be exercised once the recency requirements are complied with in that
+  // bigger group".
   let maxGroup: BalloonGroup | null = null
   if (forClass === 'hot_air' && met) {
-    const fuente = viaProficiencyCheck ? checks : trainingFlights
-    const grupo = groupOfMostRecent(fuente, doc.balloons)
-    if (grupo === null && fuente.length > 0) {
+    const fuentes: (Flight | null)[] = []
+    if (metViaA1) fuentes.push(ultimoTraining)
+    if (metViaA2) fuentes.push(ultimoCheck)
+    let sinGrupo = false
+    for (const f of fuentes) {
+      if (f === null) continue
+      const g = groupOfFlight(f, doc.balloons)
+      if (g === null) { sinGrupo = true; continue }
+      if (maxGroup === null || GROUP_ORDER[g] > GROUP_ORDER[maxGroup]) maxGroup = g
+    }
+    if (sinGrupo) {
       warnings.push(
         'No se puede determinar el grupo maximo de BFCL.160(d): el globo del vuelo que lo '
         + 'fija no tiene un volumen de envolvente valido.',
       )
+      maxGroup = null
     }
-    maxGroup = grupo
+  }
+
+  if (doc.pilot.medicalExpiry !== null && doc.pilot.medicalExpiry < asOf) {
+    warnings.push(
+      `El reconocimiento medico caduco el ${doc.pilot.medicalExpiry}. BFCL.045(a)(2) exige `
+      + 'llevar un certificado medico valido para ejercer las atribuciones.',
+    )
   }
 
   const clases = new Set(
-    enClaseTodas(doc).map(b => b.balloonClass),
+    globosVolados(doc, asOf).map(b => b.balloonClass),
   )
   if (clases.size > 1) {
     warnings.push(
@@ -296,14 +345,15 @@ export function currency(
     )
   }
 
-  let currentUntil: IsoDate | null = null
-  if (viaProficiencyCheck) {
-    const ordenados = [...checks].sort((a, b) => (a.date < b.date ? -1 : 1))
-    currentUntil = expiry24(ordenados[ordenados.length - 1])
-  } else if (met) {
+  // La caducidad de cada via, y se queda la mas tardia de las cumplidas.
+  const caducidades: IsoDate[] = []
+  if (metViaA1) {
     const fechas = items.map(i => i.expiresOn).filter((d): d is IsoDate => d !== null).sort()
-    currentUntil = fechas[0] ?? null
+    if (fechas.length === items.length) caducidades.push(fechas[0])
   }
+  if (metViaA2 && ultimoCheck !== null) caducidades.push(expiry24(ultimoCheck))
+  caducidades.sort()
+  const currentUntil = caducidades.length > 0 ? caducidades[caducidades.length - 1] : null
 
   return {
     applicable, balloonClass: forClass, viaProficiencyCheck, items, met,
@@ -311,23 +361,32 @@ export function currency(
   }
 }
 
-/** Los globos que aparecen en algun vuelo del documento. */
-function enClaseTodas(doc: LogbookDoc): Balloon[] {
-  const ids = new Set(doc.flights.map(f => f.balloonId))
+/**
+ * Los globos realmente volados hasta `asOf`.
+ *
+ * Los del catalogo que no se han volado nunca no cuentan, y los vuelos con
+ * fecha futura tampoco: si se excluyen del informe, no pueden a la vez
+ * disparar un aviso.
+ */
+function globosVolados(doc: LogbookDoc, asOf: IsoDate): Balloon[] {
+  const ids = new Set(doc.flights.filter(f => f.date <= asOf).map(f => f.balloonId))
   return doc.balloons.filter(b => ids.has(b.id))
 }
 
-/**
- * Grupo del globo del vuelo mas reciente de la lista.
- *
- * Devuelve null ante un volumen invalido en lugar de seguir buscando en vuelos
- * mas antiguos. Saltarse el dato malo puede acabar concediendo un grupo MAYOR
- * del que corresponde, que es el error caro.
- */
-function groupOfMostRecent(flights: Flight[], balloons: Balloon[]): BalloonGroup | null {
+function mostRecent(flights: Flight[]): Flight | null {
   if (flights.length === 0) return null
-  const ordenados = [...flights].sort((a, b) => (a.date < b.date ? 1 : -1))
-  const b = balloonOf(ordenados[0], balloons)
+  return [...flights].sort((a, b) => (a.date < b.date ? 1 : -1))[0]
+}
+
+/**
+ * Grupo del globo de un vuelo concreto.
+ *
+ * Devuelve null ante un volumen invalido. Quien llama NO debe caer entonces a
+ * un vuelo mas antiguo: saltarse el dato malo puede acabar concediendo un
+ * grupo MAYOR del que corresponde, que es el error caro.
+ */
+function groupOfFlight(f: Flight, balloons: Balloon[]): BalloonGroup | null {
+  const b = balloonOf(f, balloons)
   if (!b || b.balloonClass !== 'hot_air' || !(b.envelopeVolumeM3 > 0)) return null
   return groupFromVolume(b.envelopeVolumeM3)
 }

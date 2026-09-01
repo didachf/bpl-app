@@ -20,6 +20,7 @@ export function emptyDocument(): LogbookDoc {
   return {
     schemaVersion: CURRENT_SCHEMA_VERSION,
     pilot: {
+      personId: null,
       name: '',
       address: '',
       licenceNumber: null,

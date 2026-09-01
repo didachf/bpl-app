@@ -4,6 +4,7 @@ import type { Balloon, Flight, LogbookDoc, Person, Pilot, PilotFunction } from '
 
 export function makePilot(over: Partial<Pilot> = {}): Pilot {
   return {
+    personId: 'p1',
     name: 'Piloto de prueba',
     address: 'Calle Falsa 123',
     licenceNumber: null,

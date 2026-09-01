@@ -17,6 +17,14 @@ export type BalloonClass = 'hot_air' | 'gas' | 'mixed' | 'hot_air_airship'
 export type BalloonGroup = 'A' | 'B' | 'C' | 'D'
 
 export interface Pilot {
+  /**
+   * Identificador del titular dentro de `people`, si figura ahi.
+   *
+   * Existe para poder responder "esta persona NO soy yo", que es lo que exigen
+   * BFCL.160(c) con el FE(B) y BFCL.130(b)(3) con el supervisor. Sin el, basta
+   * darse a uno mismo el rol de examinador para autoconcederse la vigencia.
+   */
+  personId: Uuid | null
   name: string
   /** AMC1 BFCL.050(a)(1) exige la dirección del piloto. */
   address: string

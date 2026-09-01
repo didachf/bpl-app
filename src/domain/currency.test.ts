@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { currency } from './currency'
-import { makeBalloon, makeDoc, makeFlight, makeFlights, makePilot } from './fixtures'
+import { makeBalloon, makeDoc, makeFlight, makeFlights, makePerson, makePilot } from './fixtures'
 import type { BalloonClass, Flight, LogbookDoc } from './types'
 
 const HOY = '2026-09-01'
@@ -348,14 +348,6 @@ describe('countsAsPic no puede borrar tiempo legitimo', () => {
     expect(item(doc, 'picMinutes').current).toBe(400)
   })
 
-  it('un PIC anota su tiempo aunque la verificacion salga suspendida', () => {
-    const doc = conLicencia([
-      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC', durationOverrideMin: 400,
-        check: { type: 'proficiency_check', examinerId: 'p3', result: 'failed' } }),
-    ])
-    expect(item(doc, 'picMinutes').current).toBe(400)
-  })
-
   it('un doble mando solo anota como PIC si lleva un examen superado', () => {
     const sin = conLicencia([
       makeFlight({ date: '2026-06-01', pilotFunction: 'DUAL', durationOverrideMin: 400 }),
@@ -401,7 +393,7 @@ describe('maxGroup, BFCL.160(d)', () => {
     expect(r.maxGroup).toBe(null)
   })
 
-  it('manda el vuelo de instruccion cuando la vigencia viene por la via (a)(1)', () => {
+  it('con las dos vias cumplidas manda el grupo MAYOR, GM1 BFCL.015(c)', () => {
     const doc = conLicencia([
       ...diezPic,
       vueloDeRecencia({ date: '2026-01-10', balloonId: 'bA' }),
@@ -415,10 +407,12 @@ describe('maxGroup, BFCL.160(d)', () => {
         makeBalloon({ id: 'bD', envelopeVolumeM3: 12000 }),
       ],
     })
-    // La verificacion del 10/01/2025 esta fuera de los 24 meses? No, dentro.
-    // Pero la vigencia se cumple por (a)(1), asi que manda el vuelo de
-    // instruccion, que fue en grupo A.
-    expect(currency(doc, HOY, 'hot_air').maxGroup).toBe('A')
+    // Las dos vias de BFCL.160(a) estan cumplidas: (a)(1) por el vuelo de
+    // instruccion en grupo A, y (a)(2) por la verificacion en grupo D. GM1
+    // BFCL.015(c) dice que las atribuciones del grupo mayor "can be exercised
+    // once the recency requirements are complied with in that bigger group",
+    // asi que el piloto SI puede volar grupo D.
+    expect(currency(doc, HOY, 'hot_air').maxGroup).toBe('D')
   })
 
   it('es null si el globo que fijaria el grupo tiene un volumen invalido', () => {
@@ -445,5 +439,164 @@ describe('nada desaparece en silencio', () => {
     const avisos = currency(conLicencia([]), HOY, 'hot_air').notModelled.join(' ')
     expect(avisos).toContain('BFCL.160(b)')
     expect(avisos).toContain('BFCL.160(f)')
+  })
+})
+
+describe('BFCL.160(a) son dos vias alternativas, no una de rescate', () => {
+  // "(1) either: (i) ... and (ii) ...; or (2) ... a proficiency check"
+  const doc = () => conLicencia([
+    vueloDeRecencia({ date: '2022-11-15' }),
+    ...makeFlights(10, { date: '2026-06-01', pilotFunction: 'PIC', durationMin: 40,
+      takeoffs: 1, landings: 1 }),
+    makeFlight({ date: '2026-08-01', pilotFunction: 'PIC', balloonId: 'bC',
+      durationOverrideMin: 30,
+      check: { type: 'proficiency_check', examinerId: 'p3', result: 'passed' } }),
+  ], {
+    balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: 2000 }),
+               makeBalloon({ id: 'bC', envelopeVolumeM3: 8000 })],
+  })
+
+  it('cumplir las dos da la caducidad MAS TARDIA, no la de una sola', () => {
+    const r = currency(doc(), HOY, 'hot_air')
+    expect(r.met).toBe(true)
+    // La via (a)(1) caduca el 29/11/2026 por el vuelo de instruccion.
+    // La via (a)(2) caduca el 31/07/2028 por la verificacion. Manda la segunda.
+    expect(r.currentUntil).toBe('2028-07-31')
+  })
+
+  it('el informe no puede contradecirse: sigue cumpliendo hasta el dia que dice', () => {
+    const d = doc()
+    expect(currency(d, '2028-07-31', 'hot_air').met).toBe(true)
+    expect(currency(d, '2028-08-01', 'hot_air').met).toBe(false)
+  })
+
+  it('la verificacion sola basta aunque falle (a)(1)', () => {
+    const solo = conLicencia([
+      makeFlight({ date: '2026-08-01', pilotFunction: 'PIC', durationOverrideMin: 30,
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'passed' } }),
+    ])
+    expect(currency(solo, HOY, 'hot_air').met).toBe(true)
+  })
+})
+
+describe('el examen suspendido del candidato no da horas, el del examinador si', () => {
+  it('un PIC con verificacion suspendida no suma, AMC1 BFCL.050(b)(1)(ii)', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC', durationOverrideMin: 400,
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'failed' } }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(0)
+  })
+
+  it('un FE(B) si suma, porque el examen no es suyo, AMC1 BFCL.050(b)(1)(iv)', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'FE_B', durationOverrideMin: 400,
+        check: { type: 'proficiency_check', examinerId: 'p3', result: 'failed' } }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(400)
+  })
+
+  it('un PIC sin ningun examen suma con normalidad', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC', durationOverrideMin: 400 }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(400)
+  })
+})
+
+describe('el piloto no puede hacer de segunda persona', () => {
+  const soloYo = (over = {}) => makeDoc({
+    pilot: makePilot({ licenceIssued: '2026-01-01', personId: 'px' }),
+    people: [makePerson({ id: 'px', roles: ['pilot', 'instructor', 'examiner'] })],
+    ...over,
+  })
+
+  it('no puede supervisarse a si mismo en un solo supervisado', () => {
+    const doc = soloYo({
+      flights: [makeFlight({ date: '2026-06-01', pilotFunction: 'PIC_SOLO_SUPERVISED',
+        durationOverrideMin: 400, instructorId: 'px' })],
+    })
+    expect(item(doc, 'picMinutes').current).toBe(0)
+  })
+
+  it('no puede firmarse su propio vuelo de instruccion de recencia', () => {
+    const doc = soloYo({ flights: [vueloDeRecencia({ instructorId: 'px' })] })
+    expect(item(doc, 'trainingFlight').met).toBe(false)
+  })
+
+  it('no puede autoexaminarse aunque se ponga el rol de examinador', () => {
+    const doc = soloYo({
+      flights: [makeFlight({ date: '2026-08-01', pilotFunction: 'PIC', durationOverrideMin: 30,
+        check: { type: 'proficiency_check', examinerId: 'px', result: 'passed' } })],
+    })
+    expect(currency(doc, HOY, 'hot_air').viaProficiencyCheck).toBe(false)
+  })
+})
+
+describe('huecos que la mutacion dejo al descubierto', () => {
+  it('un supervisor que existe pero no es instructor no vale', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'PIC_SOLO_SUPERVISED',
+        durationOverrideMin: 400, instructorId: 'p3' }),
+    ])
+    expect(item(doc, 'picMinutes').current).toBe(0)
+  })
+
+  it('un doble mando cuyo instructor existe pero no es instructor no da despegues', () => {
+    const doc = conLicencia([
+      makeFlight({ date: '2026-06-01', pilotFunction: 'DUAL', takeoffs: 10, landings: 10,
+        instructorId: 'p3' }),
+    ])
+    expect(item(doc, 'takeoffs').current).toBe(0)
+  })
+
+  it('ante un volumen invalido no se cae al vuelo anterior, que puede ser mayor', () => {
+    const doc = conLicencia([
+      ...makeFlights(10, { date: '2026-06-01', pilotFunction: 'PIC', durationMin: 40,
+        takeoffs: 1, landings: 1 }),
+      vueloDeRecencia({ date: '2025-01-01', balloonId: 'bD' }),
+      vueloDeRecencia({ date: '2026-01-01', balloonId: 'bMal' }),
+    ], {
+      balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: 2000 }),
+                 makeBalloon({ id: 'bD', envelopeVolumeM3: 12000 }),
+                 makeBalloon({ id: 'bMal', envelopeVolumeM3: 0 })],
+    })
+    expect(currency(doc, HOY, 'hot_air').maxGroup).toBe(null)
+  })
+
+  it('un vuelo futuro sale en excluded tambien en vigencia', () => {
+    const doc = conLicencia([makeFlight({ date: '2099-01-01' })])
+    expect(currency(doc, HOY, 'hot_air').excluded[0].reason).toBe('flight_in_future')
+  })
+
+  it('el aviso de multiclase mira los globos VOLADOS, no el catalogo', () => {
+    const doc = conLicencia([makeFlight({ balloonId: 'b1' })], {
+      balloons: [makeBalloon({ id: 'b1' }), makeBalloon({ id: 'bGas', balloonClass: 'gas' })],
+    })
+    expect(currency(doc, HOY, 'hot_air').warnings).toEqual([])
+  })
+
+  it('un vuelo futuro no dispara el aviso de multiclase', () => {
+    const doc = conLicencia([
+      makeFlight({ balloonId: 'b1' }),
+      makeFlight({ date: '2099-01-01', balloonId: 'bGas' }),
+    ], {
+      balloons: [makeBalloon({ id: 'b1' }), makeBalloon({ id: 'bGas', balloonClass: 'gas' })],
+    })
+    expect(currency(doc, HOY, 'hot_air').warnings).toEqual([])
+  })
+})
+
+describe('el reconocimiento medico', () => {
+  it('avisa si esta caducado, BFCL.045(a)(2)', () => {
+    const doc = conLicencia([], { pilot: makePilot({ licenceIssued: '2026-01-01',
+      medicalExpiry: '2025-06-01' }) })
+    expect(currency(doc, HOY, 'hot_air').warnings.join(' ')).toContain('medico')
+  })
+
+  it('no avisa si esta en vigor', () => {
+    const doc = conLicencia([], { pilot: makePilot({ licenceIssued: '2026-01-01',
+      medicalExpiry: '2027-06-01' }) })
+    expect(currency(doc, HOY, 'hot_air').warnings).toEqual([])
   })
 })

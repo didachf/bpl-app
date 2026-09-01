@@ -1,6 +1,6 @@
 import { groupFromVolume } from './balloon'
 import { flightDurationMin, hasConsistentTimes } from './flight'
-import { hasRole } from './people'
+import { hasRoleAndIsNotThePilot } from './people'
 import type { Balloon, Flight, IsoDate, LogbookDoc, PilotFunction, Uuid } from './types'
 
 export type RequirementUnit = 'minutes' | 'count'
@@ -90,11 +90,16 @@ function exclusionReason(f: Flight, doc: LogbookDoc, asOf: IsoDate): ExclusionRe
     return 'balloon_not_eligible'
   }
   if (f.signatureStatus !== 'signed') return 'not_signed'
-  if (f.pilotFunction === 'PIC_SOLO_SUPERVISED') {
-    if (f.instructorId === null) return 'solo_without_supervisor'
-    // No basta un identificador cualquiera: BFCL.130(b)(3) pide un vuelo
-    // supervisado, y quien supervisa es un FI(B) de carne y hueso.
-    if (!hasRole(doc, f.instructorId, 'instructor')) return 'instructor_unknown'
+  if (f.pilotFunction === 'PIC_SOLO_SUPERVISED' && f.instructorId === null) {
+    return 'solo_without_supervisor'
+  }
+  // Todo vuelo de instruccion, doble mando incluido, necesita un instructor de
+  // carne y hueso que no sea el propio alumno. AMC1 BFCL.050(b)(2): el tiempo
+  // de instruccion se anota "if certified by the appropriately rated or
+  // authorised instructor from whom it was received". Y BFCL.130(b)(3) pide un
+  // vuelo SUPERVISADO, que sin supervisor no lo es.
+  if (!hasRoleAndIsNotThePilot(doc, f.instructorId, 'instructor')) {
+    return 'instructor_unknown'
   }
   return null
 }

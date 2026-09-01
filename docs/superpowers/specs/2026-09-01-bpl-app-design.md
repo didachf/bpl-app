@@ -149,7 +149,11 @@ cuando aplique.
 - `conditions`: `{ dayNight: 'day' | 'night', tether: 'free' | 'tethered' }`
 - `inflations`, `takeoffs`, `landings`, como contadores enteros. Un vuelo de instrucción
   puede llevar varios
-- `instructorId` y `signatureStatus`. BFCL.160(e) exige firma del FI(B) responsable para
+- `instructorId` y `signatureStatus`.
+- `checkType`: `none`, `skill_test` o `proficiency_check`. Añadido el 2026-09-01 al
+  escribir el plan A1: BFCL.160(a)(2) permite que una verificación de competencia en los
+  últimos 24 meses sustituya a todos los demás contadores de vigencia, y no había dónde
+  anotarla. BFCL.160(e) exige firma del FI(B) responsable para
   los vuelos de doble mando y los supervisados
 
 **Bloque operacional.** Validado con el usuario el 2026-09-01:
@@ -366,6 +370,22 @@ es un extracto PMTiles de Catalunya (del orden de 50 a 200 MB), servido por peti
 rango HTTP y cacheable entero.
 
 ### Checklists (fase 3)
+
+**Hallazgo del 2026-09-01: el contenido ya existe y es transcribible.** El Manual de Vuelo
+MV04r30 de Ultramagic (`Pilot Globus/02_Material_Estudio/Manual_de_Vuelo_MV04r30.pdf`)
+contiene:
+
+| Fuente | Contenido |
+|---|---|
+| Apéndice C | Referencia rápida de chequeo prevuelo. Nueve bloques (envoltura, quemador y sistema de combustible, barquilla, combustible, equipo, pasajeros, carga, arnés de ocupantes, condiciones generales), unos 33 ítems literales en castellano |
+| Sección 4 | Procedimientos estándar. 4.5 preparación, 4.7 inflado, 4.8.1 chequeo antes del despegue, 4.8.2 briefing de pasajeros, 4.9 despegue, 4.10 control en vuelo, 4.11 aterrizaje |
+| Sección 3 | Procedimientos de emergencia, incluido contacto con líneas eléctricas y operación accidental del FDS |
+
+Esto invierte el coste relativo: las checklists dejan de ser el módulo caro (había que
+redactarlas) y pasan a ser el barato (se copian). Reconsiderar el orden de fases al
+terminar el logbook.
+
+El aviso de abajo sigue en pie con la misma fuerza.
 
 Estructura definida **como datos en JSON, no como código**, para que sean editables sin
 tocar la app.

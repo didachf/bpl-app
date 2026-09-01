@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #5598e7; } a:hover { color: #86b6ef; }
+    .num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .sec { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #898781; margin-bottom: 8px; }
+    .r { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid #2c2c2a; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="padding: 16px 20px 18px 20px; font-size: 26px; font-weight: 600; letter-spacing: -.02em;">Ajustes</div>
+
+  <div style="flex-grow: 1; overflow: hidden; padding: 0 20px;">
+
+    <div class="sec">Copia de seguridad</div>
+    <div style="background: #24231f; border-radius: 8px; padding: 14px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0ca30c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <div style="flex-grow: 1; font-size: 15px;">didachf/bpl-logbook</div>
+      </div>
+      <div class="num" style="font-size: 13px; color: #898781; margin-top: 7px;">Última copia hace 4 min · 23 vuelos · 47 kB</div>
+      <div style="font-size: 13px; color: #c3c2b7; margin-top: 10px; padding-top: 10px; border-top: 1px solid #2c2c2a;">
+        El token caduca el <span class="num">14 ago 2027</span>
+      </div>
+    </div>
+
+    <div class="sec" style="margin-top: 22px;">Catálogos</div>
+    <div>
+      <div class="r">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 1 6 6c0 4-6 9-6 9S6 13 6 9a6 6 0 0 1 6-6Z"/><path d="M10 18h4l-.7 3h-2.6Z"/></svg>
+        <span style="flex-grow: 1; font-size: 16px;">Globos</span>
+        <span class="num" style="font-size: 15px; color: #898781;">2</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div class="r">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <span style="flex-grow: 1; font-size: 16px;">Campos</span>
+        <span class="num" style="font-size: 15px; color: #898781;">3</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div class="r">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 6.5a3 3 0 0 1 0 5.5"/></svg>
+        <span style="flex-grow: 1; font-size: 16px;">Personas</span>
+        <span class="num" style="font-size: 15px; color: #898781;">5</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div class="r" style="border-bottom: none;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>
+        <span style="flex-grow: 1; font-size: 16px;">Mis datos y licencia</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="sec" style="margin-top: 22px;">Lo que esta app no comprueba</div>
+    <div style="background: #24231f; border-radius: 8px; padding: 13px 14px; font-size: 13px; color: #c3c2b7; line-height: 1.5;">
+      Que el curso sea en una ATO o DTO. Los nueve exámenes teóricos. La habilitación de noche y la de vuelo cautivo. Las 3 h por clase adicional de globo.
+      <div style="color: #898781; margin-top: 7px;">Compruébalo tú.</div>
+    </div>
+
+  </div>
+
+  <div style="height: 64px; border-top: 1px solid #2c2c2a; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center; margin-top: 14px;">
+    <div style="text-align: center; font-size: 10px; color: #898781;">Inicio</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Vuelos</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Planificar</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Operar</div>
+    <div style="text-align: center; font-size: 10px; color: #ffffff; font-weight: 500;">Ajustes</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

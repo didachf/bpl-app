@@ -1,0 +1,21 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Inicio" },
+    { "file": "Vuelos.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "Vuelos" },
+    { "file": "CierreRapido.dc.html", "x": 980, "y": 0, "w": 390, "h": 844, "title": "Cerrar vuelo" },
+    { "file": "Detalle.dc.html", "x": 1470, "y": 0, "w": 390, "h": 844, "title": "Detalle del vuelo" },
+    { "file": "Ajustes.dc.html", "x": 1960, "y": 0, "w": 390, "h": 844, "title": "Ajustes" },
+    { "file": "InicioClaro.dc.html", "x": 0, "y": 1050, "w": 390, "h": 844, "title": "Inicio, tema claro" },
+    { "file": "DetalleClaro.dc.html", "x": 490, "y": 1050, "w": 390, "h": 844, "title": "Detalle, tema claro" }
+  ],
+  "annotations": [
+    { "id": "intro", "x": 0, "y": -230, "w": 620, "text": "Logbook BPL, dirección Instrumento.\n\nLas cinco pantallas en tema oscuro arriba, y dos en tema claro abajo para fijar el mapa de color.\nLos datos son de ejemplo pero realistas: 13 h 45 de instrucción de las 16, un vuelo de Agramunt\nsin rematar, y el globo EC-LTP de grupo B que no cuenta para el curso.\n\nEl oscuro es el tema por defecto: la app se abre antes del amanecer." },
+    { "id": "n-inicio", "x": 0, "y": 890, "w": 390, "text": "Inicio\nUn solo número protagonista, que hoy es lo que falta para el BPL. El día que tengas la licencia pasa a ser la fecha de caducidad de la vigencia, y el panel de abajo se activa." },
+    { "id": "n-vuelos", "x": 490, "y": 890, "w": 390, "text": "Vuelos\nEl cuarto vuelo está atenuado a propósito: es un cautivo en un globo de grupo B y el contador lo excluye. La app dice POR QUÉ no cuenta en vez de dejarlo desaparecer." },
+    { "id": "n-cierre", "x": 980, "y": 890, "w": 390, "text": "Cerrar vuelo\nLa pantalla que decide si usas la app o la abandonas. Cuatro campos, botones de 56 px, y la posición la coge del GPS. Diez segundos con el globo en el suelo." },
+    { "id": "n-detalle", "x": 1470, "y": 890, "w": 390, "text": "Detalle del vuelo\nDos bloques plegables. El aviso de arriba no es decorativo: sin la firma del instructor este vuelo no suma a las 16 h, y eso lo comprueba el dominio, no la pantalla." },
+    { "id": "n-ajustes", "x": 1960, "y": 890, "w": 390, "text": "Ajustes\nEl último bloque enumera lo que la app NO comprueba. Está ahí a propósito: un informe que dice «cumples» callando lo que no ha mirado miente por omisión." },
+    { "id": "n-claro", "x": 0, "y": 1940, "w": 880, "text": "Tema claro\nMismo diseño, mapa de color explícito. Un cambio no es cosmético: el ámbar de aviso pasa de #fab219 a #8a5a00, porque sobre fondo claro el original da 1,79 de contraste y el validador lo rechaza para texto e iconos. Igual el verde, que baja a #006300 cuando es texto y se queda en #0ca30c cuando rellena una barra." }
+  ],
+  "launch": { "view": "canvas" }
+}

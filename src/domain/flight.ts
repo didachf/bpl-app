@@ -12,11 +12,12 @@ import type { Flight } from './types'
  * vuelo que cruza medianoche o un cambio de hora salen bien sin casos
  * especiales.
  *
- * Una llegada anterior a la salida devuelve 0 y no un negativo, para que un
- * dato mal metido no reste horas del acumulado. La interfaz avisa aparte.
+ * Nunca devuelve un negativo, ni por unas marcas de tiempo invertidas ni por
+ * una anulacion manual negativa, para que un dato mal metido no reste horas del
+ * acumulado. Los contadores lo señalan aparte con hasConsistentTimes.
  */
 export function flightDurationMin(f: Flight): number {
-  if (f.durationOverrideMin !== null) return f.durationOverrideMin
+  if (f.durationOverrideMin !== null) return Math.max(0, f.durationOverrideMin)
   const from = Date.parse(f.departure.timestamp)
   const to = Date.parse(f.arrival.timestamp)
   if (Number.isNaN(from) || Number.isNaN(to)) return 0

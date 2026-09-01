@@ -104,3 +104,9 @@ describe('hasConsistentTimes', () => {
     expect(hasConsistentTimes(f)).toBe(false)
   })
 })
+
+describe('flightDurationMin, anulacion negativa', () => {
+  it('una anulacion negativa aporta 0 y no resta del acumulado', () => {
+    expect(flightDurationMin(flight({ durationOverrideMin: -400 }))).toBe(0)
+  })
+})

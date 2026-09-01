@@ -3,15 +3,17 @@ import { describe, it, expect } from 'vitest'
 import { bplProgress } from './progress'
 import { makeBalloon, makeDoc, makeFlight, makeFlights } from './fixtures'
 
+const HOY = '2026-09-01'
+
 function req(doc: ReturnType<typeof makeDoc>, key: string) {
-  const r = bplProgress(doc).requirements.find(x => x.key === key)
+  const r = bplProgress(doc, HOY).requirements.find(x => x.key === key)
   if (!r) throw new Error(`No existe el requisito ${key}`)
   return r
 }
 
 describe('bplProgress', () => {
   it('con un documento vacio todo esta a cero y nada cumplido', () => {
-    const p = bplProgress(makeDoc())
+    const p = bplProgress(makeDoc(), HOY)
     expect(p.allMet).toBe(false)
     expect(p.requirements.every(r => r.current === 0)).toBe(true)
   })
@@ -99,7 +101,7 @@ describe('bplProgress', () => {
         }),
       ],
     })
-    const p = bplProgress(doc)
+    const p = bplProgress(doc, HOY)
     // 20 x 40 = 800 min de doble mando, mas 40 de solo = 840. Faltan las 16 h.
     expect(p.allMet).toBe(false)
 
@@ -114,7 +116,7 @@ describe('bplProgress', () => {
       }),
     )
     // 840 + 180 = 1020 min >= 960, y el doble mando 980 >= 720.
-    expect(bplProgress(doc).allMet).toBe(true)
+    expect(bplProgress(doc, HOY).allMet).toBe(true)
   })
 })
 
@@ -124,7 +126,7 @@ describe('bplProgress, elegibilidad del vuelo', () => {
       balloons: [makeBalloon({ id: 'b1', envelopeVolumeM3: 5000 })],
       flights: [makeFlight({ durationOverrideMin: 120 })],
     })
-    const p = bplProgress(doc)
+    const p = bplProgress(doc, HOY)
     expect(req(doc, 'instructionMinutes').current).toBe(0)
     expect(p.excluded).toEqual([{ flightId: doc.flights[0].id, reason: 'balloon_not_eligible' }])
   })
@@ -147,7 +149,7 @@ describe('bplProgress, elegibilidad del vuelo', () => {
 
   it('excluye un vuelo cuyo globo no esta en el catalogo, en vez de contarlo', () => {
     const doc = makeDoc({ balloons: [], flights: [makeFlight({ durationOverrideMin: 120 })] })
-    const p = bplProgress(doc)
+    const p = bplProgress(doc, HOY)
     expect(req(doc, 'instructionMinutes').current).toBe(0)
     expect(p.excluded[0].reason).toBe('balloon_unknown')
   })
@@ -156,7 +158,7 @@ describe('bplProgress, elegibilidad del vuelo', () => {
     const doc = makeDoc({
       flights: [makeFlight({ durationOverrideMin: 120, signatureStatus: 'pending' })],
     })
-    const p = bplProgress(doc)
+    const p = bplProgress(doc, HOY)
     expect(req(doc, 'instructionMinutes').current).toBe(0)
     expect(p.excluded[0].reason).toBe('not_signed')
   })
@@ -167,14 +169,14 @@ describe('bplProgress, elegibilidad del vuelo', () => {
         pilotFunction: 'PIC_SOLO_SUPERVISED', durationOverrideMin: 45, instructorId: null,
       })],
     })
-    const p = bplProgress(doc)
+    const p = bplProgress(doc, HOY)
     expect(req(doc, 'soloFlight').met).toBe(false)
     expect(p.excluded[0].reason).toBe('solo_without_supervisor')
   })
 
   it('no excluye nada cuando todo esta en regla', () => {
     const doc = makeDoc({ flights: [makeFlight({ durationOverrideMin: 120 })] })
-    expect(bplProgress(doc).excluded).toEqual([])
+    expect(bplProgress(doc, HOY).excluded).toEqual([])
   })
 })
 
@@ -200,5 +202,48 @@ describe('bplProgress, bandera de parcial', () => {
   it('no marca parcial un contador sin vuelos que aporten', () => {
     const doc = makeDoc({ flights: [makeFlight({ durationOverrideMin: 60 })] })
     expect(req(doc, 'soloFlight').partial).toBe(false)
+  })
+})
+
+describe('bplProgress, validacion de personas y fechas', () => {
+  it('excluye un solo supervisado cuyo instructor no esta en el documento', () => {
+    const doc = makeDoc({
+      flights: [makeFlight({
+        pilotFunction: 'PIC_SOLO_SUPERVISED', durationOverrideMin: 45, instructorId: 'inventado',
+      })],
+    })
+    const p = bplProgress(doc, HOY)
+    expect(req(doc, 'soloFlight').met).toBe(false)
+    expect(p.excluded[0].reason).toBe('instructor_unknown')
+  })
+
+  it('excluye un solo supervisado cuyo supervisor no tiene rol de instructor', () => {
+    const doc = makeDoc({
+      flights: [makeFlight({
+        pilotFunction: 'PIC_SOLO_SUPERVISED', durationOverrideMin: 45, instructorId: 'p1',
+      })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('instructor_unknown')
+  })
+
+  it('excluye un vuelo con fecha futura', () => {
+    const doc = makeDoc({ flights: [makeFlight({ date: '2099-01-01', durationOverrideMin: 600 })] })
+    const p = bplProgress(doc, HOY)
+    expect(req(doc, 'instructionMinutes').current).toBe(0)
+    expect(p.excluded[0].reason).toBe('flight_in_future')
+  })
+
+  it('excluye un globo de clase mixta o dirigible, que BFCL.130(b) no admite', () => {
+    const doc = makeDoc({
+      balloons: [makeBalloon({ id: 'b1', balloonClass: 'hot_air_airship', envelopeVolumeM3: 2000 })],
+      flights: [makeFlight({ durationOverrideMin: 600 })],
+    })
+    expect(bplProgress(doc, HOY).excluded[0].reason).toBe('balloon_not_eligible')
+  })
+
+  it('declara los requisitos de BFCL.130 que no modela', () => {
+    const avisos = bplProgress(makeDoc(), HOY).notModelled.join(' ')
+    expect(avisos).toContain('ATO')
+    expect(avisos).toContain('BFCL.135')
   })
 })

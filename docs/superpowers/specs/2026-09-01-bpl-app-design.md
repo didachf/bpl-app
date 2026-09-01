@@ -265,6 +265,20 @@ silencio, el informe de vigencia lleva una lista de avisos que los nombra cuando
 documento contiene vuelos de más de una clase. La app nunca dice "cumples" tapando un
 requisito que no ha mirado.
 
+#### Las personas se validan, no basta un identificador
+
+Segunda auditoría, 2026-09-02. El reglamento no dice "un identificador cualquiera", dice
+quién: BFCL.160(c) "a proficiency check **with an FE(B)**", BFCL.160(a)(1)(ii) "one training
+flight **with an FI(B)**", BFCL.130(b)(3) "one **supervised** solo flight". Sin validar
+contra `people` y su rol, bastaba escribir el id del propio piloto para autoexaminarse y
+conceder dos años de vigencia.
+
+#### Cuatro clases de globo, no dos
+
+BFCL.010 define aire caliente, gas, mixto y dirigible de aire caliente. Solo las dos
+primeras sirven para BFCL.130(b). Un dirigible se anotaba como aire caliente y, si el
+volumen caía en grupo A, contaba para las 16 h.
+
 ### Interpretaciones resueltas
 
 Puntos donde el reglamento admite lectura y hubo que elegir. Se dejan por escrito para que

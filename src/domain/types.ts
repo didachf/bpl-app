@@ -8,7 +8,12 @@ export type Iso = string
 export type IsoDate = string
 export type Uuid = string
 
-export type BalloonClass = 'hot_air' | 'gas'
+/**
+ * Las cuatro clases de BFCL.010. Solo las dos primeras sirven para el curso de
+ * BFCL.130(b), que habla de "hot-air balloons that represent group A of that
+ * class, or gas balloons".
+ */
+export type BalloonClass = 'hot_air' | 'gas' | 'mixed' | 'hot_air_airship'
 export type BalloonGroup = 'A' | 'B' | 'C' | 'D'
 
 export interface Pilot {

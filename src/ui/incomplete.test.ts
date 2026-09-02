@@ -5,7 +5,7 @@ import { missingFields, canBeCompleted } from './incomplete'
 
 const globo: Balloon = {
   id: 'b1', registration: 'EC-KMU', manufacturer: 'Ultramagic', model: 'M-105',
-  balloonClass: 'hot_air', envelopeVolumeM3: 2900,
+  balloonClass: 'hot_air', envelopeVolumeM3: 2900, maxSurfaceWindKt: null,
 }
 const yo: Person = { id: 'p1', name: 'Didac', roles: ['pilot'], licenceNumber: null }
 const alberto: Person = { id: 'p2', name: 'Alberto', roles: ['instructor'], licenceNumber: null }

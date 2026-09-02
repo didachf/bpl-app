@@ -2,6 +2,7 @@
 import { describe, it, expect } from 'vitest'
 import { CURRENT_SCHEMA_VERSION, migrate, validate, type Migration } from './schema'
 import { makeDoc, makeFlight } from './fixtures'
+import { emptyDocument } from './empty'
 
 describe('validate', () => {
   it('acepta un documento bien formado', () => {
@@ -80,5 +81,46 @@ describe('migrate, guardas del bucle', () => {
   it('falla si una migracion RETROCEDE la version', () => {
     const atras: Record<number, Migration> = { 1: (d: any) => ({ ...d, schemaVersion: 0 }) }
     expect(() => migrate(makeDoc({ schemaVersion: 1 }), 2, atras)).toThrow(/no ha subido/i)
+  })
+})
+
+describe('migracion a la version 2, limites de viento', () => {
+  const v1 = () => ({
+    schemaVersion: 1,
+    pilot: {
+      personId: 'me', name: 'Didac', address: 'Calle 1',
+      licenceNumber: null, medicalExpiry: null, licenceIssued: null,
+    },
+    balloons: [{
+      id: 'b1', registration: 'EC-KMU', manufacturer: 'Ultramagic', model: 'M-105',
+      balloonClass: 'hot_air', envelopeVolumeM3: 2900,
+    }],
+    sites: [], people: [], flights: [],
+  })
+
+  it('la version actual es la 2', () => {
+    expect(CURRENT_SCHEMA_VERSION).toBe(2)
+  })
+
+  it('un documento de la version 1 llega a la 2 sin perder nada', () => {
+    const v2 = migrate(v1() as never)
+    expect(v2.schemaVersion).toBe(2)
+    expect(v2.balloons[0].registration).toBe('EC-KMU')
+    expect(v2.pilot.name).toBe('Didac')
+  })
+
+  it('a un globo de la version 1 el limite le queda en null, no en un numero inventado', () => {
+    // Poner 15 kt por defecto seria inventar una limitacion de aeronavegabilidad
+    // que solo esta en el manual del globo concreto. Null significa "no lo se".
+    expect(migrate(v1() as never).balloons[0].maxSurfaceWindKt).toBe(null)
+  })
+
+  it('al piloto de la version 1 el minimo personal le queda en null', () => {
+    expect(migrate(v1() as never).pilot.personalWindLimitKt).toBe(null)
+  })
+
+  it('un documento que ya es version 2 no se toca', () => {
+    const v2 = emptyDocument()
+    expect(migrate(v2)).toEqual(v2)
   })
 })

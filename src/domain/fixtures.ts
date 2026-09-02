@@ -1,5 +1,6 @@
 // src/domain/fixtures.ts
 // Constructores para pruebas. No se importa desde la interfaz.
+import { CURRENT_SCHEMA_VERSION } from './schema'
 import type { Balloon, Flight, LogbookDoc, Person, Pilot, PilotFunction } from './types'
 
 export function makePilot(over: Partial<Pilot> = {}): Pilot {
@@ -10,6 +11,7 @@ export function makePilot(over: Partial<Pilot> = {}): Pilot {
     licenceNumber: null,
     medicalExpiry: null,
     licenceIssued: null,
+      personalWindLimitKt: null,
     ...over,
   }
 }
@@ -75,6 +77,7 @@ export function makeBalloon(over: Partial<Balloon> = {}): Balloon {
     model: 'M-105',
     balloonClass: 'hot_air',
     envelopeVolumeM3: 2900,
+    maxSurfaceWindKt: null,
     ...over,
   }
 }
@@ -93,7 +96,7 @@ export function makePerson(over: Partial<Person> = {}): Person {
  */
 export function makeDoc(over: Partial<LogbookDoc> = {}): LogbookDoc {
   return {
-    schemaVersion: 1,
+    schemaVersion: CURRENT_SCHEMA_VERSION,
     pilot: makePilot(),
     balloons: [makeBalloon()],
     sites: [],

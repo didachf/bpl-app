@@ -8,7 +8,7 @@ import {
 
 const globo: Balloon = {
   id: 'b1', registration: 'EC-KMU', manufacturer: 'Ultramagic', model: 'M-105',
-  balloonClass: 'hot_air', envelopeVolumeM3: 2900,
+  balloonClass: 'hot_air', envelopeVolumeM3: 2900, maxSurfaceWindKt: null,
 }
 const campo: Site = {
   id: 's1', name: 'Agramunt', lat: 41.7869, lon: 1.0967, elevationM: 345,

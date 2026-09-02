@@ -9,6 +9,7 @@ import { Sheet } from '../../components/Screen'
 import { labelClass, labelGroup } from '../../format'
 import { newId } from '../../ids'
 import { useDoc, useStore } from '../../state'
+import { LIMITE_FM04_KT, PRACTICA_FAA_KT } from '../../windLimits'
 
 const CLASES: BalloonClass[] = ['hot_air', 'gas', 'mixed', 'hot_air_airship']
 
@@ -20,6 +21,11 @@ function nuevoGlobo(): Balloon {
     model: '',
     balloonClass: 'hot_air',
     envelopeVolumeM3: 0,
+    // 15 kt del FM04 §2.2 de Ultramagic como sugerencia, porque es el globo
+    // que vuela Didac. Se sugiere aqui y NO en la migracion: al crear un globo
+    // el campo esta delante y se puede corregir, y la pista de al lado avisa
+    // de que el Suplemento 34 baja a 12 kt para la N-500.
+    maxSurfaceWindKt: LIMITE_FM04_KT,
   }
 }
 
@@ -79,6 +85,19 @@ function Editor({ balloon, onChange, onDelete }: {
       <div class="lbl" style="margin: -8px 0 14px 0;">
         <Grupo m3={balloon.envelopeVolumeM3} clase={balloon.balloonClass} />
       </div>
+      <NumberField
+        label="Viento maximo de despegue"
+        unit="kt"
+        value={balloon.maxSurfaceWindKt}
+        hint={
+          `Del Manual de Vuelo de ESTE globo, no del reglamento: Part-BFCL no tiene ninguna `
+          + `cifra de viento. El FM04 de Ultramagic dice ${LIMITE_FM04_KT} kt en §2.2, pero el `
+          + `Suplemento 34 baja a 12 kt para la envolvente N-500 y a 10 en cautivo. `
+          + `Comprueba cual es la de este globo. La practica habitual que cita el FAA esta muy `
+          + `por debajo, en menos de ${PRACTICA_FAA_KT} kt.`
+        }
+        onChange={v => onChange({ ...balloon, maxSurfaceWindKt: v })}
+      />
       <button
         class="linkish"
         style="color: var(--danger); display: flex; align-items: center; gap: 6px;"

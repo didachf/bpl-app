@@ -1,16 +1,26 @@
 // src/domain/schema.ts
 import type { LogbookDoc } from './types'
 
-export const CURRENT_SCHEMA_VERSION = 1
+export const CURRENT_SCHEMA_VERSION = 2
 
 /** Lleva un documento de la version N a la N+1. */
 export type Migration = (doc: any) => any
 
 /**
  * Migraciones registradas. La clave N transforma de la version N a la N+1.
- * Vacio a proposito: hoy solo existe la version 1.
  */
-export const MIGRATIONS: Record<number, Migration> = {}
+export const MIGRATIONS: Record<number, Migration> = {
+  // 1 -> 2: el limite de viento del manual, por globo, y el minimo personal
+  // del piloto. Los dos entran en null y NO con un valor por defecto: 15 kt es
+  // la cifra del FM04 de Ultramagic, y suponerla para un globo que puede ser
+  // de otro fabricante seria inventar una limitacion de aeronavegabilidad.
+  1: (doc: any) => ({
+    ...doc,
+    schemaVersion: 2,
+    pilot: { ...doc.pilot, personalWindLimitKt: null },
+    balloons: (doc.balloons ?? []).map((b: any) => ({ ...b, maxSurfaceWindKt: null })),
+  }),
+}
 
 export type ValidationResult =
   | { ok: true; doc: LogbookDoc }

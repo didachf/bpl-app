@@ -356,7 +356,13 @@ import { describe, it, expect } from 'vitest'
 import { toUV, toSpeedDir, msToKt, ktToMs } from './uv'
 
 /** Redondeo para comparar flotantes sin pelearse con el ultimo bit. */
-const r = (n: number) => Math.round(n * 1e6) / 1e6
+/**
+ * Redondeo a seis decimales, normalizando el -0.
+ *
+ * `Math.cos(PI/2)` no da 0 exacto sino 6,1e-17, y al redondear sale -0, que
+ * `Object.is` no considera igual a 0. El valor de verdad es cero.
+ */
+const r = (n: number) => Math.round(n * 1e6) / 1e6 + 0
 
 describe('toUV, convencion meteorologica', () => {
   it('viento del norte, 0 grados, sopla HACIA el sur', () => {
@@ -444,10 +450,23 @@ Esperado: FAIL, `Failed to resolve import "./uv"`.
 
 export interface UV { u: number; v: number }
 
+/**
+ * Convierte -0 en 0.
+ *
+ * `-10 * Math.sin(0)` da -0. Con `===` es igual que 0, pero con `Object.is` no,
+ * asi que rompe las pruebas, y ademas un "-0.0" en pantalla queda raro.
+ */
+function sinCeroNegativo(x: number): number {
+  return x === 0 ? 0 : x
+}
+
 /** De velocidad y direccion de procedencia a componentes este y norte. */
 export function toUV(speed: number, dirDeg: number): UV {
   const a = (dirDeg * Math.PI) / 180
-  return { u: -speed * Math.sin(a), v: -speed * Math.cos(a) }
+  return {
+    u: sinCeroNegativo(-speed * Math.sin(a)),
+    v: sinCeroNegativo(-speed * Math.cos(a)),
+  }
 }
 
 /** Inverso de toUV. La direccion vuelve en 0 a 360 y nunca negativa. */

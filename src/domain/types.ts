@@ -33,6 +33,18 @@ export interface Pilot {
   medicalExpiry: IsoDate | null
   /** null mientras se es alumno. Activa el panel de vigencia cuando deja de serlo. */
   licenceIssued: IsoDate | null
+  /**
+   * Minimo personal de viento en superficie, en nudos.
+   *
+   * No es reglamentario ni de aeronavegabilidad: es la cifra por debajo de la
+   * cual ESTE piloto decide volar. El FAA Balloon Flying Handbook la contempla
+   * explicitamente, y existe porque el limite del manual, 15 kt en el FM04 de
+   * Ultramagic, esta muy por encima de la practica habitual, que el mismo
+   * manual del FAA situa en menos de 7 kt.
+   *
+   * null mientras no se haya puesto. La pantalla lo pide, no lo inventa.
+   */
+  personalWindLimitKt: number | null
 }
 
 export interface Balloon {
@@ -43,6 +55,21 @@ export interface Balloon {
   balloonClass: BalloonClass
   /** El grupo A a D se deriva de aquí, nunca se guarda. Ver domain/balloon.ts */
   envelopeVolumeM3: number
+  /**
+   * Viento maximo en superficie al despegue, en nudos, SEGUN EL MANUAL DE
+   * VUELO DE ESTE GLOBO.
+   *
+   * `CRITICAL:` es una limitacion de aeronavegabilidad aprobada, y cambia por
+   * envolvente: el FM04 de Ultramagic dice 15 kt en §2.2, y el Suplemento 34
+   * dice 12 kt para la N-500 y 10 en cautivo. Por eso es un campo y no una
+   * constante.
+   *
+   * Part-BFCL NO contiene ninguna cifra de viento, asi que esto nunca se
+   * presenta como un requisito reglamentario.
+   *
+   * null significa que no se ha mirado el manual. La pantalla lo dice.
+   */
+  maxSurfaceWindKt: number | null
 }
 
 export type PermitStatus = 'unknown' | 'granted' | 'denied' | 'not_needed'

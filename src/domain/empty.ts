@@ -36,6 +36,7 @@ export function emptyDocument(): LogbookDoc {
       licenceNumber: null,
       medicalExpiry: null,
       licenceIssued: null,
+      personalWindLimitKt: null,
     },
     balloons: [],
     sites: SEEDED_SITES.map(s => ({ ...s })),

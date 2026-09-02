@@ -1851,7 +1851,7 @@ export function saveSha(sha: string): void {
 npx vitest run src/sync/config.test.ts
 ```
 
-Esperado: PASS, 8 pruebas.
+Esperado: PASS, 7 pruebas.
 
 - [ ] **Paso 5: pruebas del empuje y la restauración**
 

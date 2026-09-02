@@ -1,7 +1,8 @@
 // src/ui/screens/ajustes/MisDatos.tsx
 import { Notice } from '../../components/Notice'
 import { Sheet } from '../../components/Screen'
-import { TextField } from '../../components/Field'
+import { NumberField, TextField } from '../../components/Field'
+import { LIMITE_FM04_KT, PRACTICA_FAA_KT } from '../../windLimits'
 import { useDoc, useStore } from '../../state'
 import { hoy } from '../../today'
 import type { LogbookDoc, Pilot } from '../../../domain/types'
@@ -62,6 +63,20 @@ export function MisDatos() {
             </Notice>
           </div>
         )}
+        <NumberField
+          label="Mi minimo personal de viento"
+          unit="kt"
+          value={p.personalWindLimitKt}
+          hint={
+            `No es reglamentario ni del manual: es la cifra por debajo de la cual TU decides `
+            + `volar, y va por debajo del limite del globo. El FAA Balloon Flying Handbook `
+            + `dice que la mayoria de pilotos prefieren volar con menos de ${PRACTICA_FAA_KT} `
+            + `kt, muy por debajo de los ${LIMITE_FM04_KT} kt del manual de Ultramagic. `
+            + `Preguntale tambien a tu instructor cual es el limite de la ATO para alumnos: `
+            + `Part-BFCL no fija ninguno.`
+          }
+          onChange={v => update(d => cambiar(d, { personalWindLimitKt: v }))}
+        />
         <TextField
           label="Fecha de emision de la licencia"
           type="date"

@@ -433,8 +433,14 @@ El límite es del Manual de Vuelo, y es **por envolvente**:
 | Práctica habitual, FAA Balloon Flying Handbook | menos de **7 kt** |
 
 Que el manual base diga 15 y el suplemento 12 significa que **el número no se cablea**: es un
-campo del catálogo de globos, con 15 kt de valor por defecto para la serie normal de
-Ultramagic y editable.
+campo del catálogo de globos, editable.
+
+**Enmendado el 2026-09-02:** Dídac dijo «el viento máximo de despegue es 15 kt, siempre»,
+porque vuela la serie normal de Ultramagic. Así que **15 kt es el valor efectivo por
+defecto**: un globo sin cifra propia se compara contra esa, y la pantalla dice de dónde sale.
+No se cablea del todo, porque la cifra del globo sigue ganando y el Suplemento 34 baja a 12
+kt para la N-500. Mantener las dos cosas cuesta cero y evita que el número viva donde nadie
+pueda corregirlo, que es lo que haría falta si otro piloto clona la app.
 
 Enseñar solo el 15 sería peligroso, porque la práctica real está a menos de la mitad. Se
 enseñan los dos, etiquetados por su naturaleza, más un **mínimo personal** que pone el piloto,

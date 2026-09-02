@@ -25,7 +25,7 @@ import { msToKt } from '../../services/uv'
 import { buildRows, nivelPorClave, type CeldaNivel } from '../../services/wind'
 import { antiguedadMin, claveDe, esVieja, guardar, leer } from '../../services/windCache'
 import { formatTime } from '../format'
-import { juzgarViento, PRACTICA_FAA_KT, type Veredicto } from '../windLimits'
+import { juzgarViento, limiteManual, PRACTICA_FAA_KT, type Veredicto } from '../windLimits'
 import { balloonById } from '../select'
 import { useDoc } from '../state'
 import { hoy } from '../today'
@@ -176,9 +176,12 @@ export function Planificar() {
   const globo = balloonById(doc, balloonId)
 
   const superficie = fila === undefined ? null : nivelPorClave(fila, NIVEL_SUPERFICIE)
+  // Se juzga contra la punta ALTA de la banda, no contra la media: si un modelo
+  // da 16 kt y otro 10, lo que hay que saber es que puede haber 16.
+  const limite = limiteManual(globo)
   const juicio = superficie?.banda == null
     ? null
-    : juzgarViento(superficie.banda.max, globo?.maxSurfaceWindKt ?? null, doc.pilot.personalWindLimitKt)
+    : juzgarViento(superficie.banda.max, limite.kt, doc.pilot.personalWindLimitKt)
 
   return (
     <Screen title="Planificar" tab="planificar">
@@ -271,7 +274,12 @@ export function Planificar() {
                   {juicio.mensaje}
                 </div>
                 <div class="lbl dim" style="margin-top: 7px; line-height: 1.5;">
-                  La practica que cita el FAA esta en menos de {PRACTICA_FAA_KT} kt, muy por
+                  {limite.fuente === 'fm04'
+                    ? `Comparado contra ${limite.kt} kt del FM04 §2.2 de Ultramagic, que es el `
+                      + 'valor por defecto. Si este globo lleva otra envolvente, ponle su cifra '
+                      + 'en Ajustes, globos.'
+                    : `Comparado contra los ${limite.kt} kt que tiene puesto este globo.`}
+                  {' '}La practica que cita el FAA esta en menos de {PRACTICA_FAA_KT} kt, muy por
                   debajo del limite de cualquier manual. Y el manual prohibe volar en
                   actividad termica, que esta app no mira.
                 </div>

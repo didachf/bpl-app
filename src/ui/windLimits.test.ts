@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { juzgarViento, LIMITE_FM04_KT, PRACTICA_FAA_KT } from './windLimits'
+import { juzgarViento, limiteManual, LIMITE_FM04_KT, PRACTICA_FAA_KT } from './windLimits'
 import { ktToMs } from '../services/uv'
 
 describe('juzgarViento', () => {
@@ -58,5 +58,30 @@ describe('las cifras de referencia', () => {
 
   it('la practica que cita el FAA son menos de 7 kt', () => {
     expect(PRACTICA_FAA_KT).toBe(7)
+  })
+})
+
+describe('limiteManual', () => {
+  const globo = (kt: number | null) => ({
+    id: 'b1', registration: 'EC-KMU', manufacturer: 'Ultramagic', model: 'M-105',
+    balloonClass: 'hot_air' as const, envelopeVolumeM3: 2900, maxSurfaceWindKt: kt,
+  })
+
+  it('sin globo elegido, los 15 kt del FM04', () => {
+    expect(limiteManual(null)).toEqual({ kt: 15, fuente: 'fm04' })
+  })
+
+  it('un globo sin cifra propia hereda los 15 kt del FM04', () => {
+    expect(limiteManual(globo(null))).toEqual({ kt: 15, fuente: 'fm04' })
+  })
+
+  it('la cifra del globo manda sobre el valor por defecto', () => {
+    // El Suplemento 34 baja a 12 kt para la envolvente N-500. Si algun dia
+    // vuela una, el campo de ese globo tiene que ganar.
+    expect(limiteManual(globo(12))).toEqual({ kt: 12, fuente: 'globo' })
+  })
+
+  it('un cero del globo es un cero, no un hueco', () => {
+    expect(limiteManual(globo(0))).toEqual({ kt: 0, fuente: 'globo' })
   })
 })

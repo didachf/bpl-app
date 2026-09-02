@@ -94,3 +94,27 @@ export function juzgarViento(
         + 'y con el globo piloto delante.',
   }
 }
+
+/** De donde sale la cifra contra la que se compara. */
+export type FuenteLimite = 'globo' | 'fm04'
+
+/**
+ * El limite del manual que se aplica de verdad.
+ *
+ * Didac vuela la serie normal de Ultramagic, cuyo FM04 §2.2 dice 15 kt, y el
+ * 2026-09-02 dijo que para el "es 15 kt siempre". Por eso ese valor se aplica
+ * solo cuando el globo no trae cifra propia, en vez de quedarse sin comparar y
+ * pedirsela cada vez.
+ *
+ * No se cablea del todo a proposito: sigue ganando la cifra del globo, porque
+ * el Suplemento 34 baja a 12 kt para la envolvente N-500. Cuesta cero
+ * mantenerlo y evita que el numero viva donde nadie pueda corregirlo, que es
+ * justo lo que hace falta si otro piloto clona esta app.
+ */
+export function limiteManual(
+  balloon: { maxSurfaceWindKt: number | null } | null,
+): { kt: number; fuente: FuenteLimite } {
+  const propio = balloon?.maxSurfaceWindKt
+  if (typeof propio === 'number') return { kt: propio, fuente: 'globo' }
+  return { kt: LIMITE_FM04_KT, fuente: 'fm04' }
+}

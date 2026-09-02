@@ -1,6 +1,7 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-09-03**. Siguiente tarea: **el plan de la interfaz**. Rama `feat/logbook-nucleo`, sin fusionar a `main`.
+Última sesión: **2026-09-02**. Siguiente tarea: **el empaquetado PWA y el despliegue**. Rama
+`feat/logbook-nucleo`, sin fusionar a `main`.
 
 ## Qué es
 
@@ -17,10 +18,11 @@ demás y está enmendado tres veces.
 |---|---|
 | Spec | `docs/superpowers/specs/2026-09-01-bpl-app-design.md` |
 | Plan del núcleo, ejecutado | `docs/superpowers/plans/2026-09-01-logbook-nucleo.md` |
+| Plan de la interfaz, ejecutado | `docs/superpowers/plans/2026-09-02-logbook-ui.md` |
 | Dominio, funciones puras | `src/domain/` |
 | Persistencia y sincronización | `src/db/store.ts`, `src/sync/github.ts` |
 | Maquetas de pantalla | `design/*.dc.html`, nueve artboards, publicadas en el enlace de abajo |
-| Interfaz | **no existe todavía**, `src/app.tsx` es un marcador |
+| Interfaz | `src/ui/`, doce rutas, nueve pantallas de verdad y dos esbozos |
 
 Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d173082a6
 
@@ -34,7 +36,15 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   Encontraron 10, 11, 9 y 4 defectos. Todos reparados.
 - **Revisión de seguridad.** Tres hallazgos, el bajo cerrado, los otros dos documentados
   en el spec §7.
-- **Seguimiento del curso retirado** el 03/09/2026. Fuera el panel de progreso hacia el
+- **La interfaz, entera.** Contexto de estado con guardado en rebote, enrutador de hash,
+  Ajustes con sus cinco subpantallas, Cerrar vuelo, Vuelos, Detalle e Inicio. Planificar y
+  Operar quedan como esbozo navegable. **116 pruebas nuevas** de los módulos puros de
+  `ui/` y de `sync/`, ninguna de componentes. Total del proyecto: 290, y las 174 de antes
+  siguen intactas.
+- **Comprobado en WebKit** con emulación de iPhone, no solo en Chrome: primer uso,
+  persistencia tras recargar, frontera de grupo en 3.400 y 3.401 m³, ciclo completo de
+  cerrar vuelo y rematarlo, y los dos temas.
+- **Seguimiento del curso retirado** el 02/09/2026. Fuera el panel de progreso hacia el
   BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
   cuaderno. Ver spec §5.
 - **Dirección visual elegida:** Instrumento. Oscuro por defecto, IBM Plex Sans y Mono,
@@ -45,7 +55,7 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
 ## Contrato del dominio, lo que consume la interfaz
 
 Todo en `src/domain/` son funciones puras: no importan nada del navegador. Firmas exactas al
-03/09/2026, para no tener que leer los ficheros:
+02/09/2026, para no tener que leer los ficheros:
 
 ```ts
 // El acumulado del cuaderno. Cuenta TODOS los vuelos, sin juicio reglamentario.
@@ -99,16 +109,14 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 
 ## Lo siguiente, en orden
 
-1. **Escribir el plan de la interfaz** (`docs/superpowers/plans/2026-09-XX-logbook-ui.md`),
-   a partir de las maquetas y del contrato de arriba. El dominio está cerrado: no tocarlo
-   salvo que la interfaz descubra un hueco real, y en ese caso con prueba primero.
-2. **Implementar las pantallas** en este orden, que es el de dependencia: contexto de
-   estado, Ajustes (para poder meter globos y personas), Cerrar vuelo, Vuelos, Detalle,
-   Inicio. Planificar y Operar quedan como esbozo navegable.
-3. **Empaquetado PWA** y despliegue a GitHub Pages con el `dist/` comiteado.
-4. Crear el repositorio privado `bpl-logbook` y el token de grano fino.
-5. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa.
-6. Fase 3: checklists, transcritas del Manual de Vuelo. Ver abajo.
+1. **Empaquetado PWA** y despliegue a GitHub Pages con el `dist/` comiteado. Incluye
+   `navigator.storage.persist()`, que solo tiene sentido con la app instalada.
+2. **Pasar la lista de verificación del iPhone** de abajo, que hoy no se puede porque la
+   app todavía no está servida.
+3. Crear el repositorio privado `bpl-logbook` y el token de grano fino.
+4. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
+   pantalla de Planificar que ya existe.
+5. Fase 3: checklists, transcritas del Manual de Vuelo. Ver abajo.
 
 ## Decisiones que no hay que volver a tomar
 
@@ -122,6 +130,21 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 - **La app no sigue el curso.** No hay contadores de BFCL.130. El acumulado de
   `totals.ts` es un dato llano que cuenta todos los vuelos, y la vigencia de `currency.ts`
   es el único juicio reglamentario, y solo se activa con licencia emitida.
+- **Enrutado por hash, escrito a mano.** GitHub Pages es estático: con la API de historia,
+  recargar en `/bpl-app/vuelos` da un 404. Por eso se desinstaló `preact-iso`.
+- **Las fuentes se sirven del propio origen**, vía `@fontsource`. La app tiene que arrancar
+  en un rastrojo sin cobertura, y ahí un `<link>` a Google Fonts falla.
+- **Nada de pruebas de componentes.** El riesgo está en qué se enseña, no en si el `<div>`
+  se pinta. Todo lo que no sea pintar sale a un módulo `.ts` puro y ese sí se prueba.
+- **El detalle guarda al teclear, sin botón de guardar.** Un botón de guardar en un teléfono
+  es una forma de perder datos al salir de la app.
+- **El cierre rápido no inventa nada.** Sin hora de despegue, con inflados y despegues a
+  cero, y `complete: false`. Lo único que hereda del último vuelo es globo, función e
+  instructor, y lo dice en pantalla.
+- **`ui/today.ts` es el único sitio que lee el reloj.** Si una función de `domain/` empezara
+  a llamarlo, dejaría de ser pura.
+- **Las claves de `localStorage` llevan prefijo `bpl-app:`**, porque el origen de Pages es la
+  cuenta entera.
 - **Nunca `dangerouslySetInnerHTML`.** El escape de Preact es la única barrera entre una
   nota de vuelo y el token de GitHub.
 
@@ -146,6 +169,23 @@ ser la cara a la barata:
 
 `CRITICAL:` El contenido se **transcribe**, no se escribe. Una checklist de globo es un
 documento de seguridad.
+
+## Lista de verificación en el iPhone, pendiente
+
+`CRITICAL:` el spec §9 exige probar **en el iPhone real y con la app añadida a la pantalla
+de inicio**, no en Chrome del Mac ni en el simulador. El service worker, la persistencia y
+la geolocalización se comportan distinto instalados que en una pestaña. No se puede hacer
+hasta que la app esté desplegada.
+
+- [ ] La app arranca sin cobertura, con el modo avión puesto.
+- [ ] El teclado no tapa el campo que se está escribiendo en el detalle.
+- [ ] `confirm()` y `alert()` de los borrados funcionan de verdad y no devuelven `false` sin
+      avisar. Ya pasó dentro de un iframe de artefacto, aquí no debería, pero se comprueba.
+- [ ] La geolocalización del cierre rápido pide permiso y, si se deniega, la pantalla sigue
+      siendo usable.
+- [ ] El tema claro se lee al sol, y el ámbar sobre fondo claro es `#8a5a00` y no `#fab219`.
+- [ ] Al cerrar la app desde el conmutador y volver, el último cambio sigue guardado.
+- [ ] La barra de pestañas no queda debajo de la raya de gestos.
 
 ## La lección de las cuatro auditorías
 

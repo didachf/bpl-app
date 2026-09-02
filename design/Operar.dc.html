@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #5598e7; } a:hover { color: #86b6ef; }
+    .num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .cap { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #898781; }
+    .blk { display: flex; align-items: center; gap: 11px; padding: 12px 0; border-bottom: 1px solid #2c2c2a; }
+    .box { width: 18px; height: 18px; border-radius: 3px; border: 1.5px solid #3a3936; flex-shrink: 0; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="padding: 16px 20px 14px 20px; font-size: 26px; font-weight: 600; letter-spacing: -.02em;">Operar</div>
+
+  <div style="margin: 0 20px 18px 20px; padding: 13px 14px; border-radius: 8px; background: #2a1f14; border: 1px solid #5a4423; display: flex; gap: 11px;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fab219" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17.5v.01"/></svg>
+    <div>
+      <div style="font-size: 14px; font-weight: 500; color: #fab219;">Sin transcribir. No usar en vuelo.</div>
+      <div style="font-size: 13px; color: #c3c2b7; line-height: 1.45; margin-top: 4px;">El contenido se copia del Manual de Vuelo MV04r30 y lo validas contra el papel. Hasta entonces esto es solo la estructura.</div>
+    </div>
+  </div>
+
+  <div style="padding: 0 20px;">
+    <div class="cap">Del manual</div>
+    <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="padding: 12px 14px; border-radius: 8px; background: #24231f; display: flex; align-items: center; gap: 11px;">
+        <div style="flex-grow: 1;">
+          <div style="font-size: 15px;">Chequeo prevuelo</div>
+          <div class="num" style="font-size: 12px; color: #898781; margin-top: 2px;">Apéndice C · 9 bloques · 39 comprobaciones</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      </div>
+      <div style="padding: 12px 14px; border-radius: 8px; border: 1px solid #2c2c2a; display: flex; align-items: center; gap: 11px;">
+        <div style="flex-grow: 1;">
+          <div style="font-size: 15px; color: #c3c2b7;">Antes del despegue</div>
+          <div class="num" style="font-size: 12px; color: #898781; margin-top: 2px;">Sección 4.8.1</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div style="padding: 12px 14px; border-radius: 8px; border: 1px solid #2c2c2a; display: flex; align-items: center; gap: 11px;">
+        <div style="flex-grow: 1;">
+          <div style="font-size: 15px; color: #c3c2b7;">Briefing de pasajeros</div>
+          <div class="num" style="font-size: 12px; color: #898781; margin-top: 2px;">Sección 4.8.2</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div style="padding: 12px 14px; border-radius: 8px; border: 1px solid #4a2020; display: flex; align-items: center; gap: 11px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#d03b3b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17.5v.01"/></svg>
+        <div style="flex-grow: 1;">
+          <div style="font-size: 15px;">Emergencias</div>
+          <div class="num" style="font-size: 12px; color: #898781; margin-top: 2px;">Sección 3 · líneas eléctricas, FDS</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 20px 0 20px;">
+    <div class="cap">Chequeo prevuelo, los nueve bloques</div>
+    <div style="margin-top: 4px;">
+      <div class="blk"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #c3c2b7;">Envoltura</span><span class="num" style="font-size: 12px; color: #898781;">9</span></div>
+      <div class="blk"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #c3c2b7;">Quemador y sistema de combustible</span><span class="num" style="font-size: 12px; color: #898781;">7</span></div>
+      <div class="blk"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #c3c2b7;">Barquilla</span><span class="num" style="font-size: 12px; color: #898781;">6</span></div>
+      <div class="blk"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #c3c2b7;">Combustible</span><span class="num" style="font-size: 12px; color: #898781;">1</span></div>
+      <div class="blk"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #c3c2b7;">Equipo</span><span class="num" style="font-size: 12px; color: #898781;">9</span></div>
+      <div class="blk" style="border-bottom: none;"><div class="box"></div><span style="flex-grow: 1; font-size: 15px; color: #898781;">Pasajeros, carga, arnés, condiciones generales</span><span class="num" style="font-size: 12px; color: #898781;">7</span></div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1;"></div>
+
+  <div style="height: 64px; border-top: 1px solid #2c2c2a; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center;">
+    <div style="text-align: center; font-size: 10px; color: #898781;">Inicio</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Vuelos</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Planificar</div>
+    <div style="text-align: center; font-size: 10px; color: #ffffff; font-weight: 500;">Operar</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Ajustes</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

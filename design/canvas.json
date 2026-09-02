@@ -17,20 +17,20 @@
       "title": "Vuelos"
     },
     {
-      "file": "CierreRapido.dc.html",
+      "file": "Planificar.dc.html",
       "x": 980,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "Cerrar vuelo"
+      "title": "Planificar"
     },
     {
-      "file": "Detalle.dc.html",
+      "file": "Operar.dc.html",
       "x": 1470,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "Detalle del vuelo"
+      "title": "Operar"
     },
     {
       "file": "Ajustes.dc.html",
@@ -41,9 +41,25 @@
       "title": "Ajustes"
     },
     {
+      "file": "CierreRapido.dc.html",
+      "x": 0,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "title": "Cerrar vuelo"
+    },
+    {
+      "file": "Detalle.dc.html",
+      "x": 490,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "title": "Detalle del vuelo"
+    },
+    {
       "file": "InicioClaro.dc.html",
       "x": 0,
-      "y": 1050,
+      "y": 2120,
       "w": 390,
       "h": 844,
       "title": "Inicio, tema claro"
@@ -51,7 +67,7 @@
     {
       "file": "DetalleClaro.dc.html",
       "x": 490,
-      "y": 1050,
+      "y": 2120,
       "w": 390,
       "h": 844,
       "title": "Detalle, tema claro"
@@ -61,37 +77,37 @@
     {
       "id": "intro",
       "x": 0,
-      "y": -230,
-      "w": 620,
-      "text": "Logbook BPL, dirección Instrumento.\n\nLas cinco pantallas en tema oscuro arriba, y dos en tema claro abajo para fijar el mapa de color.\nLos datos son de ejemplo pero realistas.\n\nEl oscuro es el tema por defecto: la app se abre antes del amanecer."
+      "y": -250,
+      "w": 660,
+      "text": "Logbook BPL, dirección Instrumento.\n\nFila 1: las cinco pestañas de la barra inferior, en orden.\nFila 2: las dos pantallas que se abren desde dentro.\nFila 3: el tema claro, para fijar el mapa de color.\n\nEl oscuro es el tema por defecto: la app se abre antes del amanecer.\nLos datos son de ejemplo pero realistas."
     },
     {
       "id": "n-inicio",
       "x": 0,
       "y": 890,
       "w": 390,
-      "text": "Inicio\nEl acumulado del cuaderno, que es un dato llano y sin juicio: cuenta todos los vuelos, incluidos los que no valen para nada reglamentario.\n\nNo hay panel de seguimiento del curso, retirado a propósito. El panel de vigencia aparecerá aquí el día que se emita la licencia."
+      "text": "Inicio\nEl acumulado del cuaderno, un dato llano y sin juicio: cuenta todos los vuelos, incluidos los que no valen para nada reglamentario.\n\nNo hay seguimiento del curso, retirado a propósito. El panel de vigencia se activa el día que se emita la licencia."
     },
     {
       "id": "n-vuelos",
       "x": 490,
       "y": 890,
       "w": 390,
-      "text": "Vuelos\nEl cuarto vuelo está atenuado: es un cautivo en un globo de grupo B. Sigue contando para el acumulado, pero no para la vigencia, y la app dice por qué en vez de dejarlo desaparecer."
+      "text": "Vuelos\nEl cuarto vuelo está atenuado: es un cautivo en un globo de grupo B. Cuenta para el acumulado pero no para la vigencia, y la app dice por qué en vez de dejarlo desaparecer."
     },
     {
-      "id": "n-cierre",
+      "id": "n-planificar",
       "x": 980,
       "y": 890,
       "w": 390,
-      "text": "Cerrar vuelo\nLa pantalla que decide si usas la app o la abandonas. Cuatro campos, botones de 56 px, y la posición la coge del GPS. Diez segundos con el globo en el suelo."
+      "text": "Planificar\nSe toca un punto libre, no solo un campo guardado, porque el sitio de despegue se decide cada día en función del viento.\n\nLa última columna es lo que aporta de verdad: cuántos de los seis modelos coinciden. A las 09:00 sólo 2 de 6, así que el pronóstico de esa hora no vale.\n\nEl mapa va como esquema dibujado: en la maqueta no se pueden cargar teselas reales."
     },
     {
-      "id": "n-detalle",
+      "id": "n-operar",
       "x": 1470,
       "y": 890,
       "w": 390,
-      "text": "Detalle del vuelo\nDos bloques plegables. El aviso de arriba no es decorativo: sin la firma del instructor este vuelo no suma a las 16 h, y eso lo comprueba el dominio, no la pantalla."
+      "text": "Operar\nLos nueve bloques y los recuentos son los del Apéndice C del Manual de Vuelo MV04r30, contados sobre el PDF: 31 ítems numerados, 39 comprobaciones contando los nueve subpuntos de Equipo.\n\nEl contenido de los ítems NO está transcrito, y el aviso de arriba lo dice sin rodeos. Una checklist de globo es un documento de seguridad: se copia del manual y se valida contra el papel."
     },
     {
       "id": "n-ajustes",
@@ -101,9 +117,23 @@
       "text": "Ajustes\nEl último bloque enumera lo que la app NO comprueba. Está ahí a propósito: un informe que dice «cumples» callando lo que no ha mirado miente por omisión."
     },
     {
+      "id": "n-cierre",
+      "x": 0,
+      "y": 1950,
+      "w": 390,
+      "text": "Cerrar vuelo\nLa pantalla que decide si usas la app o la abandonas. Cuatro campos, botones de 56 px, la posición del GPS. Diez segundos con el globo en el suelo."
+    },
+    {
+      "id": "n-detalle",
+      "x": 490,
+      "y": 1950,
+      "w": 390,
+      "text": "Detalle del vuelo\nDos bloques plegables. El aviso de arriba no es decorativo: sin la firma del instructor este vuelo no cuenta para la vigencia, y eso lo comprueba el dominio, no la pantalla."
+    },
+    {
       "id": "n-claro",
       "x": 0,
-      "y": 1940,
+      "y": 3010,
       "w": 880,
       "text": "Tema claro\nMismo diseño, mapa de color explícito. Un cambio no es cosmético: el ámbar de aviso pasa de #fab219 a #8a5a00, porque sobre fondo claro el original da 1,79 de contraste y el validador lo rechaza para texto e iconos. Igual el verde, que baja a #006300 cuando es texto y se queda en #0ca30c cuando rellena una barra."
     }

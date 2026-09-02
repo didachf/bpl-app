@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #5598e7; } a:hover { color: #86b6ef; }
+    .num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .cap { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #898781; }
+    .hrow { display: grid; grid-template-columns: 52px 30px 1fr 74px; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid #2c2c2a; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 16px 20px 10px 20px;">
+    <div style="font-size: 26px; font-weight: 600; letter-spacing: -.02em;">Planificar</div>
+    <div class="num" style="font-size: 13px; color: #898781;">jue 4 sep</div>
+  </div>
+
+  <!-- Mapa esquematico: en la maqueta no se pueden cargar teselas reales -->
+  <div style="height: 234px; background: #14181c; position: relative; overflow: hidden;">
+    <svg width="390" height="234" viewBox="0 0 390 234" style="display: block;">
+      <rect width="390" height="234" fill="#14181c"/>
+      <path d="M-10 168 C 60 150, 120 176, 190 158 S 320 128, 400 142" stroke="#1f2a33" stroke-width="14" fill="none"/>
+      <path d="M-10 60 C 70 74, 150 46, 230 62 S 340 88, 400 74" stroke="#1c242c" stroke-width="9" fill="none"/>
+      <path d="M40 -10 L 96 244" stroke="#232d36" stroke-width="2.5" fill="none"/>
+      <path d="M250 -10 L 196 244" stroke="#232d36" stroke-width="2.5" fill="none"/>
+      <path d="M-10 118 L 400 104" stroke="#232d36" stroke-width="2.5" fill="none"/>
+      <circle cx="96" cy="112" r="4" fill="#3a4650"/>
+      <circle cx="286" cy="86" r="4" fill="#3a4650"/>
+      <circle cx="212" cy="188" r="4" fill="#3a4650"/>
+      <text x="106" y="116" fill="#6d7883" font-size="10" font-family="system-ui">Agramunt</text>
+      <text x="296" y="90" fill="#6d7883" font-size="10" font-family="system-ui">Tàrrega</text>
+      <text x="222" y="192" fill="#6d7883" font-size="10" font-family="system-ui">Igualada</text>
+      <g transform="translate(150 128)">
+        <path d="M0 6 C -13 -10, -9 -26, 0 -26 C 9 -26, 13 -10, 0 6 Z" fill="#2a78d6"/>
+        <circle cx="0" cy="-18" r="4.5" fill="#14181c"/>
+      </g>
+      <text x="10" y="224" fill="#4a545e" font-size="9" font-family="system-ui">esquema, el mapa real va con teselas cacheadas</text>
+    </svg>
+  </div>
+
+  <div style="padding: 13px 20px 0 20px; display: flex; align-items: baseline; justify-content: space-between;">
+    <div>
+      <div class="num" style="font-size: 16px;">41.7431, 1.0812</div>
+      <div style="font-size: 12px; color: #898781; margin-top: 2px;">punto libre, 5,4 km al SO de Agramunt</div>
+    </div>
+    <div style="font-size: 13px; color: #2a78d6;">Guardar campo</div>
+  </div>
+
+  <div style="padding: 16px 20px 0 20px;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between;">
+      <div class="cap">Viento a 925 hPa</div>
+      <div style="font-size: 12px; color: #898781;">900 hPa</div>
+    </div>
+
+    <div style="margin-top: 6px;">
+
+      <div class="hrow">
+        <span class="num" style="font-size: 15px; color: #c3c2b7;">07:00</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate(236deg);"><path d="M12 3 L12 21 M12 21 L7 15 M12 21 L17 15" stroke="#2a78d6" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        <span class="num" style="font-size: 15px;">4 a 6 kt · 232 a 241°</span>
+        <span style="font-size: 12px; color: #0ca30c; text-align: right;">6 de 6</span>
+      </div>
+
+      <div class="hrow">
+        <span class="num" style="font-size: 15px; color: #c3c2b7;">08:00</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate(228deg);"><path d="M12 3 L12 21 M12 21 L7 15 M12 21 L17 15" stroke="#2a78d6" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        <span class="num" style="font-size: 15px;">6 a 9 kt · 219 a 244°</span>
+        <span style="font-size: 12px; color: #0ca30c; text-align: right;">5 de 6</span>
+      </div>
+
+      <div class="hrow">
+        <span class="num" style="font-size: 15px; color: #c3c2b7;">09:00</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate(205deg);"><path d="M12 3 L12 21 M12 21 L7 15 M12 21 L17 15" stroke="#8a5a00" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        <span class="num" style="font-size: 15px;">8 a 17 kt · 188 a 262°</span>
+        <span style="font-size: 12px; color: #fab219; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+          2 de 6
+        </span>
+      </div>
+
+      <div class="hrow" style="border-bottom: none;">
+        <span class="num" style="font-size: 15px; color: #c3c2b7;">10:00</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" style="transform: rotate(192deg);"><path d="M12 3 L12 21 M12 21 L7 15 M12 21 L17 15" stroke="#8a5a00" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        <span class="num" style="font-size: 15px;">11 a 22 kt · 170 a 255°</span>
+        <span style="font-size: 12px; color: #fab219; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+          1 de 6
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="margin: 14px 20px 0 20px; padding: 12px 14px; border-radius: 8px; background: #24231f; font-size: 13px; color: #c3c2b7; line-height: 1.5;">
+    La última columna dice cuántos de los seis modelos coinciden. Cuando bajan, el pronóstico no vale.
+    <div style="color: #898781; margin-top: 6px;">La deriva llega después. Esto no sustituye al globo piloto.</div>
+  </div>
+
+  <div style="flex-grow: 1;"></div>
+
+  <div style="height: 64px; border-top: 1px solid #2c2c2a; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center;">
+    <div style="text-align: center; font-size: 10px; color: #898781;">Inicio</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Vuelos</div>
+    <div style="text-align: center; font-size: 10px; color: #ffffff; font-weight: 500;">Planificar</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Operar</div>
+    <div style="text-align: center; font-size: 10px; color: #898781;">Ajustes</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

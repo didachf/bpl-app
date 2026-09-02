@@ -1,6 +1,6 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-09-03**. Rama `feat/logbook-nucleo`, sin fusionar a `main`.
+Última sesión: **2026-09-03**. Siguiente tarea: **el plan de la interfaz**. Rama `feat/logbook-nucleo`, sin fusionar a `main`.
 
 ## Qué es
 
@@ -19,7 +19,7 @@ demás y está enmendado tres veces.
 | Plan del núcleo, ejecutado | `docs/superpowers/plans/2026-09-01-logbook-nucleo.md` |
 | Dominio, funciones puras | `src/domain/` |
 | Persistencia y sincronización | `src/db/store.ts`, `src/sync/github.ts` |
-| Maquetas de pantalla | `design/*.dc.html`, publicadas en el enlace de abajo |
+| Maquetas de pantalla | `design/*.dc.html`, nueve artboards, publicadas en el enlace de abajo |
 | Interfaz | **no existe todavía**, `src/app.tsx` es un marcador |
 
 Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d173082a6
@@ -38,13 +38,73 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
   cuaderno. Ver spec §5.
 - **Dirección visual elegida:** Instrumento. Oscuro por defecto, IBM Plex Sans y Mono,
-  cifras monoespaciadas. Cinco pantallas maquetadas en oscuro y dos en claro.
+  cifras monoespaciadas. **Nueve artboards**: las cinco pestañas (Inicio, Vuelos,
+  Planificar, Operar, Ajustes), las dos pantallas internas (Cerrar vuelo, Detalle) y dos en
+  tema claro.
+
+## Contrato del dominio, lo que consume la interfaz
+
+Todo en `src/domain/` son funciones puras: no importan nada del navegador. Firmas exactas al
+03/09/2026, para no tener que leer los ficheros:
+
+```ts
+// El acumulado del cuaderno. Cuenta TODOS los vuelos, sin juicio reglamentario.
+logbookTotals(doc: LogbookDoc, asOf: IsoDate): LogbookTotals
+//   { flights, minutes, takeoffs, landings, inflations, partial }
+
+// La vigencia, POR CLASE de globo. Sólo aplica con licencia emitida.
+currency(doc: LogbookDoc, asOf: IsoDate, forClass: BalloonClass): CurrencyReport
+//   { applicable, balloonClass, viaProficiencyCheck, items, met, currentUntil,
+//     maxGroup, groupSchedule, excluded, warnings, notModelled }
+
+// Un vuelo
+flightDurationMin(f: Flight): number      // minutos, nunca negativo
+hasConsistentTimes(f: Flight): boolean    // false si la llegada precede a la salida
+
+// Globos y personas
+groupFromVolume(m3: number): BalloonGroup                 // lanza si m3 <= 0
+hasRole(doc, id: Uuid | null, role: PersonRole): boolean
+hasRoleAndIsNotThePilot(doc, id, role): boolean
+
+// Fechas, siempre sobre cadenas "YYYY-MM-DD"
+addMonths(date, n)  addDays(date, n)  endOfMonth(date)  toIsoDate(d: Date)
+
+// Documento
+emptyDocument(): LogbookDoc      // siembra los 3 campos y al titular como Person
+validate(input: unknown): ValidationResult
+migrate(doc, target?, migrations?): LogbookDoc
+CURRENT_SCHEMA_VERSION = 1
+
+// Persistencia local
+loadDocument(): Promise<LogbookDoc | null>   // null si no hay, no valida, o no migra
+saveDocument(doc): Promise<void>
+clearDocument(): Promise<void>
+makeDebouncedSaver(guardar, delayMs = 800): DebouncedSaver   // tiene .flush()
+
+// GitHub
+fetchFile(cfg: GithubConfig, path): Promise<RemoteFile | null>   // null si no existe
+putFile(cfg, path, content, sha: string | null, message): Promise<{ sha }>
+//   lanza ConflictError con 409 o 422. NO fusionar: preguntar.
+```
+
+Tres cosas que la interfaz debe respetar y son fáciles de romper:
+
+1. **Mirar `applicable` antes que `met`.** A un alumno la vigencia no le aplica, y `met` se
+   calcula igualmente.
+2. **`groupSchedule` antes que `maxGroup`.** `maxGroup` es sólo el tramo de hoy. Publicar
+   `currentUntil` junto a `maxGroup` como si fueran un par miente, y ese fue el hallazgo
+   bloqueante de la cuarta auditoría.
+3. **Enseñar `excluded`, `warnings` y `notModelled`.** Existen para que ninguna exclusión sea
+   silenciosa. Una pantalla que los ignora deshace el trabajo del dominio.
 
 ## Lo siguiente, en orden
 
-1. **Escribir el plan de la interfaz** (`docs/superpowers/plans/`), a partir de las
-   maquetas y del contrato del dominio, que ya está estable.
-2. **Implementar las pantallas**: Inicio, Vuelos, Detalle, Cerrar vuelo, Ajustes.
+1. **Escribir el plan de la interfaz** (`docs/superpowers/plans/2026-09-XX-logbook-ui.md`),
+   a partir de las maquetas y del contrato de arriba. El dominio está cerrado: no tocarlo
+   salvo que la interfaz descubra un hueco real, y en ese caso con prueba primero.
+2. **Implementar las pantallas** en este orden, que es el de dependencia: contexto de
+   estado, Ajustes (para poder meter globos y personas), Cerrar vuelo, Vuelos, Detalle,
+   Inicio. Planificar y Operar quedan como esbozo navegable.
 3. **Empaquetado PWA** y despliegue a GitHub Pages con el `dist/` comiteado.
 4. Crear el repositorio privado `bpl-logbook` y el token de grano fino.
 5. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa.

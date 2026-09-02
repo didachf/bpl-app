@@ -1,7 +1,9 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-09-02**. Siguiente tarea: **el empaquetado PWA y el despliegue**. Rama
-`feat/logbook-nucleo`, sin fusionar a `main`.
+Última sesión: **2026-09-02**. Siguiente tarea: **crear `bpl-logbook` y el token**, y pasar
+la lista de verificación en el móvil. Todo fusionado a `main` y publicado.
+
+**App en vivo: https://didachf.github.io/bpl-app/**
 
 ## Qué es
 
@@ -23,6 +25,8 @@ demás y está enmendado tres veces.
 | Persistencia y sincronización | `src/db/store.ts`, `src/sync/github.ts` |
 | Maquetas de pantalla | `design/*.dc.html`, nueve artboards, publicadas en el enlace de abajo |
 | Interfaz | `src/ui/`, doce rutas, nueve pantallas de verdad y dos esbozos |
+| Empaquetado PWA | `vite.config.ts`, iconos en `public/`, `src/ui/install.ts` |
+| Despliegue | rama `gh-pages`, con `git subtree push --prefix dist origin gh-pages` |
 
 Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d173082a6
 
@@ -49,6 +53,11 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   que usa la interfaz existe en Android: `crypto.randomUUID`, `navigator.storage.persist`,
   geolocalización, `color-mix`, `100dvh`, `accent-color` y los selectores nativos de fecha
   y hora.
+- **Empaquetado PWA y publicado.** Manifiesto con `start_url` y `scope` absolutos bajo
+  `/bpl-app/`, iconos de 192 y 512 más uno *maskable*, y service worker de Workbox con el
+  armazón entero precacheado, tipografías incluidas. Verificado **servido de verdad y en
+  vivo**: el service worker se activa con el scope correcto y, con la red cortada, la app
+  arranca entera y las tipografías salen de la caché.
 - **Seguimiento del curso retirado** el 02/09/2026. Fuera el panel de progreso hacia el
   BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
   cuaderno. Ver spec §5.
@@ -114,14 +123,27 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 
 ## Lo siguiente, en orden
 
-1. **Empaquetado PWA** y despliegue a GitHub Pages con el `dist/` comiteado. Incluye
-   `navigator.storage.persist()`, que solo tiene sentido con la app instalada.
-2. **Pasar la lista de verificación del Android** de abajo, que hoy no se puede porque la
-   app todavía no está servida.
-3. Crear el repositorio privado `bpl-logbook` y el token de grano fino.
-4. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
+1. **Crear el repositorio privado `bpl-logbook` y el token de grano fino.** Lo hace Dídac,
+   no yo: un PAT no debe pasar por una conversación. Instrucciones abajo.
+2. **Pasar la lista de verificación del Android**, con la app ya instalada desde Chrome.
+3. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
    pantalla de Planificar que ya existe.
-5. Fase 3: checklists, transcritas del Manual de Vuelo. Ver abajo.
+4. Fase 3: checklists, transcritas del Manual de Vuelo. Ver abajo.
+
+## Crear el token, paso a paso
+
+1. GitHub, **New repository**, nombre `bpl-logbook`, **privado**, sin README.
+2. Ajustes de la cuenta, Developer settings, **Personal access tokens, Fine-grained**.
+3. **Repository access:** *Only select repositories*, y elige **solo `bpl-logbook`**. Esto
+   es lo que acota el daño si el token se filtra.
+4. **Permissions, Repository permissions:** `Contents` a **Read and write**. Nada más.
+5. **Expiration:** un año.
+6. En la app: Ajustes, copia de seguridad. Cuenta `didachf`, repositorio `bpl-logbook`,
+   rama `main`, y pega el token. Después, **Subir ahora**.
+
+`WARNING:` el primer **Subir ahora** con el repositorio vacío crea `logbook.json`. Si el
+repositorio ya tuviera un `logbook.json` de otro sitio, saldría el aviso de conflicto y
+tendrías que elegir versión. No fusiona nunca.
 
 ## Decisiones que no hay que volver a tomar
 

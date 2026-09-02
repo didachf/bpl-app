@@ -1050,7 +1050,7 @@ Crea `src/ui/incomplete.test.ts`:
 ```ts
 import { describe, it, expect } from 'vitest'
 import { makeFlight, makePilot } from '../domain/fixtures'
-import type { Balloon, LogbookDoc, Person } from '../domain/types'
+import type { Balloon, LogbookDoc, Person, Site } from '../domain/types'
 import { missingFields, canBeCompleted } from './incomplete'
 
 const globo: Balloon = {
@@ -1059,13 +1059,20 @@ const globo: Balloon = {
 }
 const yo: Person = { id: 'p1', name: 'Didac', roles: ['pilot'], licenceNumber: null }
 const alberto: Person = { id: 'p2', name: 'Alberto', roles: ['instructor'], licenceNumber: null }
+// El campo 's1' existe porque `makeFlight` lo usa por defecto en las dos puntas.
+// Sin el, cualquier vuelo de prueba echa en falta el campo de despegue y el
+// lugar de aterrizaje, y la prueba mide el fixture en lugar de la funcion.
+const campo: Site = {
+  id: 's1', name: 'Agramunt', lat: 41.7869, lon: 1.0967, elevationM: 345,
+  permitStatus: 'unknown', accessNotes: '',
+}
 
 function doc(over: Partial<LogbookDoc> = {}): LogbookDoc {
   return {
     schemaVersion: 1,
     pilot: makePilot({ personId: 'p1' }),
     balloons: [globo],
-    sites: [],
+    sites: [campo],
     people: [yo, alberto],
     flights: [],
     ...over,
@@ -4195,7 +4202,7 @@ Crea `src/ui/newFlight.test.ts`:
 import { describe, it, expect } from 'vitest'
 import { makeFlight, makePilot } from '../domain/fixtures'
 import { flightDurationMin, hasConsistentTimes } from '../domain/flight'
-import type { Balloon, LogbookDoc, Person } from '../domain/types'
+import type { Balloon, LogbookDoc, Person, Site } from '../domain/types'
 import { localTimestamp, heredado, flightFromQuickClose } from './newFlight'
 
 const globo: Balloon = {
@@ -4204,13 +4211,20 @@ const globo: Balloon = {
 }
 const yo: Person = { id: 'p1', name: 'Didac', roles: ['pilot'], licenceNumber: null }
 const alberto: Person = { id: 'p2', name: 'Alberto', roles: ['instructor'], licenceNumber: null }
+// El campo 's1' existe porque `makeFlight` lo usa por defecto en las dos puntas.
+// Sin el, cualquier vuelo de prueba echa en falta el campo de despegue y el
+// lugar de aterrizaje, y la prueba mide el fixture en lugar de la funcion.
+const campo: Site = {
+  id: 's1', name: 'Agramunt', lat: 41.7869, lon: 1.0967, elevationM: 345,
+  permitStatus: 'unknown', accessNotes: '',
+}
 
 function doc(over: Partial<LogbookDoc> = {}): LogbookDoc {
   return {
     schemaVersion: 1,
     pilot: makePilot({ personId: 'p1' }),
     balloons: [globo],
-    sites: [],
+    sites: [campo],
     people: [yo, alberto],
     flights: [],
     ...over,

@@ -1,0 +1,159 @@
+/* src/ui/theme.css
+   Direccion visual "Instrumento". Oscuro por defecto, claro por preferencia del
+   sistema. Los valores salen de design/*.dc.html y no se inventan aqui.
+
+   El ambar #fab219 da 1,79 de contraste sobre fondo claro, asi que en tema claro
+   pasa a #8a5a00. Nunca rellena una superficie grande, solo trazos y texto. */
+
+:root {
+  color-scheme: dark;
+  --bg: #1a1a19;
+  --surface: #24231f;
+  --border: #2c2c2a;
+  --text: #ffffff;
+  --muted: #c3c2b7;
+  --dim: #898781;
+  --accent: #2a78d6;
+  --accent-text: #ffffff;
+  --ok: #0ca30c;
+  --warn: #fab219;
+  --warn-bg: #2a1f14;
+  --warn-border: #5a4423;
+  --danger: #d03b3b;
+  --danger-border: #4a2020;
+  --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #f2f1ed;
+    --surface: #fcfcfb;
+    --border: #e1e0d9;
+    --text: #0b0b0b;
+    --muted: #52514e;
+    --dim: #898781;
+    --accent: #1c5cab;
+    --accent-text: #ffffff;
+    --ok: #006300;
+    --warn: #8a5a00;
+    --warn-bg: #f6efe2;
+    --warn-border: #d9c9a4;
+    --danger: #a32020;
+    --danger-border: #e0c4c4;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Cifras alineadas en columna. Un acumulado que baila al teclear no se lee. */
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.cap {
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.lbl { font-size: 13px; }
+.dim { color: var(--dim); }
+.muted { color: var(--muted); }
+
+.card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 13px 14px;
+}
+
+.outline {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 13px 14px;
+  background: none;
+}
+
+.chip {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 13px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.primary {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.secondary {
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.linkish {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 15px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+/* Un campo de texto que hereda del tema. Safari le pone fondo blanco si no. */
+input, select, textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  width: 100%;
+}
+/* 16 px es el umbral por debajo del cual Safari hace zoom al enfocar. */
+input, select, textarea { font-size: 16px; }
+textarea { min-height: 76px; resize: vertical; }
+
+a { color: var(--accent); }

@@ -9,6 +9,7 @@
 import { logbookTotals } from '../../domain/totals'
 import type { BalloonClass } from '../../domain/types'
 import { Icon } from '../components/Icon'
+import { AvisoInstalar } from '../components/Instalar'
 import { Notice } from '../components/Notice'
 import { PanelVigencia } from '../components/PanelVigencia'
 import { Screen } from '../components/Screen'
@@ -102,6 +103,8 @@ export function Inicio() {
       )}
 
       <div style="padding: 22px 20px 0 20px; display: flex; flex-direction: column; gap: 10px;">
+        <AvisoInstalar />
+
         {(sync.kind === 'error' || sync.kind === 'conflicto') && (
           <Notice
             tone="warn"

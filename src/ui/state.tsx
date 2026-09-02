@@ -10,6 +10,10 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'p
 import { loadDocument, makeDebouncedSaver, saveDocument } from '../db/store'
 import { emptyDocument } from '../domain/empty'
 import type { LogbookDoc } from '../domain/types'
+import { ConflictError } from '../sync/github'
+import type { GithubConfig } from '../sync/github'
+import { clearConfig, loadConfig, loadSha, saveConfig, saveSha } from '../sync/config'
+import { pushDocument, restoreDocument } from '../sync/logbook'
 
 /**
  * En que punto del arranque estamos.
@@ -19,6 +23,21 @@ import type { LogbookDoc } from '../domain/types'
  * restaurar de GitHub. Ver el spec §8.
  */
 export type Arranque = 'cargando' | 'sin_documento' | 'listo'
+
+/**
+ * Estado de la copia en GitHub.
+ *
+ * `conflicto` no se resuelve solo nunca. El spec §7 lo dice y la cuarta
+ * auditoria del dominio dejo claro por que: fusionar sin preguntar un cuaderno
+ * de vuelo puede borrar horas voladas.
+ */
+export type SyncState =
+  | { kind: 'sin_configurar' }
+  | { kind: 'al_dia' }
+  | { kind: 'pendiente' }
+  | { kind: 'subiendo' }
+  | { kind: 'conflicto' }
+  | { kind: 'error'; mensaje: string }
 
 export interface Store {
   doc: LogbookDoc | null
@@ -31,6 +50,16 @@ export interface Store {
   replace: (doc: LogbookDoc) => void
   /** Fuerza el guardado pendiente. Se llama al ocultarse la app. */
   flush: () => Promise<void>
+  sync: SyncState
+  cfg: GithubConfig | null
+  /** Guarda o borra el token y el repositorio. `null` desconecta. */
+  setCfg: (cfg: GithubConfig | null) => void
+  /** Empuja ahora, sin esperar al rebote. */
+  pushNow: () => Promise<void>
+  /** Trae el documento del repositorio y sustituye el local. */
+  restaurar: () => Promise<void>
+  /** Resuelve un conflicto quedandose con una de las dos versiones. */
+  resolverConflicto: (cual: 'local' | 'remoto') => Promise<void>
 }
 
 const Ctx = createContext<Store | null>(null)
@@ -68,10 +97,40 @@ export function StoreProvider({ children }: { children: ComponentChildren }) {
     }),
   )
 
+  const [cfg, setCfgState] = useState<GithubConfig | null>(() => loadConfig())
+  const [sync, setSync] = useState<SyncState>(
+    () => (loadConfig() === null ? { kind: 'sin_configurar' } : { kind: 'al_dia' }),
+  )
+
+  // El documento y la configuracion vivos, para que el empujador rebotado no
+  // se quede con los de hace cinco segundos.
+  const docRef = useRef<LogbookDoc | null>(null)
+  const cfgRef = useRef<GithubConfig | null>(cfg)
+  cfgRef.current = cfg
+
+  const empujar = useCallback(async (d: LogbookDoc) => {
+    const c = cfgRef.current
+    if (c === null) return
+    setSync({ kind: 'subiendo' })
+    try {
+      const { sha } = await pushDocument(c, d, loadSha())
+      saveSha(sha)
+      setSync({ kind: 'al_dia' })
+    } catch (e) {
+      if (e instanceof ConflictError) { setSync({ kind: 'conflicto' }); return }
+      setSync({ kind: 'error', mensaje: e instanceof Error ? e.message : String(e) })
+    }
+  }, [])
+
+  // Cinco segundos, no ochocientos milisegundos: cada empuje es un commit, y
+  // un commit por tecla convertiria el historial del repositorio en ruido.
+  const pusherRef = useRef(makeDebouncedSaver(d => empujar(d), 5000))
+
   useEffect(() => {
     void (async () => {
       const cargado = await loadDocument()
       if (cargado === null) { setArranque('sin_documento'); return }
+      docRef.current = cargado
       setDoc(cargado)
       setArranque('listo')
     })()
@@ -81,7 +140,10 @@ export function StoreProvider({ children }: { children: ComponentChildren }) {
   // temporizador de 800 ms pendiente se pierde con ella. `pagehide` y
   // `visibilitychange` son los dos unicos avisos fiables en iOS.
   useEffect(() => {
-    const alSalir = () => { void saverRef.current.flush() }
+    const alSalir = () => {
+      void saverRef.current.flush()
+      void pusherRef.current.flush()
+    }
     addEventListener('pagehide', alSalir)
     document.addEventListener('visibilitychange', alSalir)
     return () => {
@@ -94,7 +156,12 @@ export function StoreProvider({ children }: { children: ComponentChildren }) {
     setDoc(anterior => {
       if (anterior === null) return anterior
       const nuevo = fn(anterior)
+      docRef.current = nuevo
       saverRef.current(nuevo)
+      if (cfgRef.current !== null) {
+        setSync({ kind: 'pendiente' })
+        pusherRef.current(nuevo)
+      }
       return nuevo
     })
     setSinGuardar(n => n + 1)
@@ -102,16 +169,85 @@ export function StoreProvider({ children }: { children: ComponentChildren }) {
 
   const replace = useCallback((nuevo: LogbookDoc) => {
     setDoc(nuevo)
+    docRef.current = nuevo
     setArranque('listo')
     saverRef.current(nuevo)
+    if (cfgRef.current !== null) {
+      setSync({ kind: 'pendiente' })
+      pusherRef.current(nuevo)
+    }
     setSinGuardar(n => n + 1)
   }, [])
 
   const flush = useCallback(() => saverRef.current.flush(), [])
 
+  const setCfg = useCallback((nueva: GithubConfig | null) => {
+    if (nueva === null) { clearConfig(); setCfgState(null); setSync({ kind: 'sin_configurar' }) }
+    else { saveConfig(nueva); setCfgState(nueva); setSync({ kind: 'pendiente' }) }
+  }, [])
+
+  const pushNow = useCallback(async () => {
+    const d = docRef.current
+    if (d === null || cfgRef.current === null) return
+    await pusherRef.current.flush()
+    await empujar(d)
+  }, [empujar])
+
+  const restaurar = useCallback(async () => {
+    const c = cfgRef.current
+    if (c === null) return
+    setSync({ kind: 'subiendo' })
+    try {
+      const r = await restoreDocument(c)
+      if (r === null) {
+        setSync({ kind: 'error', mensaje: 'El repositorio todavia no tiene logbook.json' })
+        return
+      }
+      saveSha(r.sha)
+      docRef.current = r.doc
+      setDoc(r.doc)
+      setArranque('listo')
+      await saveDocument(r.doc)
+      setSinGuardar(0)
+      setSync({ kind: 'al_dia' })
+    } catch (e) {
+      setSync({ kind: 'error', mensaje: e instanceof Error ? e.message : String(e) })
+    }
+  }, [])
+
+  /**
+   * Un conflicto solo lo resuelve el usuario, y solo eligiendo una de las dos
+   * versiones enteras. No hay fusion, ni la habra.
+   *
+   * Quedarse con la local exige releer el sha remoto antes de escribir: es la
+   * unica forma de que GitHub acepte el PUT, y es deliberadamente un
+   * sobrescribir, no un fusionar.
+   */
+  const resolverConflicto = useCallback(async (cual: 'local' | 'remoto') => {
+    const c = cfgRef.current
+    if (c === null) return
+    if (cual === 'remoto') { await restaurar(); return }
+
+    const d = docRef.current
+    if (d === null) return
+    setSync({ kind: 'subiendo' })
+    try {
+      const r = await restoreDocument(c)
+      const { sha } = await pushDocument(c, d, r === null ? null : r.sha)
+      saveSha(sha)
+      setSync({ kind: 'al_dia' })
+    } catch (e) {
+      setSync({ kind: 'error', mensaje: e instanceof Error ? e.message : String(e) })
+    }
+  }, [restaurar])
+
   const store = useMemo<Store>(
-    () => ({ doc, arranque, sinGuardar, update, replace, flush }),
-    [doc, arranque, sinGuardar, update, replace, flush],
+    () => ({
+      doc, arranque, sinGuardar, update, replace, flush,
+      sync, cfg, setCfg, pushNow, restaurar, resolverConflicto,
+    }),
+    [doc, arranque, sinGuardar, update, replace, flush,
+      sync, cfg, setCfg, pushNow, restaurar, resolverConflicto],
   )
 
   return <Ctx.Provider value={store}>{children}</Ctx.Provider>

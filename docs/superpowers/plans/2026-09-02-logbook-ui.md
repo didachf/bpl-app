@@ -1851,7 +1851,7 @@ export function saveSha(sha: string): void {
 npx vitest run src/sync/config.test.ts
 ```
 
-Esperado: PASS, 7 pruebas.
+Esperado: PASS, 8 pruebas.
 
 - [ ] **Paso 5: pruebas del empuje y la restauración**
 
@@ -2017,7 +2017,7 @@ export async function restoreDocument(
 npx vitest run src/sync/logbook.test.ts
 ```
 
-Esperado: PASS, 7 pruebas.
+Esperado: PASS, 8 pruebas.
 
 - [ ] **Paso 9: enganchar la sincronización al contexto**
 

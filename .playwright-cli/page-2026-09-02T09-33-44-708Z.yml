@@ -1,0 +1,36 @@
+- generic [ref=f1e3]:
+  - generic [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]: Logbook BPL
+      - link "Solo en el telefono" [ref=f1e7] [cursor=pointer]:
+        - /url: "#/ajustes/copia"
+    - generic [ref=f1e11]:
+      - generic [ref=f1e12]: Acumulado del cuaderno
+      - generic [ref=f1e13]: 0:00
+      - generic [ref=f1e14]: horas de vuelo
+    - generic [ref=f1e15]:
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]: "0"
+        - generic [ref=f1e18]: vuelos
+      - generic [ref=f1e19]:
+        - generic [ref=f1e20]: "0"
+        - generic [ref=f1e21]: aterrizajes
+      - generic [ref=f1e22]:
+        - generic [ref=f1e23]: "0"
+        - generic [ref=f1e24]: inflados
+    - generic [ref=f1e29]:
+      - generic [ref=f1e30]: Vigencia
+      - generic [ref=f1e31]: La vigencia de BFCL.160 empieza a contar el dia de emision de la licencia. Mientras no haya una fecha de emision en Mis datos, no hay nada que comprobar.
+    - link "Cerrar vuelo" [ref=f1e33] [cursor=pointer]:
+      - /url: "#/cerrar"
+  - navigation [ref=f1e36]:
+    - link "Inicio" [ref=f1e37] [cursor=pointer]:
+      - /url: "#/"
+    - link "Vuelos" [ref=f1e41] [cursor=pointer]:
+      - /url: "#/vuelos"
+    - link "Planificar" [ref=f1e45] [cursor=pointer]:
+      - /url: "#/planificar"
+    - link "Operar" [ref=f1e49] [cursor=pointer]:
+      - /url: "#/operar"
+    - link "Ajustes" [ref=f1e53] [cursor=pointer]:
+      - /url: "#/ajustes"

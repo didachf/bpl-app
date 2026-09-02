@@ -98,8 +98,8 @@ export function CerrarVuelo() {
         </p>
 
         {/* Hora nativa y no dos botones de mas y menos: corregir veinte minutos
-            a pulsaciones de uno en uno serian veinte toques, y el selector del
-            iPhone lo hace en dos. */}
+            a pulsaciones de uno en uno serian veinte toques, y el selector de
+            hora de Android lo hace en dos. */}
         <div style="margin-bottom: 24px;">
           <div class="cap" style="margin-bottom: 8px;">Hora de aterrizaje</div>
           <input

@@ -2,14 +2,20 @@
 
 **Fecha:** 2026-09-01
 **Autor:** Dídac (didac@highfrontier.es), con Claude
-**Estado:** aprobado, pendiente de plan de implementación
+**Estado:** aprobado, plan del núcleo y plan de la interfaz ejecutados
+
+**Enmendado el 2026-09-02:** el teléfono es **Android**, no iPhone. La primera versión de
+este documento justificaba media docena de decisiones con el comportamiento de Safari y de
+WebKit. Lo corregido está marcado abajo. **Ninguna decisión de arquitectura cambia**, y el
+código no ha necesitado ni una línea distinta: cambian los motivos, el entorno de prueba y
+dos cosas del alcance futuro, que en Android sí son posibles.
 
 ---
 
 ## 1. Objetivo
 
-Aplicación de teléfono para todo el ciclo de un vuelo en globo de aire caliente:
-planificación, operaciones e historial de vuelos.
+Aplicación de teléfono **Android** para todo el ciclo de un vuelo en globo de aire
+caliente: planificación, operaciones e historial de vuelos.
 
 Usuario único (Dídac), alumno de BPL en la ATO Ultramagic (Òdena), volando desde
 Igualada, Tàrrega y Agramunt. Diseñada para que un segundo piloto pueda usarla sin
@@ -25,7 +31,7 @@ casi todas las decisiones técnicas de abajo.
 | Decisión | Elección | Razón |
 |---|---|---|
 | Ambición | Personal, pero exportable | Sin cuentas ni backend multiusuario. No cablear nombres ni globos concretos |
-| Plataforma | PWA instalable en pantalla de inicio | Sin Xcode, sin cuenta de desarrollador, iteración inmediata |
+| Plataforma | PWA instalable en pantalla de inicio | Sin cadena de herramientas nativa, sin tienda de aplicaciones, iteración inmediata. En Android, Chrome la instala como WebAPK y el `beforeinstallprompt` deja pedir la instalación desde la propia app |
 | Conectividad | Online cuando la hay, caché local siempre | Sin cobertura en los campos de aterrizaje |
 | Stack | Vite, Preact, TypeScript | Componentes y tipos. Preact pesa 3 kB |
 | Persistencia | Documento JSON único vía `idb-keyval` | Con menos de 100 vuelos, Dexie e índices no compran nada |
@@ -39,8 +45,12 @@ casi todas las decisiones técnicas de abajo.
   de CDN. No podría llamar a open-meteo ni descargar teselas.
 - **Dexie e IndexedDB con índices.** Dimensionado para miles de registros. Con 100, el
   conjunto entero cabe en memoria y se filtra con `Array.filter`.
-- **Nativa iOS con SwiftUI.** Mejor acceso a sensores, pero exige Xcode, 99 USD al año y
-  un ciclo de iteración mucho más lento. El usuario es Python primero, no Swift.
+- **Nativa Android con Kotlin.** Mejor acceso a sensores y el único camino a la
+  grabación en segundo plano de verdad, pero exige Android Studio, aprender Kotlin y un
+  ciclo de iteración mucho más lento. El usuario es Python primero. **Corregido el
+  2026-09-02:** aquí ponía SwiftUI y Xcode, que no vienen a cuento con un Android. El
+  argumento no cambia, y de hecho pierde fuerza el de los 99 USD al año, porque publicar
+  en Play cuesta 25 USD una vez y ni siquiera hace falta para instalar la app.
 - **Backend propio.** Un servicio más que mantener para un solo usuario.
 - **Fotos dentro del documento.** Cinco fotos por vuelo son 1,5 GB en 100 vuelos.
 
@@ -426,16 +436,25 @@ escapa por defecto, y esa es la única barrera entre una nota de vuelo y el toke
 | open-meteo caído o sin red | La pantalla de viento muestra la última respuesta cacheada con su antigüedad, marcada como vieja |
 | Cuota de almacenamiento llena | Solo alcanzable acumulando trazas. Aviso y purga de las ya subidas |
 
-### Borrado de almacenamiento por parte de WebKit
+### Borrado de almacenamiento
 
-`WARNING:` WebKit borra el almacenamiento escribible por script de los sitios no visitados
-en siete días. Las apps añadidas a la pantalla de inicio quedan exentas, pero es una
-política que se ha movido varias veces.
-**ESTIMATE, verificar contra la documentación de WebKit antes de fiarse.**
+**Reescrito el 2026-09-02.** La versión anterior avisaba de la política de WebKit, que borra
+el almacenamiento de los sitios no visitados en siete días. **Eso es de Safari y aquí no
+aplica.**
 
-Mitigación: con la copia en GitHub, un borrado deja de ser pérdida de datos y pasa a ser un
-arranque lento, porque la app se rebaja el documento. Además se pide
-`navigator.storage.persist()` al instalar.
+En Chrome de Android el desalojo no va por tiempo sino por presión de almacenamiento: se
+tira lo de los orígenes menos usados cuando al dispositivo le falta sitio. Y un origen con
+almacenamiento **persistente** queda exento.
+**ESTIMATE, verificar contra la documentación de Chrome antes de fiarse. Lo único
+comprobado en el navegador es que `navigator.storage.persist` existe y es una función.**
+
+Práctica: se pide `navigator.storage.persist()` al instalar, que en una PWA instalada Chrome
+suele conceder sin preguntar, y se comprueba el resultado con `navigator.storage.persisted()`
+en lugar de darlo por hecho.
+
+El riesgo baja respecto a lo que decía este documento, pero la mitigación es la misma y no
+se relaja: con la copia en GitHub, un borrado deja de ser pérdida de datos y pasa a ser un
+arranque lento, porque la app se rebaja el documento.
 
 ---
 
@@ -459,10 +478,14 @@ estricta.
 **Migraciones de esquema:** cada versión antigua debe llegar a la actual sin perder campos.
 
 **Sin pruebas automatizadas de interfaz en la versión 1.** Para un usuario único el coste no
-compensa. En su lugar, lista corta de verificación manual **en el iPhone real y con la app
-instalada en la pantalla de inicio**, no en Chrome del Mac ni en el simulador. El service
-worker, la persistencia y la geolocalización se comportan distinto instalados que en una
-pestaña, y probar en el entorno equivocado da un aprobado falso.
+compensa. En su lugar, lista corta de verificación manual **en el Android real y con la app
+instalada desde Chrome**, no en Chrome de escritorio ni en el emulador. El service worker,
+la persistencia y la geolocalización se comportan distinto instalados que en una pestaña, y
+probar en el entorno equivocado da un aprobado falso.
+
+**Corregido el 2026-09-02:** aquí ponía iPhone. La lección se mantiene entera y de hecho se
+cobró sola: la interfaz se verificó primero en WebKit con emulación de iPhone, que era el
+motor equivocado, y hubo que repetirlo en Chromium con emulación de Pixel.
 
 ---
 
@@ -513,8 +536,13 @@ usuario contra el papel.
 
 - Fotos
 - NOTAM y espacio aéreo
-- Traza GPS grabada durante el vuelo (Safari suspende la app en segundo plano)
-- Altitud barométrica (Safari no expone el barómetro)
+- Traza GPS grabada durante el vuelo. **El motivo cambió el 2026-09-02.** Ya no es que la
+  plataforma lo impida: Android expone `navigator.wakeLock`, comprobado, así que con la
+  pantalla encendida y la app en primer plano una PWA sí puede grabar la traza. Sigue fuera
+  de la versión 1 por alcance, no por imposibilidad, y pasa a ser candidata de la fase 3
+- Altitud barométrica. **Ningún navegador la expone**, tampoco Chrome de Android: no existe
+  `Barometer`, comprobado. `PressureObserver` sí existe y **no sirve**, porque es la Compute
+  Pressure API, que mide presión de CPU y no presión atmosférica. Que nadie la confunda
 - Combustible
 - Multiusuario, cuentas, compartición
 - Cualquier contenido de checklist operacional

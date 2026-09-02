@@ -15,12 +15,14 @@ const PESTANAS: { name: TabName; label: string; icon: IconName; route: Route }[]
 /**
  * Las cinco pestañas.
  *
- * Enlaces de verdad y no botones: asi el pulsado largo del iPhone ofrece
- * copiar el enlace, y el hash queda en el historial para que la flecha de
- * atras funcione.
+ * Enlaces de verdad y no botones: asi el pulsado largo ofrece copiar el enlace,
+ * y el hash queda en el historial para que el boton de atras de Android
+ * funcione, que ahi es un boton del sistema y no un gesto opcional.
  *
- * El relleno inferior sale de la barra de gestos del iPhone. Sin el, la
- * pestaña de Ajustes queda debajo de la raya y no se puede pulsar.
+ * El relleno inferior es por si el navegador declara un `safe-area-inset`. En
+ * una PWA instalada de Android la barra de navegacion queda fuera del viewport
+ * y el inset vale cero, asi que no estorba, pero cubre el caso de pestaña
+ * normal y el de pantalla con recorte.
  */
 export function Tabs({ actual }: { actual: TabName }) {
   return (

@@ -149,7 +149,8 @@ body {
   cursor: pointer;
 }
 
-/* Un campo de texto que hereda del tema. Safari le pone fondo blanco si no. */
+/* Un campo de texto que hereda del tema. Sin esto los navegadores le ponen su
+   propio fondo, que en tema oscuro sale blanco. */
 input, select, textarea {
   font: inherit;
   color: var(--text);
@@ -159,7 +160,9 @@ input, select, textarea {
   padding: 10px 12px;
   width: 100%;
 }
-/* 16 px es el umbral por debajo del cual Safari hace zoom al enfocar. */
+/* 16 px es el umbral por debajo del cual algunos navegadores moviles hacen zoom
+   al enfocar. Chrome de Android no lo hace con el viewport bien puesto, pero el
+   coste de respetarlo es cero. */
 input, select, textarea { font-size: 16px; }
 textarea { min-height: 76px; resize: vertical; }
 

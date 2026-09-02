@@ -19,7 +19,7 @@ import { pushDocument, restoreDocument } from '../sync/logbook'
  * En que punto del arranque estamos.
  *
  * `sin_documento` no es un error: es el primer uso, y tambien lo que queda tras
- * un borrado de almacenamiento de WebKit. La app ofrece empezar de cero o
+ * un desalojo de almacenamiento del navegador. La app ofrece empezar de cero o
  * restaurar de GitHub. Ver el spec §8.
  */
 export type Arranque = 'cargando' | 'sin_documento' | 'listo'
@@ -136,9 +136,10 @@ export function StoreProvider({ children }: { children: ComponentChildren }) {
     })()
   }, [])
 
-  // Safari mata la app al pasar a segundo plano sin previo aviso, y un
-  // temporizador de 800 ms pendiente se pierde con ella. `pagehide` y
-  // `visibilitychange` son los dos unicos avisos fiables en iOS.
+  // El navegador puede descargar la pagina al pasar a segundo plano sin previo
+  // aviso, y un temporizador de 800 ms pendiente se pierde con ella.
+  // `visibilitychange` es el unico aviso fiable en movil, y `pagehide` cubre el
+  // cierre de la pestaña. `beforeunload` no vale: en movil no siempre dispara.
   useEffect(() => {
     const alSalir = () => {
       void saverRef.current.flush()

@@ -29,7 +29,7 @@ export function TextField(
     onChange: (v: string) => void
     hint?: string
     placeholder?: string
-    /** `date` y `time` abren los selectores nativos del iPhone, mejores que cualquiera propio. */
+    /** `date` y `time` abren los selectores nativos de Android, mejores que cualquiera propio. */
     type?: 'text' | 'date' | 'time' | 'number'
   },
 ) {

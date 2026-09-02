@@ -5,7 +5,7 @@
 
 ## Qué es
 
-PWA instalable en el iPhone para el ciclo completo de un vuelo en globo: registro de
+PWA instalable en el **teléfono Android** para el ciclo completo de un vuelo en globo: registro de
 vuelos, planificación y operaciones. Usuario único (Dídac, alumno de BPL en Ultramagic),
 diseñada para que un segundo piloto la pueda usar sin reescribirla.
 
@@ -41,9 +41,14 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   Operar quedan como esbozo navegable. **116 pruebas nuevas** de los módulos puros de
   `ui/` y de `sync/`, ninguna de componentes. Total del proyecto: 290, y las 174 de antes
   siguen intactas.
-- **Comprobado en WebKit** con emulación de iPhone, no solo en Chrome: primer uso,
-  persistencia tras recargar, frontera de grupo en 3.400 y 3.401 m³, ciclo completo de
-  cerrar vuelo y rematarlo, y los dos temas.
+- **Comprobado en navegador**: primer uso, persistencia tras recargar, frontera de grupo en
+  3.400 y 3.401 m³, ciclo completo de cerrar vuelo y rematarlo, y los dos temas.
+  `CRITICAL:` la primera pasada se hizo en WebKit con emulación de iPhone, que era **el
+  motor equivocado**. Repetida el 02/09/2026 en Chromium con emulación de Pixel, 360 px de
+  ancho. La maquetación aguanta a 360, más estrecho que los 390 de las maquetas, y todo lo
+  que usa la interfaz existe en Android: `crypto.randomUUID`, `navigator.storage.persist`,
+  geolocalización, `color-mix`, `100dvh`, `accent-color` y los selectores nativos de fecha
+  y hora.
 - **Seguimiento del curso retirado** el 02/09/2026. Fuera el panel de progreso hacia el
   BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
   cuaderno. Ver spec §5.
@@ -111,7 +116,7 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 
 1. **Empaquetado PWA** y despliegue a GitHub Pages con el `dist/` comiteado. Incluye
    `navigator.storage.persist()`, que solo tiene sentido con la app instalada.
-2. **Pasar la lista de verificación del iPhone** de abajo, que hoy no se puede porque la
+2. **Pasar la lista de verificación del Android** de abajo, que hoy no se puede porque la
    app todavía no está servida.
 3. Crear el repositorio privado `bpl-logbook` y el token de grano fino.
 4. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
@@ -130,6 +135,10 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 - **La app no sigue el curso.** No hay contadores de BFCL.130. El acumulado de
   `totals.ts` es un dato llano que cuenta todos los vuelos, y la vigencia de `currency.ts`
   es el único juicio reglamentario, y solo se activa con licencia emitida.
+- **El teléfono es Android.** Corregido el 02/09/2026: el spec justificaba media docena de
+  decisiones con Safari y WebKit, y estaba mal. No cambió ni una línea de código, pero sí
+  los motivos, el entorno de prueba y dos cosas del alcance: la traza GPS en vuelo pasa a
+  ser posible, y el borrado de almacenamiento a los siete días no aplica.
 - **Enrutado por hash, escrito a mano.** GitHub Pages es estático: con la API de historia,
   recargar en `/bpl-app/vuelos` da un 404. Por eso se desinstaló `preact-iso`.
 - **Las fuentes se sirven del propio origen**, vía `@fontsource`. La app tiene que arrancar
@@ -170,22 +179,30 @@ ser la cara a la barata:
 `CRITICAL:` El contenido se **transcribe**, no se escribe. Una checklist de globo es un
 documento de seguridad.
 
-## Lista de verificación en el iPhone, pendiente
+## Lista de verificación en el Android, pendiente
 
-`CRITICAL:` el spec §9 exige probar **en el iPhone real y con la app añadida a la pantalla
-de inicio**, no en Chrome del Mac ni en el simulador. El service worker, la persistencia y
+`CRITICAL:` el spec §9 exige probar **en el Android real y con la app instalada desde
+Chrome**, no en Chrome de escritorio ni en el emulador. El service worker, la persistencia y
 la geolocalización se comportan distinto instalados que en una pestaña. No se puede hacer
 hasta que la app esté desplegada.
 
 - [ ] La app arranca sin cobertura, con el modo avión puesto.
-- [ ] El teclado no tapa el campo que se está escribiendo en el detalle.
+- [ ] `navigator.storage.persisted()` devuelve `true` con la app instalada. Comprobarlo, no
+      darlo por hecho: `persist()` puede conceder o no.
+- [ ] El teclado no tapa el campo que se está escribiendo en el detalle, y el `100dvh` no
+      deja la barra de pestañas debajo del teclado.
 - [ ] `confirm()` y `alert()` de los borrados funcionan de verdad y no devuelven `false` sin
       avisar. Ya pasó dentro de un iframe de artefacto, aquí no debería, pero se comprueba.
 - [ ] La geolocalización del cierre rápido pide permiso y, si se deniega, la pantalla sigue
       siendo usable.
 - [ ] El tema claro se lee al sol, y el ámbar sobre fondo claro es `#8a5a00` y no `#fab219`.
-- [ ] Al cerrar la app desde el conmutador y volver, el último cambio sigue guardado.
-- [ ] La barra de pestañas no queda debajo de la raya de gestos.
+      El tema lo manda el ajuste del sistema de Android, que se conmuta sin reinstalar.
+- [ ] Al sacar la app de recientes y volver, el último cambio sigue guardado.
+- [ ] El **botón de atrás del sistema** sale de las pantallas interiores y no cierra la app
+      desde el detalle. Es un botón de sistema, no un gesto opcional como en iOS, así que
+      esto se usa constantemente.
+- [ ] La instalación desde Chrome deja un icono de verdad, no un acceso directo, y abre sin
+      barra de direcciones.
 
 ## La lección de las cuatro auditorías
 

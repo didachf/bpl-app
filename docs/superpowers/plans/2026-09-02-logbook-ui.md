@@ -15,6 +15,13 @@ para poder probarla con Vitest en Node.
 **Herramientas:** Preact 10, TypeScript, Vite, `idb-keyval`, Vitest. Sin librería de
 componentes, sin CSS-in-JS, sin gestor de estado.
 
+`WARNING:` **este plan se escribió y se ejecutó creyendo que el teléfono era un iPhone.**
+El 2026-09-02, ya terminado, Dídac aclaró que es un **Android**. Se deja tal cual como
+registro de lo que se hizo. Lo que hay que leer corregido está en el spec, enmendado ese
+mismo día, y en `STATUS.md`. En concreto **no valen** de este documento: la lista de
+verificación de la Task 20, que era del iPhone, y las justificaciones que citan a Safari.
+Ninguna línea de código cambió por esto.
+
 ---
 
 ## Alcance de este plan

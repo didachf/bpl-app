@@ -1,6 +1,6 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-09-02**. Rama `feat/logbook-nucleo`, sin fusionar a `main`.
+Última sesión: **2026-09-03**. Rama `feat/logbook-nucleo`, sin fusionar a `main`.
 
 ## Qué es
 
@@ -26,13 +26,17 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
 
 ## Hecho
 
-- **Núcleo del logbook completo y probado.** 193 pruebas, `tsc` y `build` limpios.
-  Tipos, contadores de BFCL.130 y BFCL.160, esquema y migraciones, persistencia local con
-  `idb-keyval`, cliente de la API de GitHub con detección de conflicto.
+- **Núcleo del logbook completo y probado.** 174 pruebas, `tsc` y `build` limpios.
+  Tipos, acumulado del cuaderno, contadores de vigencia de BFCL.160, esquema y migraciones,
+  persistencia local con `idb-keyval`, cliente de la API de GitHub con detección de
+  conflicto.
 - **Cuatro auditorías adversariales** del dominio contra el Balloon Rulebook en PDF.
   Encontraron 10, 11, 9 y 4 defectos. Todos reparados.
 - **Revisión de seguridad.** Tres hallazgos, el bajo cerrado, los otros dos documentados
   en el spec §7.
+- **Seguimiento del curso retirado** el 03/09/2026. Fuera el panel de progreso hacia el
+  BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
+  cuaderno. Ver spec §5.
 - **Dirección visual elegida:** Instrumento. Oscuro por defecto, IBM Plex Sans y Mono,
   cifras monoespaciadas. Cinco pantallas maquetadas en oscuro y dos en claro.
 
@@ -55,15 +59,19 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
 - **Las horas se manejan en minutos** dentro del dominio. Formatear es cosa de la interfaz.
 - **El ámbar `#fab219` nunca rellena una barra.** Da 1,79 de contraste sobre fondo claro.
   En tema claro pasa a `#8a5a00`.
+- **La app no sigue el curso.** No hay contadores de BFCL.130. El acumulado de
+  `totals.ts` es un dato llano que cuenta todos los vuelos, y la vigencia de `currency.ts`
+  es el único juicio reglamentario, y solo se activa con licencia emitida.
 - **Nunca `dangerouslySetInnerHTML`.** El escape de Preact es la única barrera entre una
   nota de vuelo y el token de GitHub.
 
 ## Lo que la app NO comprueba, y lo dice en pantalla
 
-Declarado en `notModelled` y visible en Ajustes: que el curso sea en una ATO o DTO, los
-nueve exámenes teóricos, la habilitación de noche (BFCL.210), la recencia de vuelo cautivo
-(BFCL.200(d)), las 3 h por clase adicional (BFCL.160(b)) y las equivalencias comerciales
-(BFCL.160(f)).
+Declarado en `notModelled` y visible en Ajustes: la habilitación de noche (BFCL.210), la
+recencia de vuelo cautivo (BFCL.200(d)), las 3 h por clase adicional (BFCL.160(b)) y las
+equivalencias comerciales (BFCL.160(f)).
+
+Ya no aplica lo del curso en una ATO ni los nueve exámenes: la app no sigue el curso.
 
 ## Hallazgo que cambia el orden de las fases
 

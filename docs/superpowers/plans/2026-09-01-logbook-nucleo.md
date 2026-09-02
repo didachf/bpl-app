@@ -727,6 +727,10 @@ git commit -m "test(domain): constructores de documentos y vuelos para pruebas"
 
 ## Task 6: Contadores de progreso hacia el BPL (BFCL.130)
 
+> **RETIRADA el 02/09/2026.** Dídac no quiere seguimiento del curso en la app, así que
+> `progress.ts` y sus 31 pruebas se han borrado. La tarea se conserva aquí por si algún día
+> se recupera: el código está en el historial de git. Ver spec §5.
+
 Requisitos verificados contra el Balloon Rulebook, BFCL.130(b):
 16 h de instrucción, de ellas 12 h de doble mando, 10 inflados, 20 despegues y aterrizajes, y un vuelo solo supervisado de al menos 30 minutos.
 
@@ -2020,8 +2024,9 @@ La interfaz va en un documento aparte, `2026-09-01-logbook-ui.md`, porque este y
 | §4 grupo derivado del volumen | Tarea 2 |
 | §4 duración y anulación manual | Tarea 3 |
 | §4 trazas fuera del documento | Campo `trackRef` en la tarea 1. La escritura del fichero va en el plan de interfaz |
-| §5 panel de progreso BFCL.130 | Tarea 6 |
 | §5 panel de vigencia BFCL.160 | Tarea 7 |
+| §5 acumulado del cuaderno | `totals.ts`, añadido el 02/09/2026 fuera de este plan |
+| §5 progreso hacia el BPL | RETIRADO el 02/09/2026, ver spec §5 |
 | §6 pantallas | Plan de interfaz |
 | §7 sincronización y conflictos | Tarea 11 |
 | §8 modos de fallo, documento corrupto | Tareas 9 y 10 |

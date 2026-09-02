@@ -195,39 +195,42 @@ aparte, nunca dentro del documento.
 
 ---
 
-## 5. Los dos paneles de contadores
+## 5. Acumulado y vigencia
 
-Es la razón por la que la app gana a una hoja de cálculo. Ambos se calculan con funciones
-puras en `domain/`.
+### El seguimiento del curso NO se hace aquí
 
-### Progreso hacia el BPL, contra BFCL.130(b)
+**Retirado el 2026-09-02, por decisión de Dídac.** La primera versión llevaba un panel de
+progreso hacia el BPL, con los contadores de BFCL.130(b): 16 h de instrucción, 12 de doble
+mando, 10 inflados, 20 despegues y aterrizajes, y el vuelo solo supervisado.
 
-Texto verificado contra el Balloon Rulebook local:
+Fuera, y con él `src/domain/progress.ts` y sus 31 pruebas. Motivo: el seguimiento del curso
+es útil unos meses y después es ruido para el resto de la vida del cuaderno, y el temario y
+los exámenes ya se llevan en el sistema de estudio del BPL, que es otro sitio.
 
-| Requisito | Umbral |
+Consecuencia de diseño: durante la fase de alumno **no hay panel de contadores**. Inicio
+enseña el acumulado, que es un dato llano.
+
+Si algún día se quiere recuperar, está en el historial de git, en el commit anterior al que
+lo borró.
+
+### Acumulado del cuaderno
+
+`src/domain/totals.ts`. AMC1 BFCL.050(a)(2) exige anotar por cada vuelo el "total time of
+flight" y el "accumulated total time of flight". Esto es lo segundo: vuelos, minutos,
+despegues, aterrizajes e inflados.
+
+**Es un acumulador, no un juez.** No filtra por clase de globo, ni por grupo, ni por firma,
+ni por quién supervisaba. Un vuelo que la vigencia excluye sigue siendo un vuelo volado. La
+distinción con `currency` es deliberada y está probada:
+
+| Pregunta | Función |
 |---|---|
-| Instrucción de vuelo | 16 h |
-| De ellas, doble mando | 12 h |
-| Inflados | 10 |
-| Despegues y aterrizajes | 20 |
-| Vuelo solo supervisado y firmado | 1, de al menos 30 min |
+| Cuánto has volado | `logbookTotals` |
+| Qué cuenta legalmente hoy | `currency` |
 
-**Qué vuelos cuentan.** Enmendado el 2026-09-02 tras la auditoría. Antes contaba cualquier
-vuelo, que era un falso positivo de los caros. Un vuelo aporta a estos contadores solo si:
-
-1. **Es del globo correcto.** BFCL.130(b) dice "at least 16 hours of flight instruction **in
-   either hot-air balloons that represent group A of that class, or gas balloons**". Así que
-   cuenta si el globo es de gas, o si es de aire caliente **de grupo A**, es decir hasta
-   3.400 m³ de envolvente. El crédito para horas fuera del grupo A que daba el Artículo
-   3c.1(b) era transitorio y expiró el 8 de abril de 2021.
-2. **Está firmado por el instructor**, cuando la función lo requiere. AMC1
-   BFCL.050(b)(1)(ii) permite anotar el solo supervisado como PIC "provided that ... the
-   logbook entry is **signed by the supervising instructor**". Y AMC1 BFCL.160(a)(1)(ii)(c)
-   deja claro por qué importa: si el instructor considera que el alumno no estuvo a la
-   altura, "they should **not** sign the logbook". Un vuelo sin firmar es exactamente el
-   vuelo que el instructor no dio por bueno.
-3. **Tiene supervisor identificado**, si se anota como solo supervisado. BFCL.130(b)(3) dice
-   "one **supervised** solo flight".
+Lo único que descarta son los vuelos con fecha futura, que no son un criterio reglamentario
+sino un dato mal metido. Lleva bandera `partial` cuando algún vuelo está incompleto o tiene
+las horas incoherentes.
 
 ### Vigencia, contra BFCL.160(a)
 
@@ -313,8 +316,12 @@ Cinco pestañas inferiores: Inicio, Vuelos, Planificar, Operar y Ajustes. Vuelo 
 es pestaña, se abre desde Vuelos y desde Inicio.
 
 ### Inicio
-Los dos paneles de contadores arriba. Botón grande de nuevo vuelo. Indicador de
-sincronización. Lista de vuelos incompletos pendientes de rematar.
+El acumulado del cuaderno arriba, como número protagonista: vuelos y horas totales. Botón
+grande de cerrar vuelo. Indicador de sincronización. Lista de vuelos incompletos pendientes
+de rematar.
+
+El panel de vigencia aparece **solo cuando hay licencia emitida**. Hasta entonces Inicio no
+lleva ningún contador reglamentario, a propósito.
 
 ### Vuelos
 Lista en orden cronológico inverso. Tarjeta por vuelo: fecha, globo, sitio, duración,

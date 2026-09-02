@@ -83,7 +83,7 @@ STATUS las enumera y el plan las ata con pruebas, no con buena voluntad:
 | `src/ui/components/Icon.tsx` | Los SVG de las maquetas, uno por nombre |
 | `src/ui/components/Tabs.tsx` | Barra inferior de cinco pestañas |
 | `src/ui/components/Screen.tsx` | Armazón de pantalla: cabecera, cuerpo con scroll, pestañas |
-| `src/ui/components/Field.tsx` | Fila de dato, texto, número, selector, contador, interruptor |
+| `src/ui/components/Field.tsx` | Texto, número, selector, contador, interruptor, fila de navegación |
 | `src/ui/components/Notice.tsx` | Avisos en tres tonos |
 | `src/ui/screens/Inicio.tsx` | Acumulado, incompletos, vigencia, botón de cerrar |
 | `src/ui/screens/Vuelos.tsx` | Lista y filtros |
@@ -2554,23 +2554,6 @@ Crea `src/ui/components/Field.tsx`:
 // y el token de GitHub, que viven en el mismo origen. Ver el spec §7.
 import type { ComponentChildren } from 'preact'
 import { Icon } from './Icon'
-
-const FILA = `
-  display: flex; align-items: baseline; gap: 12px;
-  padding: 11px 0; border-bottom: 1px solid var(--border);
-`
-
-/** Fila de solo lectura: etiqueta a la izquierda, valor a la derecha. */
-export function Row(
-  { label, children, last }: { label: string; children: ComponentChildren; last?: boolean },
-) {
-  return (
-    <div style={last === true ? `${FILA} border-bottom: none;` : FILA}>
-      <span class="lbl dim" style="flex-shrink: 0;">{label}</span>
-      <span style="flex-grow: 1; text-align: right; font-size: 15px;">{children}</span>
-    </div>
-  )
-}
 
 /** Envoltorio de un campo editable: etiqueta encima, control debajo, pista opcional. */
 export function Labeled(

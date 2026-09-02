@@ -1,7 +1,7 @@
 # Diseño: app de vuelo en globo (BPL)
 
 **Fecha:** 2026-09-01
-**Autor:** Dídac (didac@highfrontier.es), con Claude
+**Autor:** Dídac, con Claude
 **Estado:** aprobado, plan del núcleo y plan de la interfaz ejecutados
 
 **Enmendado el 2026-09-02:** el teléfono es **Android**, no iPhone. La primera versión de

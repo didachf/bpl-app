@@ -345,17 +345,124 @@ Formulario partido en los dos bloques, reglamentario y operacional, plegables. V
 que **avisa pero no bloquea**, por ejemplo hora de llegada anterior a la de salida.
 
 ### Planificar
+
+**Reescrito el 2026-09-02 tras investigar con fuentes primarias.** La versión anterior de
+esta sección era, en tres puntos, técnicamente incorrecta. Dídac señaló que esta pantalla es
+la parte principal de la app, y la investigación le dio la razón: es la que se usa antes de
+cada vuelo y la que decide si se vuela.
+
 En fase 1 contiene solo el viento. La deriva llega en fase 2, en esta misma pantalla.
-
-Mapa (Leaflet, teselas OSM, **solo online en fase 1**). Se toca cualquier punto y devuelve
-la previsión de viento a 925 y 900 hPa de los seis modelos de open-meteo, hora a hora.
-
-Los seis modelos, ya validados en `trayectoria_globo.py`: `icon_eu`, `gfs_seamless`,
-`gem_seamless`, `ukmo_global_deterministic_10km`, `meteofrance_arpege_europe`,
-`ecmwf_ifs025`.
 
 Punto libre y no solo sitios guardados, porque **el punto de despegue se decide cada día en
 función del viento**, que es justamente lo que esta pantalla informa.
+
+#### Los niveles: 925 y 900 hPa NO son la banda de gobierno
+
+Corregido. La primera versión pedía solo 925 y 900 hPa, que son los dos niveles del script
+`trayectoria_globo.py`. Sirven para la deriva, pero **no para dirigir el globo**.
+
+Un globo no se dirige: se elige altura, y a cada altura sopla un viento distinto. La técnica
+documentada por el FAA Balloon Flying Handbook se hace con lecturas de globo piloto a **150,
+300 y 450 ft AGL**, o sea de 45 a 140 m, y produce una «V» de rumbos posibles cuya apertura
+es el margen de gobierno. Sobre Igualada, con 329 m de elevación, 925 hPa queda a unos 470 m
+AGL y 900 hPa a unos 700 m: por encima de toda esa banda.
+
+Niveles que se piden, y para qué sirve cada uno:
+
+| Nivel | Altura aproximada | Para qué |
+|---|---|---|
+| 10 m AGL | 10 m | El viento en superficie, que es contra el que se compara el límite del manual |
+| 80, 120 y 180 m AGL | 80 a 180 m | **La banda de gobierno.** Es donde se decide el rumbo |
+| 950 hPa | ~500 m AMSL | Rellena el hueco entre la superficie y 925 |
+| 925 hPa | ~850 m AMSL | Techo de un vuelo de instrucción normal |
+| 900 hPa | ~1.090 m AMSL | El «viento en altura» de la V del gobierno |
+
+Pedir los niveles bajos **no cuesta nada**: van en la misma llamada.
+
+La altura de los niveles de presión **se lee, no se supone**. `geopotential_height_<nivel>hPa`
+da la altura real de cada nivel para cada modelo y cada hora. Los 828 y 1064 m del script son
+atmósfera estándar, y medidos sobre Catalunya el 2026-09-02 salieron 849 y 1086 m.
+
+#### La incertidumbre: contar modelos que coinciden NO es una probabilidad
+
+Corregido, y es lo que más cambia respecto a la maqueta, que enseña «6 de 6» y «2 de 6».
+
+Seis modelos operativos distintos forman lo que la literatura llama un *poor man's ensemble*.
+Sus miembros no son intercambiables y el conjunto no está calibrado, así que **la fracción de
+modelos que coinciden no es la probabilidad de que acierten**. Un conjunto solo produce
+probabilidad si es fiable, es decir si a lo largo de muchas previsiones un suceso pronosticado
+al 70 % ocurre el 70 % de las veces, y eso aquí no se ha verificado ni se puede.
+
+Lo que sí se puede afirmar es **desacuerdo entre modelos**, y con una advertencia: es una
+**cota inferior** de la incertidumbre real, porque no ve el error que los seis comparten.
+
+Cómo se calcula, con método citable en lugar de inventado:
+
+- Componentes u y v por convención meteorológica, `u = -V·sin(dir)`, `v = -V·cos(dir)`, y
+  promediado vectorial y no escalar, que es lo que exige la Guía CIMO de la OMM.
+- **Dirección media ponderada por velocidad**, Farrugia y Micallef 2006, ecuaciones 5 a 7. El
+  rumbo de un modelo que da 2 kt no puede pesar lo mismo que el de uno que da 12 kt.
+- **Longitud resultante media `R`**, ecuación 4, y **varianza circular `1 − R`**. `R` va de 0
+  a 1: uno es acuerdo total.
+- **Abanico de rumbos**, el arco menor que contiene los seis, que no se rompe al pasar por
+  360° como sí lo hace una lista ordenada.
+- Para la desviación angular, el estimador Y3 de Yamartino. **No** el de Mardia, que diverge
+  cuando `R` tiende a cero.
+
+`WARNING:` **no existe en la literatura ningún umbral de `R` que defina «los modelos
+coinciden».** El umbral que use esta app es convención del proyecto y la pantalla lo dice con
+esas palabras.
+
+Se enseña: el abanico de rumbos, la banda de velocidad de mínima a máxima, y el desacuerdo.
+Nunca un porcentaje, ni una cuenta de modelos, ni la palabra «probabilidad».
+
+#### El límite de viento sale del manual del globo, no del reglamento
+
+`CRITICAL:` **Part-BFCL no contiene ninguna cifra de viento.** Ni para pilotos con licencia
+ni para alumnos. BFCL.125 solo dice que el alumno no vuela solo sin autorización y
+supervisión de un FI(B). La app **nunca** presenta un límite de viento como si fuera
+reglamentario.
+
+El límite es del Manual de Vuelo, y es **por envolvente**:
+
+| Fuente | Límite |
+|---|---|
+| Ultramagic FM04 §2.2, viento en superficie al despegue | **15 kt**, aprobado por EASA, obligatorio |
+| Ultramagic Suplemento 34, envolvente N-500 | 12 kt |
+| El mismo, vuelo cautivo | 10 kt |
+| Práctica habitual, FAA Balloon Flying Handbook | menos de **7 kt** |
+
+Que el manual base diga 15 y el suplemento 12 significa que **el número no se cablea**: es un
+campo del catálogo de globos, con 15 kt de valor por defecto para la serie normal de
+Ultramagic y editable.
+
+Enseñar solo el 15 sería peligroso, porque la práctica real está a menos de la mitad. Se
+enseñan los dos, etiquetados por su naturaleza, más un **mínimo personal** que pone el piloto,
+que es lo que el propio FAA contempla.
+
+La actividad térmica no es una preferencia: FM04 §4.10.4 **prohíbe** volar en ella
+intencionadamente. Y la ventana de vuelo son las dos primeras horas tras el orto.
+
+#### Lo que impone la API, medido y no supuesto
+
+- CORS abierto y sin clave: se llama desde el navegador.
+- **Cada coordenada consume cuota por separado.** Por eso la fase 1 pide **un solo punto**, el
+  que se toca en el mapa, con todos sus niveles. La rejilla de 49 puntos del script solo hace
+  falta para la deriva, que es fase 2.
+- Los seis modelos van en **una sola llamada** con `models=` separados por comas. En llamadas
+  sueltas cuesta casi el triple. Las claves de la respuesta llevan sufijo del modelo.
+- `ecmwf_ifs025` **no tiene 900 hPa**, y no da error: devuelve 200, nulos, y la unidad
+  `"undefined"`. Hay que comprobar `hourly_units[clave] !== "undefined"` y **enseñar la
+  ausencia**, no taparla.
+- Atribución obligatoria por CC-BY 4.0: enlace a open-meteo.com junto al viento. Los datos del
+  Met Office británico son **CC-BY-SA**, no CC-BY, y eso se cita aparte.
+
+#### Lo que ninguna previsión sustituye
+
+El globo piloto da viento real, en el sitio y en el momento, que ninguna previsión puede dar.
+El aviso `no sustituye al globo piloto` que ya lleva el script sigue en pantalla, y ahora con
+fuente: el propio FAA dice que las previsiones son un punto de partida y no el final de la
+planificación.
 
 ### Operar
 
@@ -560,5 +667,13 @@ usuario contra el papel.
 | Grupos de globo por volumen | Balloon Rulebook, definición de grupos de globos de aire caliente |
 | Coordenadas de los tres sitios | `Pilot Globus/trayectoria_globo.py` |
 | Modelos meteorológicos | open-meteo, ya en uso y validado en `trayectoria_globo.py` |
+| Técnica de gobierno, ventana de la mañana, globo piloto | FAA Balloon Flying Handbook, FAA-H-8083-11 |
+| Límite de viento en superficie al despegue | Ultramagic FM04 §2.2 rev. 18, y Suplemento 34 §34.2.2 |
+| Prohibición de volar en térmicas | Ultramagic FM04 §4.10.4 |
+| Ausencia de límite de viento reglamentario | BFCL.125, Reglamento (UE) 2018/395, Anexo III |
+| Estadística circular del viento | Farrugia y Micallef, *Meteorological Applications* 13, 29-41 (2006), doi:10.1017/S1350482705001982, y Yamartino, *J. Climate Appl. Meteor.* 23(9), 1362-1366 (1984) |
+| Promediado vectorial y no escalar | Guía CIMO de la OMM, WMO-No. 8 |
+| Por qué un conjunto de seis modelos no da probabilidad | *Mon. Wea. Rev.* 129, 2461 (2001), y COSMO, guías de verificación de conjuntos |
+| Cómo presentar incertidumbre sin engañar | National Academies, *Completing the Forecast* (2006), cap. 4 |
 
 Documento base: `Pilot Globus/02_Material_Estudio/EASA_Easy_Access_Rules_for_Balloons_Balloon_Rulebook.pdf`

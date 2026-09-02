@@ -58,6 +58,10 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   armazón entero precacheado, tipografías incluidas. Verificado **servido de verdad y en
   vivo**: el service worker se activa con el scope correcto y, con la red cortada, la app
   arranca entera y las tipografías salen de la caché.
+- **Instalada en el Android de Dídac** el 02/09/2026. La opción de Chrome vive escondida en
+  el menú de tres puntos y se llama distinto según la versión, así que Inicio lleva ahora un
+  aviso de **instalar** con su botón, y unas instrucciones a mano para cuando el navegador
+  no dispara `beforeinstallprompt`. Ver `src/ui/components/Instalar.tsx`.
 - **Seguimiento del curso retirado** el 02/09/2026. Fuera el panel de progreso hacia el
   BPL y `src/domain/progress.ts` con sus 31 pruebas. Inicio enseña el acumulado del
   cuaderno. Ver spec §5.
@@ -223,8 +227,8 @@ hasta que la app esté desplegada.
 - [ ] El **botón de atrás del sistema** sale de las pantallas interiores y no cierra la app
       desde el detalle. Es un botón de sistema, no un gesto opcional como en iOS, así que
       esto se usa constantemente.
-- [ ] La instalación desde Chrome deja un icono de verdad, no un acceso directo, y abre sin
-      barra de direcciones.
+- [x] La instalación desde Chrome deja un icono de verdad, no un acceso directo, y abre sin
+      barra de direcciones. **Hecho el 02/09/2026.**
 
 ## La lección de las cuatro auditorías
 

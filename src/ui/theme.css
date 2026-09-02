@@ -132,6 +132,13 @@ body {
   cursor: pointer;
 }
 
+/* Un boton deshabilitado tiene que parecerlo. Sin esto, el de restaurar del
+   primer uso se ve azul intenso y da a entender que se puede pulsar. */
+.primary:disabled, .secondary:disabled, .linkish:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
 .linkish {
   border: none;
   background: none;

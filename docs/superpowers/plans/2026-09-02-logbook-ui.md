@@ -268,6 +268,13 @@ body {
   cursor: pointer;
 }
 
+/* Un boton deshabilitado tiene que parecerlo. Sin esto, el de restaurar del
+   primer uso se ve azul intenso y da a entender que se puede pulsar. */
+.primary:disabled, .secondary:disabled, .linkish:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
 .linkish {
   border: none;
   background: none;
@@ -5692,7 +5699,7 @@ export function PanelVigencia(
               width={2.4}
             />
             <span class="lbl" style="flex-grow: 1; min-width: 0;">{i.label}</span>
-            <span class="num lbl muted">{i.valor}</span>
+            <span class="num lbl muted" style="white-space: nowrap;">{i.valor}</span>
           </div>
         ))}
       </div>

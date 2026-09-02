@@ -1,8 +1,0 @@
-- generic [ref=e3]:
-  - generic [ref=e4]:
-    - generic [ref=e5]: Logbook BPL
-    - heading "No hay ningun cuaderno en este telefono" [level=1] [ref=e6]
-  - paragraph [ref=e7]: O es la primera vez que abres la app, o el navegador ha borrado el almacenamiento. Si ya tienes copia en GitHub, restaurala. Si no, empieza de cero.
-  - button "Restaurar desde GitHub" [disabled] [ref=e8]
-  - generic [ref=e9]: No hay token guardado en este telefono, asi que no hay de donde restaurar.
-  - button "Empezar de cero" [ref=e10] [cursor=pointer]

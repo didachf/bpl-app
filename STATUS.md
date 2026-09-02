@@ -3,6 +3,10 @@
 Última sesión: **2026-09-02**. Siguiente tarea: **crear `bpl-logbook` y el token**, y pasar
 la lista de verificación en el móvil. Todo fusionado a `main` y publicado.
 
+**Planificar ya funciona con datos reales.** Es, según Dídac, la pantalla principal de la
+app. Se investigó con fuentes primarias antes de escribirla y salieron tres errores de
+fondo en el spec, corregidos en §6.
+
 **App en vivo: https://didachf.github.io/bpl-app/**
 
 ## Qué es
@@ -26,6 +30,7 @@ demás y está enmendado tres veces.
 | Maquetas de pantalla | `design/*.dc.html`, nueve artboards, publicadas en el enlace de abajo |
 | Interfaz | `src/ui/`, doce rutas, nueve pantallas de verdad y dos esbozos |
 | Empaquetado PWA | `vite.config.ts`, iconos en `public/`, `src/ui/install.ts` |
+| Viento y modelos | `src/services/`, y `src/ui/windLimits.ts` para el juicio |
 | Despliegue | rama `gh-pages`, con `git subtree push --prefix dist origin gh-pages` |
 
 Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d173082a6
@@ -58,6 +63,12 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   armazón entero precacheado, tipografías incluidas. Verificado **servido de verdad y en
   vivo**: el service worker se activa con el scope correcto y, con la red cortada, la app
   arranca entera y las tipografías salen de la caché.
+- **Planificar, con viento real.** Mapa de Leaflet con punto libre, siete niveles de abajo
+  arriba, abanico de rumbos, banda de velocidad y el juicio del viento en superficie contra
+  el manual del globo. Comprobado contra la API de verdad sobre Igualada.
+- **Esquema 2 del documento.** `maxSurfaceWindKt` en `Balloon` y `personalWindLimitKt` en
+  `Pilot`, con migración y prueba primero. Es el único hueco de dominio que la interfaz ha
+  necesitado abrir.
 - **Instalada en el Android de Dídac** el 02/09/2026. La opción de Chrome vive escondida en
   el menú de tres puntos y se llama distinto según la versión, así que Inicio lleva ahora un
   aviso de **instalar** con su botón, y unas instrucciones a mano para cuando el navegador
@@ -161,6 +172,17 @@ tendrías que elegir versión. No fusiona nunca.
 - **La app no sigue el curso.** No hay contadores de BFCL.130. El acumulado de
   `totals.ts` es un dato llano que cuenta todos los vuelos, y la vigencia de `currency.ts`
   es el único juicio reglamentario, y solo se activa con licencia emitida.
+- **En Planificar se investiga antes de escribir.** El 02/09/2026, tres cosas que el spec
+  daba por buenas eran falsas: 925 y 900 hPa no son la banda de gobierno, contar modelos que
+  coinciden no es una probabilidad, y Part-BFCL no tiene ninguna cifra de viento. Las tres
+  salieron de fuentes primarias, no de razonar.
+- **La incertidumbre se dice como desacuerdo, nunca como probabilidad.** Ni porcentajes, ni
+  «N de 6 modelos». Los cortes de juntos, dispersos y dispares son convención nuestra y la
+  pantalla lo dice.
+- **El límite de viento no se cablea.** Es del manual del globo y cambia por envolvente: 15
+  kt en el FM04 de Ultramagic, 12 en el Suplemento 34 para la N-500.
+- **Una ausencia se enseña.** `ecmwf_ifs025` no tiene 900 hPa y devuelve nulos sin error: la
+  pantalla lo dice con el nombre del modelo.
 - **El teléfono es Android.** Corregido el 02/09/2026: el spec justificaba media docena de
   decisiones con Safari y WebKit, y estaba mal. No cambió ni una línea de código, pero sí
   los motivos, el entorno de prueba y dos cosas del alcance: la traza GPS en vuelo pasa a

@@ -4556,7 +4556,6 @@ export function CerrarVuelo() {
   return (
     <Sheet
       title="Cerrar vuelo"
-      overline="Cuatro campos. El resto se completa en casa."
       footer={
         <>
           <button class="primary" onClick={guardar}>Guardar</button>
@@ -4567,6 +4566,10 @@ export function CerrarVuelo() {
       }
     >
       <div style="padding: 8px 20px 24px 20px;">
+        <p class="muted" style="margin: 0 0 20px 0; font-size: 14px;">
+          Cuatro campos. El resto se completa en casa.
+        </p>
+
         {/* Hora nativa y no dos botones de mas y menos: corregir veinte minutos
             a pulsaciones de uno en uno serian veinte toques, y el selector del
             iPhone lo hace en dos. */}
@@ -4755,7 +4758,7 @@ export function Vuelos() {
       tab="vuelos"
       right={
         <span class="num dim" style="font-size: 13px;">
-          {total.flights} vuelos · {formatHm(total.minutes)}
+          {total.flights} {total.flights === 1 ? 'vuelo' : 'vuelos'} · {formatHm(total.minutes)}
         </span>
       }
     >

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { makeFlight, makePilot } from '../domain/fixtures'
 import { flightDurationMin, hasConsistentTimes } from '../domain/flight'
 import type { Balloon, LogbookDoc, Person, Site } from '../domain/types'
-import { localTimestamp, heredado, flightFromQuickClose } from './newFlight'
+import { localTimestamp, heredado, flightFromQuickClose, hhmmFrom } from './newFlight'
 
 const globo: Balloon = {
   id: 'b1', registration: 'EC-KMU', manufacturer: 'Ultramagic', model: 'M-105',
@@ -133,5 +133,19 @@ describe('flightFromQuickClose', () => {
     const f = flightFromQuickClose(doc(), 'f1', entrada)
     expect(f.check).toBe(null)
     expect(f.recencyTrainingFlight).toBe(false)
+  })
+})
+
+describe('hhmmFrom', () => {
+  it('saca la hora local de una marca ISO, para meterla en un input de tipo time', () => {
+    expect(hhmmFrom('2026-08-31T06:37:00.000Z')).toBe('08:37')
+  })
+
+  it('una marca vacia da cadena vacia, que es el input vacio', () => {
+    expect(hhmmFrom('')).toBe('')
+  })
+
+  it('ida y vuelta con localTimestamp', () => {
+    expect(hhmmFrom(localTimestamp('2026-08-31', '07:32'))).toBe('07:32')
   })
 })

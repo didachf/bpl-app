@@ -118,3 +118,17 @@ export function flightFromQuickClose(
     complete: false,
   }
 }
+
+/**
+ * De marca ISO a "HH:MM" local, inverso de `localTimestamp`.
+ *
+ * Devuelve cadena vacia ante una marca ausente o ilegible, que es lo que un
+ * `<input type="time">` entiende como vacio. `formatTime` no sirve aqui porque
+ * devuelve "--:--", que el input rechazaria.
+ */
+export function hhmmFrom(iso: string): string {
+  const t = Date.parse(iso)
+  if (Number.isNaN(t)) return ''
+  const d = new Date(t)
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+}

@@ -75,7 +75,7 @@ export function Vuelos() {
       tab="vuelos"
       right={
         <span class="num dim" style="font-size: 13px;">
-          {total.flights} vuelos · {formatHm(total.minutes)}
+          {total.flights} {total.flights === 1 ? 'vuelo' : 'vuelos'} · {formatHm(total.minutes)}
         </span>
       }
     >

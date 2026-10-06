@@ -643,7 +643,7 @@ Ultramagic y del manual del globo concreto. En fase 1 va el motor y una checklis
 marcada claramente como no operacional. En fase 3 se transcriben del manual y las valida el
 usuario contra el papel.
 
-**Enmienda del 2026-10-06: adelantadas montaje y pre-despegue**, a petición de Dídac. Viven en
+**Enmienda del 2026-10-06: adelantadas montaje, inflado y pre-despegue**, a petición de Dídac. Viven en
 `src/ops/checklists.json` con un apartado del manual por ítem, y la pantalla avisa de que
 están pendientes de validar mientras el JSON no diga `"validado": true`. Las marcas caducan a
 las 6 h: una checklist es de un vuelo y no puede llegar marcada al siguiente.
@@ -663,7 +663,7 @@ las 6 h: una checklist es de un vuelo y no puede llegar marcada al siguiente.
   Pressure API, que mide presión de CPU y no presión atmosférica. Que nadie la confunda
 - Combustible
 - Multiusuario, cuentas, compartición
-- Contenido de checklist operacional, **salvo montaje y pre-despegue**, adelantadas el
+- Contenido de checklist operacional, **salvo montaje, inflado y pre-despegue**, adelantadas el
   2026-10-06 (ver §10)
 
 ---

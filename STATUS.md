@@ -1,10 +1,10 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-10-06**. Siguiente tarea: **que Dídac valide las dos checklists contra
+Última sesión: **2026-10-06**. Siguiente tarea: **que Dídac valide las tres checklists contra
 el papel del MV04 r30**, y después crear `bpl-logbook` y el token. Todo fusionado a `main` y
 publicado.
 
-**Checklists de montaje y pre-despegue en Operar** desde el 06/10/2026. Contenido en
+**Checklists de montaje, inflado y pre-despegue en Operar** desde el 06/10/2026. Contenido en
 `src/ops/checklists.json`, lógica pura en `src/ops/checklist.ts`. Llevan el aviso de
 pendiente de validar hasta que el JSON diga `"validado": true`, y eso lo pone él, no yo.
 
@@ -96,6 +96,11 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   JSON roto, reinicio e identificador que no existe. La comprobación encontró un defecto
   (tres toques seguidos guardaban sólo el último, por leer el estado viejo) y está reparado.
   **Si se cambia un ítem, subir `version`**, que descarta las marcas guardadas.
+- **Checklist de inflado (27 ítems)**, el mismo 06/10/2026, porque Dídac echó en falta el
+  procedimiento de inflado. Sale de 4.7, texto y figura de tres pasos (frío, caliente, de
+  pie), con 4.6, 6.5, 3.3 y 7.5.1 metidos donde tocan. El paracaídas y las instrucciones a la
+  tripulación de corona **pasaron del montaje al inflado**, así que el montaje queda en 59
+  ítems y termina con la envoltura extendida. `version` del JSON a 2. 403 pruebas.
 
 ## Contrato del dominio, lo que consume la interfaz
 
@@ -159,9 +164,9 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 2. **Pasar la lista de verificación del Android**, con la app ya instalada desde Chrome.
 3. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
    pantalla de Planificar que ya existe.
-4. Fase 3: checklists. Hechas montaje y pre-despegue. **Primero, que Dídac las valide
-   contra el papel** y entonces `"validado": true`. Quedan inflado (4.7), control en vuelo
-   (4.10), aterrizaje (4.11) y emergencias (sección 3).
+4. Fase 3: checklists. Hechas montaje, inflado y pre-despegue. **Primero, que Dídac las
+   valide contra el papel** y entonces `"validado": true`. Quedan control en vuelo (4.10),
+   aterrizaje (4.11) y emergencias (sección 3).
 
 ## Crear el token, paso a paso
 

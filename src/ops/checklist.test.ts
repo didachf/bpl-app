@@ -31,8 +31,16 @@ describe('el contenido del manual', () => {
     expect(validarContenido(datos)).toEqual([])
   })
 
-  it('trae las dos checklists, montaje y pre-despegue', () => {
-    expect(CONTENIDO.checklists.map(c => c.id)).toEqual(['montaje', 'pre-despegue'])
+  it('trae las tres checklists en el orden del manual: montaje, inflado y pre-despegue', () => {
+    expect(CONTENIDO.checklists.map(c => c.id)).toEqual(['montaje', 'inflado', 'pre-despegue'])
+  })
+
+  it('el paracaidas y la tripulacion de corona van en el inflado, no repetidos en el montaje', () => {
+    const titulos = (id: string) => buscarChecklist(CONTENIDO, id)?.bloques.map(b => b.titulo) ?? []
+    expect(titulos('montaje')).not.toContain('Paracaídas o FDS')
+    expect(titulos('inflado')).toEqual(['Tripulación', 'Inflado en frío', 'Inflado en caliente', 'Globo de pie'])
+    const inflado = buscarChecklist(CONTENIDO, 'inflado')
+    expect(inflado !== undefined && idsDe(inflado)).toEqual(expect.arrayContaining(['p-fds', 'c-pies']))
   })
 
   it('cada item cita un apartado del manual o el Apendice C', () => {

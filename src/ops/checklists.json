@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "fuente": "Manual de Vuelo MV04 Ed.4 Rev.30, Ultramagic",
   "nota": "Texto del manual, con las frases largas partidas en un item por accion, erratas corregidas y la puntuacion adaptada. Ningun item es de cosecha propia: cada uno lleva su apartado.",
   "validado": false,
@@ -7,7 +7,7 @@
     {
       "id": "montaje",
       "titulo": "Montaje",
-      "subtitulo": "Del sitio de inflado a la envoltura lista para inflar",
+      "subtitulo": "Del sitio de inflado a la envoltura extendida",
       "avisos": [],
       "bloques": [
         {
@@ -353,39 +353,30 @@
               "fuente": "4.5.4"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "inflado",
+      "titulo": "Inflado",
+      "subtitulo": "De la envoltura extendida al globo de pie",
+      "avisos": [],
+      "bloques": [
         {
-          "titulo": "Paracaídas o FDS",
-          "fuente": "4.6",
-          "nota": "Más fácil al principio del inflado con aire frío.",
-          "items": [
-            {
-              "id": "p-cuerdas",
-              "texto": "Cuerdas del paracaídas sin liar.",
-              "fuente": "4.6.1"
-            },
-            {
-              "id": "p-centro",
-              "texto": "Tirar del centro del paracaídas hasta que cierre con la abertura del globo.",
-              "fuente": "4.6.1"
-            },
-            {
-              "id": "p-velcros",
-              "texto": "Velcros del paracaídas colocados con los correspondientes del final de la envoltura.",
-              "fuente": "4.6.1"
-            },
-            {
-              "id": "p-fds",
-              "texto": "FDS: como el paracaídas, con todas las cuerdas sin enredar, libres para deslizarse y sin que pueda ocurrir daño alguno.",
-              "fuente": "4.6.2"
-            }
-          ]
-        },
-        {
-          "titulo": "Tripulación de corona",
+          "titulo": "Tripulación",
           "fuente": "4.7",
-          "nota": "Lo que tiene que saber antes de inflar.",
+          "nota": "Lo que tiene que saber antes de empezar a inflar.",
           "items": [
+            {
+              "id": "boca",
+              "texto": "Dos personas para aguantar la boca abierta.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "corona",
+              "texto": "Una o dos personas para mantener tensa la cuerda de corona.",
+              "fuente": "4.7"
+            },
             {
               "id": "c-guantes",
               "texto": "Guantes de piel y zapatos antideslizantes.",
@@ -415,6 +406,128 @@
             {
               "id": "c-pies",
               "texto": "Toda la tripulación: si los pies se levantan del suelo aguantando la barquilla o la cuerda de corona, soltar inmediatamente.",
+              "fuente": "4.7"
+            }
+          ]
+        },
+        {
+          "titulo": "Inflado en frío",
+          "fuente": "4.7, 4.6",
+          "items": [
+            {
+              "id": "f-suelta",
+              "texto": "Amarre de suelta conectado (si se usa), con el pasador de seguridad puesto.",
+              "detalle": "El pasador evita una apertura inadvertida de la suelta rápida (6.5).",
+              "fuente": "4.7, 6.5"
+            },
+            {
+              "id": "f-extendida",
+              "texto": "Envoltura extendida tirando sólo de las cintas.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "f-ventilador",
+              "texto": "Ventilador dirigido a la boca.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "f-boca",
+              "texto": "Boca aguantada abierta por dos personas.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "f-corona",
+              "texto": "Cuerda de corona tensa.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "p-cuerdas",
+              "texto": "Cuerdas del paracaídas sin liar.",
+              "fuente": "4.6.1",
+              "detalle": "Es más fácil al principio del inflado con aire frío (4.6)."
+            },
+            {
+              "id": "p-centro",
+              "texto": "Tirar del centro del paracaídas hasta que cierre con la abertura del globo.",
+              "fuente": "4.6.1"
+            },
+            {
+              "id": "p-velcros",
+              "texto": "Velcros del paracaídas colocados con los correspondientes del final de la envoltura.",
+              "fuente": "4.6.1"
+            },
+            {
+              "id": "p-fds",
+              "texto": "FDS: como el paracaídas, con todas las cuerdas sin enredar, libres para deslizarse y sin que pueda ocurrir daño alguno.",
+              "fuente": "4.6.2"
+            },
+            {
+              "id": "f-pasajeros",
+              "texto": "Si el piloto lo decide, pasajeros a bordo con la cesta aún tumbada.",
+              "detalle": "Sobre todo en barquillas compartimentadas y si hay cierto viento. Es la alternativa a cargarlos con el globo levantado (4.8).",
+              "fuente": "4.7"
+            }
+          ]
+        },
+        {
+          "titulo": "Inflado en caliente",
+          "fuente": "4.7",
+          "nota": "A discreción del piloto, la tripulación de la boca puede no aguantar si el globo está totalmente lleno de aire frío. Si el viento basta para mantener la corona abajo con la presión del ventilador, la tripulación de corona puede ocuparse sólo del control lateral.",
+          "items": [
+            {
+              "id": "c-lleno",
+              "texto": "Envoltura tan llena como sea posible antes de usar el quemador.",
+              "detalle": "El inflado con aire caliente de una envoltura muy mojada puede dañar el tejido (7.5.1).",
+              "fuente": "4.7"
+            },
+            {
+              "id": "c-encender",
+              "texto": "Quemador encendido con el procedimiento de 4.5.3.",
+              "detalle": "Con piloto de vapor y las botellas tumbadas, el regulador recibe líquido y en un inflado largo puede helarse. Si amenaza con apagar la llama piloto, cerrarla en la válvula de la botella, esperar a que se funda el hielo, reabrir y encender (3.3).",
+              "fuente": "4.7"
+            },
+            {
+              "id": "c-boca",
+              "texto": "Boca aguantada bien abierta.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "c-quemadas",
+              "texto": "Quemadas cortas, con intervalos, para que el aire del interior se caliente lenta y regularmente.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "c-corona",
+              "texto": "Tripulación de corona dejando subir la corona poco a poco.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "c-ventilador",
+              "texto": "Ventilador en marcha hasta que la boca se levanta del suelo.",
+              "detalle": "Es útil que una persona lo vaya girando para dirigir el aire al interior.",
+              "fuente": "4.7"
+            }
+          ]
+        },
+        {
+          "titulo": "Globo de pie",
+          "fuente": "4.7",
+          "nota": "Con el globo de pie, listo para los chequeos de Pre-despegue.",
+          "items": [
+            {
+              "id": "p-peso",
+              "texto": "Tripulación de la boca aguantando la barquilla con su peso mientras el piloto sube.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "p-suelta",
+              "texto": "Cuerda de suelta extendida y tensa.",
+              "fuente": "4.7"
+            },
+            {
+              "id": "p-corona",
+              "texto": "Cuerda de corona llevada a la barquilla.",
+              "detalle": "Sale de la figura de 4.7, no del texto.",
               "fuente": "4.7"
             }
           ]

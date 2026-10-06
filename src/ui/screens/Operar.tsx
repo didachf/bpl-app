@@ -14,7 +14,6 @@ import { hrefOf } from '../router'
 import { marcasGuardadas } from './Checklist'
 
 const PENDIENTE: { titulo: string; fuente: string; grave?: boolean }[] = [
-  { titulo: 'Inflado', fuente: 'Seccion 4.7' },
   { titulo: 'Control en vuelo', fuente: 'Seccion 4.10' },
   { titulo: 'Aterrizaje', fuente: 'Seccion 4.11' },
   { titulo: 'Emergencias', fuente: 'Seccion 3, lineas electricas y FDS', grave: true },

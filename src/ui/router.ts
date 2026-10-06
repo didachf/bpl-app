@@ -14,6 +14,7 @@ export type Route =
   | { name: 'cerrar' }
   | { name: 'planificar' }
   | { name: 'operar' }
+  | { name: 'checklist'; id: string }
   | { name: 'ajustes' }
   | { name: 'ajustesPiloto' }
   | { name: 'ajustesGlobos' }
@@ -47,6 +48,10 @@ export function parseHash(hash: string): Route {
     return { name: 'inicio' }
   }
 
+  if (partes[0] === 'operar' && partes.length === 2) {
+    return { name: 'checklist', id: decodeURIComponent(partes[1]) }
+  }
+
   if (partes[0] === 'ajustes') {
     if (partes.length === 1) return { name: 'ajustes' }
     if (partes.length === 2) return AJUSTES[partes[1]] ?? { name: 'inicio' }
@@ -71,6 +76,7 @@ export function hrefOf(r: Route): string {
     case 'cerrar': return '#/cerrar'
     case 'planificar': return '#/planificar'
     case 'operar': return '#/operar'
+    case 'checklist': return `#/operar/${encodeURIComponent(r.id)}`
     case 'ajustes': return '#/ajustes'
     case 'ajustesPiloto': return '#/ajustes/piloto'
     case 'ajustesGlobos': return '#/ajustes/globos'

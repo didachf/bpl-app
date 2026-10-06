@@ -1,21 +1,20 @@
 // src/ui/screens/Operar.tsx
-// Esbozo.
+// Las checklists del manual, y lo que falta por transcribir.
 //
 // CRITICAL: aqui NO se escribe contenido de checklist. Una checklist de globo
 // es un documento de seguridad y su texto se transcribe del Manual de Vuelo
-// MV04r30 de Ultramagic en la fase 3, y lo valida el piloto contra el papel.
-// Lo que hay aqui es el indice de lo que se va a transcribir, con el numero de
-// bloque del manual, y un aviso que no se quita hasta que este transcrito.
+// MV04r30 de Ultramagic a src/ops/checklists.json, y lo valida el piloto
+// contra el papel. El aviso de pendiente de validar no se quita hasta que el
+// JSON diga validado.
+import { CONTENIDO, idsDe } from '../../ops/checklist'
+import { Icon } from '../components/Icon'
 import { Notice } from '../components/Notice'
 import { Screen } from '../components/Screen'
+import { hrefOf } from '../router'
+import { marcasGuardadas } from './Checklist'
 
-const DEL_MANUAL: { titulo: string; fuente: string; grave?: boolean }[] = [
-  { titulo: 'Chequeo prevuelo', fuente: 'Apendice C, nueve bloques' },
-  { titulo: 'Preparacion', fuente: 'Seccion 4.5' },
+const PENDIENTE: { titulo: string; fuente: string; grave?: boolean }[] = [
   { titulo: 'Inflado', fuente: 'Seccion 4.7' },
-  { titulo: 'Antes del despegue', fuente: 'Seccion 4.8.1' },
-  { titulo: 'Briefing de pasajeros', fuente: 'Seccion 4.8.2' },
-  { titulo: 'Despegue', fuente: 'Seccion 4.9' },
   { titulo: 'Control en vuelo', fuente: 'Seccion 4.10' },
   { titulo: 'Aterrizaje', fuente: 'Seccion 4.11' },
   { titulo: 'Emergencias', fuente: 'Seccion 3, lineas electricas y FDS', grave: true },
@@ -25,15 +24,43 @@ export function Operar() {
   return (
     <Screen title="Operar" tab="operar">
       <div style="padding: 0 20px 24px 20px; display: flex; flex-direction: column; gap: 16px;">
-        <Notice tone="warn" title="Sin transcribir. No usar en vuelo.">
-          El contenido se copia del Manual de Vuelo MV04r30 y lo validas contra el papel.
-          Hasta entonces esto es solo la estructura.
-        </Notice>
+        {!CONTENIDO.validado && (
+          <Notice tone="warn" title="Pendiente de validar contra el papel">
+            Transcrito del Manual de Vuelo MV04 r30. Cada ítem lleva su apartado para cotejarlo.
+          </Notice>
+        )}
+
+        <div>
+          {CONTENIDO.checklists.map(cl => {
+            const hechas = marcasGuardadas(cl).size
+            const total = idsDe(cl).length
+            return (
+              <a
+                key={cl.id}
+                href={hrefOf({ name: 'checklist', id: cl.id })}
+                style="
+                  display: flex; align-items: center; gap: 11px; padding: 14px 0;
+                  border-bottom: 1px solid var(--border); color: var(--text); text-decoration: none;
+                "
+              >
+                <Icon name="checklist" size={18} color="var(--dim)" width={2} />
+                <div style="flex-grow: 1; min-width: 0;">
+                  <div style="font-size: 16px;">{cl.titulo}</div>
+                  <div class="dim" style="font-size: 13px; margin-top: 2px;">{cl.subtitulo}</div>
+                </div>
+                <span class="num dim" style="font-size: 14px;">
+                  {hechas > 0 ? `${hechas}/${total}` : String(total)}
+                </span>
+                <Icon name="derecha" size={16} color="var(--dim)" width={2.4} />
+              </a>
+            )
+          })}
+        </div>
 
         <div>
           <div class="cap">Del manual, pendiente de transcribir</div>
           <div style="margin-top: 8px;">
-            {DEL_MANUAL.map(c => (
+            {PENDIENTE.map(c => (
               <div
                 key={c.titulo}
                 style={`
@@ -42,7 +69,7 @@ export function Operar() {
                 `}
               >
                 <div style="flex-grow: 1;">
-                  <div style="font-size: 15px;">{c.titulo}</div>
+                  <div class="muted" style="font-size: 15px;">{c.titulo}</div>
                   <div class="num dim" style="font-size: 12px; margin-top: 2px;">{c.fuente}</div>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'preact/hooks'
 import { PrimerUso } from './ui/screens/PrimerUso'
 import { CerrarVuelo } from './ui/screens/CerrarVuelo'
+import { ChecklistScreen } from './ui/screens/Checklist'
 import { Detalle } from './ui/screens/Detalle'
 import { Inicio } from './ui/screens/Inicio'
 import { Operar } from './ui/screens/Operar'
@@ -26,6 +27,7 @@ function Ruta() {
     case 'cerrar': return <CerrarVuelo />
     case 'planificar': return <Planificar />
     case 'operar': return <Operar />
+    case 'checklist': return <ChecklistScreen id={ruta.id} />
     case 'ajustes': return <Ajustes />
     case 'ajustesPiloto': return <MisDatos />
     case 'ajustesGlobos': return <Globos />

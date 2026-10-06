@@ -1,7 +1,12 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-09-02**. Siguiente tarea: **crear `bpl-logbook` y el token**, y pasar
-la lista de verificación en el móvil. Todo fusionado a `main` y publicado.
+Última sesión: **2026-10-06**. Siguiente tarea: **que Dídac valide las dos checklists contra
+el papel del MV04 r30**, y después crear `bpl-logbook` y el token. Todo fusionado a `main` y
+publicado.
+
+**Checklists de montaje y pre-despegue en Operar** desde el 06/10/2026. Contenido en
+`src/ops/checklists.json`, lógica pura en `src/ops/checklist.ts`. Llevan el aviso de
+pendiente de validar hasta que el JSON diga `"validado": true`, y eso lo pone él, no yo.
 
 **Planificar ya funciona con datos reales.** Es, según Dídac, la pantalla principal de la
 app. Se investigó con fuentes primarias antes de escribirla y salieron tres errores de
@@ -80,6 +85,17 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   cifras monoespaciadas. **Nueve artboards**: las cinco pestañas (Inicio, Vuelos,
   Planificar, Operar, Ajustes), las dos pantallas internas (Cerrar vuelo, Detalle) y dos en
   tema claro.
+- **Checklists de montaje (69 ítems) y pre-despegue (54)**, el 06/10/2026. Transcritas del
+  MV04 r30: montaje de 2.2 y 4.2 a 4.7, pre-despegue del Apéndice C con lo de 4.8.1, 2.4 y
+  2.5 metido en su bloque, más el briefing de 4.8.2 y el despegue de 4.9. Cada ítem lleva
+  su apartado. Ruta `#/operar/<id>`. Marcas en `localStorage` selladas con la `version`
+  del JSON y **caducan a las 6 h del último cambio**, para que las de la mañana no salgan
+  por la tarde como hechas. Reiniciar en dos toques dentro de la página, sin `confirm()`.
+  Pantalla encendida con `wakeLock` mientras está abierta. 30 pruebas nuevas, 402 en total.
+  Comprobado en Chromium con Pixel: toques seguidos, recarga, caducidad, versión vieja,
+  JSON roto, reinicio e identificador que no existe. La comprobación encontró un defecto
+  (tres toques seguidos guardaban sólo el último, por leer el estado viejo) y está reparado.
+  **Si se cambia un ítem, subir `version`**, que descarta las marcas guardadas.
 
 ## Contrato del dominio, lo que consume la interfaz
 
@@ -143,7 +159,9 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 2. **Pasar la lista de verificación del Android**, con la app ya instalada desde Chrome.
 3. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
    pantalla de Planificar que ya existe.
-4. Fase 3: checklists, transcritas del Manual de Vuelo. Ver abajo.
+4. Fase 3: checklists. Hechas montaje y pre-despegue. **Primero, que Dídac las valide
+   contra el papel** y entonces `"validado": true`. Quedan inflado (4.7), control en vuelo
+   (4.10), aterrizaje (4.11) y emergencias (sección 3).
 
 ## Crear el token, paso a paso
 

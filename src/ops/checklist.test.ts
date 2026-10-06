@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import datos from './checklists.json'
 import {
-  CADUCA_MS, CONTENIDO, alternar, buscarChecklist, claveDe, fuenteLegible, idsDe, progreso,
-  restaurar, serializar, validarContenido, type Checklist,
+  CADUCA_MS, CONTENIDO, alternar, buscarChecklist, claveDe, fuenteLegible, idsDe, porGrupo,
+  progreso, restaurar, serializar, validarContenido, type Checklist,
 } from './checklist'
 
 /** Todos los textos del contenido, recorriendo el JSON entero. */
@@ -59,6 +59,13 @@ describe('el contenido del manual', () => {
     expect(malos).toEqual([])
   })
 
+  it('la preparacion y el montaje van separados del check antes de despegar', () => {
+    expect(porGrupo(CONTENIDO).map(g => [g.titulo, g.checklists.map(c => c.id)])).toEqual([
+      ['Preparación y montaje', ['montaje', 'inflado']],
+      ['Check antes de despegar', ['pre-despegue']],
+    ])
+  })
+
   it('el aviso de no despegar si falla un chequeo va en el pre-despegue', () => {
     const pre = buscarChecklist(CONTENIDO, 'pre-despegue')
     expect(pre?.avisos.map(a => a.fuente)).toContain('2.3')
@@ -67,7 +74,8 @@ describe('el contenido del manual', () => {
 
 describe('validarContenido', () => {
   const base = () => JSON.parse(JSON.stringify({
-    version: 1, fuente: 'MV04', nota: '', validado: false, checklists: [MINI],
+    version: 1, fuente: 'MV04', nota: '', validado: false,
+    grupos: [{ titulo: 'Grupo', checklists: ['mini'] }], checklists: [MINI],
   })) as Record<string, any>
 
   it('acepta un contenido minimo bien formado', () => {
@@ -90,7 +98,28 @@ describe('validarContenido', () => {
     const otra = JSON.parse(JSON.stringify(MINI))
     otra.id = 'otra'
     c.checklists.push(otra)
+    c.grupos[0].checklists.push('otra')
     expect(validarContenido(c)).toEqual([])
+  })
+
+  it('una checklist que no esta en ningun grupo es un error, porque no saldria en pantalla', () => {
+    const c = base()
+    const otra = JSON.parse(JSON.stringify(MINI))
+    otra.id = 'otra'
+    c.checklists.push(otra)
+    expect(validarContenido(c)).toEqual(['la checklist otra no esta en ningun grupo'])
+  })
+
+  it('una checklist en dos grupos es un error, porque saldria repetida', () => {
+    const c = base()
+    c.grupos.push({ titulo: 'Otro', checklists: ['mini'] })
+    expect(validarContenido(c).join(' ')).toMatch(/ya esta en otro grupo/)
+  })
+
+  it('un grupo que nombra una checklist que no existe es un error', () => {
+    const c = base()
+    c.grupos[0].checklists.push('fantasma')
+    expect(validarContenido(c).join(' ')).toMatch(/fantasma no existe/)
   })
 
   it('un item sin fuente es un error, que es lo que se coteja con el papel', () => {

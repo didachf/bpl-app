@@ -6,7 +6,7 @@
 // MV04r30 de Ultramagic a src/ops/checklists.json, y lo valida el piloto
 // contra el papel. El aviso de pendiente de validar no se quita hasta que el
 // JSON diga validado.
-import { CONTENIDO, idsDe } from '../../ops/checklist'
+import { CONTENIDO, idsDe, porGrupo } from '../../ops/checklist'
 import { Icon } from '../components/Icon'
 import { Notice } from '../components/Notice'
 import { Screen } from '../components/Screen'
@@ -29,32 +29,37 @@ export function Operar() {
           </Notice>
         )}
 
-        <div>
-          {CONTENIDO.checklists.map(cl => {
-            const hechas = marcasGuardadas(cl).size
-            const total = idsDe(cl).length
-            return (
-              <a
-                key={cl.id}
-                href={hrefOf({ name: 'checklist', id: cl.id })}
-                style="
-                  display: flex; align-items: center; gap: 11px; padding: 14px 0;
-                  border-bottom: 1px solid var(--border); color: var(--text); text-decoration: none;
-                "
-              >
-                <Icon name="checklist" size={18} color="var(--dim)" width={2} />
-                <div style="flex-grow: 1; min-width: 0;">
-                  <div style="font-size: 16px;">{cl.titulo}</div>
-                  <div class="dim" style="font-size: 13px; margin-top: 2px;">{cl.subtitulo}</div>
-                </div>
-                <span class="num dim" style="font-size: 14px;">
-                  {hechas > 0 ? `${hechas}/${total}` : String(total)}
-                </span>
-                <Icon name="derecha" size={16} color="var(--dim)" width={2.4} />
-              </a>
-            )
-          })}
-        </div>
+        {porGrupo(CONTENIDO).map(g => (
+          <div key={g.titulo}>
+            <div class="cap">{g.titulo}</div>
+            <div style="margin-top: 4px;">
+              {g.checklists.map(cl => {
+                const hechas = marcasGuardadas(cl).size
+                const total = idsDe(cl).length
+                return (
+                  <a
+                    key={cl.id}
+                    href={hrefOf({ name: 'checklist', id: cl.id })}
+                    style="
+                      display: flex; align-items: center; gap: 11px; padding: 14px 0;
+                      border-bottom: 1px solid var(--border); color: var(--text); text-decoration: none;
+                    "
+                  >
+                    <Icon name="checklist" size={18} color="var(--dim)" width={2} />
+                    <div style="flex-grow: 1; min-width: 0;">
+                      <div style="font-size: 16px;">{cl.titulo}</div>
+                      <div class="dim" style="font-size: 13px; margin-top: 2px;">{cl.subtitulo}</div>
+                    </div>
+                    <span class="num dim" style="font-size: 14px;">
+                      {hechas > 0 ? `${hechas}/${total}` : String(total)}
+                    </span>
+                    <Icon name="derecha" size={16} color="var(--dim)" width={2.4} />
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        ))}
 
         <div>
           <div class="cap">Del manual, pendiente de transcribir</div>

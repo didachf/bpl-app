@@ -101,6 +101,9 @@ Maqueta publicada: https://claude.ai/code/artifact/e0420826-2c67-4c0f-889f-6f8d1
   pie), con 4.6, 6.5, 3.3 y 7.5.1 metidos donde tocan. El paracaídas y las instrucciones a la
   tripulación de corona **pasaron del montaje al inflado**, así que el montaje queda en 59
   ítems y termina con la envoltura extendida. `version` del JSON a 2. 403 pruebas.
+- **Operar en dos apartados**, también a petición suya: «Preparación y montaje» (montaje e
+  inflado) y «Check antes de despegar» (pre-despegue). Salen de `grupos` en el JSON, y la
+  validación exige cada checklist en un grupo y sólo en uno. 407 pruebas.
 
 ## Contrato del dominio, lo que consume la interfaz
 

@@ -35,6 +35,12 @@ export interface Checklist {
   bloques: Bloque[]
 }
 
+/** Un apartado de la pantalla de Operar. Separa la preparacion del check antes de despegar. */
+export interface Grupo {
+  titulo: string
+  checklists: string[]
+}
+
 export interface Contenido {
   /** Sello del contenido. Al cambiar cualquier item se sube, y las marcas viejas se descartan. */
   version: number
@@ -42,6 +48,7 @@ export interface Contenido {
   nota: string
   /** Lo pone a true el piloto, cuando lo ha cotejado contra el papel. Nunca yo. */
   validado: boolean
+  grupos: Grupo[]
   checklists: Checklist[]
 }
 
@@ -125,7 +132,42 @@ export function validarContenido(input: unknown): string[] {
     })
   })
 
+  // Cada checklist en un apartado y solo en uno. Una que no este en ninguno no
+  // saldria en la pantalla, y una en dos saldria repetida.
+  if (!Array.isArray(input.grupos) || input.grupos.length === 0) {
+    errores.push('no hay grupos')
+    return errores
+  }
+  const agrupadas = new Set<string>()
+  input.grupos.forEach((g: unknown, i) => {
+    const donde = `grupo ${i + 1}`
+    if (!esObjeto(g)) { errores.push(`${donde} no es un objeto`); return }
+    if (!esTexto(g.titulo)) errores.push(`${donde}: falta el titulo`)
+    if (!Array.isArray(g.checklists) || g.checklists.length === 0) {
+      errores.push(`${donde}: no tiene checklists`)
+      return
+    }
+    for (const id of g.checklists) {
+      if (typeof id !== 'string' || !idsChecklist.has(id)) errores.push(`${donde}: la checklist ${String(id)} no existe`)
+      else if (agrupadas.has(id)) errores.push(`${donde}: la checklist ${id} ya esta en otro grupo`)
+      else agrupadas.add(id)
+    }
+  })
+  for (const id of idsChecklist) {
+    if (!agrupadas.has(id)) errores.push(`la checklist ${id} no esta en ningun grupo`)
+  }
+
   return errores
+}
+
+/** Los apartados con sus checklists ya resueltas, en el orden del JSON. */
+export function porGrupo(c: Contenido): { titulo: string; checklists: Checklist[] }[] {
+  return c.grupos.map(g => ({
+    titulo: g.titulo,
+    checklists: g.checklists
+      .map(id => buscarChecklist(c, id))
+      .filter((cl): cl is Checklist => cl !== undefined),
+  }))
 }
 
 /** En el JSON el Apendice C va como C, que es corto de escribir y no se lee. */

@@ -3,6 +3,21 @@
   "fuente": "Manual de Vuelo MV04 Ed.4 Rev.30, Ultramagic",
   "nota": "Texto del manual, con las frases largas partidas en un item por accion, erratas corregidas y la puntuacion adaptada. Ningun item es de cosecha propia: cada uno lleva su apartado.",
   "validado": false,
+  "grupos": [
+    {
+      "titulo": "Preparación y montaje",
+      "checklists": [
+        "montaje",
+        "inflado"
+      ]
+    },
+    {
+      "titulo": "Check antes de despegar",
+      "checklists": [
+        "pre-despegue"
+      ]
+    }
+  ],
   "checklists": [
     {
       "id": "montaje",

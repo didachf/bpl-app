@@ -1,12 +1,24 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-10-06**. Siguiente tarea: **que Dídac valide las tres checklists contra
-el papel del MV04 r30**, y después crear `bpl-logbook` y el token. Todo fusionado a `main` y
-publicado.
+Última sesión: **2026-10-08**. Las checklists se rehicieron con Dídac paso a paso en la rama
+`checklists-revision-08-10`, **sin fusionar ni publicar** hasta que él lo diga. Después, crear
+`bpl-logbook` y el token.
 
-**Checklists de montaje, inflado y pre-despegue en Operar** desde el 06/10/2026. Contenido en
-`src/ops/checklists.json`, lógica pura en `src/ops/checklist.ts`. Llevan el aviso de
-pendiente de validar hasta que el JSON diga `"validado": true`, y eso lo pone él, no yo.
+**Checklists de Operar, versión 3, desde el 08/10/2026.** Montaje (27 pasos), inflado (21) y
+último chequeo (7). **Sustituyen enteras** a las del 06/10/2026, que eran transcripción del
+manual en el orden del manual: «todo lo que hemos hecho en la app de checkeos es sustituido
+por esto de hoy». Los pasos y el orden los dictó él, cada uno con su fuente (apartado del
+MV04, Apéndice C, norma, o `Piloto` si es procedimiento suyo). El repaso punto a punto, con
+cada decisión y sus palabras, está en `docs/revision-montaje-inflado-08-10-2026.md`.
+Contenido en `src/ops/checklists.json`, lógica pura en `src/ops/checklist.ts`. Llevan el
+aviso de pendiente de validar hasta que el JSON diga `"validado": true`, y eso lo pone él,
+no yo.
+
+**Pasos que se despliegan.** El test del quemador (10 subpasos), el interior de la barquilla
+(extintor, botiquín y documentos) y las pertenencias (9 cosas). Se marca cada subpaso, y el
+paso no se puede marcar hasta tenerlos todos. Desmarcar un subpaso desmarca su paso. Es
+petición suya: «que no estén en los pasos generales, sino test quemador, se despliega esto».
+Campo `subpasos` en el JSON, un solo nivel.
 
 **Planificar ya funciona con datos reales.** Es, según Dídac, la pantalla principal de la
 app. Se investigó con fuentes primarias antes de escribirla y salieron tres errores de

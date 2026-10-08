@@ -1,12 +1,12 @@
 // src/ui/screens/Operar.tsx
-// Las checklists del manual, y lo que falta por transcribir.
+// Las checklists de operacion, y lo que falta por transcribir.
 //
 // CRITICAL: aqui NO se escribe contenido de checklist. Una checklist de globo
-// es un documento de seguridad y su texto se transcribe del Manual de Vuelo
-// MV04r30 de Ultramagic a src/ops/checklists.json, y lo valida el piloto
-// contra el papel. El aviso de pendiente de validar no se quita hasta que el
-// JSON diga validado.
-import { CONTENIDO, idsDe, porGrupo } from '../../ops/checklist'
+// es un documento de seguridad. Su texto vive en src/ops/checklists.json, es
+// el procedimiento que dicta el piloto cruzado con el Manual de Vuelo MV04r30
+// de Ultramagic, y cada paso lleva su fuente. El aviso de pendiente de validar
+// no se quita hasta que el JSON diga validado, y eso lo decide el piloto.
+import { CONTENIDO, porGrupo, progreso } from '../../ops/checklist'
 import { Icon } from '../components/Icon'
 import { Notice } from '../components/Notice'
 import { Screen } from '../components/Screen'
@@ -24,8 +24,9 @@ export function Operar() {
     <Screen title="Operar" tab="operar">
       <div style="padding: 0 20px 24px 20px; display: flex; flex-direction: column; gap: 16px;">
         {!CONTENIDO.validado && (
-          <Notice tone="warn" title="Pendiente de validar contra el papel">
-            Transcrito del Manual de Vuelo MV04 r30. Cada ítem lleva su apartado para cotejarlo.
+          <Notice tone="warn" title="Pendiente de validar">
+            Pasos dictados por el piloto el 08/10/2026 y cruzados con el MV04 r30. Cada paso
+            lleva su fuente.
           </Notice>
         )}
 
@@ -34,8 +35,8 @@ export function Operar() {
             <div class="cap">{g.titulo}</div>
             <div style="margin-top: 4px;">
               {g.checklists.map(cl => {
-                const hechas = marcasGuardadas(cl).size
-                const total = idsDe(cl).length
+                // Los pasos de la lista. Los subpasos cuentan dentro de su paso.
+                const { hechas, total } = progreso(cl, marcasGuardadas(cl))
                 return (
                   <a
                     key={cl.id}

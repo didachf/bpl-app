@@ -1,18 +1,31 @@
 // src/ops/checklist.ts
 // Checklists de operacion: el contenido y las marcas.
 //
-// El contenido vive en checklists.json y sale del Manual de Vuelo MV04r30 de
-// Ultramagic, nunca de aqui. Este modulo solo sabe validarlo, contar y guardar
-// que items estan marcados. Funciones puras: el localStorage lo toca la
-// pantalla, y aqui solo entra y sale texto.
+// El contenido vive en checklists.json, nunca aqui. Es el procedimiento que
+// dicto el piloto el 08/10/2026, cruzado con el Manual de Vuelo MV04r30 de
+// Ultramagic, y cada paso lleva su fuente. Este modulo solo sabe validarlo,
+// contar y guardar que pasos estan marcados. Funciones puras: el localStorage
+// lo toca la pantalla, y aqui solo entra y sale texto.
 import datos from './checklists.json'
 
-export interface Item {
+export interface Subpaso {
   id: string
   texto: string
   detalle?: string
-  /** Apartado del manual. Sin fuente no hay item: es lo que se coteja con el papel. */
+  /**
+   * De donde sale: apartado del manual, C para el Apendice C, una norma
+   * (BOP.BAS.050, BFCL.045) o Piloto si es procedimiento suyo. Sin fuente no
+   * hay paso.
+   */
   fuente: string
+}
+
+export interface Item extends Subpaso {
+  /**
+   * Un paso que se despliega, como el test del quemador. Se marca cada
+   * subpaso, y el paso solo se puede marcar cuando estan todos. Un solo nivel.
+   */
+  subpasos?: Subpaso[]
 }
 
 export interface Bloque {
@@ -128,6 +141,24 @@ export function validarContenido(input: unknown): string[] {
         if (!esTexto(it.texto)) errores.push(`${dondeI}: falta el texto`)
         if (!esTexto(it.fuente)) errores.push(`${dondeI}: falta la fuente`)
         if (it.detalle !== undefined && !esTexto(it.detalle)) errores.push(`${dondeI}: detalle vacio`)
+        if (it.subpasos === undefined) return
+        if (!Array.isArray(it.subpasos) || it.subpasos.length === 0) {
+          errores.push(`${dondeI}: subpasos tiene que ser una lista con algo`)
+          return
+        }
+        // Las marcas de pasos y subpasos van en el mismo conjunto, asi que los
+        // ids son unicos entre todos ellos dentro de la checklist.
+        it.subpasos.forEach((sp: unknown, m) => {
+          const dondeS = `${dondeI}, subpaso ${m + 1}`
+          if (!esObjeto(sp)) { errores.push(`${dondeS} no es un objeto`); return }
+          if (!esTexto(sp.id) || !ID.test(sp.id)) errores.push(`${dondeS}: id vacio o con caracteres raros`)
+          else if (idsItem.has(sp.id)) errores.push(`${dondeS}: id ${sp.id} repetido`)
+          else idsItem.add(sp.id)
+          if (!esTexto(sp.texto)) errores.push(`${dondeS}: falta el texto`)
+          if (!esTexto(sp.fuente)) errores.push(`${dondeS}: falta la fuente`)
+          if (sp.detalle !== undefined && !esTexto(sp.detalle)) errores.push(`${dondeS}: detalle vacio`)
+          if (sp.subpasos !== undefined) errores.push(`${dondeS}: los subpasos son de un solo nivel`)
+        })
       })
     })
   })
@@ -179,17 +210,32 @@ export function buscarChecklist(c: Contenido, id: string): Checklist | undefined
   return c.checklists.find(cl => cl.id === id)
 }
 
+/** Todos los ids que se pueden marcar: los pasos y sus subpasos. */
 export function idsDe(cl: Checklist): string[] {
-  return cl.bloques.flatMap(b => b.items.map(i => i.id))
+  return cl.bloques.flatMap(b => b.items.flatMap(i => [i.id, ...(i.subpasos ?? []).map(s => s.id)]))
 }
 
-export interface Progreso {
+export interface Cuenta {
   hechas: number
   total: number
-  /** Una entrada por bloque, en el mismo orden. */
-  porBloque: { hechas: number; total: number }[]
 }
 
+export interface Progreso extends Cuenta {
+  /** Una entrada por bloque, en el mismo orden. */
+  porBloque: Cuenta[]
+}
+
+/** Un paso con subpasos se puede marcar cuando estan todos. Uno sin ellos, siempre. */
+export function puedeMarcar(item: Item, marcadas: ReadonlySet<string>): boolean {
+  return (item.subpasos ?? []).every(s => marcadas.has(s.id))
+}
+
+export function subprogreso(item: Item, marcadas: ReadonlySet<string>): Cuenta {
+  const subpasos = item.subpasos ?? []
+  return { hechas: subpasos.filter(s => marcadas.has(s.id)).length, total: subpasos.length }
+}
+
+/** Cuenta los pasos de la lista. Los subpasos no: el paso cuenta cuando se marca. */
 export function progreso(cl: Checklist, marcadas: ReadonlySet<string>): Progreso {
   const porBloque = cl.bloques.map(b => ({
     hechas: b.items.filter(i => marcadas.has(i.id)).length,
@@ -208,6 +254,28 @@ export function alternar(marcadas: ReadonlySet<string>, id: string): Set<string>
   if (nuevo.has(id)) nuevo.delete(id)
   else nuevo.add(id)
   return nuevo
+}
+
+/**
+ * Marca o desmarca un paso o un subpaso, con las reglas de los que se despliegan.
+ *
+ * Un paso con subpasos pendientes no se marca. Marcar el ultimo subpaso no
+ * marca el paso: lo da por hecho el piloto. Desmarcar un subpaso desmarca su
+ * paso, que ya no esta completo.
+ */
+export function alternarEn(cl: Checklist, marcadas: ReadonlySet<string>, id: string): Set<string> {
+  for (const item of cl.bloques.flatMap(b => b.items)) {
+    if (item.id === id) {
+      if (!marcadas.has(id) && !puedeMarcar(item, marcadas)) return new Set(marcadas)
+      return alternar(marcadas, id)
+    }
+    if ((item.subpasos ?? []).some(s => s.id === id)) {
+      const nuevo = alternar(marcadas, id)
+      if (!nuevo.has(id)) nuevo.delete(item.id)
+      return nuevo
+    }
+  }
+  return new Set(marcadas)
 }
 
 // --- Marcas guardadas ---------------------------------------------------
@@ -270,6 +338,11 @@ export function restaurar(raw: string | null, cl: Checklist, version: number, ah
 
   const existentes = new Set(idsDe(cl))
   const marcadas = new Set((g.marcadas as string[]).filter(m => existentes.has(m)))
+  // Un paso marcado con subpasos pendientes no sale de la pantalla. Si esta
+  // guardado asi, se tira el paso y se quedan los subpasos.
+  for (const item of cl.bloques.flatMap(b => b.items)) {
+    if (marcadas.has(item.id) && !puedeMarcar(item, marcadas)) marcadas.delete(item.id)
+  }
   if (marcadas.size === 0) return VACIO()
 
   if (ahora - g.actualizado > CADUCA_MS || g.actualizado - ahora > FUTURO_MS) {

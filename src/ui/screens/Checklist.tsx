@@ -1,13 +1,13 @@
 // src/ui/screens/Checklist.tsx
-// Una checklist del manual, para ir marcando en el campo.
+// Una checklist de operacion, para ir marcando en el campo.
 //
-// El texto no se escribe aqui: sale de src/ops/checklists.json, que esta
-// transcrito del Manual de Vuelo MV04r30. Esta pantalla solo pinta y guarda
-// las marcas.
+// El texto no se escribe aqui: sale de src/ops/checklists.json, que es el
+// procedimiento del piloto cruzado con el Manual de Vuelo MV04r30. Esta
+// pantalla solo pinta y guarda las marcas.
 import { useEffect, useRef, useState } from 'preact/hooks'
 import {
-  CONTENIDO, alternar, buscarChecklist, claveDe, fuenteLegible, progreso, restaurar, serializar,
-  type Bloque, type Checklist, type Item,
+  CONTENIDO, alternarEn, buscarChecklist, claveDe, fuenteLegible, progreso, puedeMarcar, restaurar,
+  serializar, subprogreso, type Bloque, type Checklist, type Item, type Subpaso,
 } from '../../ops/checklist'
 import { Icon } from '../components/Icon'
 import { Notice } from '../components/Notice'
@@ -68,12 +68,13 @@ function usePantallaEncendida(): void {
   }, [])
 }
 
-function Casilla({ marcada }: { marcada: boolean }) {
+/** Bloqueada: un paso con subpasos pendientes, que todavia no se puede marcar. */
+function Casilla({ marcada, bloqueada = false }: { marcada: boolean; bloqueada?: boolean }) {
   return (
     <div style={`
       width: 26px; height: 26px; flex-shrink: 0; border-radius: 6px; margin-top: 1px;
       display: flex; align-items: center; justify-content: center;
-      border: 2px solid ${marcada ? 'var(--ok)' : 'var(--dim)'};
+      border: 2px ${bloqueada ? 'dashed var(--dim)' : `solid ${marcada ? 'var(--ok)' : 'var(--dim)'}`};
       background: ${marcada ? 'var(--ok)' : 'none'};
     `}>
       {marcada && <Icon name="check" size={17} color="#ffffff" width={3} />}
@@ -81,7 +82,7 @@ function Casilla({ marcada }: { marcada: boolean }) {
   )
 }
 
-function Fila({ item, marcada, onToggle }: { item: Item; marcada: boolean; onToggle: () => void }) {
+function Fila({ item, marcada, onToggle }: { item: Subpaso; marcada: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
@@ -107,6 +108,78 @@ function Fila({ item, marcada, onToggle }: { item: Item; marcada: boolean; onTog
         <div class="num dim" style="font-size: 12px; margin-top: 4px;">{fuenteLegible(item.fuente)}</div>
       </div>
     </button>
+  )
+}
+
+/**
+ * Un paso que se despliega en subpasos, como el test del quemador.
+ *
+ * Dos botones hermanos: la casilla marca el paso, y el resto de la fila abre
+ * y cierra la lista. La casilla no marca hasta tener todos los subpasos, y
+ * mientras tanto un toque en ella abre la lista, que es lo que falta hacer.
+ */
+function FilaDesplegable({ item, marcadas, onToggle }: {
+  item: Item
+  marcadas: ReadonlySet<string>
+  onToggle: (id: string) => void
+}) {
+  const marcada = marcadas.has(item.id)
+  const lista = puedeMarcar(item, marcadas)
+  const sub = subprogreso(item, marcadas)
+  const [abierta, setAbierta] = useState(false)
+
+  const alMarcar = () => {
+    if (!marcada && !lista) setAbierta(true)
+    else onToggle(item.id)
+  }
+
+  return (
+    <div style="border-bottom: 1px solid var(--border);">
+      <div style="display: flex; align-items: flex-start;">
+        <button
+          type="button"
+          role="checkbox"
+          aria-checked={marcada}
+          aria-disabled={!marcada && !lista}
+          aria-label={item.texto}
+          onClick={alMarcar}
+          style="
+            padding: 13px 13px 13px 0; border: none; background: none; cursor: pointer;
+            display: flex; align-items: flex-start;
+          "
+        >
+          <Casilla marcada={marcada} bloqueada={!marcada && !lista} />
+        </button>
+        <button
+          type="button"
+          aria-expanded={abierta}
+          onClick={() => setAbierta(!abierta)}
+          style="
+            flex-grow: 1; min-width: 0; display: flex; align-items: flex-start; gap: 10px;
+            padding: 13px 0; border: none; background: none; color: var(--text);
+            font: inherit; text-align: left; cursor: pointer;
+          "
+        >
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style={`font-size: 15px; line-height: 1.4; color: ${marcada ? 'var(--dim)' : 'var(--text)'};`}>
+              {item.texto}
+            </div>
+            <div class="num dim" style="font-size: 12px; margin-top: 4px;">{fuenteLegible(item.fuente)}</div>
+          </div>
+          <span class="num" style={`font-size: 13px; margin-top: 2px; color: ${lista ? 'var(--ok)' : 'var(--dim)'};`}>
+            {sub.hechas}/{sub.total}
+          </span>
+          <Icon name={abierta ? 'arriba' : 'abajo'} size={18} color="var(--dim)" width={2.4} />
+        </button>
+      </div>
+      {abierta && (
+        <div style="margin: 0 0 8px 39px; border-top: 1px solid var(--border);">
+          {(item.subpasos ?? []).map(sp => (
+            <Fila key={sp.id} item={sp} marcada={marcadas.has(sp.id)} onToggle={() => onToggle(sp.id)} />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -179,7 +252,7 @@ function Ejecutar({ cl }: { cl: Checklist }) {
   const completa = p.hechas === p.total
 
   const alternarItem = (id: string) => {
-    const nuevas = alternar(actuales.current, id)
+    const nuevas = alternarEn(cl, actuales.current, id)
     actuales.current = nuevas
     setMarcadas(nuevas)
     setNoGuarda(!escribir(clave, serializar(cl, CONTENIDO.version, nuevas, Date.now())))
@@ -204,7 +277,7 @@ function Ejecutar({ cl }: { cl: Checklist }) {
   )
 
   return (
-    <Sheet title={cl.titulo} overline="Manual de Vuelo MV04 r30" footer={pie}>
+    <Sheet title={cl.titulo} overline="Procedimiento del piloto y MV04 r30" footer={pie}>
       <div style="padding: 0 20px 28px 20px;">
         <div class="muted" style="font-size: 14px; margin-bottom: 14px;">{cl.subtitulo}</div>
 
@@ -213,9 +286,9 @@ function Ejecutar({ cl }: { cl: Checklist }) {
             <Notice key={a.texto} tone="danger" title={a.texto}>Apartado {a.fuente}</Notice>
           ))}
           {!CONTENIDO.validado && (
-            <Notice tone="warn" title="Pendiente de validar contra el papel">
-              Transcrito del manual con las frases partidas y la puntuación retocada. Cada ítem
-              lleva su apartado para cotejarlo.
+            <Notice tone="warn" title="Pendiente de validar">
+              Pasos y orden dictados por el piloto el 08/10/2026 y cruzados con el MV04 r30.
+              Cada paso lleva su fuente.
             </Notice>
           )}
           {inicio.caducadas && (
@@ -233,14 +306,16 @@ function Ejecutar({ cl }: { cl: Checklist }) {
         {cl.bloques.map((b, i) => (
           <div key={b.titulo}>
             <CabeceraBloque bloque={b} hechas={p.porBloque[i].hechas} total={p.porBloque[i].total} />
-            {b.items.map(it => (
-              <Fila
-                key={it.id}
-                item={it}
-                marcada={marcadas.has(it.id)}
-                onToggle={() => alternarItem(it.id)}
-              />
-            ))}
+            {b.items.map(it => (it.subpasos !== undefined
+              ? <FilaDesplegable key={it.id} item={it} marcadas={marcadas} onToggle={alternarItem} />
+              : (
+                <Fila
+                  key={it.id}
+                  item={it}
+                  marcada={marcadas.has(it.id)}
+                  onToggle={() => alternarItem(it.id)}
+                />
+              )))}
           </div>
         ))}
 

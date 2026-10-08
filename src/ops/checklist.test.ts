@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import datos from './checklists.json'
 import {
-  CADUCA_MS, CONTENIDO, alternar, buscarChecklist, claveDe, fuenteLegible, idsDe, porGrupo,
-  progreso, restaurar, serializar, validarContenido, type Checklist,
+  CADUCA_MS, CONTENIDO, alternar, alternarEn, buscarChecklist, claveDe, fuenteLegible, idsDe, porGrupo,
+  progreso, puedeMarcar, restaurar, serializar, subprogreso, validarContenido, type Checklist, type Item,
 } from './checklist'
 
 /** Todos los textos del contenido, recorriendo el JSON entero. */
@@ -26,37 +26,36 @@ const MINI: Checklist = {
 
 const T0 = Date.UTC(2026, 9, 7, 6, 30)
 
-describe('el contenido del manual', () => {
+/** Un paso que se despliega en dos subpasos, como el test del quemador. */
+const CON_SUB: Checklist = {
+  id: 'sub',
+  titulo: 'Con subpasos',
+  subtitulo: 'De prueba',
+  avisos: [],
+  bloques: [{
+    titulo: 'Uno',
+    fuente: '4.5.3',
+    items: [
+      {
+        id: 'test', texto: 'Test', fuente: '4.5.3',
+        subpasos: [{ id: 's1', texto: 'S1', fuente: '4.5.3' }, { id: 's2', texto: 'S2', fuente: 'Piloto' }],
+      },
+      { id: 'x', texto: 'X', fuente: '4.5' },
+    ],
+  }],
+}
+
+function pasos(id: string): Item[] {
+  return buscarChecklist(CONTENIDO, id)?.bloques.flatMap(b => b.items) ?? []
+}
+
+describe('el contenido revisado con el piloto el 08/10/2026', () => {
   it('valida sin un solo error', () => {
     expect(validarContenido(datos)).toEqual([])
   })
 
-  it('trae las tres checklists en el orden del manual: montaje, inflado y pre-despegue', () => {
+  it('trae tres checklists: montaje, inflado y el ultimo chequeo antes de despegar', () => {
     expect(CONTENIDO.checklists.map(c => c.id)).toEqual(['montaje', 'inflado', 'pre-despegue'])
-  })
-
-  it('el paracaidas y la tripulacion de corona van en el inflado, no repetidos en el montaje', () => {
-    const titulos = (id: string) => buscarChecklist(CONTENIDO, id)?.bloques.map(b => b.titulo) ?? []
-    expect(titulos('montaje')).not.toContain('Paracaídas o FDS')
-    expect(titulos('inflado')).toEqual(['Tripulación', 'Inflado en frío', 'Inflado en caliente', 'Globo de pie'])
-    const inflado = buscarChecklist(CONTENIDO, 'inflado')
-    expect(inflado !== undefined && idsDe(inflado)).toEqual(expect.arrayContaining(['p-fds', 'c-pies']))
-  })
-
-  it('cada item cita un apartado del manual o el Apendice C', () => {
-    const apartado = /^(C|\d+(\.\d+)*)(, (C|\d+(\.\d+)*))*$/
-    for (const cl of CONTENIDO.checklists) {
-      for (const id of idsDe(cl)) {
-        const item = cl.bloques.flatMap(b => b.items).find(i => i.id === id)
-        expect(item?.fuente, `${cl.id}/${id}`).toMatch(apartado)
-      }
-    }
-  })
-
-  it('ni punto y coma ni rayas en ningun texto', () => {
-    // Raya y guion medio por su codigo, para que el propio test no las lleve.
-    const malos = textos(datos).filter(t => /[;\u2014\u2013]/.test(t))
-    expect(malos).toEqual([])
   })
 
   it('la preparacion y el montaje van separados del check antes de despegar', () => {
@@ -66,9 +65,35 @@ describe('el contenido del manual', () => {
     ])
   })
 
-  it('el aviso de no despegar si falla un chequeo va en el pre-despegue', () => {
-    const pre = buscarChecklist(CONTENIDO, 'pre-despegue')
-    expect(pre?.avisos.map(a => a.fuente)).toContain('2.3')
+  it('cada paso y cada subpaso cita su fuente: el manual, el Apendice C, una norma o el piloto', () => {
+    const token = /^(C|\d+(\.\d+)*|Piloto|BOP\.BAS\.050|BFCL\.045)$/
+    for (const cl of CONTENIDO.checklists) {
+      for (const p of cl.bloques.flatMap(b => b.items)) {
+        for (const q of [p, ...(p.subpasos ?? [])]) {
+          for (const t of q.fuente.split(', ')) expect(t, `${cl.id}/${q.id}`).toMatch(token)
+        }
+      }
+    }
+  })
+
+  it('el test del quemador es un paso que se despliega en diez subpasos', () => {
+    const test = pasos('montaje').find(p => p.id === 'test-quemador')
+    expect(test?.subpasos).toHaveLength(10)
+  })
+
+  it('las pertenencias llevan la radio, que el piloto echo en falta', () => {
+    const cosas = pasos('inflado').find(p => p.id === 'pertenencias')
+    expect(cosas?.subpasos?.map(s => s.id)).toContain('radio')
+  })
+
+  it('ni un paso de vapor: las bombonas son solo de liquido', () => {
+    expect(textos(datos).filter(t => /vapor/i.test(t))).toEqual([])
+  })
+
+  it('ni punto y coma ni rayas en ningun texto', () => {
+    // Raya y guion medio por su codigo, para que el propio test no las lleve.
+    const malos = textos(datos).filter(t => /[;\u2014\u2013]/.test(t))
+    expect(malos).toEqual([])
   })
 })
 
@@ -140,6 +165,32 @@ describe('validarContenido', () => {
     expect(validarContenido(c).join(' ')).toMatch(/no hay items/)
   })
 
+  it('un subpaso sin fuente es un error', () => {
+    const c = base()
+    c.checklists[0].bloques[0].items[0].subpasos = [{ id: 's1', texto: 'S1' }]
+    expect(validarContenido(c).join(' ')).toMatch(/subpaso 1: falta la fuente/)
+  })
+
+  it('un subpaso con el id de otro paso de la checklist es un error, porque las marcas se pisarian', () => {
+    const c = base()
+    c.checklists[0].bloques[0].items[0].subpasos = [{ id: 'c', texto: 'S1', fuente: '4.5' }]
+    expect(validarContenido(c).join(' ')).toMatch(/repetido/)
+  })
+
+  it('una lista de subpasos vacia es un error', () => {
+    const c = base()
+    c.checklists[0].bloques[0].items[0].subpasos = []
+    expect(validarContenido(c).join(' ')).toMatch(/subpasos/)
+  })
+
+  it('un subpaso con sus propios subpasos es un error: solo hay un nivel', () => {
+    const c = base()
+    c.checklists[0].bloques[0].items[0].subpasos = [
+      { id: 's1', texto: 'S1', fuente: '4.5', subpasos: [{ id: 's2', texto: 'S2', fuente: '4.5' }] },
+    ]
+    expect(validarContenido(c).join(' ')).toMatch(/un solo nivel/)
+  })
+
   it('devuelve todos los errores de una vez, no solo el primero', () => {
     const c = base()
     delete c.checklists[0].bloques[0].items[0].texto
@@ -172,6 +223,71 @@ describe('progreso y alternar', () => {
     expect([...una]).toEqual(['a'])
     expect(vacio.size).toBe(0)
     expect(alternar(una, 'a').size).toBe(0)
+  })
+})
+
+describe('pasos que se despliegan', () => {
+  const test = CON_SUB.bloques[0].items[0]
+
+  it('idsDe incluye los subpasos, para que sus marcas se guarden', () => {
+    expect(idsDe(CON_SUB)).toEqual(['test', 's1', 's2', 'x'])
+  })
+
+  it('el paso no se puede marcar hasta tener todos sus subpasos', () => {
+    expect(puedeMarcar(test, new Set())).toBe(false)
+    expect(puedeMarcar(test, new Set(['s1']))).toBe(false)
+    expect(puedeMarcar(test, new Set(['s1', 's2']))).toBe(true)
+  })
+
+  it('un paso sin subpasos se puede marcar siempre', () => {
+    expect(puedeMarcar(CON_SUB.bloques[0].items[1], new Set())).toBe(true)
+  })
+
+  it('marcar el paso con subpasos pendientes no hace nada', () => {
+    expect(alternarEn(CON_SUB, new Set(['s1']), 'test')).toEqual(new Set(['s1']))
+  })
+
+  it('con todos los subpasos hechos, el paso se marca', () => {
+    expect(alternarEn(CON_SUB, new Set(['s1', 's2']), 'test')).toEqual(new Set(['s1', 's2', 'test']))
+  })
+
+  it('marcar el ultimo subpaso no marca el paso solo: lo marca el piloto', () => {
+    expect(alternarEn(CON_SUB, new Set(['s1']), 's2')).toEqual(new Set(['s1', 's2']))
+  })
+
+  it('desmarcar un subpaso desmarca el paso, que ya no esta completo', () => {
+    expect(alternarEn(CON_SUB, new Set(['s1', 's2', 'test']), 's1')).toEqual(new Set(['s2']))
+  })
+
+  it('desmarcar el paso deja los subpasos como estaban', () => {
+    expect(alternarEn(CON_SUB, new Set(['s1', 's2', 'test']), 'test')).toEqual(new Set(['s1', 's2']))
+  })
+
+  it('no toca el conjunto original', () => {
+    const antes = new Set(['s1', 's2'])
+    alternarEn(CON_SUB, antes, 'test')
+    expect(antes).toEqual(new Set(['s1', 's2']))
+  })
+
+  it('el progreso cuenta los pasos de la lista, no los subpasos', () => {
+    expect(progreso(CON_SUB, new Set(['s1', 's2'])).hechas).toBe(0)
+    expect(progreso(CON_SUB, new Set(['s1', 's2', 'test', 'x']))).toEqual({
+      hechas: 2, total: 2, porBloque: [{ hechas: 2, total: 2 }],
+    })
+  })
+
+  it('subprogreso cuenta los subpasos de un paso', () => {
+    expect(subprogreso(test, new Set(['s2']))).toEqual({ hechas: 1, total: 2 })
+  })
+
+  it('al restaurar se conservan las marcas de los subpasos', () => {
+    const raw = serializar(CON_SUB, 1, new Set(['s1']), T0)
+    expect(restaurar(raw, CON_SUB, 1, T0).marcadas).toEqual(new Set(['s1']))
+  })
+
+  it('al restaurar se tira un paso marcado con subpasos pendientes, que no puede pasar', () => {
+    const raw = JSON.stringify({ version: 1, checklistId: 'sub', marcadas: ['test', 's1', 'x'], actualizado: T0 })
+    expect(restaurar(raw, CON_SUB, 1, T0).marcadas).toEqual(new Set(['s1', 'x']))
   })
 })
 

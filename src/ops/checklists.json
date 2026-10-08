@@ -1,7 +1,7 @@
 {
-  "version": 2,
-  "fuente": "Manual de Vuelo MV04 Ed.4 Rev.30, Ultramagic",
-  "nota": "Texto del manual, con las frases largas partidas en un item por accion, erratas corregidas y la puntuacion adaptada. Ningun item es de cosecha propia: cada uno lleva su apartado.",
+  "version": 3,
+  "fuente": "Procedimiento del piloto, revisado el 08/10/2026, con el Manual de Vuelo MV04 Ed.4 Rev.30 de Ultramagic",
+  "nota": "Pasos y orden dictados por el piloto el 08/10/2026, que sustituyen a la transcripción del manual del 06/10/2026. Cada paso lleva su fuente: el apartado del MV04, C para el Apéndice C, la norma, o Piloto si es procedimiento suyo.",
   "validado": false,
   "grupos": [
     {
@@ -22,350 +22,241 @@
     {
       "id": "montaje",
       "titulo": "Montaje",
-      "subtitulo": "Del sitio de inflado a la envoltura extendida",
+      "subtitulo": "Del campo a la vela extendida y el ventilador en marcha",
       "avisos": [],
       "bloques": [
         {
-          "titulo": "Antes de empezar",
-          "fuente": "2.2, 4.2 a 4.5",
+          "titulo": "En el campo",
+          "fuente": "2.2, 4.2, 4.4, Piloto",
           "items": [
             {
-              "id": "sitio",
-              "texto": "Sitio de inflado plano y de dimensiones suficientes, libre de obstrucciones verticales, piedras afiladas, arbustos punzantes o cualquier cosa que pueda dañar la envoltura.",
-              "detalle": "Si es posible, abrigado del viento predominante. Con espacio para posicionar los vehículos para atar el globo.",
-              "fuente": "4.2"
-            },
-            {
-              "id": "nomex",
-              "texto": "Si hay algún riesgo de prender fuego a la vegetación, manta de nomex entre el quemador y la base de la envoltura.",
-              "fuente": "4.2"
-            },
-            {
               "id": "meteo",
-              "texto": "Limitaciones meteorológicas cumplidas.",
-              "detalle": "Sin actividad térmica, o muy débil. Sin indicios de tormentas, ni activas ni formándose. Viento en superficie máximo 15 kt (N-500 y N-550, 12 kt).",
+              "texto": "Meteo dentro de 2.2: sin térmicas, sin tormentas, viento en superficie de 15 kt como máximo",
               "fuente": "2.2"
             },
             {
-              "id": "meteo-plan",
-              "texto": "Considerado el tiempo inestable que se acerque, la brisa marina y que la dirección del viento no lleve a un área prohibida o una zona controlada.",
-              "detalle": "Y el efecto de la temperatura ambiente en la presión del combustible.",
-              "fuente": "4.3"
+              "id": "sitio",
+              "texto": "Sitio de inflado plano, sin obstrucciones, piedras ni arbustos, y abrigado si se puede",
+              "fuente": "4.2"
+            },
+            {
+              "id": "globo-sonda",
+              "texto": "Globo sonda soltado para ver la deriva",
+              "fuente": "Piloto"
             },
             {
               "id": "carga",
-              "texto": "Peso total calculado y por debajo de la máxima carga permitida en la Tabla de Carga.",
-              "detalle": "La carga máxima varía con la temperatura ambiente y la altitud (5.3). Por encima de 300 m (1000 ft) puede hacer falta consultarla en vuelo.",
-              "fuente": "4.4"
-            },
-            {
-              "id": "tripulacion",
-              "texto": "Tripulación instruida de las tareas que debe realizar.",
-              "fuente": "4.5"
+              "texto": "Temperatura ambiente medida y peso total dentro de la Tabla de Carga",
+              "fuente": "4.4, 4.3"
             }
           ]
         },
         {
-          "titulo": "Chequeo pre-vuelo inicial",
-          "fuente": "4.5.1",
+          "titulo": "Barquilla y quemador",
+          "fuente": "4.5.1, 4.5.2, 4.5.3, Piloto",
           "items": [
             {
-              "id": "documentos",
-              "texto": "Todos los documentos exigidos a bordo, según la autoridad nacional que aplique.",
-              "fuente": "4.5.1.1"
+              "id": "orientacion",
+              "texto": "Orientación del inflado decidida",
+              "fuente": "Piloto"
             },
             {
-              "id": "manual",
-              "texto": "Manual de Vuelo correcto, completo y válido para la configuración presente de la aeronave.",
-              "fuente": "4.5.1.1"
+              "id": "ventilador-bajar",
+              "texto": "Ventilador bajado del remolque",
+              "fuente": "Piloto"
             },
             {
-              "id": "env-tejido",
-              "texto": "Ningún agujero o desgarro en el tejido de la envoltura que exceda el daño permitido.",
-              "detalle": "Tercio inferior: daños en un área de no más de 3 paneles, que pueden ser adyacentes. En cualquier parte: agujeros de no más de 10 mm, a no menos de 25 mm de las cintas de carga, no más de 5 por panel y a no menos de 50 mm entre ellos. No más de 3 paneles con estos agujeros en los dos tercios superiores. Ningún daño en quemador, combustible ni cables de carga (2.3.1).",
-              "fuente": "4.5.1.2"
+              "id": "barquilla-suelo",
+              "texto": "Barquilla de pie donde se infla, con el lado largo sobre el que se tumbará hacia donde va el viento y las bombonas más pesadas de ese lado",
+              "fuente": "4.5.2, Piloto"
             },
             {
-              "id": "env-cintas",
-              "texto": "Todas las cintas de carga verticales y horizontales en buenas condiciones.",
-              "fuente": "4.5.1.2"
+              "id": "barquilla-inspeccion",
+              "texto": "Inspección de la barquilla",
+              "fuente": "C"
             },
             {
-              "id": "env-cuerdas",
-              "texto": "Todas las cuerdas y poleas bien atadas y funcionando correctamente.",
-              "fuente": "4.5.1.2"
+              "id": "bombonas-correas",
+              "texto": "Cada bombona con 2 correas y gas suficiente para el vuelo",
+              "fuente": "4.5.1.4, 4.5.2"
             },
             {
-              "id": "env-cordeles",
-              "texto": "Cordeles del paracaídas y del FDS sin enredar y trabajando correctamente.",
-              "fuente": "4.5.1.2"
-            },
-            {
-              "id": "env-cables",
-              "texto": "Cables de carga sin daños ni doblados.",
-              "fuente": "4.5.1.2"
-            },
-            {
-              "id": "quemador",
-              "texto": "Quemador y válvulas principales chequeados.",
-              "fuente": "4.5.1.3"
-            },
-            {
-              "id": "tubos",
-              "texto": "Tubos y sus conexiones con los depósitos en buen estado y sin pérdidas.",
-              "fuente": "4.5.1.3"
-            },
-            {
-              "id": "barquilla",
-              "texto": "Barquilla: supervisión general.",
-              "fuente": "4.5.1.4"
-            },
-            {
-              "id": "bombonas",
-              "texto": "Cada bombona bien asegurada con 2 correas.",
-              "fuente": "4.5.1.4"
-            },
-            {
-              "id": "quemador-cables",
-              "texto": "Quemador y cables correctamente unidos.",
-              "fuente": "4.5.1.4"
-            },
-            {
-              "id": "puerta",
-              "texto": "Puerta cerrada y bloqueada (si aplica).",
-              "fuente": "4.5.1.4"
-            },
-            {
-              "id": "instrumentos",
-              "texto": "Altímetro, variómetro y termómetro comprobados.",
-              "fuente": "4.5.1.5"
-            },
-            {
-              "id": "equipo",
-              "texto": "Cerillas, guantes, botiquín y extintor en buen estado.",
-              "fuente": "4.5.1.5"
-            }
-          ]
-        },
-        {
-          "titulo": "Unión barquilla y quemador",
-          "fuente": "4.5.2",
-          "items": [
-            {
-              "id": "barq-vertical",
-              "texto": "Barquilla vertical donde va a tener lugar el inflado.",
+              "id": "bombonas-orientacion",
+              "texto": "Bombonas del inflado con la válvula de líquido abajo al tumbar, y salidas sin apuntar a los ocupantes",
               "fuente": "4.5.2"
             },
             {
-              "id": "barq-cables",
-              "texto": "Cables de la barquilla chequeados por si hay daños.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "depositos",
-              "texto": "Depósitos firmemente atados a la barquilla y con gas suficiente para el vuelo.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "dep-inflado",
-              "texto": "Depósitos del inflado llenos y bien orientados: válvula de líquido en la posición más baja con la barquilla tumbada.",
-              "detalle": "Si se requiere suministro de vapor, la válvula de vapor de ese depósito en la posición superior con la barquilla tumbada.",
+              "id": "barras-cuadro",
+              "texto": "Comprobación de barras y cuadro",
               "fuente": "4.5.2"
             },
             {
               "id": "mangueras",
-              "texto": "Mangueras sin tramos sueltos en el compartimento del piloto, ni codos ni ángulos cerrados.",
-              "fuente": "4.5.2"
+              "texto": "Mangueras conectadas, sin tensión, sin codos, sin adaptadores y enganchadas a la pared para que no molesten",
+              "fuente": "4.5.2, Piloto"
             },
             {
-              "id": "salidas",
-              "texto": "Salidas de combustible de las botellas no alineadas hacia los ocupantes.",
-              "detalle": "Para evitar golpes en caso de aterrizaje duro.",
-              "fuente": "4.5.2"
+              "id": "interior-barquilla",
+              "texto": "Interior de la barquilla: extintor, botiquín y documentos",
+              "fuente": "4.5.1, BOP.BAS.050, BFCL.045",
+              "subpasos": [
+                {
+                  "id": "extintor",
+                  "texto": "Extintor",
+                  "fuente": "4.5.1.5"
+                },
+                {
+                  "id": "botiquin",
+                  "texto": "Botiquín",
+                  "fuente": "4.5.1.5"
+                },
+                {
+                  "id": "docs-a-bordo",
+                  "texto": "Documentos siempre a bordo",
+                  "fuente": "BOP.BAS.050",
+                  "detalle": "Limitaciones y procedimientos normales, anormales y de emergencia del Manual de Vuelo. Plan de vuelo ATS presentado, cuando haga falta. Cartas aeronáuticas vigentes de la zona."
+                },
+                {
+                  "id": "docs-globo",
+                  "texto": "Documentos del globo, a bordo o en el vehículo de recuperación",
+                  "fuente": "BOP.BAS.050, 4.5.1.1",
+                  "detalle": "Certificado de matrícula. Certificado de aeronavegabilidad con sus anexos. Manual de Vuelo correcto, completo y válido. Licencia de estación de radio, si lleva radio. Certificado del seguro de responsabilidad civil frente a terceros. Libro del globo. Cualquier otro que exija el Estado."
+                },
+                {
+                  "id": "docs-piloto",
+                  "texto": "Documentos del piloto",
+                  "fuente": "BFCL.045",
+                  "detalle": "Con licencia: BPL, certificado médico, documento de identidad con foto y los datos del logbook que demuestren que se cumple Part-BFCL. Alumno en vuelo solo: certificado médico, documento de identidad con foto y la autorización del instructor para el solo."
+                }
+              ]
             },
             {
-              "id": "mang-tensas",
-              "texto": "Mangueras sin tensión, sobre todo con interconexiones (conexiones en T).",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "adaptadores",
-              "texto": "Sin adaptadores de conexión (p. ej. Tema a Rego). No se permiten.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "barras",
-              "texto": "Barras de nylon en su soporte de la barquilla y cuadro del quemador en el otro extremo.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "mosq-barquilla",
-              "texto": "Cables de la barquilla conectados al cuadro con los mosquetones. Con doble mosquetón, cada cable con el suyo.",
-              "detalle": "Cuadros de otros fabricantes y barquillas con dos cables por esquina: ver 4.5.2 y los suplementos aplicables.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "tuberias",
-              "texto": "Tuberías en buenas condiciones y conectadas a los depósitos: el vapor por los reguladores (cuando se precise) y el líquido por las válvulas principales.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "fundas",
-              "texto": "Fundas protectoras en los soportes del quemador, sin pellizcar las tuberías y permitiendo un giro suave.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "tub-dobladas",
-              "texto": "Tuberías sin dobleces que impidan la libre circulación del combustible o fuercen el sistema de combustible.",
-              "fuente": "4.5.2"
-            },
-            {
-              "id": "amarre",
-              "texto": "Globo amarrado por el cuadro del quemador, del lado del que sopla el viento, a un vehículo o punto fijo de anclaje.",
-              "detalle": "Salvo con viento muy calmado, se recomienda una suelta rápida en el amarre (6.5). Con cuadro de cuatro puntos de anclaje, doble cuerda de suelta y anillo de sujeción.",
-              "fuente": "4.5.2"
+              "id": "test-quemador",
+              "texto": "Test del quemador",
+              "fuente": "4.5.3, Piloto",
+              "subpasos": [
+                {
+                  "id": "q-cerradas",
+                  "texto": "Válvulas de los quemadores cerradas, abrir el líquido de las bombonas",
+                  "fuente": "4.5.3"
+                },
+                {
+                  "id": "q-fugas",
+                  "texto": "Sin fugas, de oído y de olfato",
+                  "fuente": "4.5.3"
+                },
+                {
+                  "id": "q-pilotos",
+                  "texto": "Abrir las válvulas de los quemadores y encender las llamas piloto. Llamas correctas",
+                  "fuente": "4.5.3"
+                },
+                {
+                  "id": "q-presion",
+                  "texto": "Presión dentro del rango verde del manómetro",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "q-principal",
+                  "texto": "Prueba de las válvulas de llama principal",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "q-liquida",
+                  "texto": "Válvulas líquidas, arriba y abajo",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "q-apagar",
+                  "texto": "Apagar el gas de los quemadores",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "q-enfriar",
+                  "texto": "Enfriar los quemadores",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "q-bombonas",
+                  "texto": "Cerrar las válvulas de las bombonas",
+                  "fuente": "4.5.3"
+                },
+                {
+                  "id": "q-purgar",
+                  "texto": "Purgar las tuberías quemando el líquido por los quemadores, y cerrar las válvulas de los quemadores",
+                  "fuente": "4.5.3"
+                }
+              ]
             }
           ]
         },
         {
-          "titulo": "Test del quemador",
-          "fuente": "4.5.3",
-          "nota": "Con la barquilla todavía vertical. El 4.5.2 dice preparar el test y después tumbarla.",
-          "items": [
-            {
-              "id": "t-abrir",
-              "texto": "Con todas las válvulas del quemador cerradas, abrir el líquido en la botella y después el vapor (si aplica).",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-fugas",
-              "texto": "Sin pérdidas, escuchando y comprobando con el olfato.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-piloto",
-              "texto": "Llama piloto de un quemador encendida, con el flujo comprobado y la llama correcta.",
-              "detalle": "Con piloto de vapor, ajustar el regulador si es necesario.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-principal",
-              "texto": "Válvula principal de un quemador abierta y la llama funcionando correctamente.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-manometro",
-              "texto": "Manómetro entre un mínimo de 3 bar en invierno y un máximo de 10 bar en verano.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-cada",
-              "texto": "Mismo procedimiento en cada unidad de quemador, en todas las configuraciones.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-interconexion",
-              "texto": "Válvula de interconexión (si está instalada) funcionando, con 2 o 3 quemadores desde la misma válvula de botella.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-liquida",
-              "texto": "Llama líquida funcionando correctamente (si está instalada).",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-remoto",
-              "texto": "Válvula con control remoto (si está instalada) conectada y comprobada: abre completamente al apretar la maneta hidráulica.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-cerrar-liquido",
-              "texto": "Válvulas líquidas de las botellas cerradas, líquido de las tuberías quemado y válvula principal cerrada.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-cerrar-vapor",
-              "texto": "Vapor de las botellas cerrado (si aplica), llama piloto agotada y válvulas de las llamas piloto cerradas.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-friccion",
-              "texto": "Fricción del giro del quemador ajustada como se desea.",
-              "fuente": "4.5.3"
-            },
-            {
-              "id": "t-sujecion",
-              "texto": "Sin elementos sueltos ni dañados en la sujeción del quemador al cuadro.",
-              "fuente": "4.5.3"
-            }
-          ]
-        },
-        {
-          "titulo": "Tumbar la barquilla",
-          "fuente": "4.5.2",
+          "titulo": "Envoltura y amarre",
+          "fuente": "4.5.2, 4.5.4, 6.5, Piloto",
           "items": [
             {
               "id": "tumbar",
-              "texto": "Barquilla tumbada sobre uno de los lados largos, con el quemador apuntando hacia donde va el viento.",
+              "texto": "Barquilla tumbada sobre un lado largo, con el quemador hacia donde va el viento",
               "fuente": "4.5.2"
             },
             {
-              "id": "tumbar-valvulas",
-              "texto": "Válvulas de fase vapor (botellas maestras) arriba y salidas de líquido de las botellas del inflado abajo.",
-              "fuente": "4.5.2"
+              "id": "anclajes",
+              "texto": "Mosquetones de los puntos de anclaje en vertical y cables de acero bien puestos",
+              "fuente": "Piloto"
             },
             {
-              "id": "tumbar-t",
-              "texto": "Barquilla compartimentada en T: compartimento del piloto a la derecha mirando desde la barquilla hacia la boca.",
-              "fuente": "4.5.2"
-            }
-          ]
-        },
-        {
-          "titulo": "Envoltura",
-          "fuente": "4.5.4",
-          "items": [
+              "id": "boca-remolque",
+              "texto": "Boca de la envoltura bajada del remolque, con los cables fuera",
+              "fuente": "Piloto"
+            },
             {
-              "id": "e-bolsa",
-              "texto": "Bolsa abierta, cables y parte inferior de la envoltura fuera.",
+              "id": "cinta-color",
+              "texto": "Cinta de color del nomex en la parte central inferior",
               "fuente": "4.5.4"
             },
             {
-              "id": "e-cinta",
-              "texto": "Cinta de color cosida en el interior del nomex situada en la parte central inferior.",
-              "detalle": "Dónde queda la cinta roja de la boca según el número de cables: diagramas de 4.5.4.",
+              "id": "cables-mosquetones",
+              "texto": "Cables de la envoltura a los mosquetones del cuadro, sin enredar. Rosca del seguro cerrada hasta el tope y aflojada un cuarto de vuelta",
+              "fuente": "4.5.4, Piloto"
+            },
+            {
+              "id": "desinflado",
+              "texto": "Cuerda de desinflado conectada al cuadro del quemador",
               "fuente": "4.5.4"
             },
             {
-              "id": "e-cables",
-              "texto": "Cables de la envoltura atados a los mosquetones del cuadro de carga, sin enredar entre ellos y como en los diagramas.",
+              "id": "desplegar",
+              "texto": "Vehículo avanzando hacia donde va el viento y desplegando la vela desde el remolque",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "corona-estirada",
+              "texto": "Cuerda de corona estirada hacia donde va el viento",
               "fuente": "4.5.4"
             },
             {
-              "id": "e-mosquetones",
-              "texto": "Con dobles platinas en cada esquina, dos mosquetones. Con 8 barras de nylon, un mosquetón por barra.",
-              "detalle": "Dos platinas adyacentes del cuadro de carga no se unen a la envoltura con un solo mosquetón.",
-              "fuente": "4.5.4"
+              "id": "amarre",
+              "texto": "Vehículo del lado de donde sopla el viento y cuadro del quemador amarrado con la suelta rápida y su pasador",
+              "fuente": "4.5.2, 6.5"
             },
             {
-              "id": "e-seguros",
-              "texto": "Todos los seguros de los mosquetones cerrados.",
-              "fuente": "4.5.4"
+              "id": "tensar",
+              "texto": "Mover el coche para tensar la cuerda de amarre",
+              "fuente": "Piloto"
             },
             {
-              "id": "e-desinflado",
-              "texto": "Cuerda de desinflado conectada al cuadro del quemador.",
-              "fuente": "4.5.4"
+              "id": "nomex",
+              "texto": "Manta de nomex, si hay riesgo de prender la vegetación",
+              "fuente": "4.2"
             },
             {
-              "id": "e-sacar",
-              "texto": "Envoltura sacada de su bolsa tirando hacia donde va el viento.",
-              "fuente": "4.5.4"
+              "id": "abrir-boca",
+              "texto": "Abrir la boca tirando de las cintas de carga",
+              "fuente": "4.7, Piloto"
             },
             {
-              "id": "e-desplegar",
-              "texto": "Globo desplegado tanto como sea posible y cuerda de corona estirada hacia donde va el viento.",
-              "fuente": "4.5.4"
+              "id": "ventilador",
+              "texto": "Ventilador a la izquierda de la cesta mirando hacia la vela, dirigido a la boca, con gasolina y arrancado",
+              "fuente": "4.7, Piloto"
             }
           ]
         }
@@ -374,176 +265,176 @@
     {
       "id": "inflado",
       "titulo": "Inflado",
-      "subtitulo": "De la envoltura extendida al globo de pie",
+      "subtitulo": "Del inflado en frío al globo de pie",
       "avisos": [],
       "bloques": [
         {
-          "titulo": "Tripulación",
-          "fuente": "4.7",
-          "nota": "Lo que tiene que saber antes de empezar a inflar.",
+          "titulo": "Inflado en frío y paracaídas",
+          "fuente": "4.5.1.2, 4.6.1, 4.7, 6.4.2, Piloto",
           "items": [
             {
-              "id": "boca",
-              "texto": "Dos personas para aguantar la boca abierta.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "corona",
-              "texto": "Una o dos personas para mantener tensa la cuerda de corona.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-guantes",
-              "texto": "Guantes de piel y zapatos antideslizantes.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-observadores",
-              "texto": "No tomar ayuda de observadores salvo que el piloto los haya informado.",
-              "detalle": "Pueden hacer mucha fuerza aguantando el globo abajo y crear demasiada sustentación durante el inflado.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-avisar",
-              "texto": "Avisar al piloto si hay algún problema en la corona.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-final",
-              "texto": "Permanecer al final de la cuerda aguantando con firmeza.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-vueltas",
-              "texto": "No dar vueltas con la cuerda al cuerpo ni a un árbol para ir soltándola.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-pies",
-              "texto": "Toda la tripulación: si los pies se levantan del suelo aguantando la barquilla o la cuerda de corona, soltar inmediatamente.",
-              "fuente": "4.7"
-            }
-          ]
-        },
-        {
-          "titulo": "Inflado en frío",
-          "fuente": "4.7, 4.6",
-          "items": [
-            {
-              "id": "f-suelta",
-              "texto": "Amarre de suelta conectado (si se usa), con el pasador de seguridad puesto.",
-              "detalle": "El pasador evita una apertura inadvertida de la suelta rápida (6.5).",
-              "fuente": "4.7, 6.5"
-            },
-            {
-              "id": "f-extendida",
-              "texto": "Envoltura extendida tirando sólo de las cintas.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "f-ventilador",
-              "texto": "Ventilador dirigido a la boca.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "f-boca",
-              "texto": "Boca aguantada abierta por dos personas.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "f-corona",
-              "texto": "Cuerda de corona tensa.",
+              "id": "frio",
+              "texto": "Inflado en frío: boca abierta por dos personas, cuerda de corona tensa y ventilador llenando la envoltura",
               "fuente": "4.7"
             },
             {
               "id": "p-cuerdas",
-              "texto": "Cuerdas del paracaídas sin liar.",
-              "fuente": "4.6.1",
-              "detalle": "Es más fácil al principio del inflado con aire frío (4.6)."
+              "texto": "Cuerdas del paracaídas sin liar, costuras bien y poleas trabajando como deben",
+              "fuente": "4.6.1, 4.5.1.2"
             },
             {
-              "id": "p-centro",
-              "texto": "Tirar del centro del paracaídas hasta que cierre con la abertura del globo.",
-              "fuente": "4.6.1"
+              "id": "sensor",
+              "texto": "Sensor de temperatura colocado en la parte superior, por el agujero de cerca de la cinta de carga 9 o 9½, según las instrucciones del fabricante",
+              "fuente": "6.4.2"
             },
             {
-              "id": "p-velcros",
-              "texto": "Velcros del paracaídas colocados con los correspondientes del final de la envoltura.",
-              "fuente": "4.6.1"
+              "id": "cintas-corona",
+              "texto": "Cintas de carga de la corona sin liar",
+              "fuente": "Piloto"
             },
             {
-              "id": "p-fds",
-              "texto": "FDS: como el paracaídas, con todas las cuerdas sin enredar, libres para deslizarse y sin que pueda ocurrir daño alguno.",
-              "fuente": "4.6.2"
+              "id": "velcros",
+              "texto": "Tirar del centro del paracaídas hasta que cierre y poner los velcros, empezando por el de más a la derecha mirando hacia la vela",
+              "fuente": "4.6.1, Piloto"
             },
             {
-              "id": "f-pasajeros",
-              "texto": "Si el piloto lo decide, pasajeros a bordo con la cesta aún tumbada.",
-              "detalle": "Sobre todo en barquillas compartimentadas y si hay cierto viento. Es la alternativa a cargarlos con el globo levantado (4.8).",
-              "fuente": "4.7"
+              "id": "p-fuera",
+              "texto": "Por fuera, paracaídas bien colocado y cuerda central sin liar con las cintas de carga de la corona",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "p-seccion",
+              "texto": "Abrir una sección del paracaídas: cordines bien y sin líos, y mirar si el scoop está centrado o desviado",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "scoop-centrar",
+              "texto": "Abrir el globo para centrar el scoop",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "doble-check",
+              "texto": "Doble comprobación: cables bien y todos los mosquetones cerrados",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "inspeccion-interior",
+              "texto": "Inspección interior: cuerdas bien, paracaídas sin enredar y tela sin agujeros",
+              "fuente": "4.5.1.2, Piloto"
+            }
+          ]
+        },
+        {
+          "titulo": "Antes de quemar",
+          "fuente": "4.7, 7.5.1, Piloto",
+          "items": [
+            {
+              "id": "rescate-corona",
+              "texto": "Una persona del equipo de rescate sujetando la cuerda de corona",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "pertenencias",
+              "texto": "Mis cosas para el vuelo dentro de la cesta",
+              "fuente": "Piloto",
+              "subpasos": [
+                {
+                  "id": "guantes",
+                  "texto": "Guantes",
+                  "fuente": "C"
+                },
+                {
+                  "id": "cerillas",
+                  "texto": "Cerillas o mechero",
+                  "fuente": "C"
+                },
+                {
+                  "id": "instrumentos",
+                  "texto": "Instrumentos",
+                  "fuente": "C"
+                },
+                {
+                  "id": "tableta",
+                  "texto": "Tableta con su soporte",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "telefono",
+                  "texto": "Teléfono",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "boli",
+                  "texto": "Boli",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "libreta",
+                  "texto": "Libreta",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "brujula",
+                  "texto": "Brújula",
+                  "fuente": "Piloto"
+                },
+                {
+                  "id": "radio",
+                  "texto": "Radio",
+                  "fuente": "Piloto"
+                }
+              ]
+            },
+            {
+              "id": "matricula",
+              "texto": "Matrícula del globo apuntada en la libreta",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "lleno-frio",
+              "texto": "Envoltura tan llena como se pueda antes de quemar. Cuidado si está muy mojada",
+              "fuente": "4.7, 7.5.1"
+            },
+            {
+              "id": "ventilador-control",
+              "texto": "Ventilador cerca para poder pararlo, o una persona de rescate controlándolo para poder apagarlo",
+              "fuente": "Piloto"
             }
           ]
         },
         {
           "titulo": "Inflado en caliente",
-          "fuente": "4.7",
-          "nota": "A discreción del piloto, la tripulación de la boca puede no aguantar si el globo está totalmente lleno de aire frío. Si el viento basta para mantener la corona abajo con la presión del ventilador, la tripulación de corona puede ocuparse sólo del control lateral.",
+          "fuente": "4.5.3, 4.7, Piloto",
           "items": [
             {
-              "id": "c-lleno",
-              "texto": "Envoltura tan llena como sea posible antes de usar el quemador.",
-              "detalle": "El inflado con aire caliente de una envoltura muy mojada puede dañar el tejido (7.5.1).",
+              "id": "encender",
+              "texto": "Bombonas abiertas, válvulas de los quemadores abiertas y llamas piloto encendidas",
+              "fuente": "4.7, 4.5.3"
+            },
+            {
+              "id": "quemadas",
+              "texto": "Quemadas cortas con intervalos, con la boca bien abierta",
               "fuente": "4.7"
             },
             {
-              "id": "c-encender",
-              "texto": "Quemador encendido con el procedimiento de 4.5.3.",
-              "detalle": "Con piloto de vapor y las botellas tumbadas, el regulador recibe líquido y en un inflado largo puede helarse. Si amenaza con apagar la llama piloto, cerrarla en la válvula de la botella, esperar a que se funda el hielo, reabrir y encender (3.3).",
+              "id": "ventilador-boca",
+              "texto": "Ventilador en marcha hasta que la boca se levanta del suelo",
               "fuente": "4.7"
             },
             {
-              "id": "c-boca",
-              "texto": "Boca aguantada bien abierta.",
+              "id": "recto",
+              "texto": "Calentar poco a poco hasta levantar la cesta y tener el globo recto",
+              "fuente": "Piloto"
+            },
+            {
+              "id": "corona-cesta",
+              "texto": "Cuerda de corona llevada a la barquilla",
               "fuente": "4.7"
             },
             {
-              "id": "c-quemadas",
-              "texto": "Quemadas cortas, con intervalos, para que el aire del interior se caliente lenta y regularmente.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-corona",
-              "texto": "Tripulación de corona dejando subir la corona poco a poco.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "c-ventilador",
-              "texto": "Ventilador en marcha hasta que la boca se levanta del suelo.",
-              "detalle": "Es útil que una persona lo vaya girando para dirigir el aire al interior.",
-              "fuente": "4.7"
-            }
-          ]
-        },
-        {
-          "titulo": "Globo de pie",
-          "fuente": "4.7",
-          "nota": "Con el globo de pie, listo para los chequeos de Pre-despegue.",
-          "items": [
-            {
-              "id": "p-peso",
-              "texto": "Tripulación de la boca aguantando la barquilla con su peso mientras el piloto sube.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "p-suelta",
-              "texto": "Cuerda de suelta extendida y tensa.",
-              "fuente": "4.7"
-            },
-            {
-              "id": "p-corona",
-              "texto": "Cuerda de corona llevada a la barquilla.",
-              "detalle": "Sale de la figura de 4.7, no del texto.",
-              "fuente": "4.7"
+              "id": "scoop-fijar",
+              "texto": "Scoop fijado en la cesta",
+              "fuente": "Piloto"
             }
           ]
         }
@@ -551,361 +442,48 @@
     },
     {
       "id": "pre-despegue",
-      "titulo": "Pre-despegue",
-      "subtitulo": "Con el globo levantado, hasta la suelta",
-      "avisos": [
-        {
-          "texto": "El globo no debe despegar si falla en alguno de los chequeos pre-vuelo.",
-          "fuente": "2.3"
-        }
-      ],
+      "titulo": "Último chequeo",
+      "subtitulo": "Con el globo de pie, justo antes de despegar",
+      "avisos": [],
       "bloques": [
         {
-          "titulo": "Envoltura",
-          "fuente": "Apéndice C, 4.8.1",
+          "titulo": "Último chequeo",
+          "fuente": "6.4.2, C, Piloto",
           "items": [
             {
-              "id": "env-tejido",
-              "texto": "Ningún daño en el tejido que exceda el daño permitido.",
-              "detalle": "Que no haya rotos que impidan el vuelo (4.8.1). Límites en 2.3.1.",
-              "fuente": "C"
+              "id": "quitar-velcros",
+              "texto": "Quitar los velcros",
+              "fuente": "Piloto"
             },
             {
-              "id": "env-cintas",
-              "texto": "Ningún daño en las cintas de carga.",
-              "fuente": "C"
+              "id": "montar-instrumentos",
+              "texto": "Montar los instrumentos",
+              "fuente": "Piloto"
             },
             {
-              "id": "env-cables",
-              "texto": "Ningún daño en los cables y sin giros.",
-              "fuente": "C"
+              "id": "temperatura",
+              "texto": "El instrumento recibe la temperatura de la envoltura",
+              "fuente": "6.4.2"
             },
             {
-              "id": "env-mosquetones",
-              "texto": "Cables conectados correctamente a los mosquetones, y éstos cerrados, con el seguro y cargados correctamente.",
-              "fuente": "C, 4.8.1"
+              "id": "testigo",
+              "texto": "Testigo de temperatura en su sitio, visto desde la cesta",
+              "fuente": "C, 6.4.2"
             },
             {
-              "id": "env-cuerdas",
-              "texto": "Cuerdas de control sin ningún daño, atadas con seguridad, sin giros y trabajando correctamente.",
-              "fuente": "C"
+              "id": "probar-radio",
+              "texto": "Probar la radio",
+              "fuente": "Piloto"
             },
             {
-              "id": "env-poleas",
-              "texto": "Poleas y enganches bien cosidos y trabajando libremente.",
-              "fuente": "C"
+              "id": "obstaculos",
+              "texto": "Mirar obstáculos",
+              "fuente": "C, Piloto"
             },
             {
-              "id": "env-cuerdas-cuadro",
-              "texto": "Todas las cuerdas atadas al cuadro de carga.",
-              "fuente": "C"
-            },
-            {
-              "id": "env-paracaidas",
-              "texto": "Chequeo del sistema de paracaídas.",
-              "detalle": "Tirar de la cuerda del paracaídas para soltar todos los velcros, comprobando que cierra correctamente y que las cuerdas trabajan libremente (4.8.1).",
-              "fuente": "C, 4.8.1"
-            },
-            {
-              "id": "env-fds",
-              "texto": "Chequeo del FDS, si está instalado.",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Quemador y sistema de combustible",
-          "fuente": "Apéndice C, 4.8.1",
-          "items": [
-            {
-              "id": "q-danos",
-              "texto": "Quemador, válvulas y tubos sin daño ni fuga.",
-              "fuente": "C"
-            },
-            {
-              "id": "q-tubos",
-              "texto": "Todos los tubos conectados con seguridad a las botellas y conexiones sin pérdidas.",
-              "fuente": "C"
-            },
-            {
-              "id": "q-botellas",
-              "texto": "Botellas bien atadas, sin daños y sin signos de fugas.",
-              "fuente": "C"
-            },
-            {
-              "id": "q-presion",
-              "texto": "Presión dentro de los niveles requeridos.",
-              "detalle": "De 3 bar en invierno a 10 bar en verano (4.5.3). Con frío la presión baja y el globo responde mucho menos (4.9.1).",
-              "fuente": "C"
-            },
-            {
-              "id": "q-funcion",
-              "texto": "Funcionamiento del quemador en todas las unidades, con todas las válvulas abriendo y cerrando correctamente.",
-              "detalle": "Tubos y válvulas otra vez como en 4.5.3 (4.8.1).",
-              "fuente": "C, 4.8.1"
-            },
-            {
-              "id": "q-piloto",
-              "texto": "Llamas piloto funcionando correctamente y con fuerza, sin ser demasiado ruidosas ni silenciosas.",
-              "detalle": "Funcionamiento normal y sin congelamiento (4.8.1).",
-              "fuente": "C, 4.8.1"
-            },
-            {
-              "id": "q-todas",
-              "texto": "Todas las botellas funcionando correctamente.",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Barquilla",
-          "fuente": "Apéndice C",
-          "items": [
-            {
-              "id": "b-estado",
-              "texto": "Estado general de la barquilla y sus daños.",
-              "fuente": "C"
-            },
-            {
-              "id": "b-cables",
-              "texto": "Cables de la barquilla sin daños ni entregirados.",
-              "fuente": "C"
-            },
-            {
-              "id": "b-cuadro",
-              "texto": "Cuadro del quemador y barras de nylon coincidiendo correctamente y libres de daños.",
-              "fuente": "C"
-            },
-            {
-              "id": "b-union",
-              "texto": "Puntos de unión seguros y todos los mosquetones bien cerrados.",
-              "fuente": "C"
-            },
-            {
-              "id": "b-extintor",
-              "texto": "Extintor presente y listo para su uso.",
-              "fuente": "C"
-            },
-            {
-              "id": "b-cintas",
-              "texto": "Cintas de amarre de bombona colocadas y aseguradas.",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Combustible",
-          "fuente": "Apéndice C, 4.8.1, 2.5",
-          "items": [
-            {
-              "id": "combustible",
-              "texto": "Combustible suficiente para la duración del vuelo.",
-              "detalle": "Contenido de los depósitos comprobado otra vez (4.8.1). Mínimo 1 depósito por quemador, y 2 con quemador sencillo, llenos en el despegue (2.5).",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Equipo a bordo",
-          "fuente": "Apéndice C, 2.4",
-          "items": [
-            {
-              "id": "eq-encendido",
-              "texto": "Medios de encendido alternativo: cerillas, mechero, etc.",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-reloj",
-              "texto": "Reloj o indicador de tiempo.",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-instrumentos",
-              "texto": "Instrumentos (altímetro y variómetro) fijados y en marcha.",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-extintor",
-              "texto": "Extintor listo para su uso.",
-              "detalle": "De 2 kg, o dos de 1 kg, de polvo seco conforme a EN3 (2.4).",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-guantes",
-              "texto": "Guantes protectores para el piloto.",
-              "fuente": "C, 2.4"
-            },
-            {
-              "id": "eq-temperatura",
-              "texto": "Testigo de temperatura o sensor/transmisor de temperatura de vela.",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-combustible",
-              "texto": "Indicador de combustible en cada depósito.",
-              "fuente": "2.4"
-            },
-            {
-              "id": "eq-300",
-              "texto": "Si se prevé subir a más de 300 m (1000 ft), termómetro de temperatura ambiente y tabla de carga del constructor.",
-              "fuente": "2.4"
-            },
-            {
-              "id": "eq-cautivo",
-              "texto": "Kit de componentes para cautivo (si procede).",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-radio",
-              "texto": "Radio/Transponder (si procede), instalado y operativo.",
-              "fuente": "C"
-            },
-            {
-              "id": "eq-otros",
-              "texto": "Otros equipos requeridos según la CAA local y la naturaleza de la operación.",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Pasajeros",
-          "fuente": "Apéndice C, 4.8.1",
-          "items": [
-            {
-              "id": "pa-bordo",
-              "texto": "Todos los pasajeros a bordo y con suficiente espacio.",
-              "detalle": "Suben sólo con el globo estable, repartidos de forma regular y cada uno con un asa por lo menos (4.8.1).",
-              "fuente": "C, 4.8.1"
-            },
-            {
-              "id": "pa-instruidos",
-              "texto": "Todos los pasajeros instruidos para el despegue y su equipo fijado con seguridad.",
-              "detalle": "El briefing está en el bloque siguiente (4.8.2).",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Briefing de pasajeros",
-          "fuente": "4.8.2",
-          "items": [
-            {
-              "id": "br-piloto",
-              "texto": "Seguir las indicaciones del piloto, que prevalecen sobre éstas.",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-asas",
-              "texto": "Agarrarse a las asas o (excepto en el aterrizaje) a la barandilla.",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-tuberias",
-              "texto": "No agarrarse nunca a las tuberías, válvulas o cuerdas de control.",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-camaras",
-              "texto": "Cuando se indique, guardar cámaras, binoculares, etc.",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-posicion",
-              "texto": "Cuando se indique, posición de aterrizaje: rodillas juntas y ligeramente dobladas, sin sentarse ni acurrucarse, y manos dentro de la barquilla agarradas a las asas de cuerda.",
-              "detalle": "Barquilla abierta: en el lado delantero en la dirección de avance (4.8.2.1). Compartimentada: agachado de espaldas a la dirección de avance y con la espalda contra la pared, o de lado contra la pared frontal sin dar la espalda al piloto y con una mano en cada asa (4.8.2.2).",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-pelo",
-              "texto": "Pelo largo dentro de la ropa o atado atrás.",
-              "detalle": "En compartimentada, además, fuera bufandas, collares u otros objetos alrededor del cuello (4.8.2.2).",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-toque",
-              "texto": "Aguantar fuerte para el toque. La barquilla puede tumbarse y arrastrar después.",
-              "fuente": "4.8.2"
-            },
-            {
-              "id": "br-salir",
-              "texto": "No dejar la barquilla hasta que el piloto lo indique.",
-              "fuente": "4.8.2"
-            }
-          ]
-        },
-        {
-          "titulo": "Carga",
-          "fuente": "Apéndice C",
-          "items": [
-            {
-              "id": "ca-temperatura",
-              "texto": "Temperatura en el lugar de despegue comprobada.",
-              "fuente": "C"
-            },
-            {
-              "id": "ca-calculos",
-              "texto": "Cálculos de carga de acuerdo con el Manual de Vuelo y los requisitos operacionales.",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Arnés de ocupantes",
-          "fuente": "Apéndice C",
-          "items": [
-            {
-              "id": "arnes",
-              "texto": "Arnés puesto y conectado (si se requiere).",
-              "fuente": "C"
-            }
-          ]
-        },
-        {
-          "titulo": "Condiciones generales",
-          "fuente": "Apéndice C, 4.8.1",
-          "items": [
-            {
-              "id": "cg-obstaculos",
-              "texto": "Área hacia donde va el viento libre de obstáculos.",
-              "fuente": "C, 4.8.1"
-            },
-            {
-              "id": "cg-meteo",
-              "texto": "Condiciones meteorológicas sin cambios en detrimento de la seguridad del vuelo.",
-              "detalle": "Límites de 2.2: viento en superficie máximo 15 kt (N-500 y N-550, 12 kt), sin actividad térmica o muy débil, sin indicios de tormentas.",
-              "fuente": "C"
-            },
-            {
-              "id": "cg-tripulacion",
-              "texto": "Tripulación instruida de permanecer atenta.",
-              "fuente": "4.8.1"
-            }
-          ]
-        },
-        {
-          "titulo": "Despegue",
-          "fuente": "4.9",
-          "items": [
-            {
-              "id": "d-sobrante",
-              "texto": "Con viento, cierto sobrante de sustentación acumulado antes de dejar el suelo, con personal de tierra o con la suelta rápida.",
-              "detalle": "Saliendo de un sitio a resguardo, el viento por encima del globo da una falsa sustentación que desaparece al despegar (4.9.1).",
-              "fuente": "4.9.1"
-            },
-            {
-              "id": "d-scoop",
-              "texto": "Si es posible, abertura del scoop (si equipa) de cara al viento.",
-              "fuente": "4.9.1"
-            },
-            {
-              "id": "d-quemadas",
-              "texto": "Despegar incrementando la temperatura de la envoltura con quemadas reiteradas, y operar la suelta rápida.",
-              "fuente": "4.9"
-            },
-            {
-              "id": "d-preparado",
-              "texto": "Preparado para accionar el quemador otra vez cuando el globo se ha elevado y estabilizado.",
-              "fuente": "4.9"
+              "id": "briefing",
+              "texto": "Safety briefing",
+              "fuente": "Piloto"
             }
           ]
         }

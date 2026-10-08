@@ -1,8 +1,10 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-10-08**. Las checklists se rehicieron con Dídac paso a paso en la rama
-`checklists-revision-08-10`, **sin fusionar ni publicar** hasta que él lo diga. Después, crear
-`bpl-logbook` y el token.
+Última sesión: **2026-10-08**. Las checklists se rehicieron con Dídac paso a paso, y están
+fusionadas a `main` y **publicadas** el mismo día (commit `969ddfd`, bundle
+`index-oNOTTOOE.js` comprobado en Pages). Siguiente: que él las pruebe en un montaje de
+verdad y diga si se quita el aviso de pendiente de validar. Después, crear `bpl-logbook` y
+el token.
 
 **Checklists de Operar, versión 3, desde el 08/10/2026.** Montaje (27 pasos), inflado (21) y
 último chequeo (7). **Sustituyen enteras** a las del 06/10/2026, que eran transcripción del

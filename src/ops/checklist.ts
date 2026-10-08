@@ -14,7 +14,7 @@ export interface Subpaso {
   detalle?: string
   /**
    * De donde sale: apartado del manual, C para el Apendice C, una norma
-   * (BOP.BAS.050, BFCL.045) o Piloto si es procedimiento suyo. Sin fuente no
+   * (BOP.BAS.050, BFCL.045) o Pilot si es procedimiento suyo. Sin fuente no
    * hay paso.
    */
   fuente: string
@@ -201,9 +201,9 @@ export function porGrupo(c: Contenido): { titulo: string; checklists: Checklist[
   }))
 }
 
-/** En el JSON el Apendice C va como C, que es corto de escribir y no se lee. */
+/** En el JSON el Apendice C va como C, que es corto de escribir y no se lee. En catalan, como el resto. */
 export function fuenteLegible(fuente: string): string {
-  return fuente.split(', ').map(t => (t === 'C' ? 'Apéndice C' : t)).join(', ')
+  return fuente.split(', ').map(t => (t === 'C' ? 'Apèndix C' : t)).join(', ')
 }
 
 export function buscarChecklist(c: Contenido, id: string): Checklist | undefined {

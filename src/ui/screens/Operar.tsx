@@ -1,6 +1,9 @@
 // src/ui/screens/Operar.tsx
 // Las checklists de operacion, y lo que falta por transcribir.
 //
+// En catalan, por peticion del piloto el 08/10/2026, igual que el contenido.
+// El resto de la app sigue en castellano.
+//
 // CRITICAL: aqui NO se escribe contenido de checklist. Una checklist de globo
 // es un documento de seguridad. Su texto vive en src/ops/checklists.json, es
 // el procedimiento que dicta el piloto cruzado con el Manual de Vuelo MV04r30
@@ -14,9 +17,9 @@ import { hrefOf } from '../router'
 import { marcasGuardadas } from './Checklist'
 
 const PENDIENTE: { titulo: string; fuente: string; grave?: boolean }[] = [
-  { titulo: 'Control en vuelo', fuente: 'Seccion 4.10' },
-  { titulo: 'Aterrizaje', fuente: 'Seccion 4.11' },
-  { titulo: 'Emergencias', fuente: 'Seccion 3, lineas electricas y FDS', grave: true },
+  { titulo: 'Control en vol', fuente: 'Secció 4.10' },
+  { titulo: 'Aterratge', fuente: 'Secció 4.11' },
+  { titulo: 'Emergències', fuente: 'Secció 3, línies elèctriques i FDS', grave: true },
 ]
 
 export function Operar() {
@@ -24,9 +27,9 @@ export function Operar() {
     <Screen title="Operar" tab="operar">
       <div style="padding: 0 20px 24px 20px; display: flex; flex-direction: column; gap: 16px;">
         {!CONTENIDO.validado && (
-          <Notice tone="warn" title="Pendiente de validar">
-            Pasos dictados por el piloto el 08/10/2026 y cruzados con el MV04 r30. Cada paso
-            lleva su fuente.
+          <Notice tone="warn" title="Pendent de validar">
+            Passos dictats pel pilot el 08/10/2026 i creuats amb el MV04 r30. Cada pas porta
+            la seva font.
           </Notice>
         )}
 
@@ -63,7 +66,7 @@ export function Operar() {
         ))}
 
         <div>
-          <div class="cap">Del manual, pendiente de transcribir</div>
+          <div class="cap">Del manual, pendent de transcriure</div>
           <div style="margin-top: 8px;">
             {PENDIENTE.map(c => (
               <div

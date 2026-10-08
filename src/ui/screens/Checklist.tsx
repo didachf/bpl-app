@@ -232,7 +232,7 @@ function BotonReiniciar({ onReiniciar, desactivado }: { onReiniciar: () => void;
       onClick={alPulsar}
       style={`width: auto; padding: 0 18px; ${armado ? 'border-color: var(--danger); color: var(--danger);' : ''}`}
     >
-      {armado ? 'Pulsa otra vez para borrar' : 'Reiniciar'}
+      {armado ? 'Torna a prémer per esborrar' : 'Reinicia'}
     </button>
   )
 }
@@ -277,28 +277,28 @@ function Ejecutar({ cl }: { cl: Checklist }) {
   )
 
   return (
-    <Sheet title={cl.titulo} overline="Procedimiento del piloto y MV04 r30" footer={pie}>
+    <Sheet title={cl.titulo} overline="Procediment del pilot i MV04 r30" footer={pie}>
       <div style="padding: 0 20px 28px 20px;">
         <div class="muted" style="font-size: 14px; margin-bottom: 14px;">{cl.subtitulo}</div>
 
         <div style="display: flex; flex-direction: column; gap: 10px;">
           {cl.avisos.map(a => (
-            <Notice key={a.texto} tone="danger" title={a.texto}>Apartado {a.fuente}</Notice>
+            <Notice key={a.texto} tone="danger" title={a.texto}>Apartat {a.fuente}</Notice>
           ))}
           {!CONTENIDO.validado && (
-            <Notice tone="warn" title="Pendiente de validar">
-              Pasos y orden dictados por el piloto el 08/10/2026 y cruzados con el MV04 r30.
-              Cada paso lleva su fuente.
+            <Notice tone="warn" title="Pendent de validar">
+              Passos i ordre dictats pel pilot el 08/10/2026 i creuats amb el MV04 r30.
+              Cada pas porta la seva font.
             </Notice>
           )}
           {inicio.caducadas && (
-            <Notice title="Marcas borradas">
-              Eran de hace más de 6 h y se han quitado. Se empieza de cero.
+            <Notice title="Marques esborrades">
+              Eren de fa més de 6 h i s'han tret. Es comença de zero.
             </Notice>
           )}
           {noGuarda && (
-            <Notice tone="warn" title="Las marcas no se están guardando">
-              Si la app se cierra, se pierden. La checklist sigue sirviendo.
+            <Notice tone="warn" title="Les marques no s'estan desant">
+              Si l'app es tanca, es perden. La checklist continua servint.
             </Notice>
           )}
         </div>
@@ -320,8 +320,8 @@ function Ejecutar({ cl }: { cl: Checklist }) {
         ))}
 
         <div class="dim" style="font-size: 13px; line-height: 1.45; margin-top: 20px;">
-          Las marcas caducan a las 6 h del último cambio. La pantalla no se apaga mientras
-          está abierta.
+          Les marques caduquen a les 6 h de l'últim canvi. La pantalla no s'apaga mentre
+          està oberta.
         </div>
       </div>
     </Sheet>
@@ -334,8 +334,8 @@ export function ChecklistScreen({ id }: { id: string }) {
     return (
       <Sheet title="Checklist">
         <div style="padding: 0 20px;">
-          <Notice tone="warn" title="Esta checklist no existe">
-            <a href={hrefOf({ name: 'operar' })} style="color: var(--accent);">Volver a Operar</a>
+          <Notice tone="warn" title="Aquesta checklist no existeix">
+            <a href={hrefOf({ name: 'operar' })} style="color: var(--accent);">Torna a Operar</a>
           </Notice>
         </div>
       </Sheet>

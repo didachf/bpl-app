@@ -1,18 +1,18 @@
 {
-  "version": 3,
-  "fuente": "Procedimiento del piloto, revisado el 08/10/2026, con el Manual de Vuelo MV04 Ed.4 Rev.30 de Ultramagic",
-  "nota": "Pasos y orden dictados por el piloto el 08/10/2026, que sustituyen a la transcripción del manual del 06/10/2026. Cada paso lleva su fuente: el apartado del MV04, C para el Apéndice C, la norma, o Piloto si es procedimiento suyo.",
+  "version": 4,
+  "fuente": "Procediment del pilot, revisat el 08/10/2026, amb el Manual de Vol MV04 Ed.4 Rev.30 d'Ultramagic",
+  "nota": "Passos i ordre dictats pel pilot el 08/10/2026, en català per petició seva. Substitueixen la transcripció del manual del 06/10/2026. Cada pas porta la seva font: l'apartat del MV04, C per a l'Apèndix C, la norma, o Pilot si és procediment seu.",
   "validado": false,
   "grupos": [
     {
-      "titulo": "Preparación y montaje",
+      "titulo": "Preparació i muntatge",
       "checklists": [
         "montaje",
         "inflado"
       ]
     },
     {
-      "titulo": "Check antes de despegar",
+      "titulo": "Check abans d'enlairar-se",
       "checklists": [
         "pre-despegue"
       ]
@@ -21,83 +21,83 @@
   "checklists": [
     {
       "id": "montaje",
-      "titulo": "Montaje",
-      "subtitulo": "Del campo a la vela extendida y el ventilador en marcha",
+      "titulo": "Muntatge",
+      "subtitulo": "Del camp a la vela estesa i el ventilador en marxa",
       "avisos": [],
       "bloques": [
         {
-          "titulo": "En el campo",
-          "fuente": "2.2, 4.2, 4.4, Piloto",
+          "titulo": "Al camp",
+          "fuente": "2.2, 4.2, 4.4, Pilot",
           "items": [
             {
               "id": "meteo",
-              "texto": "Meteo dentro de 2.2: sin térmicas, sin tormentas, viento en superficie de 15 kt como máximo",
+              "texto": "Meteo dins de 2.2: sense tèrmiques, sense tempestes, vent en superfície de 15 kt com a màxim",
               "fuente": "2.2"
             },
             {
               "id": "sitio",
-              "texto": "Sitio de inflado plano, sin obstrucciones, piedras ni arbustos, y abrigado si se puede",
+              "texto": "Lloc d'inflat pla, sense obstacles, pedres ni arbustos, i arrecerat si es pot",
               "fuente": "4.2"
             },
             {
               "id": "globo-sonda",
-              "texto": "Globo sonda soltado para ver la deriva",
-              "fuente": "Piloto"
+              "texto": "Globus sonda deixat anar per veure la deriva",
+              "fuente": "Pilot"
             },
             {
               "id": "carga",
-              "texto": "Temperatura ambiente medida y peso total dentro de la Tabla de Carga",
+              "texto": "Temperatura ambient mesurada i pes total dins de la Taula de Càrrega",
               "fuente": "4.4, 4.3"
             }
           ]
         },
         {
-          "titulo": "Barquilla y quemador",
-          "fuente": "4.5.1, 4.5.2, 4.5.3, Piloto",
+          "titulo": "Cistella i cremador",
+          "fuente": "4.5.1, 4.5.2, 4.5.3, Pilot",
           "items": [
             {
               "id": "orientacion",
-              "texto": "Orientación del inflado decidida",
-              "fuente": "Piloto"
+              "texto": "Orientació de l'inflat decidida",
+              "fuente": "Pilot"
             },
             {
               "id": "ventilador-bajar",
-              "texto": "Ventilador bajado del remolque",
-              "fuente": "Piloto"
+              "texto": "Ventilador baixat del remolc",
+              "fuente": "Pilot"
             },
             {
               "id": "barquilla-suelo",
-              "texto": "Barquilla de pie donde se infla, con el lado largo sobre el que se tumbará hacia donde va el viento y las bombonas más pesadas de ese lado",
-              "fuente": "4.5.2, Piloto"
+              "texto": "Cistella dreta on s'infla, amb el costat llarg sobre el qual es tombarà cap on va el vent i les bombones més pesades d'aquest costat",
+              "fuente": "4.5.2, Pilot"
             },
             {
               "id": "barquilla-inspeccion",
-              "texto": "Inspección de la barquilla",
+              "texto": "Inspecció de la cistella",
               "fuente": "C"
             },
             {
               "id": "bombonas-correas",
-              "texto": "Cada bombona con 2 correas y gas suficiente para el vuelo",
+              "texto": "Cada bombona amb 2 corretges i gas suficient per al vol",
               "fuente": "4.5.1.4, 4.5.2"
             },
             {
               "id": "bombonas-orientacion",
-              "texto": "Bombonas del inflado con la válvula de líquido abajo al tumbar, y salidas sin apuntar a los ocupantes",
+              "texto": "Bombones de l'inflat amb la vàlvula de líquid a baix en tombar, i sortides sense apuntar als ocupants",
               "fuente": "4.5.2"
             },
             {
               "id": "barras-cuadro",
-              "texto": "Comprobación de barras y cuadro",
+              "texto": "Comprovació de barres i quadre",
               "fuente": "4.5.2"
             },
             {
               "id": "mangueras",
-              "texto": "Mangueras conectadas, sin tensión, sin codos, sin adaptadores y enganchadas a la pared para que no molesten",
-              "fuente": "4.5.2, Piloto"
+              "texto": "Mànegues connectades, sense tensió, sense colzes, sense adaptadors i enganxades a la paret perquè no molestin",
+              "fuente": "4.5.2, Pilot"
             },
             {
               "id": "interior-barquilla",
-              "texto": "Interior de la barquilla: extintor, botiquín y documentos",
+              "texto": "Interior de la cistella: extintor, farmaciola i documents",
               "fuente": "4.5.1, BOP.BAS.050, BFCL.045",
               "subpasos": [
                 {
@@ -107,82 +107,82 @@
                 },
                 {
                   "id": "botiquin",
-                  "texto": "Botiquín",
+                  "texto": "Farmaciola",
                   "fuente": "4.5.1.5"
                 },
                 {
                   "id": "docs-a-bordo",
-                  "texto": "Documentos siempre a bordo",
+                  "texto": "Documents sempre a bord",
                   "fuente": "BOP.BAS.050",
-                  "detalle": "Limitaciones y procedimientos normales, anormales y de emergencia del Manual de Vuelo. Plan de vuelo ATS presentado, cuando haga falta. Cartas aeronáuticas vigentes de la zona."
+                  "detalle": "Limitacions i procediments normals, anormals i d'emergència del Manual de Vol. Pla de vol ATS presentat, quan calgui. Cartes aeronàutiques vigents de la zona."
                 },
                 {
                   "id": "docs-globo",
-                  "texto": "Documentos del globo, a bordo o en el vehículo de recuperación",
+                  "texto": "Documents del globus, a bord o al vehicle de recuperació",
                   "fuente": "BOP.BAS.050, 4.5.1.1",
-                  "detalle": "Certificado de matrícula. Certificado de aeronavegabilidad con sus anexos. Manual de Vuelo correcto, completo y válido. Licencia de estación de radio, si lleva radio. Certificado del seguro de responsabilidad civil frente a terceros. Libro del globo. Cualquier otro que exija el Estado."
+                  "detalle": "Certificat de matrícula. Certificat d'aeronavegabilitat amb els annexos. Manual de Vol correcte, complet i vàlid. Llicència d'estació de ràdio, si porta ràdio. Certificat de l'assegurança de responsabilitat civil davant de tercers. Llibre del globus. Qualsevol altre que exigeixi l'Estat."
                 },
                 {
                   "id": "docs-piloto",
-                  "texto": "Documentos del piloto",
+                  "texto": "Documents del pilot",
                   "fuente": "BFCL.045",
-                  "detalle": "Con licencia: BPL, certificado médico, documento de identidad con foto y los datos del logbook que demuestren que se cumple Part-BFCL. Alumno en vuelo solo: certificado médico, documento de identidad con foto y la autorización del instructor para el solo."
+                  "detalle": "Amb llicència: BPL, certificat mèdic, document d'identitat amb foto i les dades del logbook que demostrin que es compleix Part-BFCL. Alumne en vol solo: certificat mèdic, document d'identitat amb foto i l'autorització de l'instructor per al solo."
                 }
               ]
             },
             {
               "id": "test-quemador",
-              "texto": "Test del quemador",
-              "fuente": "4.5.3, Piloto",
+              "texto": "Test del cremador",
+              "fuente": "4.5.3, Pilot",
               "subpasos": [
                 {
                   "id": "q-cerradas",
-                  "texto": "Válvulas de los quemadores cerradas, abrir el líquido de las bombonas",
+                  "texto": "Vàlvules dels cremadors tancades, obrir el líquid de les bombones",
                   "fuente": "4.5.3"
                 },
                 {
                   "id": "q-fugas",
-                  "texto": "Sin fugas, de oído y de olfato",
+                  "texto": "Sense fuites, d'oïda i d'olfacte",
                   "fuente": "4.5.3"
                 },
                 {
                   "id": "q-pilotos",
-                  "texto": "Abrir las válvulas de los quemadores y encender las llamas piloto. Llamas correctas",
+                  "texto": "Obrir les vàlvules dels cremadors i encendre les flames pilot. Flames correctes",
                   "fuente": "4.5.3"
                 },
                 {
                   "id": "q-presion",
-                  "texto": "Presión dentro del rango verde del manómetro",
-                  "fuente": "Piloto"
+                  "texto": "Pressió dins del rang verd del manòmetre",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "q-principal",
-                  "texto": "Prueba de las válvulas de llama principal",
-                  "fuente": "Piloto"
+                  "texto": "Prova de les vàlvules de flama principal",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "q-liquida",
-                  "texto": "Válvulas líquidas, arriba y abajo",
-                  "fuente": "Piloto"
+                  "texto": "Vàlvules líquides, amunt i avall",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "q-apagar",
-                  "texto": "Apagar el gas de los quemadores",
-                  "fuente": "Piloto"
+                  "texto": "Apagar el gas dels cremadors",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "q-enfriar",
-                  "texto": "Enfriar los quemadores",
-                  "fuente": "Piloto"
+                  "texto": "Refredar els cremadors",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "q-bombonas",
-                  "texto": "Cerrar las válvulas de las bombonas",
+                  "texto": "Tancar les vàlvules de les bombones",
                   "fuente": "4.5.3"
                 },
                 {
                   "id": "q-purgar",
-                  "texto": "Purgar las tuberías quemando el líquido por los quemadores, y cerrar las válvulas de los quemadores",
+                  "texto": "Purgar les canonades cremant el líquid pels cremadors, i tancar les vàlvules dels cremadors",
                   "fuente": "4.5.3"
                 }
               ]
@@ -190,73 +190,73 @@
           ]
         },
         {
-          "titulo": "Envoltura y amarre",
-          "fuente": "4.5.2, 4.5.4, 6.5, Piloto",
+          "titulo": "Vela i amarratge",
+          "fuente": "4.5.2, 4.5.4, 6.5, Pilot",
           "items": [
             {
               "id": "tumbar",
-              "texto": "Barquilla tumbada sobre un lado largo, con el quemador hacia donde va el viento",
+              "texto": "Cistella tombada sobre un costat llarg, amb el cremador cap on va el vent",
               "fuente": "4.5.2"
             },
             {
               "id": "anclajes",
-              "texto": "Mosquetones de los puntos de anclaje en vertical y cables de acero bien puestos",
-              "fuente": "Piloto"
+              "texto": "Mosquetons dels punts d'ancoratge en vertical i cables d'acer ben posats",
+              "fuente": "Pilot"
             },
             {
               "id": "boca-remolque",
-              "texto": "Boca de la envoltura bajada del remolque, con los cables fuera",
-              "fuente": "Piloto"
+              "texto": "Boca de la vela baixada del remolc, amb els cables fora",
+              "fuente": "Pilot"
             },
             {
               "id": "cinta-color",
-              "texto": "Cinta de color del nomex en la parte central inferior",
+              "texto": "Cinta de color del nomex a la part central inferior",
               "fuente": "4.5.4"
             },
             {
               "id": "cables-mosquetones",
-              "texto": "Cables de la envoltura a los mosquetones del cuadro, sin enredar. Rosca del seguro cerrada hasta el tope y aflojada un cuarto de vuelta",
-              "fuente": "4.5.4, Piloto"
+              "texto": "Cables de la vela als mosquetons del quadre, sense embolicar. Rosca del segur tancada fins al topall i afluixada un quart de volta",
+              "fuente": "4.5.4, Pilot"
             },
             {
               "id": "desinflado",
-              "texto": "Cuerda de desinflado conectada al cuadro del quemador",
+              "texto": "Corda de desinflat connectada al quadre del cremador",
               "fuente": "4.5.4"
             },
             {
               "id": "desplegar",
-              "texto": "Vehículo avanzando hacia donde va el viento y desplegando la vela desde el remolque",
-              "fuente": "Piloto"
+              "texto": "Vehicle avançant cap on va el vent i desplegant la vela des del remolc",
+              "fuente": "Pilot"
             },
             {
               "id": "corona-estirada",
-              "texto": "Cuerda de corona estirada hacia donde va el viento",
+              "texto": "Corda de corona estirada cap on va el vent",
               "fuente": "4.5.4"
             },
             {
               "id": "amarre",
-              "texto": "Vehículo del lado de donde sopla el viento y cuadro del quemador amarrado con la suelta rápida y su pasador",
+              "texto": "Vehicle del costat d'on bufa el vent i quadre del cremador amarrat amb l'alliberament ràpid i el seu passador",
               "fuente": "4.5.2, 6.5"
             },
             {
               "id": "tensar",
-              "texto": "Mover el coche para tensar la cuerda de amarre",
-              "fuente": "Piloto"
+              "texto": "Moure el cotxe per tensar la corda d'amarratge",
+              "fuente": "Pilot"
             },
             {
               "id": "nomex",
-              "texto": "Manta de nomex, si hay riesgo de prender la vegetación",
+              "texto": "Manta de nomex, si hi ha risc de calar foc a la vegetació",
               "fuente": "4.2"
             },
             {
               "id": "abrir-boca",
-              "texto": "Abrir la boca tirando de las cintas de carga",
-              "fuente": "4.7, Piloto"
+              "texto": "Obrir la boca estirant de les cintes de càrrega",
+              "fuente": "4.7, Pilot"
             },
             {
               "id": "ventilador",
-              "texto": "Ventilador a la izquierda de la cesta mirando hacia la vela, dirigido a la boca, con gasolina y arrancado",
-              "fuente": "4.7, Piloto"
+              "texto": "Ventilador a l'esquerra de la cistella mirant cap a la vela, dirigit a la boca, amb benzina i engegat",
+              "fuente": "4.7, Pilot"
             }
           ]
         }
@@ -264,177 +264,177 @@
     },
     {
       "id": "inflado",
-      "titulo": "Inflado",
-      "subtitulo": "Del inflado en frío al globo de pie",
+      "titulo": "Inflat",
+      "subtitulo": "De l'inflat en fred al globus dret",
       "avisos": [],
       "bloques": [
         {
-          "titulo": "Inflado en frío y paracaídas",
-          "fuente": "4.5.1.2, 4.6.1, 4.7, 6.4.2, Piloto",
+          "titulo": "Inflat en fred i paracaigudes",
+          "fuente": "4.5.1.2, 4.6.1, 4.7, 6.4.2, Pilot",
           "items": [
             {
               "id": "frio",
-              "texto": "Inflado en frío: boca abierta por dos personas, cuerda de corona tensa y ventilador llenando la envoltura",
+              "texto": "Inflat en fred: boca oberta per dues persones, corda de corona tensa i ventilador omplint la vela",
               "fuente": "4.7"
             },
             {
               "id": "p-cuerdas",
-              "texto": "Cuerdas del paracaídas sin liar, costuras bien y poleas trabajando como deben",
+              "texto": "Cordes del paracaigudes sense embolicar, costures bé i politges treballant com cal",
               "fuente": "4.6.1, 4.5.1.2"
             },
             {
               "id": "sensor",
-              "texto": "Sensor de temperatura colocado en la parte superior, por el agujero de cerca de la cinta de carga 9 o 9½, según las instrucciones del fabricante",
+              "texto": "Sensor de temperatura col·locat a la part superior, pel forat de prop de la cinta de càrrega 9 o 9½, segons les instruccions del fabricant",
               "fuente": "6.4.2"
             },
             {
               "id": "cintas-corona",
-              "texto": "Cintas de carga de la corona sin liar",
-              "fuente": "Piloto"
+              "texto": "Cintes de càrrega de la corona sense embolicar",
+              "fuente": "Pilot"
             },
             {
               "id": "velcros",
-              "texto": "Tirar del centro del paracaídas hasta que cierre y poner los velcros, empezando por el de más a la derecha mirando hacia la vela",
-              "fuente": "4.6.1, Piloto"
+              "texto": "Estirar del centre del paracaigudes fins que tanqui i posar els velcros, començant pel de més a la dreta mirant cap a la vela",
+              "fuente": "4.6.1, Pilot"
             },
             {
               "id": "p-fuera",
-              "texto": "Por fuera, paracaídas bien colocado y cuerda central sin liar con las cintas de carga de la corona",
-              "fuente": "Piloto"
+              "texto": "Per fora, paracaigudes ben col·locat i corda central sense embolicar amb les cintes de càrrega de la corona",
+              "fuente": "Pilot"
             },
             {
               "id": "p-seccion",
-              "texto": "Abrir una sección del paracaídas: cordines bien y sin líos, y mirar si el scoop está centrado o desviado",
-              "fuente": "Piloto"
+              "texto": "Obrir una secció del paracaigudes: cordills bé i sense embolics, i mirar si l'scoop està centrat o desviat",
+              "fuente": "Pilot"
             },
             {
               "id": "scoop-centrar",
-              "texto": "Abrir el globo para centrar el scoop",
-              "fuente": "Piloto"
+              "texto": "Obrir el globus per centrar l'scoop",
+              "fuente": "Pilot"
             },
             {
               "id": "doble-check",
-              "texto": "Doble comprobación: cables bien y todos los mosquetones cerrados",
-              "fuente": "Piloto"
+              "texto": "Doble comprovació: cables bé i tots els mosquetons tancats",
+              "fuente": "Pilot"
             },
             {
               "id": "inspeccion-interior",
-              "texto": "Inspección interior: cuerdas bien, paracaídas sin enredar y tela sin agujeros",
-              "fuente": "4.5.1.2, Piloto"
+              "texto": "Inspecció interior: cordes bé, paracaigudes sense embolicar i tela sense forats",
+              "fuente": "4.5.1.2, Pilot"
             }
           ]
         },
         {
-          "titulo": "Antes de quemar",
-          "fuente": "4.7, 7.5.1, Piloto",
+          "titulo": "Abans de cremar",
+          "fuente": "4.7, 7.5.1, Pilot",
           "items": [
             {
               "id": "rescate-corona",
-              "texto": "Una persona del equipo de rescate sujetando la cuerda de corona",
-              "fuente": "Piloto"
+              "texto": "Una persona de l'equip de rescat aguantant la corda de corona",
+              "fuente": "Pilot"
             },
             {
               "id": "pertenencias",
-              "texto": "Mis cosas para el vuelo dentro de la cesta",
-              "fuente": "Piloto",
+              "texto": "Les meves coses per al vol dins de la cistella",
+              "fuente": "Pilot",
               "subpasos": [
                 {
                   "id": "guantes",
-                  "texto": "Guantes",
+                  "texto": "Guants",
                   "fuente": "C"
                 },
                 {
                   "id": "cerillas",
-                  "texto": "Cerillas o mechero",
+                  "texto": "Llumins o encenedor",
                   "fuente": "C"
                 },
                 {
                   "id": "instrumentos",
-                  "texto": "Instrumentos",
+                  "texto": "Instruments",
                   "fuente": "C"
                 },
                 {
                   "id": "tableta",
-                  "texto": "Tableta con su soporte",
-                  "fuente": "Piloto"
+                  "texto": "Tauleta amb el seu suport",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "telefono",
-                  "texto": "Teléfono",
-                  "fuente": "Piloto"
+                  "texto": "Telèfon",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "boli",
                   "texto": "Boli",
-                  "fuente": "Piloto"
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "libreta",
-                  "texto": "Libreta",
-                  "fuente": "Piloto"
+                  "texto": "Llibreta",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "brujula",
-                  "texto": "Brújula",
-                  "fuente": "Piloto"
+                  "texto": "Brúixola",
+                  "fuente": "Pilot"
                 },
                 {
                   "id": "radio",
-                  "texto": "Radio",
-                  "fuente": "Piloto"
+                  "texto": "Ràdio",
+                  "fuente": "Pilot"
                 }
               ]
             },
             {
               "id": "matricula",
-              "texto": "Matrícula del globo apuntada en la libreta",
-              "fuente": "Piloto"
+              "texto": "Matrícula del globus apuntada a la llibreta",
+              "fuente": "Pilot"
             },
             {
               "id": "lleno-frio",
-              "texto": "Envoltura tan llena como se pueda antes de quemar. Cuidado si está muy mojada",
+              "texto": "Vela tan plena com es pugui abans de cremar. Compte si està molt mullada",
               "fuente": "4.7, 7.5.1"
             },
             {
               "id": "ventilador-control",
-              "texto": "Ventilador cerca para poder pararlo, o una persona de rescate controlándolo para poder apagarlo",
-              "fuente": "Piloto"
+              "texto": "Ventilador a prop per poder-lo aturar, o una persona de rescat controlant-lo per poder-lo apagar",
+              "fuente": "Pilot"
             }
           ]
         },
         {
-          "titulo": "Inflado en caliente",
-          "fuente": "4.5.3, 4.7, Piloto",
+          "titulo": "Inflat en calent",
+          "fuente": "4.5.3, 4.7, Pilot",
           "items": [
             {
               "id": "encender",
-              "texto": "Bombonas abiertas, válvulas de los quemadores abiertas y llamas piloto encendidas",
+              "texto": "Bombones obertes, vàlvules dels cremadors obertes i flames pilot enceses",
               "fuente": "4.7, 4.5.3"
             },
             {
               "id": "quemadas",
-              "texto": "Quemadas cortas con intervalos, con la boca bien abierta",
+              "texto": "Cremades curtes amb intervals, amb la boca ben oberta",
               "fuente": "4.7"
             },
             {
               "id": "ventilador-boca",
-              "texto": "Ventilador en marcha hasta que la boca se levanta del suelo",
+              "texto": "Ventilador en marxa fins que la boca s'aixeca de terra",
               "fuente": "4.7"
             },
             {
               "id": "recto",
-              "texto": "Calentar poco a poco hasta levantar la cesta y tener el globo recto",
-              "fuente": "Piloto"
+              "texto": "Escalfar a poc a poc fins aixecar la cistella i tenir el globus dret",
+              "fuente": "Pilot"
             },
             {
               "id": "corona-cesta",
-              "texto": "Cuerda de corona llevada a la barquilla",
+              "texto": "Corda de corona portada a la cistella",
               "fuente": "4.7"
             },
             {
               "id": "scoop-fijar",
-              "texto": "Scoop fijado en la cesta",
-              "fuente": "Piloto"
+              "texto": "Scoop fixat a la cistella",
+              "fuente": "Pilot"
             }
           ]
         }
@@ -442,48 +442,48 @@
     },
     {
       "id": "pre-despegue",
-      "titulo": "Último chequeo",
-      "subtitulo": "Con el globo de pie, justo antes de despegar",
+      "titulo": "Últim xequeig",
+      "subtitulo": "Amb el globus dret, just abans d'enlairar-se",
       "avisos": [],
       "bloques": [
         {
-          "titulo": "Último chequeo",
-          "fuente": "6.4.2, C, Piloto",
+          "titulo": "Últim xequeig",
+          "fuente": "6.4.2, C, Pilot",
           "items": [
             {
               "id": "quitar-velcros",
-              "texto": "Quitar los velcros",
-              "fuente": "Piloto"
+              "texto": "Treure els velcros",
+              "fuente": "Pilot"
             },
             {
               "id": "montar-instrumentos",
-              "texto": "Montar los instrumentos",
-              "fuente": "Piloto"
+              "texto": "Muntar els instruments",
+              "fuente": "Pilot"
             },
             {
               "id": "temperatura",
-              "texto": "El instrumento recibe la temperatura de la envoltura",
+              "texto": "L'instrument rep la temperatura de la vela",
               "fuente": "6.4.2"
             },
             {
               "id": "testigo",
-              "texto": "Testigo de temperatura en su sitio, visto desde la cesta",
+              "texto": "Testimoni de temperatura al seu lloc, vist des de la cistella",
               "fuente": "C, 6.4.2"
             },
             {
               "id": "probar-radio",
-              "texto": "Probar la radio",
-              "fuente": "Piloto"
+              "texto": "Provar la ràdio",
+              "fuente": "Pilot"
             },
             {
               "id": "obstaculos",
-              "texto": "Mirar obstáculos",
-              "fuente": "C, Piloto"
+              "texto": "Mirar obstacles",
+              "fuente": "C, Pilot"
             },
             {
               "id": "briefing",
               "texto": "Safety briefing",
-              "fuente": "Piloto"
+              "fuente": "Pilot"
             }
           ]
         }

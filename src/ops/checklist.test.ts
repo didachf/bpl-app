@@ -38,7 +38,7 @@ const CON_SUB: Checklist = {
     items: [
       {
         id: 'test', texto: 'Test', fuente: '4.5.3',
-        subpasos: [{ id: 's1', texto: 'S1', fuente: '4.5.3' }, { id: 's2', texto: 'S2', fuente: 'Piloto' }],
+        subpasos: [{ id: 's1', texto: 'S1', fuente: '4.5.3' }, { id: 's2', texto: 'S2', fuente: 'Pilot' }],
       },
       { id: 'x', texto: 'X', fuente: '4.5' },
     ],
@@ -60,13 +60,13 @@ describe('el contenido revisado con el piloto el 08/10/2026', () => {
 
   it('la preparacion y el montaje van separados del check antes de despegar', () => {
     expect(porGrupo(CONTENIDO).map(g => [g.titulo, g.checklists.map(c => c.id)])).toEqual([
-      ['Preparación y montaje', ['montaje', 'inflado']],
-      ['Check antes de despegar', ['pre-despegue']],
+      ['Preparació i muntatge', ['montaje', 'inflado']],
+      ['Check abans d\'enlairar-se', ['pre-despegue']],
     ])
   })
 
   it('cada paso y cada subpaso cita su fuente: el manual, el Apendice C, una norma o el piloto', () => {
-    const token = /^(C|\d+(\.\d+)*|Piloto|BOP\.BAS\.050|BFCL\.045)$/
+    const token = /^(C|\d+(\.\d+)*|Pilot|BOP\.BAS\.050|BFCL\.045)$/
     for (const cl of CONTENIDO.checklists) {
       for (const p of cl.bloques.flatMap(b => b.items)) {
         for (const q of [p, ...(p.subpasos ?? [])]) {
@@ -88,6 +88,11 @@ describe('el contenido revisado con el piloto el 08/10/2026', () => {
 
   it('ni un paso de vapor: las bombonas son solo de liquido', () => {
     expect(textos(datos).filter(t => /vapor/i.test(t))).toEqual([])
+  })
+
+  it('en catalan, por peticion del piloto el 08/10/2026: ni un titulo en castellano', () => {
+    const titulos = CONTENIDO.checklists.flatMap(c => [c.titulo, ...c.bloques.map(b => b.titulo)])
+    expect(titulos.filter(t => /Montaje|Inflado|Barquilla|Envoltura|Antes de|chequeo/.test(t))).toEqual([])
   })
 
   it('ni punto y coma ni rayas en ningun texto', () => {
@@ -200,9 +205,9 @@ describe('validarContenido', () => {
 })
 
 describe('fuenteLegible', () => {
-  it('escribe el Apendice C entero y deja los apartados como estan', () => {
-    expect(fuenteLegible('C')).toBe('Apéndice C')
-    expect(fuenteLegible('C, 4.8.1')).toBe('Apéndice C, 4.8.1')
+  it('escribe el Apendice C entero, en catalan, y deja los apartados como estan', () => {
+    expect(fuenteLegible('C')).toBe('Apèndix C')
+    expect(fuenteLegible('C, 4.8.1')).toBe('Apèndix C, 4.8.1')
     expect(fuenteLegible('4.5.1.2')).toBe('4.5.1.2')
   })
 })

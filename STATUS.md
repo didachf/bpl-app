@@ -6,6 +6,8 @@ fusionadas a `main` y **publicadas** el mismo día (commit `969ddfd`, bundle
 verdad y diga si se quita el aviso de pendiente de validar. Después, crear `bpl-logbook` y
 el token.
 
+**En catalán desde el mismo 08/10/2026** (versión 4 del JSON), por petición suya: «lo quiero en catalán». Contenido y textos de las pantallas de Operar y de la checklist. El resto de la app sigue en castellano. La fuente de los pasos suyos es `Pilot`.
+
 **Checklists de Operar, versión 3, desde el 08/10/2026.** Montaje (27 pasos), inflado (21) y
 último chequeo (7). **Sustituyen enteras** a las del 06/10/2026, que eran transcripción del
 manual en el orden del manual: «todo lo que hemos hecho en la app de checkeos es sustituido

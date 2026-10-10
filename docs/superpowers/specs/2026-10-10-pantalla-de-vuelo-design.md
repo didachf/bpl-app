@@ -429,7 +429,8 @@ necesitarán otra fuente, por ejemplo el PNOA del IGN. Queda fuera de este spec.
 | Arranque ya en el aire | Altitud sin calibrar, con su aviso |
 | Pronóstico de más de 6 h | Aviso, como en Planificar |
 | Un modelo no llega a una fila | Se dice en el detalle de la casilla, con el nombre del modelo |
-| Ninguna medida en una franja | La casilla de «Mesurat» va vacía, no inventa |
+| Ninguna medida en ninguna franja | **La columna «Mesurat» no aparece** hasta la primera medida. Es la misma regla de §6.9, aceptada por el piloto el 10/10/2026 |
+| Ninguna medida en una franja, habiendo otras | Esa casilla de «Mesurat» va vacía, no inventa |
 | La pantalla se apaga | Se vuelve a pedir `wakeLock` al volver |
 | Sin mosaicos de una zona | Leaflet enseña el fondo vacío. La posición y la traza siguen |
 | Sin waypoint activo, en cualquiera de los cuatro casos de §6.9 | No aparece nada del waypoint ni del optimizador. La mejor izquierda y la mejor derecha siguen |

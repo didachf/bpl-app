@@ -21,7 +21,7 @@ siempre que se pase de una a otra con un toque.
 | Pieza | Contenido | Spec |
 |---|---|---|
 | 1 | Tabla de viento previsto por altitud y hora | **Éste** |
-| 2 | GPS en vuelo: posición, viento medido, proyección y destino | **Éste** |
+| 2 | GPS en vuelo: posición, viento medido, proyección, waypoints y navegación con optimizador | **Éste** |
 | 3 | El plan de vuelo dentro de la app, que se rehace entero desde el móvil o la tablet | Propio, más adelante |
 | 4 | Pasar los planes del Mac a la tablet y al teléfono | Propio, más adelante |
 
@@ -41,7 +41,10 @@ navegador, que se pueden correr con node.
 | Proyección | Una línea con marcas a los **5, 10, 15 y 20 min**, como la de FlyMate. 30 min «es casi medio vuelo» |
 | Filas de la tabla | La fila «terra» (viento a 10 m sobre el terreno, escrita en pies sobre el mar), **cada 250 ft** hasta el techo y **cada 1 000 ft** por encima, hasta 10 000 ft, para la emergencia |
 | Viento medido | En las mismas franjas de 250 ft que la tabla. Cada franja guarda sólo la última medida |
-| Destino | Se fija con una pulsación larga en el mapa. Se resaltan las filas que van hacia allí con **15° a cada lado**. Este margen es criterio nuestro y la pantalla lo dice |
+| Waypoints | Se crean con una pulsación larga en el mapa **o escribiendo las coordenadas**, eligiendo antes el formato: decimal, grados minutos y segundos, o UTM. Uno de ellos es el activo |
+| Navegación | Dos partes. **Rumbo directo y distancia horizontal** del globo al waypoint activo. Y un **optimizador** que dice cómo llegar controlando la altitud y la velocidad de subida y bajada |
+| Velocidad vertical | La del piloto. Subir lento de 0 a 1 m/s, rápido de 2,5 a 3. Bajar lento de 0 a 1 m/s, rápido de 3 a 5. Son los valores por defecto, editables en Ajustes |
+| Filas hacia el waypoint | Se resaltan las que van hacia él con **15° a cada lado**. Este margen es criterio nuestro y la pantalla lo dice |
 | Sin plan del día | Hasta que exista la pieza 3, el despegue es la posición GPS al pulsar «Començar vol», la ventana va desde ese momento hasta 3 h después y el techo es 1 200 m. Los tres se cambian en la pantalla |
 | Idioma | Catalán, como Operar y como los planes en PDF |
 
@@ -193,18 +196,113 @@ conserva su medida anterior.
 Una línea desde la posición actual con el rumbo y la velocidad de §6.3, con marcas a los 5,
 10, 15 y 20 min. Es dónde estarías si te quedas a esta altura.
 
-### 6.6 Destino
+### 6.6 Waypoints
 
-Se fija con una pulsación larga en el mapa. La franja da rumbo, distancia y hora estimada
-de llegada a la velocidad actual. En la tabla se resaltan las filas cuyo rumbo, previsto
-(«Ara») o medido, queda a 15° o menos del rumbo al destino.
+Un waypoint lleva nombre, latitud, longitud y una nota opcional. Se crea de dos maneras:
 
-### 6.7 Mejor izquierda y mejor derecha
+1. **Desde el mapa**, con una pulsación larga. Sale con el nombre WP1, WP2..., que se cambia
+   después.
+2. **Escribiendo las coordenadas.** Primero se elige el formato, y el campo cambia según él:
+   * **Decimal**: «41,6561 N 1,1490 E», como en los planes, y también lo que se pega de Google
+     Maps, «41.6561, 1.1490». Acepta coma o punto decimal, y letras o signo.
+   * **Grados, minutos y segundos**: «41°39'22" N 1°08'56" E», como en el AIP.
+   * **UTM**, en ETRS89, que es lo que usan los mapas del ICGC: huso, X e Y. El huso es 31 por
+     defecto. El 30 queda disponible porque el oeste de Lleida cae cerca del límite. La
+     diferencia entre ETRS89 y WGS84 es de menos de un metro, y aquí no cuenta.
 
-Con un rango de altitud que elige el piloto, por ejemplo de 1 500 a 3 000 ft: la fila que
-más gira a la izquierda del rumbo actual y la que más gira a la derecha, con su altitud,
-rumbo y velocidad. Sale de lo medido si la medida tiene menos de 15 min, y de «Ara» si no, y
-dice de cuál.
+   Antes de guardar, la pantalla enseña el punto en el mapa y en los otros dos formatos, para
+   ver que está donde se quería.
+
+Hay una lista de waypoints con su rumbo y su distancia desde la posición actual. En ella se
+activa uno, se cambia el nombre o se borra. Sólo uno está activo a la vez, y es el que usan la
+franja, la tabla y el optimizador.
+
+Los waypoints se guardan **en el documento del logbook**, con su esquema y su migración, como
+el resto de datos. Así van en la copia de seguridad y llegarán a la tablet y al teléfono con la
+pieza 4. Las zonas de aterrizaje del plan, con la pieza 3, serán waypoints también.
+
+### 6.7 Rumbo directo y distancia
+
+Del globo al waypoint activo, por círculo máximo: rumbo verdadero, distancia horizontal en km
+(en metros por debajo de 1 km) y hora estimada de llegada a la velocidad actual sobre el suelo.
+Van en la franja fija y se ven en las dos vistas. En el mapa, una línea recta une el globo con
+el waypoint.
+
+En la tabla se resaltan las filas cuyo rumbo, previsto («Ara») o medido, queda a 15° o menos
+del rumbo directo.
+
+### 6.8 Optimizador: cómo llegar
+
+Dice qué hacer con la altitud para pasar lo más cerca posible del waypoint activo. Se
+recalcula en directo.
+
+**El modelo.** Con el viento de un solo punto (§5.5), la deriva sólo depende de la altitud y
+de la hora, no de dónde esté el globo. Entonces el desplazamiento de un plan es la suma del
+viento de cada altitud por el tiempo que se pasa en ella. Se integra en pasos de 10 s, con el
+viento interpolado en altitud y en el tiempo, igual que la columna «Ara».
+
+**De dónde sale el viento de cada altitud.** De lo medido si la medida de esa franja tiene
+menos de 15 min. Si no, de lo previsto para cada instante del plan.
+
+**Qué planes prueba.** Hasta tres altitudes mantenidas, que son filas de la tabla, unidas por
+subidas y bajadas. El primer tramo puede ser quedarse donde se está. Cada cambio de altitud se
+hace en uno de los cuatro modos del piloto:
+
+| Modo | Rango del piloto | Valor de cálculo |
+|---|---|---|
+| Puja lent | 0 a 1 m/s | 0,5 m/s |
+| Puja ràpid | 2,5 a 3 m/s | 2,75 m/s |
+| Baixa lent | 0 a 1 m/s | 0,5 m/s |
+| Baixa ràpid | 3 a 5 m/s | 4 m/s |
+
+`ASSUMPTION:` el valor de cálculo es el punto medio del rango. Durante la subida o la bajada,
+el globo atraviesa las capas intermedias y su viento cuenta, no se salta. Los tiempos en cada
+altitud van en pasos de 1 min.
+
+**Qué busca.** La menor distancia horizontal al waypoint en todo el recorrido, no al final. Si
+dos planes empatan dentro de 50 m, gana el que llega antes, y después el que tiene menos
+cambios.
+
+**Límites.**
+* La altitud se mueve dentro de un rango que elige el piloto. Por defecto va desde 250 ft
+  sobre el despegue hasta el techo.
+* El horizonte es de 60 min, editable. Con la pieza 3, lo limitará también el propano.
+
+**Qué enseña**, en catalán y en órdenes cortas:
+
+1. Ara, puja ràpid (2,5 a 3 m/s) fins a 2 500 ft.
+2. Manté 2 500 ft 9 min, cap a 078° a 7 kt (previst).
+3. Baixa lent fins a 1 500 ft.
+4. Manté 1 500 ft fins al punt, cap a 045° a 4 kt (mesurat fa 6 min).
+
+Debajo de las órdenes va:
+* el resultado: «Passes a 120 m del punt a les 08:52»
+* lo mismo **si no haces nada** y te quedas a la altitud actual, para comparar
+* **la dispersión**: el mismo plan calculado con el viento de cada modelo por separado, por
+  ejemplo «amb cada model, entre 100 m i 1,6 km». Es un desacuerdo, no una probabilidad, y
+  sigue las reglas de §6 del spec principal. En las capas medidas, todos los modelos usan la
+  medida.
+
+En el mapa, el recorrido del plan sale en otro color, con marcas cada 5 min.
+
+**En directo.**
+* Se recalcula cada 15 s, y también al cambiar de waypoint o al llegar una medida nueva.
+* El cálculo va en un Web Worker, para que la pantalla no se trabe. Presupuesto: menos de
+  1 s en la tablet.
+* Para que la orden no salte de un recálculo a otro, el plan vigente sólo se sustituye si el
+  nuevo pasa al menos un 20 % más cerca o 200 m más cerca.
+* Si el piloto no sigue el plan, el siguiente recálculo parte de donde está de verdad.
+
+`WARNING:` el optimizador no sabe nada del terreno bajo el recorrido, de los obstáculos, de las
+líneas eléctricas ni del espacio aéreo. La altitud mínima del rango se cuenta desde el
+despegue, y una loma más alta en el camino la deja corta. Es una ayuda para decidir, la decisión
+es del piloto, y la pantalla lo dice.
+
+### 6.9 Mejor izquierda y mejor derecha
+
+Con el mismo rango de altitud: la fila que más gira a la izquierda del rumbo actual y la que
+más gira a la derecha, con su altitud, rumbo y velocidad. Sale de lo medido si la medida tiene
+menos de 15 min, y de «Ara» si no, y dice de cuál. Sirve aunque no haya waypoint activo.
 
 ## 7. La pantalla
 
@@ -217,7 +315,9 @@ Cifras grandes:
 * variómetro en m/s
 * rumbo y velocidad sobre el suelo, en grados y nudos
 * tiempo de vuelo
-* destino: rumbo, distancia en km y hora estimada, si hay destino
+* waypoint activo: nombre, rumbo directo, distancia y hora estimada
+* **la orden vigente del optimizador** y su resultado, por ejemplo «Puja ràpid fins a
+  2 500 ft. Passes a 120 m a les 08:52»
 * el botón para cambiar de vista
 
 ### 7.2 Vista Mapa
@@ -226,7 +326,10 @@ Leaflet, con la ortofoto del ICGC. Encima:
 * la posición
 * la traza, coloreada por altitud
 * la proyección
-* el destino, con su línea
+* los waypoints, con el activo destacado y la línea recta hasta él
+* el recorrido del plan del optimizador, con marcas cada 5 min
+
+Desde aquí se abre la lista de waypoints y el formulario de coordenadas.
 
 Las zonas de aterrizaje, las líneas eléctricas y el propano llegan con la pieza 3.
 
@@ -238,11 +341,16 @@ La tabla, con lo alto arriba:
 * Las casillas con modelos dispares van atenuadas.
 * Una línea marca la altitud actual. Por encima y por debajo de ella, las filas llevan un tono
   distinto cada una.
-* Las filas que van al destino van resaltadas.
+* Las filas que van al waypoint activo van resaltadas, y las altitudes del plan del
+  optimizador van marcadas.
 * Un toque en la casilla abre el detalle: la banda de velocidad, el desacuerdo, y qué modelos
   no llegan a esa fila.
 
-Debajo, el rango y la mejor izquierda y la mejor derecha.
+Debajo, en este orden:
+1. el plan del optimizador entero, con sus órdenes, el resultado, el «si no fas res» y la
+   dispersión
+2. el rango de altitud
+3. la mejor izquierda y la mejor derecha
 
 ### 7.4 Teléfono y tablet
 
@@ -290,6 +398,10 @@ necesitarán otra fuente, por ejemplo el PNOA del IGN. Queda fuera de este spec.
 | Ninguna medida en una franja | La casilla de «Mesurat» va vacía, no inventa |
 | La pantalla se apaga | Se vuelve a pedir `wakeLock` al volver |
 | Sin mosaicos de una zona | Leaflet enseña el fondo vacío. La posición y la traza siguen |
+| Sin waypoint activo | No hay rumbo directo ni optimizador. La mejor izquierda y la mejor derecha siguen |
+| Ningún plan mejora a quedarse | El optimizador lo dice así, «cap pla s'hi acosta més que quedar-te a aquesta altitud», y no inventa una orden |
+| Coordenadas que no se entienden o fuera de rango | El formulario dice qué campo falla y no guarda |
+| El cálculo tarda más de lo previsto | Se queda el plan anterior, con su hora, hasta que llegue el nuevo |
 
 ## 11. Pruebas
 
@@ -302,7 +414,19 @@ Módulos puros con prueba, como el resto del proyecto, y ninguna prueba de compo
 * rumbo y velocidad de una ventana de puntos, incluido el paso por 360°
 * viento medido: vuelo nivelado, ascenso lento que sí mide, ascenso rápido que no
 * calibración de altitud
-* proyección, rumbo y distancia al destino, contra valores conocidos
+* proyección, rumbo y distancia al waypoint, contra valores conocidos
+* coordenadas: los tres formatos, en los dos sentidos, contra puntos de referencia publicados
+  (para UTM, puntos con coordenadas oficiales del ICGC), con coma y punto decimal, y los
+  errores de formato y de rango
+* waypoints en el documento: esquema nuevo, migración desde el esquema 2 y validación
+* optimizador:
+  * con dos capas sintéticas cuya solución exacta se puede calcular a mano, encuentra esa
+    solución
+  * cuenta la deriva durante las subidas y las bajadas
+  * respeta el rango de altitud y el horizonte
+  * prefiere lo medido reciente a lo previsto
+  * el umbral de sustitución no deja que la orden salte
+  * dice «cap pla s'hi acosta més» cuando es verdad
 * mejor izquierda y mejor derecha, y de qué fuente sale
 
 **Contraste con el Mac:** con la misma respuesta de open-meteo guardada, el motor de la app y
@@ -323,3 +447,7 @@ apaisada. En la tablet de verdad:
 2. **open-meteo:** cuánta cuota gasta la petición con siete modelos y nueve niveles de altura.
 3. **La altitud de Chrome en Android:** si da elipsoide, como dice el W3C, o ya la da sobre el
    mar.
+4. **El coste del optimizador:** cuántos planes salen con tres altitudes, cuatro modos y pasos
+   de 1 min, y si caben en 1 s en la tablet. Si no caben, se poda (por ejemplo, altitudes
+   sólo dentro del rango y tiempos más gruesos lejos del punto) antes de bajar el número de
+   altitudes.

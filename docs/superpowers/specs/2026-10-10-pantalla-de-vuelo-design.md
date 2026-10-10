@@ -205,10 +205,15 @@ Una línea desde la posición actual con el rumbo y la velocidad de §6.3, con m
 
 ### 6.6 Waypoints
 
-Un waypoint lleva nombre, latitud, longitud y una nota opcional. Se crea de dos maneras:
+Un waypoint lleva nombre, latitud, longitud y una nota opcional. Se crea de dos maneras, que
+la lista ofrece como dos botones del mismo peso, «Marcar al mapa» y «Per coordenades». Lo pidió
+el piloto el 10/10/2026: o con coordenadas, o seleccionando el punto a mano en el mapa.
 
-1. **Desde el mapa**, con una pulsación larga. Sale con el nombre WP1, WP2..., que se cambia
-   después.
+1. **Marcar al mapa.** Una cruz fija en el centro. El piloto mueve y amplía el mapa hasta que la
+   cruz cae en el punto, y las coordenadas se escriben solas debajo, en el formato elegido. Es
+   más preciso que tocar el punto con el dedo en una cesta que se mueve. La pulsación larga en
+   el mapa es un atajo que abre esta misma pantalla centrada donde se ha pulsado. Sale con el
+   nombre WP1, WP2..., que se cambia allí mismo.
 2. **Escribiendo las coordenadas.** Primero se elige el formato, y el campo cambia según él:
    * **Decimal**: «41,6561 N 1,1490 E», como en los planes, y también lo que se pega de Google
      Maps, «41.6561, 1.1490». Acepta coma o punto decimal, y letras o signo.

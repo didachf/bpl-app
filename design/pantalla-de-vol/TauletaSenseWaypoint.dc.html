@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, mapa sense waypoint actiu</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:4px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; left: 0; top: 0; width: 1280px; height: 600px; overflow: hidden; background: #3a3426;">
+    <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto del ICGC al voltant de Tàrrega" style="position: absolute; left: 0; top: -300px; width: 1300px; height: 1050px;">
+    <svg width="1300" height="1050" viewBox="0 0 1300 1050" style="position: absolute; left: 0; top: -300px;" role="img" aria-label="Traça, projecció i waypoints sense cap d'actiu">
+      <polygon points="712.1,569.0 719.4,577.2 726.4,585.7 733.2,594.3 739.8,603.1 746.1,612.1 752.2,621.3 758.1,630.6 763.7,640.0 885.0,570.0 877.5,557.4 869.7,545.0 861.5,532.8 853.0,520.8 844.3,509.1 835.2,497.6 825.8,486.3 816.2,475.3" fill="#3ad16b" fill-opacity="0.22" stroke="#3ad16b" stroke-width="2"></polygon>
+      <text x="842" y="470" fill="#ffffff" font-family="IBM Plex Sans" font-size="15" font-weight="600" class="halo">ZONA A</text>
+      <circle cx="796.4" cy="562.0" r="9" fill="none" stroke="#0b0b0b" stroke-opacity="0.6" stroke-width="5"></circle>
+      <circle cx="796.4" cy="562.0" r="9" fill="none" stroke="#ffffff" stroke-width="2"></circle>
+      <circle cx="1000" cy="430" r="9" fill="none" stroke="#0b0b0b" stroke-opacity="0.6" stroke-width="5"></circle>
+      <circle cx="1000" cy="430" r="9" fill="none" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="1014" y="435" fill="#ffffff" font-family="IBM Plex Sans" font-size="14" font-weight="600" class="halo">Camp gran</text>
+
+      <polyline points="402.9,846.3 405.9,842.8 409.0,839.3 412.2,835.8 415.4,832.4 418.7,829.1 422.0,825.9 425.4,822.6 428.7,819.4 432.1,816.2 435.5,813.0 438.9,809.8 442.2,806.6 445.5,803.3 448.8,800.0 452.0,796.6 455.2,793.1 458.2,789.6 461.2,786.0 464.1,782.4 467.0,778.6 469.7,774.8 472.4,771.0 475.0,767.1 481.1,763.8" fill="none" stroke="#0b0b0b" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <polyline points="481.1,763.8 487.3,760.7 493.4,757.6 499.7,754.6 505.9,751.7 512.2,748.9 518.5,746.0 524.8,743.3 531.0,740.5 537.3,737.6 543.6,734.8 549.8,731.8 556.0,728.8 562.2,725.8 568.3,722.6 574.4,719.4 580.5,716.0 586.5,712.7 592.5,709.2 598.5,705.8 604.5,702.3 610.5,698.8 616.5,695.4 622.5,692.0 628.6,688.7 634.7,685.5 640.8,682.3 647.0,679.3 653.2,676.3 659.4,673.3 665.7,670.5 672.0,667.7 678.3,664.9 684.6,662.1 690.8,659.2 697.1,656.4 703.4,653.5 709.6,650.5 715.7,647.4 721.9,644.3 728.0,641.0 734.0,637.7 740.1,634.3 746.1,630.9" fill="none" stroke="#0b0b0b" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <polyline points="402.9,846.3 405.9,842.8 409.0,839.3 412.2,835.8 415.4,832.4 418.7,829.1 422.0,825.9 425.4,822.6 428.7,819.4 432.1,816.2 435.5,813.0 438.9,809.8 442.2,806.6 445.5,803.3 448.8,800.0 452.0,796.6 455.2,793.1 458.2,789.6 461.2,786.0 464.1,782.4 467.0,778.6 469.7,774.8 472.4,771.0 475.0,767.1 481.1,763.8" fill="none" stroke="#ffd400" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <polyline points="481.1,763.8 487.3,760.7 493.4,757.6 499.7,754.6 505.9,751.7 512.2,748.9 518.5,746.0 524.8,743.3 531.0,740.5 537.3,737.6 543.6,734.8 549.8,731.8 556.0,728.8 562.2,725.8 568.3,722.6 574.4,719.4 580.5,716.0 586.5,712.7 592.5,709.2 598.5,705.8 604.5,702.3 610.5,698.8 616.5,695.4 622.5,692.0 628.6,688.7 634.7,685.5 640.8,682.3 647.0,679.3 653.2,676.3 659.4,673.3 665.7,670.5 672.0,667.7 678.3,664.9 684.6,662.1 690.8,659.2 697.1,656.4 703.4,653.5 709.6,650.5 715.7,647.4 721.9,644.3 728.0,641.0 734.0,637.7 740.1,634.3 746.1,630.9" fill="none" stroke="#ff9f1a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+
+      <circle cx="400" cy="850" r="7" fill="#ffffff" stroke="#0b0b0b" stroke-width="2"></circle>
+      <text x="412" y="872" fill="#ffffff" font-family="IBM Plex Sans" font-size="13" font-weight="500" class="halo">Enlairament 08:00</text>
+
+      <line x1="746.1" y1="630.9" x2="978.3" y2="502.2" stroke="#0b0b0b" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"></line>
+      <line x1="746.1" y1="630.9" x2="978.3" y2="502.2" stroke="#ffffff" stroke-width="3" stroke-linecap="round"></line>
+      <circle cx="804.1" cy="598.7" r="11" fill="#1a1a19" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="804.1" y="602.7" fill="#ffffff" font-family="IBM Plex Mono" font-size="11" font-weight="600" text-anchor="middle">5</text>
+      <circle cx="862.2" cy="566.6" r="11" fill="#1a1a19" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="862.2" y="570.6" fill="#ffffff" font-family="IBM Plex Mono" font-size="11" font-weight="600" text-anchor="middle">10</text>
+      <circle cx="920.2" cy="534.4" r="11" fill="#1a1a19" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="920.2" y="538.4" fill="#ffffff" font-family="IBM Plex Mono" font-size="11" font-weight="600" text-anchor="middle">15</text>
+      <circle cx="978.3" cy="502.2" r="11" fill="#1a1a19" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="978.3" y="506.2" fill="#ffffff" font-family="IBM Plex Mono" font-size="11" font-weight="600" text-anchor="middle">20</text>
+
+      <g transform="translate(746.1 630.9) rotate(61)">
+        <circle r="20" fill="#ffffff" fill-opacity="0.18"></circle>
+        <path d="M0,-15 L10,11 L0,5 L-10,11 Z" fill="#ffffff" stroke="#0b0b0b" stroke-width="2" stroke-linejoin="round"></path>
+      </g>
+    </svg>
+
+    <div style="position: absolute; left: 16px; top: 16px; display: flex; gap: 8px;">
+      <div style="background: rgba(26,26,25,.88); border-radius: 8px; padding: 9px 12px; display: flex; align-items: center; gap: 8px; font-size: 13px;">
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="5" fill="#0ca30c"></circle></svg>
+        <span>GPS</span><span class="num" style="color: #c3c2b7;">±4 m</span>
+      </div>
+      <div style="background: rgba(26,26,25,.88); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: #c3c2b7;">Pronòstic de les <span class="num" style="color: #ffffff;">07:41</span>, 7 models</div>
+    </div>
+
+    <div style="position: absolute; right: 16px; top: 16px; display: flex; flex-direction: column; gap: 8px;">
+      <a href="TauletaWaypoints.dc.html" aria-label="Waypoints" style="width: 52px; height: 52px; border-radius: 10px; background: rgba(26,26,25,.9); color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.4-6-11a6 6 0 0 1 12 0c0 5.6-6 11-6 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
+      </a>
+      <button aria-label="Centrar en el globus" style="width: 52px; height: 52px; border-radius: 10px; border: none; background: rgba(26,26,25,.9); color: #ffffff; display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg>
+      </button>
+      <button aria-label="Apropar" style="width: 52px; height: 52px; border-radius: 10px; border: none; background: rgba(26,26,25,.9); color: #ffffff; font-size: 26px; font-family: 'IBM Plex Mono', monospace;">+</button>
+      <button aria-label="Allunyar" style="width: 52px; height: 52px; border-radius: 10px; border: none; background: rgba(26,26,25,.9); color: #ffffff; font-size: 26px; font-family: 'IBM Plex Mono', monospace;">−</button>
+    </div>
+
+    <div style="position: absolute; left: 16px; bottom: 14px; background: rgba(26,26,25,.88); border-radius: 8px; padding: 9px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #c3c2b7;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 22px; height: 3px; border-radius: 2px; background: #ffffff;"></span><span>Projecció a l'altitud actual, 5 a 20 min</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 120px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #ffd400, #ff9f1a, #ff4fd8, #a77bff);"></span><span>Traça per altitud, terra a 3 750 ft</span>
+      </div>
+      <div style="color: #898781;">Mantén premut el mapa per afegir un waypoint</div>
+    </div>
+
+    <div style="position: absolute; right: 16px; bottom: 14px; display: flex; align-items: flex-end; gap: 12px;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <span class="num" style="font-size: 11px; color: #ffffff; text-shadow: 0 0 3px #000;">1 km</span>
+        <span style="display: block; width: 100px; height: 6px; border: 2px solid #ffffff; border-top: none;"></span>
+      </div>
+      <span style="font-size: 11px; color: #ffffff; text-shadow: 0 0 3px #000;">Ortofoto ICGC, CC BY 4.0</span>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; top: 600px; width: 1280px; height: 200px; display: flex; border-top: 1px solid #2c2c2a;">
+    <div style="flex: 1 1 0; padding: 18px 24px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 6px;">
+      <div class="lab">Altitud</div>
+      <div style="display: flex; align-items: baseline; gap: 8px;"><span class="num" style="font-size: 64px; font-weight: 500; line-height: 1.05;">1 540</span><span class="num" style="font-size: 22px; color: #c3c2b7;">ft</span></div>
+      <div style="font-size: 14px; color: #c3c2b7;">GPS, calibrat a terra · <span class="num">469 m</span></div>
+    </div>
+    <div style="flex: 1 1 0; padding: 18px 24px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 6px;">
+      <div class="lab">Vario</div>
+      <div class="num" style="font-size: 64px; font-weight: 500; line-height: 1.05;">+0,3</div>
+      <div class="num" style="font-size: 14px; color: #c3c2b7;">m/s, GPS</div>
+    </div>
+    <div style="flex: 1 1 0; padding: 18px 24px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 6px;">
+      <div class="lab">Rumb i velocitat</div>
+      <div style="display: flex; align-items: baseline; gap: 16px;"><span class="num" style="font-size: 64px; font-weight: 500; line-height: 1.05;">061°</span><span class="num" style="font-size: 30px;">4,3 <span style="font-size: 18px; color: #c3c2b7;">kt</span></span></div>
+    </div>
+    <div style="flex: 1 1 0; padding: 18px 24px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 6px;">
+      <div class="lab">Temps de vol</div>
+      <div class="num" style="font-size: 64px; font-weight: 500; line-height: 1.05;">0:34</div>
+      <div class="num" style="font-size: 14px; color: #c3c2b7;">ara 08:34</div>
+    </div>
+    <div style="width: 116px; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box;">
+      <button aria-pressed="true" style="flex-grow: 1; border-radius: 10px; border: 2px solid #2a78d6; background: #1d2c40; color: #ffffff; font-family: inherit; font-size: 16px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg>
+        Mapa
+      </button>
+      <a href="TauletaVent.dc.html" style="flex-grow: 1; border-radius: 10px; border: 1px solid #2c2c2a; color: #c3c2b7; font-size: 16px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3"></path><path d="M3 12h16a3 3 0 1 1-3 3"></path><path d="M3 16h7"></path></svg>
+        Vent
+      </a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

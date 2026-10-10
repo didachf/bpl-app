@@ -1,10 +1,35 @@
 # Logbook BPL, estado
 
-Última sesión: **2026-10-08**. Las checklists se rehicieron con Dídac paso a paso, y están
-fusionadas a `main` y **publicadas** el mismo día (commit `969ddfd`, bundle
-`index-oNOTTOOE.js` comprobado en Pages). Siguiente: que él las pruebe en un montaje de
-verdad y diga si se quita el aviso de pendiente de validar. Después, crear `bpl-logbook` y
-el token.
+Última sesión: **2026-10-10**. Dos cosas:
+
+1. **Cinturón de aterrizaje en el Últim xequeig**, publicado (commit `0515c48` en `main`, bundle
+   `index-3L9J590H.js` comprobado en Pages). Va antes de «Mirar obstacles», donde el Apèndix C
+   del MV04 pone el arnés de ocupantes (y §6.6). JSON en versión 5.
+2. **Diseño de la pantalla de vuelo, sin código todavía.** Spec en
+   `docs/superpowers/specs/2026-10-10-pantalla-de-vuelo-design.md`, quince maquetas en
+   https://claude.ai/artifact/Frarp4bampNfwHn86kKNnf (copia en `design/pantalla-de-vol/`) y
+   prototipos con datos reales en `docs/prototipos/2026-10-10-vuelo/`. **Siguiente sesión:
+   Dídac hace el repaso final de spec y maquetas, y después plan de implementación de la pieza
+   1 (tabla de viento prevista) y a programar.**
+
+Lo que manda del 10/10, en una línea cada cosa, y el detalle en el spec:
+* **La tablet y el teléfono son cosas distintas.** Navegación, rumbos y viento en directo, sólo
+  en la tablet (Galaxy Tab S11 5G, sin barómetro). El teléfono: registro, plan y checklists.
+  Una sola app con un modo por aparato en Ajustes.
+* **En vuelo, todo en esta app.** Dos vistas, Mapa y Vent, con la franja de cifras grandes fija.
+* **Altitud en pies sobre el mar**, filas cada 250 ft hasta el techo y cada 1 000 ft hasta
+  10 000 ft. Siete modelos (entra AROME France).
+* **Viento medido con el GPS** por franja, con la altura calibrada en tierra porque el GPS da
+  elipsoide.
+* **Waypoints, puntos o zonas**, marcados al mapa con cruz fija o por coordenadas (decimal,
+  grados minutos segundos, UTM). A una zona se navega a su polo de inaccesibilidad. Sin
+  waypoint activo no aparece nada del waypoint.
+* **Optimizador** que dice cómo llegar con altitud y los cuatro modos de subida y bajada del
+  piloto (lento de 0 a 1 m/s, rápido de 2,5 a 3 subiendo y de 3 a 5 bajando).
+* **Pestaña propia «Competició»** (pieza 5), con el reglamento de la FAI en
+  `Pilot Globus/08_Competicion/`. Notas en el §13 del spec.
+
+Las checklists del 08/10 siguen pendientes de que él las pruebe en un montaje de verdad.
 
 **En catalán desde el mismo 08/10/2026** (versión 4 del JSON), por petición suya: «lo quiero en catalán». Contenido y textos de las pantallas de Operar y de la checklist. El resto de la app sigue en castellano. La fuente de los pasos suyos es `Pilot`.
 
@@ -178,11 +203,19 @@ Tres cosas que la interfaz debe respetar y son fáciles de romper:
 
 ## Lo siguiente, en orden
 
-1. **Crear el repositorio privado `bpl-logbook` y el token de grano fino.** Lo hace Dídac,
-   no yo: un PAT no debe pasar por una conversación. Instrucciones abajo.
-2. **Pasar la lista de verificación del Android**, con la app ya instalada desde Chrome.
-3. Fase 2: planificación, con el puerto de `trayectoria_globo.py` y el mapa, sobre la
-   pantalla de Planificar que ya existe.
+1. **Repaso final del spec y las maquetas de la pantalla de vuelo con Dídac**, y plan de
+   implementación de la pieza 1 con la skill de planes. Antes de escribir código, las cuatro
+   comprobaciones del §12 del spec: mosaicos del ICGC, cuota de open-meteo, altitud de Chrome en
+   Android y coste del optimizador.
+2. **Las piezas en orden:** 1 tabla de viento prevista, 2 GPS en vuelo y optimizador, 3 plan de
+   vuelo dentro de la app con un solo motor, 4 sincronización entre aparatos y planes del Mac,
+   5 Competició.
+3. **Crear el repositorio privado `bpl-logbook` y el token de grano fino.** Lo hace Dídac,
+   no yo: un PAT no debe pasar por una conversación. Instrucciones abajo. **Desde el 10/10 ya
+   no es opcional**: el plan del teléfono y el vuelo de la tablet tienen que viajar entre los
+   dos aparatos.
+4. **Pasar la lista de verificación del Android**, con la app ya instalada desde Chrome, y
+   ahora también en la tablet.
 4. Fase 3: checklists. Hechas montaje, inflado y pre-despegue. **Primero, que Dídac las
    valide contra el papel** y entonces `"validado": true`. Quedan control en vuelo (4.10),
    aterrizaje (4.11) y emergencias (sección 3).

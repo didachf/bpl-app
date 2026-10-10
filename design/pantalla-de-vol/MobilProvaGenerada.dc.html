@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Telèfon, prova HWZ generada</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:7px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="display: flex; align-items: center; gap: 8px; padding: 10px 14px 8px 8px;">
+    <a href="MobilCompeticio.dc.html" aria-label="Tornar a Competició" style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div>
+      <div style="font-size: 19px; font-weight: 600;"><span class="num" style="color: #35d0ff;">HWZ</span> · Diversos blancs</div>
+      <div style="font-size: 12px; color: #898781;">4 blancs on pots arribar amb el vent del pla</div>
+    </div>
+  </div>
+
+  <div style="position: relative; height: 330px; overflow: hidden; background: #3a3426; flex-shrink: 0;">
+    <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto amb els blancs de la prova" style="position: absolute; left: -205px; top: -240px; width: 715px; height: 578px;">
+    <svg width="715" height="578" viewBox="0 0 1300 1050" style="position: absolute; left: -205px; top: -240px;" role="img" aria-label="Enlairament i quatre blancs">
+      <circle cx="400" cy="850" r="12" fill="#ffffff" stroke="#0b0b0b" stroke-width="4"></circle>
+      <text x="420" y="895" fill="#ffffff" font-family="IBM Plex Sans" font-size="24" font-weight="500" class="halo">Enlairament</text>
+      <path d="M507 633.5H543M525 615.5V651.5M709.7 620.6H745.7M727.7 602.6V638.6M945.8 644.8H981.8M963.8 626.8V662.8M979.7 797.7H1015.7M997.7 779.7V815.7" stroke="#0b0b0b" stroke-width="12" stroke-linecap="round"></path>
+      <path d="M507 633.5H543M525 615.5V651.5M709.7 620.6H745.7M727.7 602.6V638.6M945.8 644.8H981.8M963.8 626.8V662.8M979.7 797.7H1015.7M997.7 779.7V815.7" stroke="#ffffff" stroke-width="6" stroke-linecap="round"></path>
+      <text x="547" y="620" fill="#ffffff" font-family="IBM Plex Mono" font-size="28" font-weight="600" class="halo">B1</text>
+      <text x="750" y="607" fill="#ffffff" font-family="IBM Plex Mono" font-size="28" font-weight="600" class="halo">B2</text>
+      <text x="986" y="631" fill="#ffffff" font-family="IBM Plex Mono" font-size="28" font-weight="600" class="halo">B3</text>
+      <text x="1020" y="784" fill="#ffffff" font-family="IBM Plex Mono" font-size="28" font-weight="600" class="halo">B4</text>
+    </svg>
+    <div style="position: absolute; right: 8px; bottom: 6px; font-size: 10px; color: #ffffff; text-shadow: 0 0 3px #000;">Ortofoto ICGC</div>
+  </div>
+
+  <div style="padding: 8px 16px 0 16px; display: flex; flex-direction: column;">
+    <sc-for list="{{blancs}}" as="b" hint-placeholder-count="4">
+      <div style="display: grid; grid-template-columns: 38px 96px minmax(0, 1fr); align-items: center; padding: 8px 0; border-bottom: 1px solid #2c2c2a;">
+        <span class="num" style="font-size: 15px; font-weight: 600;">{{b.nom}}</span>
+        <span class="num" style="font-size: 14px;">{{b.rumb}} {{b.dist}}</span>
+        <div style="display: flex; flex-direction: column; text-align: right;">
+          <span class="num" style="font-size: 13px; color: #c3c2b7;">{{b.temps}}</span>
+          <span class="num" style="font-size: 11px; color: #898781;">amb cada model, {{b.disp}}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding: 10px 16px 0 16px; font-size: 12px; color: #898781; line-height: 1.45;">
+    MMA de <span class="num">50 m</span>. Marca per sota de <span class="num">500 ft</span> sobre el terreny. Període de <span class="num">08:00</span> a <span class="num">09:00</span>. Són els exemples de la fulla TDS i de la plantilla II.21 de la CIA, i els pots canviar.
+  </div>
+
+  <div style="flex-grow: 1;"></div>
+  <div style="padding: 10px 16px 22px 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+    <button style="height: 54px; border-radius: 8px; border: 1px solid #2c2c2a; background: none; color: #ffffff; font-family: inherit; font-size: 16px;">Tornar a generar</button>
+    <button style="height: 54px; border-radius: 8px; border: none; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 16px; font-weight: 500;">Desar al pla</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Calculat amb el vent real del 10/10/2026, enlairant a les 08:00, acabant per sota de 500 ft.
+    var blancs = [
+      ['B1', 525.0, 633.5, '030°', '2,5 km', '32 min, 2 canvis', 'de 400 m a 2,0 km'],
+      ['B2', 727.7, 620.6, '055°', '4,0 km', '32 min, 2 canvis', 'de 180 m a 1,7 km'],
+      ['B3', 963.8, 644.8, '070°', '6,0 km', '34 min, 2 canvis', 'de 70 m a 2,3 km'],
+      ['B4', 997.7, 797.7, '085°', '6,0 km', '31 min, 2 canvis', 'de 170 m a 1,8 km']
+    ].map(function (b) { return { nom: b[0], x: b[1], y: b[2], rumb: b[3], dist: b[4], temps: b[5], disp: b[6] }; });
+    return { blancs: blancs };
+  }
+}
+</script>
+</body>
+</html>

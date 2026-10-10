@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Telèfon, marcar un punt al mapa</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:4px;stroke-linejoin:round}
+input{font:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; left: 0; top: 0; width: 390px; height: 520px; overflow: hidden; background: #3a3426;">
+    <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto del ICGC al voltant de Tàrrega" style="position: absolute; left: -705px; top: -210px; width: 1300px; height: 1050px;">
+    <svg width="1300" height="1050" viewBox="0 0 1300 1050" style="position: absolute; left: -705px; top: -210px;" aria-hidden="true">
+      <polygon points="712.1,569.0 719.4,577.2 726.4,585.7 733.2,594.3 739.8,603.1 746.1,612.1 752.2,621.3 758.1,630.6 763.7,640.0 885.0,570.0 877.5,557.4 869.7,545.0 861.5,532.8 853.0,520.8 844.3,509.1 835.2,497.6 825.8,486.3 816.2,475.3" fill="#3ad16b" fill-opacity="0.2" stroke="#3ad16b" stroke-width="2"></polygon>
+      <text x="842" y="466" fill="#ffffff" font-family="IBM Plex Sans" font-size="14" font-weight="600" class="halo">ZONA A</text>
+      <circle cx="1000" cy="430" r="8" fill="none" stroke="#ffffff" stroke-width="2"></circle>
+      <text x="1012" y="435" fill="#ffffff" font-family="IBM Plex Sans" font-size="13" font-weight="600" class="halo">Camp gran</text>
+    </svg>
+    <svg width="64" height="64" viewBox="0 0 64 64" style="position: absolute; left: 163px; top: 228px;" aria-hidden="true">
+      <circle cx="32" cy="32" r="16" fill="none" stroke="#0b0b0b" stroke-width="5" stroke-opacity="0.6"></circle>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="#ffffff" stroke-width="2.5"></circle>
+      <path d="M32 2v20M32 42v20M2 32h20M42 32h20" stroke="#0b0b0b" stroke-width="5" stroke-opacity="0.6"></path>
+      <path d="M32 2v20M32 42v20M2 32h20M42 32h20" stroke="#ffffff" stroke-width="2.5"></path>
+    </svg>
+    <div style="position: absolute; left: 12px; top: 12px; right: 12px; display: flex; align-items: center; gap: 8px;">
+      <a href="MobilWaypoints.dc.html" aria-label="Cancel·lar" style="width: 44px; height: 44px; border-radius: 10px; background: rgba(26,26,25,.9); display: flex; align-items: center; justify-content: center; color: #ffffff;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </a>
+      <div style="background: rgba(26,26,25,.9); border-radius: 8px; padding: 9px 11px; font-size: 12px; color: #c3c2b7;">Mou el mapa fins que la creu caigui al punt</div>
+    </div>
+    <div style="position: absolute; right: 10px; bottom: 8px; font-size: 10px; color: #ffffff; text-shadow: 0 0 3px #000;">Ortofoto ICGC</div>
+  </div>
+
+  <div style="position: absolute; left: 0; top: 520px; width: 390px; height: 324px; border-top: 1px solid #2c2c2a; padding: 12px 16px 22px 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; background: #24231f; border-radius: 10px; padding: 4px;">
+      <button aria-pressed="true" style="height: 40px; border-radius: 7px; border: none; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 600;">Punt</button>
+      <button aria-pressed="false" style="height: 40px; border-radius: 7px; border: none; background: none; color: #c3c2b7; font-family: inherit; font-size: 15px;">Zona</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 10px; align-items: center;">
+      <label for="mnom" class="lab">Nom</label>
+      <input id="mnom" value="WP3" style="height: 44px; border-radius: 8px; border: 1px solid #2c2c2a; background: #24231f; color: #ffffff; padding: 0 12px; font-size: 16px;">
+    </div>
+    <div style="background: #24231f; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="lab">Sota la creu</span>
+        <span style="font-size: 12px; color: #5598e7;">Decimal ▾</span>
+      </div>
+      <span class="num" style="font-size: 22px; font-weight: 500;">41,6902 N 1,2091 E</span>
+      <span class="num" style="font-size: 13px; color: #c3c2b7;">053° · 6,3 km des de l'enlairament</span>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <button style="height: 56px; border-radius: 8px; border: none; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 17px; font-weight: 500;">Desar aquí</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

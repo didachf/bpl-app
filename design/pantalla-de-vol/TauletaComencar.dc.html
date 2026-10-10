@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, començar vol</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:5px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; overflow: hidden;">
+
+  <div style="position: relative; width: 640px; height: 800px; overflow: hidden; background: #3a3426; flex-shrink: 0;">
+    <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto del ICGC de la zona del vol" style="position: absolute; left: 0; top: 0; width: 988px; height: 798px;">
+    <svg width="988" height="798" viewBox="0 0 1300 1050" style="position: absolute; left: 0; top: 0;" role="img" aria-label="Zona descarregada al voltant de l'enlairament">
+      <circle cx="400" cy="850" r="300" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-width="3" stroke-dasharray="10 8"></circle>
+      <text x="400" y="535" fill="#ffffff" font-family="IBM Plex Sans" font-size="20" font-weight="500" text-anchor="middle" class="halo">Més detall a 3 km</text>
+      <polygon points="712.1,569.0 719.4,577.2 726.4,585.7 733.2,594.3 739.8,603.1 746.1,612.1 752.2,621.3 758.1,630.6 763.7,640.0 885.0,570.0 877.5,557.4 869.7,545.0 861.5,532.8 853.0,520.8 844.3,509.1 835.2,497.6 825.8,486.3 816.2,475.3" fill="#3ad16b" fill-opacity="0.25" stroke="#3ad16b" stroke-width="3"></polygon>
+      <text x="842" y="466" fill="#ffffff" font-family="IBM Plex Sans" font-size="20" font-weight="600" class="halo">ZONA A</text>
+      <polygon points="231.8,222.1 249.6,217.6 267.6,213.6 285.7,210.1 303.9,207.1 322.2,204.7 340.5,202.7 358.9,201.3 377.3,200.4 372.1,50.5 349.4,51.6 326.8,53.4 304.2,55.8 281.8,58.8 259.4,62.5 237.1,66.8 214.9,71.7 192.9,77.3" fill="#3ad16b" fill-opacity="0.25" stroke="#3ad16b" stroke-width="3"></polygon>
+      <text x="390" y="140" fill="#ffffff" font-family="IBM Plex Sans" font-size="20" font-weight="600" class="halo">ZONA B</text>
+      <circle cx="1000" cy="430" r="11" fill="none" stroke="#0b0b0b" stroke-opacity="0.6" stroke-width="6"></circle>
+      <circle cx="1000" cy="430" r="11" fill="none" stroke="#ffffff" stroke-width="3"></circle>
+      <circle cx="400" cy="850" r="10" fill="#ffffff" stroke="#0b0b0b" stroke-width="3"></circle>
+      <text x="418" y="882" fill="#ffffff" font-family="IBM Plex Sans" font-size="19" font-weight="500" class="halo">Enlairament</text>
+    </svg>
+    <div style="position: absolute; left: 16px; top: 16px; right: 16px; background: rgba(26,26,25,.9); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 3px;">
+      <span style="font-size: 15px; font-weight: 500;">Mapa per volar sense cobertura</span>
+      <span style="font-size: 13px; color: #c3c2b7;">Ortofoto de <span class="num">15 km</span> al voltant de l'enlairament, i més detall a <span class="num">3 km</span></span>
+    </div>
+    <div style="position: absolute; right: 16px; bottom: 14px; font-size: 11px; color: #ffffff; text-shadow: 0 0 3px #000;">Ortofoto ICGC, CC BY 4.0</div>
+  </div>
+
+  <div style="flex-grow: 1; padding: 28px 36px 28px 36px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box;">
+    <div>
+      <div style="font-size: 30px; font-weight: 600; letter-spacing: -.02em;">Començar vol</div>
+      <div style="font-size: 14px; color: #898781; margin-top: 4px;">Tot el que cal per volar sense cobertura, abans d'enlairar-te</div>
+    </div>
+
+    <div style="background: #24231f; border-radius: 10px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ca30c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M20 6 9 17l-5-5"></path></svg>
+      <div style="flex-grow: 1;">
+        <div style="font-size: 17px; font-weight: 500;">Pronòstic</div>
+        <div style="font-size: 14px; color: #c3c2b7; margin-top: 2px;">7 models, baixat a les <span class="num">07:41</span> al punt d'enlairament</div>
+      </div>
+    </div>
+
+    <div style="background: #24231f; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ca30c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M20 6 9 17l-5-5"></path></svg>
+        <div style="flex-grow: 1;">
+          <div style="font-size: 17px; font-weight: 500;">Mapa sense cobertura</div>
+          <div style="font-size: 14px; color: #c3c2b7; margin-top: 2px;"><span class="num">1 512</span> mosaics, <span class="num">43 MB</span></div>
+        </div>
+      </div>
+      <div style="height: 6px; border-radius: 3px; background: #0ca30c;"></div>
+    </div>
+
+    <div style="background: #24231f; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #2a78d6;">
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5598e7" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0;"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg>
+        <div style="flex-grow: 1;">
+          <div style="font-size: 17px; font-weight: 500;">Calibrant l'altitud a terra</div>
+          <div style="font-size: 14px; color: #c3c2b7; margin-top: 2px;">Deixa la cistella quieta a terra. <span class="num">18 s</span> de <span class="num">30</span></div>
+        </div>
+      </div>
+      <div style="height: 6px; border-radius: 3px; background: #2c2c2a; position: relative; overflow: hidden;">
+        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 60%; background: #2a78d6;"></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+        <div><div class="lab" style="font-size: 11px;">GPS</div><div class="num" style="font-size: 18px;">429 m</div></div>
+        <div><div class="lab" style="font-size: 11px;">Terreny</div><div class="num" style="font-size: 18px;">380 m</div></div>
+        <div><div class="lab" style="font-size: 11px;">Correcció</div><div class="num" style="font-size: 18px;">−49 m</div></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 11px 2px; border-bottom: 1px solid #2c2c2a;">
+        <span style="font-size: 15px;">Finestra</span><span class="num" style="font-size: 15px; color: #c3c2b7;">08:00 a 11:00</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 11px 2px; border-bottom: 1px solid #2c2c2a;">
+        <span style="font-size: 15px;">Sostre</span><span class="num" style="font-size: 15px; color: #c3c2b7;">1 200 m · 3 937 ft</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 11px 2px; border-bottom: 1px solid #2c2c2a;">
+        <span style="font-size: 15px;">Optimitzador</span><span class="num" style="font-size: 15px; color: #c3c2b7;">1 500 a 3 937 ft</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 11px 2px; border-bottom: 1px solid #2c2c2a;">
+        <span style="font-size: 15px;">Waypoint actiu</span><span style="font-size: 15px; color: #c3c2b7;">ZONA A</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;"></div>
+    <a href="Main.dc.html" style="height: 64px; border-radius: 10px; background: #2a78d6; color: #ffffff; font-size: 19px; font-weight: 500; display: flex; align-items: center; justify-content: center; text-decoration: none;">Obrir la pantalla de vol</a>
+    <div style="text-align: center; font-size: 13px; color: #898781;">La pantalla es queda encesa mentre voles</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

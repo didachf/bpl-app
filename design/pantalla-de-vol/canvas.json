@@ -1,0 +1,46 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-10T19:05:00Z"},
+  "title": "Pantalla de vol",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · Mapa"},
+    "TauletaVent.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · Vent"},
+    "TauletaSenseWaypoint.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · sense waypoint actiu"},
+    "TauletaComencar.dc.html": {"x": 0, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Començar vol"},
+    "TauletaWaypoints.dc.html": {"x": 1360, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Waypoints"},
+    "TauletaMarcarMapa.dc.html": {"x": 2720, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Marcar al mapa"},
+    "TauletaCoordenades.dc.html": {"x": 4080, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Per coordenades"},
+    "MobilWaypoints.dc.html": {"x": 0, "y": 2600, "w": 390, "h": 844, "title": "Telèfon · Waypoints del pla"},
+    "MobilMarcarMapa.dc.html": {"x": 470, "y": 2600, "w": 390, "h": 844, "title": "Telèfon · Marcar al mapa"},
+    "MobilCoordenades.dc.html": {"x": 940, "y": 2600, "w": 390, "h": 844, "title": "Telèfon · Per coordenades"},
+    "MobilCompeticio.dc.html": {"x": 0, "y": 3900, "w": 390, "h": 844, "title": "Telèfon · Competició"},
+    "MobilProvaGenerada.dc.html": {"x": 470, "y": 3900, "w": 390, "h": 844, "title": "Telèfon · Prova generada"},
+    "TauletaProvaEnVol.dc.html": {"x": 940, "y": 3900, "w": 1280, "h": 800, "title": "Tauleta · Prova en vol"},
+    "TauletaResultat.dc.html": {"x": 2300, "y": 3900, "w": 1280, "h": 800, "title": "Tauleta · Resultat"}
+  },
+  "order": [
+    "Main.dc.html",
+    "TauletaVent.dc.html",
+    "TauletaSenseWaypoint.dc.html",
+    "TauletaComencar.dc.html",
+    "TauletaWaypoints.dc.html",
+    "TauletaMarcarMapa.dc.html",
+    "TauletaCoordenades.dc.html",
+    "MobilWaypoints.dc.html",
+    "MobilMarcarMapa.dc.html",
+    "MobilCoordenades.dc.html",
+    "MobilCompeticio.dc.html",
+    "MobilProvaGenerada.dc.html",
+    "TauletaProvaEnVol.dc.html",
+    "TauletaResultat.dc.html"
+  ],
+  "notes": {
+    "t1": {"x": 0, "y": -300, "text": "Tauleta · pantalla de vol", "kind": "title1", "maxW": 4000},
+    "t3": {"x": 0, "y": 1000, "text": "Tauleta · abans i durant el vol", "kind": "title1", "maxW": 5360},
+    "t2": {"x": 0, "y": 2300, "text": "Telèfon · només dins del pla, sense navegació", "kind": "title1", "maxW": 2400},
+    "t4": {"x": 0, "y": 3600, "text": "Competició · pestanya pròpia", "kind": "title1", "maxW": 3580}
+  },
+  "designSystems": []
+}

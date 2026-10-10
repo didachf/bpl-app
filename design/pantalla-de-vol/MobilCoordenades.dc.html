@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Telèfon, waypoint per coordenades</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+input{font:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px 8px;">
+    <a href="MobilWaypoints.dc.html" aria-label="Tornar a la llista" style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="font-size: 24px; font-weight: 600; letter-spacing: -.01em;">Nou waypoint</div>
+  </div>
+
+  <div style="flex-grow: 1; padding: 0 16px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <label for="nom" class="lab">Nom</label>
+      <input id="nom" value="WP2" style="height: 48px; border-radius: 8px; border: 1px solid #2c2c2a; background: #24231f; color: #ffffff; padding: 0 14px; font-size: 17px;">
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <span class="lab">Format</span>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; background: #24231f; border-radius: 10px; padding: 4px;">
+        <button aria-pressed="false" style="height: 44px; border-radius: 7px; border: none; background: none; color: #c3c2b7; font-family: inherit; font-size: 15px;">Decimal</button>
+        <button aria-pressed="false" style="height: 44px; border-radius: 7px; border: none; background: none; color: #c3c2b7; font-family: inherit; font-size: 15px;">Graus min s</button>
+        <button aria-pressed="true" style="height: 44px; border-radius: 7px; border: none; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 600;">UTM</button>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 84px minmax(0, 1fr) minmax(0, 1fr); gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="fus" class="lab">Fus</label>
+        <div id="fus" style="height: 48px; border-radius: 8px; border: 1px solid #2c2c2a; background: #24231f; display: flex; align-items: center; justify-content: space-between; padding: 0 10px 0 14px;">
+          <span class="num" style="font-size: 17px;">31</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="x" class="lab">X, est</label>
+        <input id="x" class="num" inputmode="numeric" value="351 155" style="height: 48px; border-radius: 8px; border: 1px solid #2a78d6; background: #24231f; color: #ffffff; padding: 0 12px; font-size: 17px; width: 100%; box-sizing: border-box;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="y" class="lab">Y, nord</label>
+        <input id="y" class="num" inputmode="numeric" value="4 616 431" style="height: 48px; border-radius: 8px; border: 1px solid #2c2c2a; background: #24231f; color: #ffffff; padding: 0 12px; font-size: 17px; width: 100%; box-sizing: border-box;">
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #898781; margin-top: -6px;">ETRS89, com als mapes de l'ICGC</div>
+
+    <div style="position: relative; height: 180px; border-radius: 10px; overflow: hidden; background: #3a3426;">
+      <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="On cau el punt sobre l'ortofoto" style="position: absolute; left: -741px; top: -430px; width: 1300px; height: 1050px;">
+      <svg width="358" height="180" viewBox="0 0 358 180" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+        <path d="M179,90 m0,-30 c-10,0 -17,7 -17,17 c0,13 17,30 17,30 s17,-17 17,-30 c0,-10 -7,-17 -17,-17 z" transform="translate(0 -14)" fill="#35d0ff" stroke="#0b0b0b" stroke-width="2"></path>
+        <circle cx="179" cy="73" r="5" fill="#0b0b0b"></circle>
+      </svg>
+      <div style="position: absolute; right: 8px; bottom: 6px; font-size: 10px; color: #ffffff; text-shadow: 0 0 3px #000;">Ortofoto ICGC</div>
+    </div>
+
+    <div style="background: #24231f; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;">
+      <span class="lab">És el mateix punt que</span>
+      <div style="display: flex; justify-content: space-between; gap: 10px;"><span style="font-size: 13px; color: #898781;">Decimal</span><span class="num" style="font-size: 14px;">41,6857 N 1,2115 E</span></div>
+      <div style="display: flex; justify-content: space-between; gap: 10px;"><span style="font-size: 13px; color: #898781;">Graus min s</span><span class="num" style="font-size: 14px;">41°41'08,7" N 1°12'41,5" E</span></div>
+      <div style="display: flex; justify-content: space-between; gap: 10px;"><span style="font-size: 13px; color: #898781;">Des de l'enlairament</span><span class="num" style="font-size: 14px;">058° · 6,2 km</span></div>
+    </div>
+  </div>
+
+  <div style="padding: 14px 16px 24px 16px; border-top: 1px solid #2c2c2a;">
+    <button style="width: 100%; height: 56px; border-radius: 8px; border: none; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 17px; font-weight: 500;">Desar al pla</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

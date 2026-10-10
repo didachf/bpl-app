@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Telèfon, pestanya Competició</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="padding: 16px 20px 6px 20px;">
+    <div style="font-size: 26px; font-weight: 600; letter-spacing: -.02em;">Competició</div>
+    <div style="font-size: 13px; color: #898781; margin-top: 3px; line-height: 1.4;">Proves de l'AXMER 2026 que pots practicar sol, amb marca electrònica</div>
+  </div>
+
+  <div style="margin: 8px 16px 10px 16px; background: #24231f; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c3c2b7" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"></path></svg>
+    <div style="flex-grow: 1; font-size: 13px;"><span style="color: #c3c2b7;">Per al pla de</span> Tàrrega, <span class="num">10/10 08:00</span></div>
+    <span style="font-size: 13px; color: #5598e7;">Canviar</span>
+  </div>
+
+  <div style="flex-grow: 1; padding: 0 16px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;">
+    <sc-for list="{{proves}}" as="p" hint-placeholder-count="7">
+      <a href="{{p.href}}" style="border: 1px solid #2c2c2a; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: #ffffff;">
+        <span class="num" style="width: 46px; flex-shrink: 0; font-size: 14px; font-weight: 600; color: #35d0ff;">{{p.codi}}</span>
+        <div style="flex-grow: 1; min-width: 0;">
+          <div style="font-size: 15px; font-weight: 500;">{{p.nom}}</div>
+          <div style="font-size: 12px; color: #898781; margin-top: 2px; line-height: 1.35;">{{p.desc}}</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#898781" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+      </a>
+    </sc-for>
+    <div style="font-size: 12px; color: #898781; padding: 6px 4px 0 4px; line-height: 1.4;">Més endavant: 3DT i APT, que necessiten altímetre.</div>
+  </div>
+
+  <nav aria-label="Pestanyes" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid #2c2c2a; padding: 6px 2px 14px 2px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; color: {{t.color}};">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.d}}"></path></svg>
+        <span style="font-size: 10px; font-weight: {{t.fw}};">{{t.nom}}</span>
+      </div>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var proves = [
+      ['JDG', 'Blanc fixat', 'Un blanc. Marca tan a prop com puguis', '#'],
+      ['HWZ', 'Diversos blancs', 'En tries un en vol, compta el més proper', 'MobilProvaGenerada.dc.html'],
+      ['PDG', 'Blanc declarat a terra', 'El declares abans d’enlairar-te', '#'],
+      ['FON', 'Blanc declarat en vol', 'El declares volant, lluny de l’anterior', '#'],
+      ['FIN', 'Tria on t’enlaires', 'La app et proposa d’on sortir per arribar al blanc', '#'],
+      ['MDT', 'Distància mínima', 'Marca a prop de la referència passat un temps', '#'],
+      ['XDT', 'Distància màxima', 'Marca tan lluny com puguis dins d’un temps', '#']
+    ].map(function (p) { return { codi: p[0], nom: p[1], desc: p[2], href: p[3] }; });
+    var tabs = [
+      ['Inicio', 'M3 11l9-7 9 7v9h-6v-6H9v6H3z', false],
+      ['Vuelos', 'M5 4h11l3 3v13H5zM9 9h7M9 13h7M9 17h4', false],
+      ['Planificar', 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14', false],
+      ['Operar', 'M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2', false],
+      ['Competició', 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8M12 11.5v1', true],
+      ['Ajustes', 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6M19 12l2-1-1-3-2 .5-1.5-1.5.5-2-3-1-1 2h-2l-1-2-3 1 .5 2L6 7.5 4 7 3 10l2 1v2l-2 1 1 3 2-.5 1.5 1.5-.5 2 3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3-2-1z', false]
+    ].map(function (t) { return { nom: t[0], d: t[1], color: t[2] ? '#ffffff' : '#898781', fw: t[2] ? 600 : 400 }; });
+    return { proves: proves, tabs: tabs };
+  }
+}
+</script>
+</body>
+</html>

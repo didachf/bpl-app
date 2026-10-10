@@ -298,7 +298,41 @@ líneas eléctricas ni del espacio aéreo. La altitud mínima del rango se cuent
 despegue, y una loma más alta en el camino la deja corta. Es una ayuda para decidir, la decisión
 es del piloto, y la pantalla lo dice.
 
-### 6.9 Mejor izquierda y mejor derecha
+### 6.9 Sin waypoint activo
+
+Pedido por el piloto el 10/10/2026: que no falle, y que **las opciones y los datos del waypoint
+no aparezcan si no hay ninguno activo**. No se enseñan huecos, guiones ni «sense destí».
+
+**Cuándo no hay waypoint activo.** Son cuatro casos, y los cuatro se tratan igual:
+1. no se ha creado ninguno
+2. hay waypoints pero ninguno activado
+3. se ha borrado el que estaba activo
+4. el identificador activo guardado ya no existe en el documento, por ejemplo tras restaurar
+   una copia de seguridad
+
+Por eso el waypoint activo no se guarda como un objeto, sino como un identificador que se
+resuelve cada vez contra la lista. Si no se encuentra, es «ninguno». Borrar el waypoint activo
+lo desactiva en la misma operación.
+
+**Qué desaparece**, no se vacía:
+* de la franja: nombre, rumbo directo, distancia, hora estimada y orden del optimizador. La
+  franja se recoloca con lo que queda
+* del mapa: la línea recta y el recorrido del plan
+* de la tabla: el resaltado de las filas y las marcas de las altitudes del plan
+* de la vista Vent: el bloque entero del optimizador
+
+**Qué se queda:** la lista de waypoints, para crear o activar uno, y la mejor izquierda y la
+mejor derecha, que no necesitan waypoint.
+
+**El optimizador** no se ejecuta. Al quitar el waypoint activo en vuelo se para el cálculo en
+curso y se descarta el plan vigente, para que no quede una orden vieja pintada. Un resultado
+que llegue del Web Worker después de desactivar se tira.
+
+**En el código**, todas las funciones que reciben el waypoint activo aceptan «ninguno» y
+devuelven «nada que enseñar», nunca lanzan. La pantalla pregunta una sola vez si hay
+waypoint activo y, si no, no pinta esas piezas.
+
+### 6.10 Mejor izquierda y mejor derecha
 
 Con el mismo rango de altitud: la fila que más gira a la izquierda del rumbo actual y la que
 más gira a la derecha, con su altitud, rumbo y velocidad. Sale de lo medido si la medida tiene
@@ -398,7 +432,7 @@ necesitarán otra fuente, por ejemplo el PNOA del IGN. Queda fuera de este spec.
 | Ninguna medida en una franja | La casilla de «Mesurat» va vacía, no inventa |
 | La pantalla se apaga | Se vuelve a pedir `wakeLock` al volver |
 | Sin mosaicos de una zona | Leaflet enseña el fondo vacío. La posición y la traza siguen |
-| Sin waypoint activo | No hay rumbo directo ni optimizador. La mejor izquierda y la mejor derecha siguen |
+| Sin waypoint activo, en cualquiera de los cuatro casos de §6.9 | No aparece nada del waypoint ni del optimizador. La mejor izquierda y la mejor derecha siguen |
 | Ningún plan mejora a quedarse | El optimizador lo dice así, «cap pla s'hi acosta més que quedar-te a aquesta altitud», y no inventa una orden |
 | Coordenadas que no se entienden o fuera de rango | El formulario dice qué campo falla y no guarda |
 | El cálculo tarda más de lo previsto | Se queda el plan anterior, con su hora, hasta que llegue el nuevo |
@@ -419,6 +453,11 @@ Módulos puros con prueba, como el resto del proyecto, y ninguna prueba de compo
   (para UTM, puntos con coordenadas oficiales del ICGC), con coma y punto decimal, y los
   errores de formato y de rango
 * waypoints en el documento: esquema nuevo, migración desde el esquema 2 y validación
+* sin waypoint activo, los cuatro casos de §6.9:
+  * cada función que recibe el waypoint activo devuelve «nada que enseñar» y no lanza
+  * borrar el activo lo desactiva
+  * un identificador que ya no existe se resuelve como «ninguno»
+  * un resultado del optimizador que llega después de desactivar se descarta
 * optimizador:
   * con dos capas sintéticas cuya solución exacta se puede calcular a mano, encuentra esa
     solución
@@ -434,7 +473,12 @@ Módulos puros con prueba, como el resto del proyecto, y ninguna prueba de compo
 primera prueba del motor único.
 
 En navegador, Chromium con emulación de Pixel (360 px) y a tamaño de tablet, en vertical y
-apaisada. En la tablet de verdad:
+apaisada. Además, recorriendo los estados del waypoint a mano: sin ninguno, crear uno,
+activarlo, cambiar a otro, desactivarlo, borrar el activo con el optimizador calculando, y
+restaurar un documento cuyo activo ya no existe. En cada paso, comprobar que no queda nada del
+waypoint pintado y que la consola no tiene errores.
+
+En la tablet de verdad:
 * qué referencia de altitud da Chrome
 * la calibración en tierra en un punto de elevación conocida
 * `wakeLock`

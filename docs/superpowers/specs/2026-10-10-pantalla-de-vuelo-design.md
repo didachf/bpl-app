@@ -542,3 +542,33 @@ En la tablet de verdad:
    de 1 min, y si caben en 1 s en la tablet. Si no caben, se poda (por ejemplo, altitudes
    sólo dentro del rango y tiempos más gruesos lejos del punto) antes de bajar el número de
    altitudes.
+
+## 13. Notas para la pieza 5, pruebas de competición
+
+Lo decidido o comprobado el 10/10/2026, para que su spec parta de aquí. El reglamento y su
+resumen están en `Pilot Globus/08_Competicion/` (AXMER 2026, Sección 1 de agosto de 2026, COH
+2025 y la hoja TDS de la CIA).
+
+* **Pestaña propia, «Competició»**, en la tablet y en el teléfono. En el teléfono se genera la
+  prueba para el plan y se guardan sus blancos como waypoints del plan. En la tablet, además,
+  se vuela y se marca.
+* **Primera versión: JDG, HWZ, FIN, PDG, FON, XDT y MDT, en 2D.** HNH y WSD necesitan un globo
+  liebre. 3DT y APT necesitan altitud fiable, y sin barómetro el error vertical del GPS es de 2
+  a 3 veces el horizontal (S1 An6 1.3).
+* **Se puntúa con marca electrónica contra coordenadas**, sin blanco físico, como permite AX
+  12.4. Comprobado en el texto. Cuenta la primera marca (AX 8.4.8).
+* **El botón de marca se mantiene pulsado 1 s.** Como cuenta la primera, un toque sin querer
+  arruinaría la prueba.
+* **El plan para una prueba acaba bajo.** La plantilla II.21 recomienda medir en 3D por encima
+  de unos 500 ft sobre el terreno, contra un punto a esa altura sobre el blanco. Es un valor
+  que fija el organizador, y la app lo aplica por defecto. Con el viento real del 10/10 sobre
+  Tàrrega, pasar por encima de B3 a 2 750 ft daba unos 290 m de resultado. El optimizador
+  sólo cuenta la distancia por debajo de ese nivel, y el plan pasó a subir a 2 500 ft y bajar
+  despacio hasta terra, a 10 m del blanco.
+* **Cada blanco generado se comprueba con el optimizador** antes de proponerlo, y se enseña el
+  tiempo, los cambios de altitud y la dispersión entre modelos. Nunca una cuenta de modelos.
+* **El resultado dice también el punto más cercano de la traza** y cuántos segundos antes de la
+  marca pasó, para ver si se marcó tarde. Resultado en metros, sin puntos de la FAI, que
+  dependen del número de competidores (AX 14.5).
+* Los valores de la TDS (MMA de 50 m, cinco blancos en HWZ, 20 min en MDT) son ejemplos, no
+  reglas, y la pantalla lo dice.

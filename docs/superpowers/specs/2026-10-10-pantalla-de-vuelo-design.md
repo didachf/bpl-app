@@ -228,6 +228,24 @@ el piloto el 10/10/2026: o con coordenadas, o seleccionando el punto a mano en e
 Se crean en los dos aparatos. En el teléfono, desde Planificar, con el mapa y el formulario de
 coordenadas, y sin nada de navegación. En la tablet, además, desde la pantalla de vuelo.
 
+**Un waypoint puede ser un punto o una zona.** Pedido por el piloto el 10/10/2026. Una zona es
+un polígono:
+* En «Marcar al mapa» se elige «Zona» y se va tocando «Afegir vèrtex» con la cruz en cada
+  esquina. «Tancar la zona» se activa con tres vértices, y «Desfer l'últim» quita el último.
+* En «Per coordenades», los vértices se escriben uno a uno, en el formato elegido.
+* Las zonas de aterrizaje del plan del Mac, que son sectores de rumbo y distancia desde el
+  despegue, llegan como polígonos.
+
+**Para navegar a una zona, la app busca su centro sola** y todo lo de §6.7 y §6.8 apunta a ese
+punto. El centro no es el centroide geométrico, que en una zona cóncava, por ejemplo un campo en
+L, cae fuera. Es el punto de dentro más alejado de todos los bordes (el «polo de
+inaccesibilidad», con el algoritmo `polylabel`), que siempre está dentro y es el que deja más
+margen para aterrizar. En una zona convexa casi coincide con el centroide. El mapa lo enseña, y
+la lista dice la superficie de la zona y a cuántos metros del borde más cercano queda el centro.
+
+Con una zona activa, el resultado del optimizador dice además si el recorrido entra en la zona y
+cuándo, por ejemplo «Passes a 20 m del centre, dins de la zona des de les 08:42».
+
 Hay una lista de waypoints con su rumbo y su distancia desde la posición actual. En ella se
 activa uno, se cambia el nombre o se borra. Sólo uno está activo a la vez, y es el que usan la
 franja, la tabla y el optimizador.
@@ -479,6 +497,9 @@ Módulos puros con prueba, como el resto del proyecto, y ninguna prueba de compo
   (para UTM, puntos con coordenadas oficiales del ICGC), con coma y punto decimal, y los
   errores de formato y de rango
 * waypoints en el documento: esquema nuevo, migración desde el esquema 2 y validación
+* zonas: centro de un rectángulo, de un triángulo y de una L (donde el centroide cae fuera y el
+  centro elegido no), superficie contra un valor calculado a mano, polígono con menos de tres
+  vértices rechazado, y sector del plan convertido a polígono
 * sin waypoint activo, los cuatro casos de §6.9:
   * cada función que recibe el waypoint activo devuelve «nada que enseñar» y no lanza
   * borrar el activo lo desactiva

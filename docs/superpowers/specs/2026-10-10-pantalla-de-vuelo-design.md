@@ -43,7 +43,7 @@ navegador, que se pueden correr con node.
 |---|---|
 | Altitud | **Todo en pies sobre el mar**, también la capa baja. Es lo que marcan el altímetro y el GPS |
 | Vistas | Dos, **Mapa** y **Vent**, con un toque para cambiar. La franja de cifras es común y está siempre a la vista |
-| Proyección | Una línea con marcas a los **5, 10, 15 y 20 min**, como la de FlyMate. 30 min «es casi medio vuelo» |
+| Proyección | Una línea con marcas a los **5, 10, 15 y 20 min**, como la de FlyMate. Según el piloto, 30 min es casi medio vuelo |
 | Filas de la tabla | La fila «terra» (viento a 10 m sobre el terreno, escrita en pies sobre el mar), **cada 250 ft** hasta el techo y **cada 1 000 ft** por encima, hasta 10 000 ft, para la emergencia |
 | Viento medido | En las mismas franjas de 250 ft que la tabla. Cada franja guarda sólo la última medida |
 | Waypoints | Se crean con una pulsación larga en el mapa **o escribiendo las coordenadas**, eligiendo antes el formato: decimal, grados minutos y segundos, o UTM. Uno de ellos es el activo |

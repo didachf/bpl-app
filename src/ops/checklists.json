@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "fuente": "Procediment del pilot, revisat el 08/10/2026, amb el Manual de Vol MV04 Ed.4 Rev.30 d'Ultramagic",
   "nota": "Passos i ordre dictats pel pilot el 08/10/2026, en català per petició seva. Substitueixen la transcripció del manual del 06/10/2026. Cada pas porta la seva font: l'apartat del MV04, C per a l'Apèndix C, la norma, o Pilot si és procediment seu.",
   "validado": false,
@@ -474,6 +474,11 @@
               "id": "probar-radio",
               "texto": "Provar la ràdio",
               "fuente": "Pilot"
+            },
+            {
+              "id": "cinturon",
+              "texto": "Posar-se el cinturó d'aterratge i enganxar-lo",
+              "fuente": "C, 6.6, Pilot"
             },
             {
               "id": "obstaculos",

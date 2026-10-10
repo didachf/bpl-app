@@ -16,6 +16,10 @@ El piloto pidió dos cosas el 10/10/2026:
 De ahí la regla de esta pantalla: **en vuelo basta con esta app.** Pueden ser dos vistas,
 siempre que se pase de una a otra con un toque.
 
+Y una tercera, del mismo día: **la tablet y el teléfono son cosas distintas.** La tablet se usa
+para todo. El teléfono sirve sólo para el registro de vuelos, el plan de vuelo y las
+checklists. Todo lo de navegación, rumbos y viento en directo es sólo de la tablet.
+
 ## 2. Las cuatro piezas, y qué cubre este spec
 
 | Pieza | Contenido | Spec |
@@ -23,7 +27,8 @@ siempre que se pase de una a otra con un toque.
 | 1 | Tabla de viento previsto por altitud y hora | **Éste** |
 | 2 | GPS en vuelo: posición, viento medido, proyección, waypoints y navegación con optimizador | **Éste** |
 | 3 | El plan de vuelo dentro de la app, que se rehace entero desde el móvil o la tablet | Propio, más adelante |
-| 4 | Pasar los planes del Mac a la tablet y al teléfono | Propio, más adelante |
+| 4 | Pasar los planes del Mac a la tablet y al teléfono, y sincronizar los dos aparatos | Propio, más adelante |
+| 5 | Practicar pruebas de competición: la app crea los blancos o las áreas según el tipo de prueba y el viento del momento, en la tablet y en el teléfono | Propio, después de leer el reglamento de la FAI |
 
 Las piezas 3 y 4 salen de otra respuesta suya del mismo día: el plan se hace idealmente en
 el Mac, pero si hay que cambiar algo en el campo quiere poder hacerlo con el móvil o la
@@ -47,6 +52,8 @@ navegador, que se pueden correr con node.
 | Filas hacia el waypoint | Se resaltan las que van hacia él con **15° a cada lado**. Este margen es criterio nuestro y la pantalla lo dice |
 | Sin plan del día | Hasta que exista la pieza 3, el despegue es la posición GPS al pulsar «Començar vol», la ventana va desde ese momento hasta 3 h después y el techo es 1 200 m. Los tres se cambian en la pantalla |
 | Idioma | Catalán, como Operar y como los planes en PDF |
+| Aparatos | **La pantalla de vuelo sólo existe en la tablet.** Es una sola app con dos modos, no dos apps: cada aparato dice en Ajustes si es «Tauleta de vol» o «Telèfon». La primera vez se propone por el tamaño de pantalla y el piloto lo cambia si hace falta. El modo teléfono no enseña ni «Començar vol» ni la ruta `#/vol` |
+| Waypoints en el teléfono | Sí. Se crean, se editan y se borran en los dos aparatos, porque forman parte del plan. Navegar a ellos es sólo de la tablet |
 
 ## 4. Ideas tomadas de otras apps
 
@@ -213,6 +220,9 @@ Un waypoint lleva nombre, latitud, longitud y una nota opcional. Se crea de dos 
    Antes de guardar, la pantalla enseña el punto en el mapa y en los otros dos formatos, para
    ver que está donde se quería.
 
+Se crean en los dos aparatos. En el teléfono, desde Planificar, con el mapa y el formulario de
+coordenadas, y sin nada de navegación. En la tablet, además, desde la pantalla de vuelo.
+
 Hay una lista de waypoints con su rumbo y su distancia desde la posición actual. En ella se
 activa uno, se cambia el nombre o se borra. Sólo uno está activo a la vez, y es el que usan la
 franja, la tabla y el optimizador.
@@ -340,7 +350,8 @@ menos de 15 min, y de «Ara» si no, y dice de cuál. Sirve aunque no haya waypo
 
 ## 7. La pantalla
 
-Ruta `#/vol`. Se entra con «Començar vol» al final del Últim xequeig y desde Planificar.
+Ruta `#/vol`, **sólo en modo tablet**. Se entra con «Començar vol» al final del Últim xequeig y
+desde Planificar. En modo teléfono la ruta no existe: un enlace viejo a `#/vol` lleva a Inicio.
 
 ### 7.1 Franja fija, en las dos vistas
 
@@ -386,10 +397,19 @@ Debajo, en este orden:
 2. el rango de altitud
 3. la mejor izquierda y la mejor derecha
 
-### 7.4 Teléfono y tablet
+### 7.4 Sólo en la tablet
 
-Las mismas dos vistas en los dos. **El manifiesto pasa de `orientation: 'portrait'` a
-`'any'`**, para que la tablet se pueda usar apaisada.
+La pantalla de vuelo se diseña para la Galaxy Tab S11, apaisada, de unos 1 280 por 800 px. **El
+manifiesto pasa de `orientation: 'portrait'` a `'any'`**, para que la tablet se pueda usar
+apaisada. El teléfono sigue en vertical.
+
+El modo del aparato se guarda en `localStorage` del propio aparato, no en el documento del
+logbook, porque cada aparato tiene el suyo y el documento es el mismo en los dos.
+
+`WARNING:` con el plan hecho en el teléfono y el vuelo en la tablet, **la sincronización entre
+aparatos deja de ser opcional.** El plan y los waypoints tienen que llegar a la tablet, y el
+vuelo que graba la tablet tiene que llegar al registro. Es la pieza 4, y depende del
+repositorio privado `bpl-logbook` y su token, pendientes desde el 02/09/2026.
 
 Mientras la pantalla de vuelo está abierta, la pantalla del aparato se mantiene encendida con
 `wakeLock`. Se vuelve a pedir al volver de segundo plano, porque Android lo suelta.

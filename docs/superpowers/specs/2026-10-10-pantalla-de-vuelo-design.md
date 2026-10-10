@@ -28,7 +28,7 @@ checklists. Todo lo de navegación, rumbos y viento en directo es sólo de la ta
 | 2 | GPS en vuelo: posición, viento medido, proyección, waypoints y navegación con optimizador | **Éste** |
 | 3 | El plan de vuelo dentro de la app, que se rehace entero desde el móvil o la tablet | Propio, más adelante |
 | 4 | Pasar los planes del Mac a la tablet y al teléfono, y sincronizar los dos aparatos | Propio, más adelante |
-| 5 | Practicar pruebas de competición: la app crea los blancos o las áreas según el tipo de prueba y el viento del momento, en la tablet y en el teléfono | Propio, después de leer el reglamento de la FAI |
+| 5 | Practicar pruebas de competición: la app crea los blancos o las áreas según el tipo de prueba y el viento del momento, en la tablet y en el teléfono. **Pestaña propia, «Competició»**, en los dos aparatos, elegida por el piloto el 10/10/2026 | Propio, después de leer el reglamento de la FAI |
 
 Las piezas 3 y 4 salen de otra respuesta suya del mismo día: el plan se hace idealmente en
 el Mac, pero si hay que cambiar algo en el campo quiere poder hacerlo con el móvil o la

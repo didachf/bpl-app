@@ -1,5 +1,26 @@
 # Logbook BPL, estado
 
+## 30/10/2026: motor de navegación a un punto, fase 1
+
+**En la rama `motor-navegacion`** (worktree `~/code/bpl-app-motor`), sin fusionar con `main` y sin
+publicar. Sin pantalla: sólo el cálculo, en `src/services/nav/`.
+
+* Spec: `docs/superpowers/specs/2026-10-30-motor-navegacion-design.md`. Plan ejecutado:
+  `docs/superpowers/plans/2026-10-30-motor-navegacion.md`, con sus cambios al final.
+* Qué hace: con la previsión de los siete modelos y la traza GPS, dice cómo llegar a un punto con
+  hasta tres altitudes (2 min como mínimo cada una), o el punto más cercano posible y la zona
+  alcanzable, y demuestra cuándo un punto no se alcanza. El viento medido corrige el error de la
+  previsión (proceso gaussiano, como Loon) con el retraso del globo corregido.
+* Con el vuelo real del 10/10 (escenario de `optim2.py`): pasa a 4 m de la zona A, contra 370 m sin
+  hacer nada, en unos 180 ms en node. No es peor que la fuerza bruta del prototipo.
+* 84 pruebas nuevas, 510 en total. `tsc -b` y `npm run build` limpios.
+* **Siguiente:** fase 2, maquetas de la zona alcanzable y del punto más cercano en el lienzo, y
+  después la pantalla de vuelo, que usará `navegar()` en un Web Worker. Antes de la pantalla,
+  las comprobaciones del §12 del spec del 10/10. Luego, otras fuentes (METAR sin clave) y Claude.
+* Observación para la fase 2: el motor busca la menor distancia horizontal, así que el plan
+  puede pasar sobre el punto subiendo. Para aterrizar o marcar un blanco hará falta pedir llegar
+  bajo, como la regla 3D del AXMER (§13 del spec del 10/10).
+
 Última sesión: **2026-10-10**. Dos cosas:
 
 1. **Cinturón de aterrizaje en el Últim xequeig**, publicado (commit `0515c48` en `main`, bundle

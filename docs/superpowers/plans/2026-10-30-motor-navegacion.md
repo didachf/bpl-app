@@ -2542,3 +2542,11 @@ Añadir al principio, debajo del título, un bloque con: fecha 30/10/2026, «Mot
 git add STATUS.md
 git commit -m "docs: STATUS con el motor de navegacion, fase 1"
 ```
+
+---
+
+## Cambios durante la ejecución, 30/10/2026
+
+* **Task 8:** la prueba de la cota acumula el peor caso y comprueba una vez (con un `expect` por punto tardaba 4,9 s, al borde de los 5 s de vitest). Con un fallo a propósito (quitar las posiciones a mitad de cambio) no se ponía en rojo, porque con franjas contiguas esos puntos nunca son extremos. Se añadió la prueba «las posiciones a mitad de un cambio largo también cuentan», que sí lo detecta.
+* **Task 10:** con el punto inalcanzable, la última orden decía «fins al punt» y la dispersión «entre 29,7 km i 29,7 km». Ahora `ordenes()` recibe `llega` y dice «fins al punt més proper», y si todos los modelos dan lo mismo sale «Amb tots els models, …». Con su prueba primero.
+* El motor entero con el 10/10 tarda unos 180 ms en node en el Mac.

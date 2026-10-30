@@ -45,7 +45,8 @@ function vientoTramo(c: Campo, b: number, k0: number, k1: number): { rumbo: numb
   return { rumbo: rumbo(su / n, sv / n), kt: Math.hypot(su / n, sv / n) / KT, medido: ss / n < S_MS / 2 }
 }
 
-export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[]): string[] {
+/** `llega` falso: la ultima orden lleva al punto mas proximo, no al punto. */
+export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[], llega = true): string[] {
   return tramos.map((t, i) => {
     const alt = c.rejilla.etiqueta[t.franja]
     if (t.tipo === 'cambiar' && t.modo !== null) {
@@ -56,7 +57,7 @@ export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[]): string[] {
     const w = vientoTramo(c, t.franja, t.inicioMin, t.finMin)
     const cap = `cap a ${String(Math.round(w.rumbo) % 360).padStart(3, '0')}° a ${Math.round(w.kt)} kt (${w.medido ? 'mesurat' : 'previst'})`
     return i === tramos.length - 1
-      ? `Manté ${alt} fins al punt, ${cap}.`
+      ? `Manté ${alt} fins al punt${llega ? '' : ' més proper'}, ${cap}.`
       : `Manté ${alt} ${t.finMin - t.inicioMin} min, ${cap}.`
   })
 }

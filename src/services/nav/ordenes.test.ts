@@ -26,6 +26,10 @@ describe('ordenes', () => {
     const tramos: Tramo[] = [{ tipo: 'cambiar', franja: 1, modo: 'puja_lent', inicioMin: 0, finMin: 3 }]
     expect(ordenes(c, aj, tramos)).toEqual(['Ara, puja lent (0 a 1 m/s) fins a 1 750 ft.'])
   })
+  it('si no se llega, hasta el punto mas proximo', () => {
+    const tramos: Tramo[] = [{ tipo: 'mantener', franja: 0, modo: null, inicioMin: 0, finMin: 5 }]
+    expect(ordenes(c, aj, tramos, false)).toEqual(['Manté 1 500 ft fins al punt més proper, cap a 090° a 10 kt (previst).'])
+  })
   it('medido cuando la incertidumbre ha bajado', () => {
     const c2 = { ...c, sigma: new Float64Array(c.sigma.length).fill(0.3) }
     const tramos: Tramo[] = [{ tipo: 'mantener', franja: 0, modo: null, inicioMin: 0, finMin: 5 }]

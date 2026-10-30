@@ -97,7 +97,11 @@ cómo se obtiene su medida y nada más.
   `√(σv² + (τ · σd)²)`, con `σv` el de la velocidad promediada y `σd` el error típico de la
   pendiente de la regresión. Si la medida sale ruidosa, su `sigma` lo dice y la corrección le da
   menos peso sola. No hace falta una regla aparte.
-* Como mucho una medida por franja cada 2 min, la más reciente.
+* Como mucho una medida por franja cada 2 min, la más reciente. Y dos medidas de la misma franja
+  nunca comparten ventana: si quedan a menos de 60 s, se queda la más reciente, porque con muestras
+  compartidas no son independientes y la corrección les daría doble peso.
+* Sólo cuenta la traza desde el despegue (`despegue` en la entrada). Con la cesta en el suelo
+  durante el inflado, el GPS mediría viento cero. La pantalla de la fase 2 pondrá esa hora.
 
 ### 5.2 Campo y corrección
 
@@ -113,7 +117,10 @@ exponencial en altitud y en tiempo:
 
 `k = s² · exp(−|Δz| / Lz − |Δt| / Lt)`
 
-y la media a posteriori se suma al campo. La varianza a posteriori es la incertidumbre de cada
+y la media a posteriori se suma al campo. Una medida fuera de toda previsión (por encima o por
+debajo de todos los modelos) no se usa. Si sólo le falta a un modelo, a ese modelo se le aplica el
+residuo del combinado: poner residuo cero diría que el modelo acierta, y bajaría su incertidumbre
+sin información detrás. La varianza a posteriori es la incertidumbre de cada
 casilla. Las medidas son las mismas para todos los modelos, así que la matriz se factoriza una vez
 y se resuelve para cada modelo y para la combinación.
 
@@ -160,7 +167,8 @@ de partida: constante térmica de unos 340 s, y 1 K más de temperatura en la ve
 Para una dirección `u`, el punto alcanzable más lejano en esa dirección en el minuto `k` maximiza
 una suma de términos de cada paso, y eso lo resuelve exacto una programación dinámica hacia
 delante (tipo Viterbi). El estado es la franja, cuántas altitudes mantenidas se llevan (1 a 3) y
-cuánto se lleva en la actual (0, 1, o 2 min o más). Una sola pasada hacia delante da el extremo de
+cuánto se lleva en la actual (0, 1, o 2 min o más). De la franja actual se sale en el minuto 0 o
+a partir del 2, igual que en el plan de §6.4. Una sola pasada hacia delante da el extremo de
 **todos** los minutos a la vez, y los punteros hacia atrás dan el plan real que llega a cada
 extremo.
 
@@ -196,8 +204,11 @@ prototipo.
    del tramo común (lo mantenido en la actual, el cambio a `A`) se calcula una vez para todos los
    planes que lo comparten. Con 11 franjas son unos 2 × 10⁵ planes.
 2. **Refinado:** a los 40 mejores se les mueve cada duración un minuto arriba y abajo.
-3. **Elección:** el de menor distancia y, entre los que quedan a menos de 50 m de ella, el que llega
-   antes y después el de menos cambios.
+3. **Elección:** si alguno llega (50 m o menos), de los que llegan, el que llega antes y después el
+   de menos cambios. Si ninguno llega, el más cercano, y a igual distancia el de menos cambios. Un
+   plan que no llega nunca gana a uno que llega. Y el motor sólo cambia el plan por quedarse si el
+   plan mejora menos de 50 m **y** no cruza el umbral: un plan que llega no se cambia por quedarse
+   cuando quedarse no llega (corregido el 30/10/2026 tras la revisión de código).
 
 Con más de 16 franjas (vuelos altos), `A` y `B` se eligen entre 12 candidatas: la actual y las tres
 de arriba y de abajo, las que forman la envolvente del viento medio de cada franja sobre el
@@ -254,6 +265,8 @@ Sin punto activo, `estado` es `sin-punto` y no se calcula ni el plan ni nada del
 * La zona alcanzable en el mapa.
 * «No s'hi arriba amb aquest vent» y el punto más cercano posible con su plan: «El més a prop:
   2,3 km a les 09:05».
+* Cuando el punto se pasa a mitad de una subida o bajada, la última orden lo dice: «Puja ràpid
+  (2,5 a 3 m/s) cap a 2 250 ft, i passes pel punt pujant».
 
 El resto ya está diseñado en el 10/10.
 
@@ -263,7 +276,7 @@ El resto ya está diseñado en el 10/10.
 |---|---|
 | Sin previsión | `sin-datos`. No inventa viento |
 | Una franja sin dato en ningún modelo | Sale del rango de altitud del cálculo, y la salida lo dice |
-| Sin GPS | Calcula desde el último punto conocido y devuelve su antigüedad |
+| Sin GPS | Calcula desde el último punto conocido y devuelve su antigüedad. Con la posición de hace un minuto o más **no da por demostrado** que el punto no se alcanza, porque el origen ya no es donde está el globo |
 | La factorización de la corrección falla | Se reintenta con más ruido en la diagonal. Si vuelve a fallar, se calcula sin corrección y la salida lo dice |
 | Medidas viejas | Pesan menos solas por el núcleo en tiempo. Las de más de 6 h se descartan |
 | El horizonte pasa del final del pronóstico | Se acorta al último minuto con previsión, y la salida lo dice |
@@ -295,8 +308,10 @@ Con vitest, prueba primero, como el resto del proyecto.
   * desempate por distancia, hora y cambios
 * **Órdenes:** catalán, pies y nudos, fuente del viento.
 * **Motor:** `sin-punto`, `sin-datos` y el horizonte acortado.
-* **Rendimiento:** el motor entero con el vuelo del 10/10 (11 franjas, 60 min) por debajo de 1 s en
-  node en el Mac, y la prueba apunta el tiempo. En la tablet se mide en la fase 2.
+* **Rendimiento:** el motor entero con el vuelo del 10/10 (11 franjas, 60 min) tarda unos 180 ms en
+  node en el Mac sin carga (30/10/2026). La prueba toma el mejor de tres, apunta el tiempo y sólo falla
+  por encima de 2 s, para no fallar cuando la máquina está cargada por otra cosa. El objetivo de 1 s
+  es en la tablet y se mide en la fase 2.
 
 El script de node para correr el motor desde el Mac con un JSON guardado queda para cuando haga
 falta: el código de la app usa importaciones sin extensión y node no las resuelve sin un

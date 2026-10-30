@@ -69,7 +69,10 @@ export function calcularZona(t: Tablas, b0: number): Zona {
         const n = (Math.floor(s / T) % MAX_ALTITUDES) + 1
         const b = Math.floor(s / (T * MAX_ALTITUDES))
         const i = b * W + k
-        relajar(k + 1, st(b, n, Math.min(tm + 1, MIN_MANTENER)), x + t.px[i + 1] - t.px[i], y + t.py[i + 1] - t.py[i])
+        // De la actual se sale al minuto 0 o tras MIN_MANTENER, como en plan.ts: el primer minuto
+        // mantenido cuenta desde cero.
+        const sig = k === 0 && n === 1 ? 1 : Math.min(tm + 1, MIN_MANTENER)
+        relajar(k + 1, st(b, n, sig), x + t.px[i + 1] - t.px[i], y + t.py[i + 1] - t.py[i])
         if (tm < MIN_MANTENER || n >= MAX_ALTITUDES) continue
         for (let b2 = 0; b2 < B; b2++) {
           if (b2 === b) continue

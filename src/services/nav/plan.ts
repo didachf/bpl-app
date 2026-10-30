@@ -104,11 +104,17 @@ export function caminoTabla(t: Tablas, p: PlanInterno): Camino | null {
   return out
 }
 
-/** La menor distancia y, a menos de 50 m de ella, el que llega antes y despues el de menos cambios. */
+/**
+ * Si alguno llega (50 m o menos), de los que llegan el que llega antes y despues el de menos
+ * cambios. Si ninguno llega, el mas cercano: un plan que no llega nunca gana a uno que llega.
+ */
 export function elegir(es: Evaluado[]): Evaluado {
   const dmin = Math.min(...es.map(e => e.distM))
+  if (dmin > LLEGA_M) {
+    return [...es].sort((a, b) => a.distM - b.distM || a.plan.franjas.length - b.plan.franjas.length)[0]
+  }
   return es
-    .filter(e => e.distM < dmin + LLEGA_M)
+    .filter(e => e.distM <= LLEGA_M)
     .sort((a, b) => a.minuto - b.minuto || a.plan.franjas.length - b.plan.franjas.length || a.distM - b.distM)[0]
 }
 

@@ -52,6 +52,11 @@ describe('medidasGps', () => {
     const crudo = [0, 1].map(i => w[i] + (v0[i] - w[i]) * Math.exp(-tc / tau))
     expect(Math.hypot(crudo[0] - w[0], crudo[1] - w[1])).toBeGreaterThan(2)
   })
+  it('dos medidas de la misma franja no comparten ventana', () => {
+    const m = medidasGps(traza(181, t => [5 * t, 0]), rej, plano)
+    expect(m).toHaveLength(1)
+    expect(m[0].t).toBeCloseTo(150500, -1)
+  })
   it('no mide si la ventana cruza mas de una franja', () => {
     const m = medidasGps(traza(200, t => [5 * t, 0], t => 500 + 3 * t), rej, plano)
     expect(m).toHaveLength(0)

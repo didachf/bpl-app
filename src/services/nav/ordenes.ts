@@ -51,7 +51,11 @@ export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[], llega = true)
     const alt = c.rejilla.etiqueta[t.franja]
     if (t.tipo === 'cambiar' && t.modo !== null) {
       const [a, b] = aj.rangos[t.modo]
-      const txt = `${NOM_MODO[t.modo]} (${decimal(a)} a ${decimal(b)} m/s) fins a ${alt}.`
+      const base = `${NOM_MODO[t.modo]} (${decimal(a)} a ${decimal(b)} m/s)`
+      // Si el plan acaba en un cambio, el punto se pasa a mitad de la subida o la bajada.
+      const txt = i === tramos.length - 1
+        ? `${base} cap a ${alt}, i passes pel punt${llega ? '' : ' més proper'} ${t.modo.startsWith('puja') ? 'pujant' : 'baixant'}.`
+        : `${base} fins a ${alt}.`
       return t.inicioMin === 0 ? `Ara, ${txt}` : txt[0].toUpperCase() + txt.slice(1)
     }
     const w = vientoTramo(c, t.franja, t.inicioMin, t.finMin)

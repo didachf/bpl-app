@@ -23,12 +23,23 @@ describe('ordenes', () => {
     ])
   })
   it('el primer cambio, ara', () => {
-    const tramos: Tramo[] = [{ tipo: 'cambiar', franja: 1, modo: 'puja_lent', inicioMin: 0, finMin: 3 }]
-    expect(ordenes(c, aj, tramos)).toEqual(['Ara, puja lent (0 a 1 m/s) fins a 1 750 ft.'])
+    const tramos: Tramo[] = [
+      { tipo: 'cambiar', franja: 1, modo: 'puja_lent', inicioMin: 0, finMin: 3 },
+      { tipo: 'mantener', franja: 1, modo: null, inicioMin: 3, finMin: 20 },
+    ]
+    expect(ordenes(c, aj, tramos)[0]).toBe('Ara, puja lent (0 a 1 m/s) fins a 1 750 ft.')
   })
   it('si no se llega, hasta el punto mas proximo', () => {
     const tramos: Tramo[] = [{ tipo: 'mantener', franja: 0, modo: null, inicioMin: 0, finMin: 5 }]
     expect(ordenes(c, aj, tramos, false)).toEqual(['Manté 1 500 ft fins al punt més proper, cap a 090° a 10 kt (previst).'])
+  })
+  it('si se pasa por el punto a mitad de un cambio, lo dice', () => {
+    const tramos: Tramo[] = [
+      { tipo: 'mantener', franja: 0, modo: null, inicioMin: 0, finMin: 9 },
+      { tipo: 'cambiar', franja: 1, modo: 'puja_rapid', inicioMin: 9, finMin: 10 },
+    ]
+    expect(ordenes(c, aj, tramos)[1]).toBe('Puja ràpid (2,5 a 3 m/s) cap a 1 750 ft, i passes pel punt pujant.')
+    expect(ordenes(c, aj, tramos, false)[1]).toBe('Puja ràpid (2,5 a 3 m/s) cap a 1 750 ft, i passes pel punt més proper pujant.')
   })
   it('medido cuando la incertidumbre ha bajado', () => {
     const c2 = { ...c, sigma: new Float64Array(c.sigma.length).fill(0.3) }

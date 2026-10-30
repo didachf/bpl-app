@@ -13,7 +13,9 @@ publicar. Sin pantalla: sólo el cálculo, en `src/services/nav/`.
   previsión (proceso gaussiano, como Loon) con el retraso del globo corregido.
 * Con el vuelo real del 10/10 (escenario de `optim2.py`): pasa a 4 m de la zona A, contra 370 m sin
   hacer nada, en unos 180 ms en node. No es peor que la fuerza bruta del prototipo.
-* 84 pruebas nuevas, 510 en total. `tsc -b` y `npm run build` limpios.
+* 94 pruebas nuevas, 520 en total. `tsc -b` y `npm run build` limpios. Revisión de código
+  independiente hecha: dos fallos serios en la decisión de «llega» y cinco menores, todos
+  corregidos con su prueba (detalle al final del plan).
 * **Siguiente:** fase 2, maquetas de la zona alcanzable y del punto más cercano en el lienzo, y
   después la pantalla de vuelo, que usará `navegar()` en un Web Worker. Antes de la pantalla,
   las comprobaciones del §12 del spec del 10/10. Luego, otras fuentes (METAR sin clave) y Claude.

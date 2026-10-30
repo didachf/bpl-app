@@ -57,6 +57,8 @@ export interface Corregido { campo: Campo; corregido: boolean; usadas: number }
 export function corregirCampo(c: Campo, prev: Previsiones, medidas: Medida[], ahora: number): Corregido {
   const usadas = medidas
     .filter(m => m.t <= ahora + 1000 && (ahora - m.t) / 1000 <= EDAD_MAX_S)
+    // Fuera de toda prevision no hay error que medir.
+    .filter(m => vientoFuente(prev, prev.modelos.length, m.altM, m.t) !== null)
     .sort((a, b) => b.t - a.t)
     .slice(0, MAX_MEDIDAS)
   const n = usadas.length
@@ -81,13 +83,15 @@ export function corregirCampo(c: Campo, prev: Previsiones, medidas: Medida[], ah
   const nf = c.nombres.length
   const alfaU: Float64Array[] = []
   const alfaV: Float64Array[] = []
+  const comb = usadas.map(m => vientoFuente(prev, prev.modelos.length, m.altM, m.t) as [number, number])
   for (let f = 0; f < nf; f++) {
     const ru = new Float64Array(n)
     const rv = new Float64Array(n)
     for (let i = 0; i < n; i++) {
-      const w = vientoFuente(prev, f, usadas[i].altM, usadas[i].t)
-      ru[i] = w === null ? 0 : usadas[i].u - w[0]
-      rv[i] = w === null ? 0 : usadas[i].v - w[1]
+      // Un modelo sin dato en la medida no queda confirmado: se le corrige como al combinado.
+      const w = vientoFuente(prev, f, usadas[i].altM, usadas[i].t) ?? comb[i]
+      ru[i] = usadas[i].u - w[0]
+      rv[i] = usadas[i].v - w[1]
     }
     alfaU.push(atras(l, n, adelante(l, n, ru)))
     alfaV.push(atras(l, n, adelante(l, n, rv)))

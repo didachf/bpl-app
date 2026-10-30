@@ -37,7 +37,7 @@ export function medidasGps(traza: PuntoTraza[], rej: Rejilla, plano: Plano): Med
     vel.push({ t: (a.t + b.t) / 2, u: (b.x - a.x) / dt, v: (b.y - a.y) / dt, z: (a.z + b.z) / 2 })
   }
 
-  const porTramo = new Map<string, Medida>()
+  const porTramo = new Map<string, { b: number; m: Medida }>()
   let ini = 0
   for (let fin = 0; fin < vel.length; fin++) {
     while (vel[fin].t - vel[ini].t > VENTANA_S) ini++
@@ -81,9 +81,19 @@ export function medidasGps(traza: PuntoTraza[], rej: Rejilla, plano: Plano): Med
 
     const sigma = Math.hypot(SIGMA_GPS_1S / Math.sqrt(n), (TAU_S * SIGMA_GPS_1S) / Math.sqrt(stt))
     porTramo.set(`${b}|${Math.floor(tm / SEPARACION_S)}`, {
-      fuente: 'gps', t: tm * 1000, altM: zm,
-      u: um + (TAU_S * stu) / stt, v: vm + (TAU_S * stv) / stt, sigma,
+      b,
+      m: { fuente: 'gps', t: tm * 1000, altM: zm, u: um + (TAU_S * stu) / stt, v: vm + (TAU_S * stv) / stt, sigma },
     })
   }
-  return [...porTramo.values()].sort((a, b) => a.t - b.t)
+  // Dos medidas de la misma franja con ventanas solapadas comparten muestras y no son
+  // independientes: de las dos, se queda la mas reciente.
+  const elegidas: Medida[] = []
+  const ultima = new Map<number, number>()
+  for (const { b, m } of [...porTramo.values()].sort((x, y) => y.m.t - x.m.t)) {
+    const u = ultima.get(b)
+    if (u !== undefined && u - m.t < VENTANA_S * 1000) continue
+    ultima.set(b, m.t)
+    elegidas.push(m)
+  }
+  return elegidas.sort((a, b) => a.t - b.t)
 }

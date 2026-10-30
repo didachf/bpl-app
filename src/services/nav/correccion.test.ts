@@ -30,6 +30,22 @@ describe('algebra', () => {
   })
 })
 
+describe('corregirCampo con un modelo que no llega a la medida', () => {
+  // el modelo b solo llega a 500 m. La medida a 1000 m no le dice que acierte: le corrige como al combinado.
+  const p0 = [{ altM: 0, u: 0, v: 0 }, { altM: 3000, u: 0, v: 0 }]
+  const pb = [{ altM: 0, u: 0, v: 0 }, { altM: 500, u: 0, v: 0 }]
+  const prev: Previsiones = { elevM: 0, horas: [h0, h0 + 7200000], modelos: ['a', 'b'], perfiles: [[p0, p0], [pb, pb]] }
+  const c = construirCampo(prev, { altM: [400, 1000], etiqueta: ['x', 'y'] }, h0, 60)
+  it('al modelo sin dato le aplica el residuo del combinado', () => {
+    const r = corregirCampo(c, prev, [medida()], h0)
+    const m0 = (2 * S_MS ** 2) / (S_MS ** 2 + 0.01)
+    expect(r.campo.u[1][idx(c, 0, 0)]).toBeCloseTo(m0 * Math.exp(-3), 3)
+  })
+  it('una medida fuera de toda prevision no se usa', () => {
+    expect(corregirCampo(c, prev, [medida({ altM: 5000 })], h0).usadas).toBe(0)
+  })
+})
+
 describe('corregirCampo', () => {
   const c = construirCampo(prevCero(), rej, h0, 60)
   it('sin medidas no cambia', () => {

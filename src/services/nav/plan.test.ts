@@ -69,6 +69,12 @@ describe('elegir', () => {
   it('y despues el de menos cambios', () => {
     expect(elegir([{ plan: q, distM: 10, minuto: 10 }, { plan: p, distM: 30, minuto: 10 }]).plan).toBe(p)
   })
+  it('si alguno llega, no gana uno que no llega aunque llegue antes', () => {
+    expect(elegir([{ plan: q, distM: 10, minuto: 40 }, { plan: p, distM: 55, minuto: 20 }]).distM).toBe(10)
+  })
+  it('si ninguno llega, el mas cercano', () => {
+    expect(elegir([{ plan: p, distM: 2000, minuto: 0 }, { plan: q, distM: 1960, minuto: 30 }]).distM).toBe(1960)
+  })
   it('a mas de 50 m, la distancia manda', () => {
     expect(elegir([{ plan: p, distM: 10, minuto: 20 }, { plan: q, distM: 70, minuto: 5 }]).plan).toBe(p)
   })

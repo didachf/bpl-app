@@ -23,6 +23,13 @@ export interface EntradaNav {
   ahora: number
   /** Incluir la franja «terra» (elevacion mas 10 m) por debajo del rango. */
   incluirTerra?: boolean
+  /** Hora del despegue. Lo de antes (inflado, cesta en el suelo) no cuenta para medir viento. */
+  despegue?: number
+}
+
+/** Los puntos de la traza desde el despegue, si se sabe. */
+export function trazaEnVuelo(traza: PuntoTraza[], despegue: number | undefined): PuntoTraza[] {
+  return despegue === undefined ? traza : traza.filter(p => p.t >= despegue)
 }
 
 const PASO_ZONA_MIN = 5
@@ -56,7 +63,7 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
     avisos.push(`Horitzó escurçat a ${r.campo.minutos} min: la previsió no arriba més enllà.`)
   }
 
-  const medidas = medidasGps(e.traza, r.campo.rejilla, plano)
+  const medidas = medidasGps(trazaEnVuelo(e.traza, e.despegue), r.campo.rejilla, plano)
   const corr = corregirCampo(r.campo, e.prevision, medidas, e.ahora)
   if (medidas.length > 0 && !corr.corregido) avisos.push('Vent mesurat no aplicat: el càlcul de la correcció ha fallat.')
   const c = corr.campo
@@ -76,7 +83,9 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
   const quieto: PlanInterno = { franjas: [b0], clases: [], dur: [c.minutos] }
   const aQuieto = aproximacion(caminoDirecto(c, fc, e.ajustes, quieto)!, ox, oy)
   const mejor = buscarPlan(t, b0, ox, oy)
-  const sinMejora = mejor.plan.franjas.length === 1 || mejor.distM > aQuieto.distM - LLEGA_M
+  // Quedarse si el plan mejora menos de 50 m, salvo que el plan llegue y quedarse no.
+  const cruzaUmbral = mejor.distM <= LLEGA_M && aQuieto.distM > LLEGA_M
+  const sinMejora = mejor.plan.franjas.length === 1 || (!cruzaUmbral && mejor.distM > aQuieto.distM - LLEGA_M)
   const elegido = sinMejora ? { plan: quieto, distM: aQuieto.distM, minuto: aQuieto.minuto } : mejor
   const tramos: Tramo[] = aTramos(t, elegido.plan, Math.max(1, elegido.minuto))
 
@@ -87,7 +96,8 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
     dispersion.push({ modelo: c.nombres[m], distanciaMinM: aproximacion(cam, ox, oy).distM })
   }
 
-  const fuera = fueraSeguro(zonaInt, ox, oy)
+  // Con la posicion vieja el origen no es donde esta el globo: no se demuestra nada.
+  const fuera = edadMin < 1 && fueraSeguro(zonaInt, ox, oy)
   const llega = elegido.distM <= LLEGA_M
   const horaMs = c.t0 + elegido.minuto * 60000
   const resumen: string[] = []

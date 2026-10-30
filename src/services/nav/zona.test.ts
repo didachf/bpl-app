@@ -22,6 +22,16 @@ describe('viento estable, cuentas a mano', () => {
   it('un punto al norte si', () => { expect(fueraSeguro(z, 0, 3000)).toBe(false) })
 })
 
+describe('de la altitud actual se sale al minuto 0 o a partir del 2, como en el plan', () => {
+  // la franja 0 va al este el primer minuto y al sur despues. Salir al minuto 1 (prohibido)
+  // seria lo mas lejano en la direccion 1 al minuto 2. Lo legal es quedarse: (300, -300).
+  const c = campoSintetico(rejillaUniforme(2, 500), 10, (b, k) => (b === 1 ? [0, 5] : k === 0 ? [5, 0] : [0, -5]))
+  const z = calcularZona(construirTablas(c, 1, rapido), 0)
+  it('la direccion 1 al minuto 2', () => {
+    expect(z.h[1][2]).toBeCloseTo(300 * z.dirs[1][0] - 300 * z.dirs[1][1], 6)
+  })
+})
+
 describe('las posiciones a mitad de un cambio largo tambien cuentan', () => {
   // 762 m a 1 m/s son 13 min de cambio: a los 6 min solo un plan a medio camino va al norte
   const lento: AjustesNav = { ...aj, modos: { puja_lent: 1, puja_rapid: 1, baixa_lent: 1, baixa_rapid: 1 } }

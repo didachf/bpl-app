@@ -1948,12 +1948,27 @@ describe('viento estable, cuentas a mano', () => {
   it('un punto al norte si', () => { expect(fueraSeguro(z, 0, 3000)).toBe(false) })
 })
 
+describe('las posiciones a mitad de un cambio largo tambien cuentan', () => {
+  // 762 m a 1 m/s son 13 min de cambio: a los 6 min solo un plan a medio camino va al norte
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 1, puja_rapid: 1, baixa_lent: 1, baixa_rapid: 1 } }
+  const c = campoSintetico({ altM: [500, 1262], etiqueta: ['a', 'b'] }, 30, b => (b === 0 ? [5, 0] : [0, 5]))
+  const z = calcularZona(construirTablas(c, 1, lento), 0)
+  it('la cota cubre el plan en pleno cambio', () => {
+    const cam = caminoDirecto(c, 1, lento, { franjas: [0, 1], clases: [1], dur: [0, 0] })!
+    expect(cam[6][1]).toBeGreaterThan(0)
+    for (let d = 0; d < z.dirs.length; d++) {
+      expect(cam[6][0] * z.dirs[d][0] + cam[6][1] * z.dirs[d][1]).toBeLessThanOrEqual(z.h[d][6] + 1e-6)
+    }
+  })
+})
+
 describe('la cota exterior contiene todos los planes de la fuerza bruta', () => {
   const c = campoSintetico(rejillaUniforme(4, 500), 30, (b, k) =>
     [Math.cos(b * 1.7 + k / 9) * 5, Math.sin(b * 1.1 + k / 13) * 5])
   const z = calcularZona(construirTablas(c, 1, aj), 1)
   it('en cada minuto y cada direccion', () => {
     let planes = 0
+    let peor = -Infinity
     for (let h0 = 0; h0 <= 10; h0 += 2) {
       for (let A = 0; A < 4; A++) {
         if (A === 1) continue
@@ -1968,8 +1983,7 @@ describe('la cota exterior contiene todos los planes de la fuerza bruta', () => 
                 planes++
                 for (let k = 0; k <= 30; k++) {
                   for (let d = 0; d < z.dirs.length; d++) {
-                    const proy = cam[k][0] * z.dirs[d][0] + cam[k][1] * z.dirs[d][1]
-                    expect(proy).toBeLessThanOrEqual(z.h[d][k] + 1e-6)
+                    peor = Math.max(peor, cam[k][0] * z.dirs[d][0] + cam[k][1] * z.dirs[d][1] - z.h[d][k])
                   }
                 }
               }
@@ -1979,6 +1993,7 @@ describe('la cota exterior contiene todos los planes de la fuerza bruta', () => 
       }
     }
     expect(planes).toBeGreaterThan(100)
+    expect(peor).toBeLessThanOrEqual(1e-6)
   })
 })
 ```
@@ -2113,7 +2128,7 @@ export function fueraSeguro(z: Zona, ox: number, oy: number): boolean {
 - [ ] **Step 4: comprobar que pasa**
 
 Run: `npx vitest run src/services/nav/zona.test.ts`
-Expected: PASS, 7 pruebas.
+Expected: PASS, 8 pruebas.
 
 - [ ] **Step 5: commit**
 

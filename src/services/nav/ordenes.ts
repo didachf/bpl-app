@@ -1,9 +1,9 @@
 // src/services/nav/ordenes.ts
 // El plan en ordenes cortas en catalan (spec 10/10 §6.8). Pies y nudos solo aqui.
-import { idx, type Campo } from './campo'
+import { idx, miles, PIE_M, type Campo } from './campo'
 import { rumbo } from './geo'
 import { S_MS } from './parametros'
-import type { AjustesNav, Modo, Tramo } from './tipos'
+import { QUALSEVOL, type AjustesNav, type Modo, type Objetivo, type Tramo } from './tipos'
 
 const KT = 1852 / 3600
 const NOM_MODO: Record<Modo, string> = {
@@ -22,6 +22,11 @@ export function distancia(m: number): string {
   if (m < 100) return `${Math.round(m)} m`
   if (m < 1000) return `${Math.round(m / 10) * 10} m`
   return `${(m / 1000).toFixed(1).replace('.', ',')} km`
+}
+
+/** Una altitud sobre el mar en pies, «2 000 ft». */
+export function alturaFt(altM: number): string {
+  return `${miles(altM / PIE_M)} ft`
 }
 
 function decimal(x: number): string {
@@ -45,23 +50,31 @@ function vientoTramo(c: Campo, b: number, k0: number, k1: number): { rumbo: numb
   return { rumbo: rumbo(su / n, sv / n), kt: Math.hypot(su / n, sv / n) / KT, medido: ss / n < S_MS / 2 }
 }
 
-/** `llega` falso: la ultima orden lleva al punto mas proximo, no al punto. */
-export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[], llega = true): string[] {
+/**
+ * `llega` falso: la ultima orden lleva al punto mas proximo, no al punto. El
+ * objetivo cambia la ultima orden si el plan acaba en un cambio (spec 2026-11-01 §6).
+ */
+export function ordenes(c: Campo, aj: AjustesNav, tramos: Tramo[], llega = true, objetivo: Objetivo = QUALSEVOL): string[] {
+  const mp = llega ? '' : ' més proper'
   return tramos.map((t, i) => {
     const alt = c.rejilla.etiqueta[t.franja]
     if (t.tipo === 'cambiar' && t.modo !== null) {
       const [a, b] = aj.rangos[t.modo]
       const base = `${NOM_MODO[t.modo]} (${decimal(a)} a ${decimal(b)} m/s)`
-      // Si el plan acaba en un cambio, el punto se pasa a mitad de la subida o la bajada.
-      const txt = i === tramos.length - 1
-        ? `${base} cap a ${alt}, i passes pel punt${llega ? '' : ' més proper'} ${t.modo.startsWith('puja') ? 'pujant' : 'baixant'}.`
-        : `${base} fins a ${alt}.`
+      let txt: string
+      if (i < tramos.length - 1) txt = `${base} fins a ${alt}.`
+      else if (objetivo.tipo === 'aterrar') txt = `${base} fins a ${alt}, i hi arribes al punt${mp}.`
+      else {
+        // Si el plan acaba en un cambio, el punto se pasa a mitad de la subida o la bajada.
+        const aQue = objetivo.tipo === 'altitud' ? ` a ${alturaFt(objetivo.altM)}` : ''
+        txt = `${base} cap a ${alt}, i passes pel punt${mp}${aQue} ${t.modo.startsWith('puja') ? 'pujant' : 'baixant'}.`
+      }
       return t.inicioMin === 0 ? `Ara, ${txt}` : txt[0].toUpperCase() + txt.slice(1)
     }
     const w = vientoTramo(c, t.franja, t.inicioMin, t.finMin)
     const cap = `cap a ${String(Math.round(w.rumbo) % 360).padStart(3, '0')}° a ${Math.round(w.kt)} kt (${w.medido ? 'mesurat' : 'previst'})`
     return i === tramos.length - 1
-      ? `Manté ${alt} fins al punt${llega ? '' : ' més proper'}, ${cap}.`
+      ? `Manté ${alt} fins al punt${mp}, ${cap}.`
       : `Manté ${alt} ${t.finMin - t.inicioMin} min, ${cap}.`
   })
 }

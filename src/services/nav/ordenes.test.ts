@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { distancia, hora, ordenes } from './ordenes'
+import { alturaFt, distancia, hora, ordenes } from './ordenes'
 import { campoSintetico } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav, type Tramo } from './tipos'
 
@@ -55,4 +55,29 @@ describe('formatos', () => {
     expect(distancia(2340)).toBe('2,3 km')
   })
   it('hora local', () => { expect(hora(Date.parse('2026-10-10T06:52Z'))).toBe('08:52') })
+})
+
+describe('ordenes con objetivo', () => {
+  const tramos: Tramo[] = [
+    { tipo: 'mantener', franja: 0, modo: null, inicioMin: 0, finMin: 9 },
+    { tipo: 'cambiar', franja: 1, modo: 'puja_rapid', inicioMin: 9, finMin: 10 },
+  ]
+  it('pasar a una altitud cruzandola: la dice', () => {
+    const o = { tipo: 'altitud' as const, altM: 1600 * 0.3048 }
+    expect(ordenes(c, aj, tramos, true, o)[1]).toBe('Puja ràpid (2,5 a 3 m/s) cap a 1 750 ft, i passes pel punt a 1 600 ft pujant.')
+    expect(ordenes(c, aj, tramos, false, o)[1]).toBe('Puja ràpid (2,5 a 3 m/s) cap a 1 750 ft, i passes pel punt més proper a 1 600 ft pujant.')
+  })
+  it('aterrar llegando a terra en el punto', () => {
+    const ct = campoSintetico({ altM: [380, 457.2], etiqueta: ['terra', '1 500 ft'] }, 60, () => [1, 0])
+    const baja: Tramo[] = [
+      { tipo: 'mantener', franja: 1, modo: null, inicioMin: 0, finMin: 9 },
+      { tipo: 'cambiar', franja: 0, modo: 'baixa_rapid', inicioMin: 9, finMin: 10 },
+    ]
+    expect(ordenes(ct, aj, baja, true, { tipo: 'aterrar' })[1]).toBe('Baixa ràpid (3 a 5 m/s) fins a terra, i hi arribes al punt.')
+    expect(ordenes(ct, aj, baja, false, { tipo: 'aterrar' })[1]).toBe('Baixa ràpid (3 a 5 m/s) fins a terra, i hi arribes al punt més proper.')
+  })
+  it('qualsevol, como el 30/10', () => {
+    expect(ordenes(c, aj, tramos, true, { tipo: 'qualsevol' })[1]).toBe('Puja ràpid (2,5 a 3 m/s) cap a 1 750 ft, i passes pel punt pujant.')
+  })
+  it('altura en pies', () => { expect(alturaFt(2000 * 0.3048)).toBe('2 000 ft') })
 })

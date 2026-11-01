@@ -84,4 +84,8 @@ export interface ResultadoNavegacion {
   avisos: string[]
   calculadoA: string
   previsionDe: string | null
+  /** El plan minuto a minuto desde ahora hasta el punto mas cercano: el indice es el minuto. */
+  camino: { lat: number; lon: number; altM: number; aRas: boolean }[]
+  /** Donde el plan pasa mas cerca del punto dentro del margen del objetivo. null sin plan. */
+  masCerca: Punto | null
 }

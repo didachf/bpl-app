@@ -2,13 +2,17 @@ import { describe, it, expect } from 'vitest'
 import { navegar, trazaEnVuelo, type EntradaNav } from './motor'
 import type { Previsiones } from './perfil'
 import { parsePrevision } from './perfil'
-import { cargar1010, DESPEGUE_1010 } from './prueba-1010'
+import { cargar1010, cargarRelieve1010, DESPEGUE_1010 } from './prueba-1010'
 import { aGeo, aPlano } from './geo'
 import { AJUSTES_POR_DEFECTO, type AjustesNav, type Objetivo } from './tipos'
 import { margenDe } from './objetivo'
 import { franjas, recortar } from './campo'
 import { franjaMasCercana } from './medidas'
 import { oraculo } from './oraculo'
+import { maximo, sueloGeo, sueloPlano, techoPlano } from './relieve'
+import { relieveSintetico } from './sintetico'
+import { construirTablas } from './vertical'
+import { buscarPlan, caminoTabla, limite } from './plan'
 
 const prev = parsePrevision(cargar1010())
 const despegue = { lat0: DESPEGUE_1010.lat, lon0: DESPEGUE_1010.lon }
@@ -246,5 +250,62 @@ describe('la ultima bajada dura lo que hay hasta el suelo del punto', () => {
   })
   it('sin el, la bajada larga hasta el suelo del pronostico', () => {
     expect(bajada(navegar(base))).toBeGreaterThanOrEqual(9)
+  })
+})
+
+describe('el motor con el relieve', () => {
+  const relieve = cargarRelieve1010()
+  const punto = aGeo(despegue, ZA[0], ZA[1])
+  it('sin relieve lo dice', () => {
+    expect(navegar(entrada()).avisos).toContain('Sense relleu: el pla no sap on és el terreny.')
+  })
+  for (const obj of [{ tipo: 'qualsevol' }, { tipo: 'aterrar' }, { tipo: 'altitud', altM: 2500 * 0.3048 }] as Objetivo[]) {
+    it(`${obj.tipo}: nada del plan, fuera de terra, a menos de 100 ft del suelo, y no peor que la fuerza bruta`, () => {
+      const r = navegar(entrada({ objetivo: obj, relieve }))
+      expect(r.avisos.some(a => a.startsWith('Sense relleu'))).toBe(false)
+      // las mismas franjas que el motor: terra en el suelo de ahora (o del punto), y por encima
+      const plano = { lat0: pos.lat, lon0: pos.lon }
+      const sueloAhora = sueloPlano(relieve, plano)(0, 0)
+      const terraM = (obj.tipo === 'aterrar' ? sueloGeo(relieve, punto.lat, punto.lon) : sueloAhora) + 10
+      const rej = franjas(Math.max(terraM, prev.elevM + 10) + 1.5, aj.altMaxM, terraM, prev.elevM + 10)
+      const c = recortar(prev, rej, ahora, 60).campo
+      const terreno = { techo: techoPlano(relieve, plano), maxM: maximo(relieve) }
+      const m = margenDe(obj, c.rejilla)!
+      const t = construirTablas(c, c.nombres.length - 1, aj, m, terreno)
+      const b0 = franjaMasCercana(c.rejilla, altM)
+      const [ox, oy] = aPlano(plano, punto.lat, punto.lon)
+      const e = buscarPlan(t, b0, ox, oy)
+      expect(limite(t, e.plan, caminoTabla(t, e.plan)!)).toBeGreaterThan(e.minuto)
+      const o = oraculo(c, c.nombres.length - 1, aj, b0, ox, oy, m, terreno)
+      expect(r.distanciaMinM!).toBeLessThanOrEqual(o.distM + 50)
+      // y no mas cerca que el mejor plan que respeta el suelo: si ignorara el relieve, podria
+      expect(r.distanciaMinM!).toBeGreaterThanOrEqual(e.distM - 1)
+    })
+  }
+  it('con el relieve, el mejor de tres por debajo de 2 s', () => {
+    let ms = Infinity
+    for (let i = 0; i < 3; i++) {
+      const t0 = performance.now()
+      navegar(entrada({ objetivo: { tipo: 'aterrar' }, relieve }))
+      ms = Math.min(ms, performance.now() - t0)
+    }
+    console.log(`motor con relieve y el 10/10: ${ms.toFixed(0)} ms`)
+    expect(ms).toBeLessThan(2000)
+  }, 20000)
+})
+
+describe('si no fas res, contra un cerro', () => {
+  // 1 000 ft (304,8 m) al este a 5 m/s sobre suelo a 0 m, y un cerro de 290 m desde x = 3 000. El
+  // techo de la celda ya es 290 entre 2 900 y 3 000: en el minuto 10 (3 000 m) deja de valer.
+  const h0 = Date.parse('2026-10-10T06:00Z')
+  const perfil = [{ altM: 0, u: 5, v: 0 }, { altM: 3000, u: 5, v: 0 }]
+  const prevS: Previsiones = { elevM: 0, horas: [h0, h0 + 7200000], modelos: ['a'], perfiles: [[perfil, perfil]] }
+  const relieve = relieveSintetico({ lat0: 41.6, lon0: 1.6 }, -2000, -2000, 9000, 2000, 100, x => (x >= 3000 ? 290 : 0))
+  it('el aviso dice cuando', () => {
+    const r = navegar({
+      prevision: prevS, traza: [{ t: h0, lat: 41.6, lon: 1.6, altM: 1000 * 0.3048 }],
+      ajustes: { ...AJUSTES_POR_DEFECTO, altMinM: 0, altMaxM: 2000 * 0.3048 }, punto: null, ahora: h0, relieve,
+    })
+    expect(r.avisos).toContain('Si no fas res, a les 08:10 passes a menys de 100 ft del terreny.')
   })
 })

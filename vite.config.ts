@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config'
 import preact from '@preact/preset-vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { CACHE_MOSAICOS, PATRON_MOSAICOS } from './src/services/vuelo/mapasDeVuelo'
 
 // Ruta que sirve GitHub Pages para un repositorio que no es el sitio raiz.
 const BASE = '/bpl-app/'
@@ -43,14 +44,28 @@ export default defineConfig({
         // en un campo sin cobertura.
         globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
         navigateFallback: `${BASE}index.html`,
-        // SIN runtimeCaching a proposito. La API de GitHub no se cachea nunca:
-        // servir un logbook.json viejo de la cache haria creer que la copia
-        // esta al dia cuando no lo esta, y podria disparar un conflicto falso.
+        // Ninguna ruta para la API de GitHub, a proposito: servir un
+        // logbook.json viejo de la cache haria creer que la copia esta al dia
+        // cuando no lo esta, y podria disparar un conflicto falso.
+        // La unica ruta es la de los mosaicos de la ortofoto y del relieve,
+        // primero de la cache, que es donde los deja bajarMosaicos antes del
+        // vuelo (spec 10/10 §8). Mismo nombre de cache que la descarga.
+        runtimeCaching: [{
+          urlPattern: PATRON_MOSAICOS,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: CACHE_MOSAICOS,
+            matchOptions: { ignoreVary: true },
+            cacheableResponse: { statuses: [200] },
+          },
+        }],
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },
     }),
   ],
+  // El motor corre en un worker de modulo (src/services/vuelo/nav.worker.ts).
+  worker: { format: 'es' },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],

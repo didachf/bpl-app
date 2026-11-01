@@ -573,8 +573,9 @@ CC BY 4.0», con la fecha de la última actualización. No hay cláusula que per
 guardar mosaicos para usarlos sin conexión. Lo único es que «un ús excepcionalment alt» puede
 ralentizar o cortar el servicio y que el ICGC puede bloquear un mal uso
 (https://www.icgc.cat/ca/LICGC/Informacio-publica/Transparencia/Reutilitzacio-de-la-informacio).
-Unos 1 700 mosaicos una vez por vuelo, de uno en uno y no en paralelo, queda lejos de eso. Si
-algún día molesta, el ICGC ofrece la ortofoto entera en GeoPackage por año.
+Unos 1 800 mosaicos una vez por vuelo (1 764 en Tàrrega, unos 55 MB), como mucho cuatro a la vez,
+lo que pide un mapa al moverlo, queda lejos de eso. Si algún día molesta, el ICGC ofrece la
+ortofoto entera en GeoPackage por año.
 
 Fuera de Cataluña, según la documentación del ICGC (https://openicgc.github.io/), el Mapa base
 pone el PNOA del IGN en España de z14 a z20, y fuera de España EOxCloudless, que es
@@ -624,6 +625,10 @@ La calibración en tierra de §6.2 se queda como está. Dos cosas nuevas:
 afinados a 1 min y tres altitudes, y con el relieve unos 230 ms en node con el 10/10.
 `ESTIMATE`: en la tablet, entre dos y tres veces más, por debajo de 1 s. Se mide en la tablet de
 verdad cuando el motor corra en su Web Worker.
+
+01/11/2026: ya corre en su Web Worker (plan `2026-11-01-datos-de-vuelo`). En Chromium en el Mac,
+con el 10/10, Aterrar y el relieve, de 98 a 191 ms por cálculo en cinco vueltas, y el mismo
+resultado que en el hilo principal. La medida en la tablet espera a publicar.
 
 ## 13. Notas para la pieza 5, pruebas de competición
 

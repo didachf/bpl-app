@@ -1,5 +1,27 @@
 # Logbook BPL, estado
 
+## 01/11/2026, noche: capa de datos de la pantalla de vuelo
+
+Todo lo que la pantalla de vuelo necesita por debajo, sin pantalla, en `src/services/vuelo/`.
+Plan `docs/superpowers/plans/2026-11-01-datos-de-vuelo.md`, con sus cambios al final. Sin push
+ni publicar, y sin tocar `dist/`, que sólo cambia al publicar.
+
+* **Previsión:** la petición de §5.1 (siete modelos, 42 variables, 29,4 llamadas) de una hora
+  antes a 24 h después, guardada en IndexedDB, refresco como mucho cada 30 min y, sin red, la
+  guardada con el error.
+* **Relieve:** 36 mosaicos Terrarium en 20 km a la rejilla del motor. En Chromium, la del 10/10
+  sale idéntica a la del prototipo en los 29 145 nodos.
+* **Ortofoto:** 1 764 mosaicos del Mapa base (z12 a z15 en 15 km, z16 en 3 km), cuatro a la vez,
+  sin repetir. El service worker los sirve de la caché `mosaicos` sin red (comprobado con un
+  mosaico que no existe en el servidor), y guarda también los que se ven con conexión.
+* **Motor en un Web Worker**, gana el último pedido. Con el 10/10, mismo resultado que en el
+  hilo principal, de 98 a 191 ms en Chromium en el Mac.
+* `prepararVol()` junta las tres descargas para el botón «Començar vol».
+* 652 pruebas, 37 nuevas, y las guardas mutadas. Una vuelta de la suite falló una prueba justo
+  tras un build y no se repitió en once vueltas más, dos con carga: sin causa conocida.
+* **Siguiente:** su repaso de las seis maquetas, y después la pantalla, que ya tiene debajo
+  todo esto. La capa de Leaflet tendrá que pedir los mosaicos con `crossOrigin: true`.
+
 ## 01/11/2026, noche: las comprobaciones del §12 del 10/10
 
 Hechas las cuatro, sin esperar al repaso de las maquetas porque no dependen de ellas. Resultado

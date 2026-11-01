@@ -24,6 +24,8 @@ function doc(over: Partial<LogbookDoc> = {}): LogbookDoc {
     sites: [campo],
     people: [yo, alberto],
     flights: [],
+    waypoints: [],
+    waypointActiuId: null,
     ...over,
   }
 }

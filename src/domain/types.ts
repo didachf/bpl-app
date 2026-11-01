@@ -184,6 +184,19 @@ export interface Flight {
   complete: boolean
 }
 
+/** El objetivo de altura en el punto (spec 2026-11-01). Misma forma que `Objetivo` del motor. */
+export type ObjectiuWaypoint = { tipo: 'aterrar' } | { tipo: 'altitud'; altM: number } | { tipo: 'qualsevol' }
+
+/** Un punto al que navegar (spec 10/10 §6.6). Las zonas llegaran con la parte 3. */
+export interface Waypoint {
+  id: string
+  nom: string
+  lat: number
+  lon: number
+  objectiu: ObjectiuWaypoint
+  nota: string
+}
+
 export interface LogbookDoc {
   schemaVersion: number
   pilot: Pilot
@@ -191,4 +204,8 @@ export interface LogbookDoc {
   sites: Site[]
   people: Person[]
   flights: Flight[]
+  /** Spec 10/10 §6.6. */
+  waypoints: Waypoint[]
+  /** Un identificador y no un objeto: si no se encuentra en la lista, no hay activo (§6.9). */
+  waypointActiuId: string | null
 }

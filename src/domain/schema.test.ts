@@ -98,12 +98,8 @@ describe('migracion a la version 2, limites de viento', () => {
     sites: [], people: [], flights: [],
   })
 
-  it('la version actual es la 2', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(2)
-  })
-
   it('un documento de la version 1 llega a la 2 sin perder nada', () => {
-    const v2 = migrate(v1() as never)
+    const v2 = migrate(v1() as never, 2)
     expect(v2.schemaVersion).toBe(2)
     expect(v2.balloons[0].registration).toBe('EC-KMU')
     expect(v2.pilot.name).toBe('Didac')
@@ -119,8 +115,25 @@ describe('migracion a la version 2, limites de viento', () => {
     expect(migrate(v1() as never).pilot.personalWindLimitKt).toBe(null)
   })
 
-  it('un documento que ya es version 2 no se toca', () => {
+  it('un documento que ya es de la version actual no se toca', () => {
     const v2 = emptyDocument()
     expect(migrate(v2)).toEqual(v2)
+  })
+})
+
+describe('migracion 2 a 3, waypoints', () => {
+  it('la version actual es la 3', () => {
+    expect(CURRENT_SCHEMA_VERSION).toBe(3)
+  })
+
+  it('anade waypoints vacios y ningun activo, sin tocar lo demas', () => {
+    const v2 = { ...makeDoc({ flights: [makeFlight({})] }), schemaVersion: 2 } as any
+    delete v2.waypoints
+    delete v2.waypointActiuId
+    const v3 = migrate(v2)
+    expect(v3.schemaVersion).toBe(3)
+    expect(v3.waypoints).toEqual([])
+    expect(v3.waypointActiuId).toBe(null)
+    expect(v3.flights).toEqual(v2.flights)
   })
 })

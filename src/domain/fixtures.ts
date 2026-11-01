@@ -106,6 +106,8 @@ export function makeDoc(over: Partial<LogbookDoc> = {}): LogbookDoc {
       makePerson({ id: 'p3', name: 'Examinadora', roles: ['examiner'] }),
     ],
     flights: [],
+    waypoints: [],
+    waypointActiuId: null,
     ...over,
   }
 }

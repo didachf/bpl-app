@@ -9,7 +9,12 @@ export const PIE_M = 0.3048
 export const FRANJA_M = 250 * PIE_M
 export const COMB = 'comb'
 
-export interface Rejilla { altM: number[]; etiqueta: string[] }
+/**
+ * `vientoM`, si esta, es la altitud a la que se lee el viento de cada franja. Solo
+ * difiere de `altM` en terra al aterrizar: su altitud es la del suelo del punto y
+ * su viento, el de 10 m del pronostico (spec 2026-11-01 §3).
+ */
+export interface Rejilla { altM: number[]; etiqueta: string[]; vientoM?: number[] }
 
 /** 2500 a "2 500". */
 export function miles(n: number): string {
@@ -18,14 +23,18 @@ export function miles(n: number): string {
 
 /**
  * Multiplos de 250 ft entre `altMinM` y `altMaxM`, y la franja «terra» debajo
- * si se pide. «terra» es la elevacion mas 10 m (spec 10/10 §5.2).
+ * si se pide. «terra» es la elevacion mas 10 m (spec 10/10 §5.2). Con
+ * `terraVientoM`, el viento de terra se lee a esa altitud y no a la suya.
  */
-export function franjas(altMinM: number, altMaxM: number, terraM: number | null = null): Rejilla {
+export function franjas(
+  altMinM: number, altMaxM: number, terraM: number | null = null, terraVientoM: number | null = null,
+): Rejilla {
   const altM: number[] = []
   const etiqueta: string[] = []
   const i0 = Math.ceil(altMinM / FRANJA_M - 1e-9)
   const i1 = Math.floor(altMaxM / FRANJA_M + 1e-9)
-  if (terraM !== null && (i0 > i1 || terraM < i0 * FRANJA_M - 1)) {
+  const conTerra = terraM !== null && (i0 > i1 || terraM < i0 * FRANJA_M - 1)
+  if (conTerra) {
     altM.push(terraM)
     etiqueta.push('terra')
   }
@@ -33,6 +42,7 @@ export function franjas(altMinM: number, altMaxM: number, terraM: number | null 
     altM.push(i * FRANJA_M)
     etiqueta.push(`${miles(i * 250)} ft`)
   }
+  if (conTerra && terraVientoM !== null) return { altM, etiqueta, vientoM: [terraVientoM, ...altM.slice(1)] }
   return { altM, etiqueta }
 }
 
@@ -132,7 +142,7 @@ export function construirCampo(prev: Previsiones, rejilla: Rejilla, t0: number, 
   for (let f = 0; f < nombres.length; f++) {
     for (let b = 0; b < rejilla.altM.length; b++) {
       for (let k = 0; k <= minutos; k++) {
-        const w = vientoFuente(prev, f, rejilla.altM[b], t0 + k * 60000)
+        const w = vientoFuente(prev, f, rejilla.vientoM?.[b] ?? rejilla.altM[b], t0 + k * 60000)
         const i = b * (minutos + 1) + k
         u[f][i] = w === null ? NaN : w[0]
         v[f][i] = w === null ? NaN : w[1]
@@ -167,5 +177,6 @@ export function recortar(prev: Previsiones, rejilla: Rejilla, t0: number, minuto
     }
   }
   const r: Rejilla = { altM: dentro.map(b => rejilla.altM[b]), etiqueta: dentro.map(b => rejilla.etiqueta[b]) }
+  if (rejilla.vientoM !== undefined) r.vientoM = dentro.map(b => rejilla.vientoM![b])
   return { campo: construirCampo(prev, r, t0, Math.max(0, h)), fuera }
 }

@@ -43,10 +43,28 @@ El margen sirve después para la regla 3D de Competició (§13 del spec del 10/1
 **La altura se pide en ft sobre el mar y en pasos de 250 ft**, como las filas de la tabla de viento
 (§3 del 10/10). Así X cae siempre en una franja y el margen es esa franja.
 
-`ASSUMPTION:` la franja terra se pone a la elevación del punto del pronóstico (el despegue o la
-posición actual) más 10 m, con el viento a 10 m de los modelos. El motor sigue sin saber del terreno
-bajo el punto, y una diferencia de cota entre los dos sitios cambia la duración real de la última
-bajada. El aviso de terreno del 30/10 (§9) sigue valiendo.
+**La franja terra, con Aterrar, va a la elevación del suelo bajo el punto** (corregido el mismo
+01/11/2026). La primera versión la ponía a la elevación del pronóstico más 10 m, como `ASSUMPTION`, y
+los datos la tumbaron: con el 10/10, el suelo sube de 380 m en el despegue de Tàrrega a 430 m bajo el
+globo y 440 m en la zona A (Copernicus GLO-90 por la API de elevación de open-meteo, que da 380 m en
+el despegue, igual que el pronóstico). El motor creía que desde 1 500 ft quedaban 67 m hasta terra,
+y quedan 17. Una bajada lenta de 50 m de más son unos 100 s de deriva de más, del orden de 100 a
+200 m de error en el punto de aterrizaje.
+
+* `EntradaNav.elevPuntoM`: la elevación del suelo bajo el punto, en metros sobre el mar. La da la
+  pantalla al marcar el punto, del mismo modelo de elevación.
+* Con Aterrar y la elevación, la franja terra tiene **dos altitudes**: la del suelo del punto más
+  10 m, para los tiempos de subida y bajada y el margen, y la del pronóstico más 10 m para leer el
+  viento, que es el viento a 10 m de los modelos. Si se leyera el viento a la altitud del punto sobre
+  el perfil del despegue, sería el viento a 70 m del suelo, no el de ras.
+* Sin la elevación del punto, terra queda a la elevación del pronóstico más 10 m y el aviso lo dice.
+* Si el suelo del punto más 10 m llega a la franja más baja del rango, no se calcula el aterrizaje
+  y el aviso lo dice: el rango del piloto no sirve para ese punto.
+
+`ASSUMPTION:` las franjas de por encima siguen siendo altitudes sobre el mar con el viento del perfil
+del pronóstico, y el motor sigue sin saber del terreno a lo largo del recorrido. En vuelos bajos
+sobre terreno que sube, la franja más baja del rango puede quedar a pocos metros del suelo. El aviso
+de terreno del 30/10 (§9) sigue valiendo.
 
 ## 4. El cálculo
 

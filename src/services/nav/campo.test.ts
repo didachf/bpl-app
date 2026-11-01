@@ -107,3 +107,30 @@ describe('construirCampo y recortar', () => {
     expect(r.campo.minutos).toBe(30)
   })
 })
+
+describe('terra con el viento leido a otra altitud (spec 2026-11-01 §3)', () => {
+  const h0 = Date.parse('2026-10-10T06:00Z')
+  // u crece con la altitud: 0 en el suelo, 1 m/s cada 10 m
+  const perfil = [0, 390, 450, 460, 600].map(z => ({ altM: z, u: Math.max(0, z - 380) / 10, v: 0 }))
+  const prev: Previsiones = { elevM: 380, horas: [h0, h0 + 3600000], modelos: ['a'], perfiles: [[perfil, perfil]] }
+  it('franjas: terra a una altitud y el viento a otra', () => {
+    const r = franjas(457.2, 533.4, 450, 390)
+    expect(r.altM.map(x => +x.toFixed(3))).toEqual([450, 457.2, 533.4])
+    expect(r.vientoM!.map(x => +x.toFixed(3))).toEqual([390, 457.2, 533.4])
+  })
+  it('sin altitud de viento aparte, no hay vientoM', () => {
+    expect(franjas(457.2, 533.4, 390).vientoM).toBeUndefined()
+  })
+  it('el campo lee el viento de terra a su altitud de viento', () => {
+    const c = construirCampo(prev, franjas(457.2, 533.4, 450, 390), h0, 10)
+    expect(c.u[1][idx(c, 0, 0)]).toBeCloseTo(1, 9)
+    expect(c.u[1][idx(c, 1, 0)]).toBeCloseTo(7.72, 9)
+  })
+  it('recortar mantiene vientoM alineado al quitar franjas', () => {
+    // la de 2 000 ft (609,6 m) queda por encima del perfil y sale
+    const r = recortar(prev, franjas(457.2, 609.6, 450, 390), h0, 10)
+    expect(r.fuera).toEqual(['2 000 ft'])
+    expect(r.campo.rejilla.altM.map(x => +x.toFixed(3))).toEqual([450, 457.2, 533.4])
+    expect(r.campo.rejilla.vientoM!.map(x => +x.toFixed(3))).toEqual([390, 457.2, 533.4])
+  })
+})

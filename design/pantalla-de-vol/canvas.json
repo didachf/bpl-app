@@ -5,9 +5,22 @@
   "launch": {"view": "canvas"},
   "pages": [],
   "boards": {
+    "TauletaPerfil.dc.html": {"x": 0, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Perfil"},
+    "TauletaAfegirGlobus.dc.html": {"x": 1360, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Afegir globus"},
+    "TauletaAfegirGlobusBarreja.dc.html": {"x": 2720, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Afegir globus, marques barrejades"},
+    "TauletaPlans.dc.html": {"x": 4080, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Plans"},
+    "TauletaPlaNou.dc.html": {"x": 5440, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Pla nou"},
+    "TauletaAfegirEnlairament.dc.html": {"x": 6800, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Afegir punt d'enlairament"},
+    "TauletaPla.dc.html": {"x": 8160, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Pla, resum"},
+    "TauletaPlaTrajectories.dc.html": {"x": 9520, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Pla, trajectòries"},
+    "TauletaPlaWaypoints.dc.html": {"x": 10880, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Pla, waypoints i zones"},
+    "TauletaPlaEnaire.dc.html": {"x": 12240, "y": -1600, "w": 1280, "h": 800, "title": "Tauleta · Pla, espai aeri i ENAIRE · TBD"},
     "Main.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · Mapa"},
     "TauletaVent.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · Vent"},
     "TauletaSenseWaypoint.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · sense waypoint actiu"},
+    "TauletaVolMes.dc.html": {"x": 4080, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · vol, més"},
+    "TauletaEmergencia.dc.html": {"x": 5440, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · camps d'emergència"},
+    "TauletaAcabarVol.dc.html": {"x": 6800, "y": 0, "w": 1280, "h": 800, "title": "Tauleta · acabar vol"},
     "TauletaComencar.dc.html": {"x": 0, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Començar vol"},
     "TauletaWaypoints.dc.html": {"x": 1360, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Waypoints"},
     "TauletaMarcarMapa.dc.html": {"x": 2720, "y": 1300, "w": 1280, "h": 800, "title": "Tauleta · Marcar al mapa"},
@@ -21,9 +34,22 @@
     "TauletaResultat.dc.html": {"x": 2300, "y": 3900, "w": 1280, "h": 800, "title": "Tauleta · Resultat"}
   },
   "order": [
+    "TauletaPerfil.dc.html",
+    "TauletaAfegirGlobus.dc.html",
+    "TauletaAfegirGlobusBarreja.dc.html",
+    "TauletaPlans.dc.html",
+    "TauletaPlaNou.dc.html",
+    "TauletaAfegirEnlairament.dc.html",
+    "TauletaPla.dc.html",
+    "TauletaPlaTrajectories.dc.html",
+    "TauletaPlaWaypoints.dc.html",
+    "TauletaPlaEnaire.dc.html",
     "Main.dc.html",
     "TauletaVent.dc.html",
     "TauletaSenseWaypoint.dc.html",
+    "TauletaVolMes.dc.html",
+    "TauletaEmergencia.dc.html",
+    "TauletaAcabarVol.dc.html",
     "TauletaComencar.dc.html",
     "TauletaWaypoints.dc.html",
     "TauletaMarcarMapa.dc.html",
@@ -37,10 +63,11 @@
     "TauletaResultat.dc.html"
   ],
   "notes": {
-    "t1": {"x": 0, "y": -300, "text": "Tauleta · pantalla de vol", "kind": "title1", "maxW": 4000},
+    "t0": {"x": 0, "y": -1900, "text": "Tauleta · mapa nou de l'app, 11/10", "kind": "title1", "maxW": 13520},
+    "t1": {"x": 0, "y": -300, "text": "Tauleta · pantalla de vol, sense columna", "kind": "title1", "maxW": 8080},
     "t3": {"x": 0, "y": 1000, "text": "Tauleta · abans i durant el vol", "kind": "title1", "maxW": 5360},
     "t2": {"x": 0, "y": 2300, "text": "Telèfon · només dins del pla, sense navegació", "kind": "title1", "maxW": 2400},
-    "t4": {"x": 0, "y": 3600, "text": "Competició · pestanya pròpia", "kind": "title1", "maxW": 3580}
+    "t4": {"x": 0, "y": 3600, "text": "Competició · secció pròpia, després d'Operar", "kind": "title1", "maxW": 3580}
   },
   "designSystems": []
 }

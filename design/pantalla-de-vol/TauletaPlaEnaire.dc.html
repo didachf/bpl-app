@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, Pla, Espai aeri i ENAIRE</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:5px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; overflow: hidden;">
+  <nav aria-label="Seccions" style="width: 88px; height: 800px; flex-shrink: 0; box-sizing: border-box; background: #121211; border-right: 1px solid #2c2c2a; padding: 14px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+    <a href="TauletaPerfil.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg></span>
+      Perfil
+    </a>
+    <a href="TauletaPlans.dc.html" aria-current="page" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 600;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; background: #1d3352; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="M9 11h6M9 15h4"></path></svg></span>
+      Plans
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5l1.8 1.8L9 5"></path><path d="M4 12.5l1.8 1.8L9 11"></path><path d="M4 18.5l1.8 1.8L9 17"></path><path d="M12 7h8M12 13h8M12 19h8"></path></svg></span>
+      Operar
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg></span>
+      Competició
+    </a>
+    <a href="TauletaComencar.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg></span>
+      Vol
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"></path><path d="M5 20a2 2 0 0 0 2 2h12v-4"></path><path d="M9 7h6"></path></svg></span>
+      Registre
+    </a>
+    <span style="flex-grow: 1;"></span>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"></path></svg></span>
+      Ajustos
+    </a>
+  </nav>
+  <main style="flex-grow: 1; min-width: 0; box-sizing: border-box; padding: 14px 24px 14px; display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; align-items: flex-end; gap: 16px;">
+      <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+        <a href="TauletaPlans.dc.html" style="font-size: 14px; text-decoration: none;">‹ Plans</a>
+        <h1 style="margin: 0; font-size: 25px; font-weight: 600;">Tàrrega · dissabte 10/10/2026</h1>
+        <div class="num" style="font-size: 14px; color: #c3c2b7;">08:00 a 09:30 · Marc · M-65, C-1, MK-32 doble, 2 × M-40 · perfil baix</div>
+      </div>
+      <a style="height: 54px; padding: 0 16px; border-radius: 12px; border: 1px solid #45443f; color: #ffffff; font-size: 15px; text-decoration: none; display: flex; align-items: center; flex-shrink: 0;">PDF per a l'instructor</a>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;">
+        <a href="TauletaComencar.dc.html" style="height: 54px; padding: 0 22px; border-radius: 12px; background: #2a78d6; color: #ffffff; font-size: 18px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg>Començar vol</a>
+        <span style="font-size: 12px; color: #898781;">Baixa el mapa i el pronòstic i calibra l'altitud</span>
+      </div>
+    </div>
+    <div role="tablist" aria-label="Parts del pla" style="display: flex; gap: 2px; border-bottom: 1px solid #2c2c2a;">
+      <a href="TauletaPla.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Resum</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Meteo</a>
+      <a href="TauletaPlaTrajectories.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Trajectòries</a>
+      <a href="TauletaPlaWaypoints.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Waypoints i zones</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Càrrega i combustible</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Emergència</a>
+      <a href="TauletaPlaEnaire.dc.html" role="tab" aria-selected="true" style="height: 40px; padding: 0 12px; border-bottom: 3px solid #2a78d6; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Espai aeri i ENAIRE</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Comprovació del matí</a>
+    </div>
+    <div style="flex-grow: 1; min-height: 0; display: flex; gap: 16px;">
+      <section aria-label="Espai aeri" style="width: 452px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px;">
+        <span class="lab">Espai aeri a l'enlairament</span>
+        <svg width="430" height="470" viewBox="0 0 430 470" role="img" aria-label="Espai aeri sobre Tàrrega: classe G fins a 4 500 ft, amb la capa G de la TMA des de 1 000 ft sobre el terreny, i classe D per sobre">
+          <defs><pattern id="ratlla" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#22261f"></rect><line x1="0" y1="0" x2="0" y2="10" stroke="#6b5420" stroke-width="4"></line></pattern></defs>
+          <rect x="60" y="32.0" width="200" height="183.8" fill="#2a1d1b"></rect>
+          <rect x="60" y="215.8" width="200" height="170.7" fill="#1f2a22"></rect>
+          <rect x="60" y="215.8" width="200" height="118.19999999999999" fill="url(#ratlla)"></rect>
+          <rect x="60" y="386.5" width="200" height="65.5" fill="#3a3024"></rect>
+          <line x1="60" y1="215.8" x2="260" y2="215.8" stroke="#d4a59c" stroke-width="2"></line>
+          <line x1="60" y1="245.3" x2="260" y2="245.3" stroke="#c3c2b7" stroke-width="1.5" stroke-dasharray="6 5"></line>
+          <line x1="60" y1="110.8" x2="260" y2="110.8" stroke="#35d0ff" stroke-width="2.5"></line>
+          <text x="70" y="50.0" fill="#ecd9d4" font-family="IBM Plex Sans" font-size="13" font-weight="600">TMA Barcelona, classe D</text>
+          <text x="70" y="66.0" fill="#d4a59c" font-family="IBM Plex Sans" font-size="11">fins a FL145 · pla de vol i autorització</text>
+          <text x="70" y="231.8" fill="#f0d79a" font-family="IBM Plex Sans" font-size="12" font-weight="600">TMA, capa G</text>
+          <text x="70" y="246.8" fill="#f0d79a" font-family="IBM Plex Sans" font-size="11">transpondedor? per confirmar</text>
+          <text x="70" y="352.0" fill="#c9e7d2" font-family="IBM Plex Sans" font-size="12" font-weight="600">Classe G</text>
+          <text x="70" y="406.5" fill="#c3c2b7" font-family="IBM Plex Sans" font-size="11">Tàrrega, 1 250 ft</text>
+          <text x="268" y="219.8" fill="#d4a59c" font-family="IBM Plex Mono" font-size="11">4 500 ft · sostre G</text>
+          <text x="268" y="338.0" fill="#f0d79a" font-family="IBM Plex Mono" font-size="11">2 250 ft · 1 000 sobre terra</text>
+          <text x="268" y="249.3" fill="#c3c2b7" font-family="IBM Plex Mono" font-size="11">3 940 ft · sostre del pla</text>
+          <text x="268" y="114.8" fill="#35d0ff" font-family="IBM Plex Mono" font-size="11">6 500 ft · exemple A065</text>
+          <line x1="60" y1="334.0" x2="260" y2="334.0" stroke="#8a6a1f" stroke-width="1"></line>
+          <text x="52" y="351.0" fill="#898781" font-family="IBM Plex Mono" font-size="10" text-anchor="end">2 000</text>
+          <text x="52" y="246.0" fill="#898781" font-family="IBM Plex Mono" font-size="10" text-anchor="end">4 000</text>
+          <text x="52" y="141.0" fill="#898781" font-family="IBM Plex Mono" font-size="10" text-anchor="end">6 000</text>
+          <text x="52" y="36.0" fill="#898781" font-family="IBM Plex Mono" font-size="10" text-anchor="end">8 000 ft</text>
+        </svg>
+        <div style="font-size: 12px; line-height: 1.45; color: #c3c2b7;">Cervera, al sector de 5 500 ft. CTR de Lleida, classe D de terra a 3 000 ft, només en horari ATS. AIP ENR 2.1 i carta VFR.</div>
+        <div style="background: #2a2416; border: 1px solid #5a4719; border-radius: 10px; padding: 8px 11px; font-size: 12px; line-height: 1.45; color: #f0d79a;">ENR 1.6 demana transpondedor a tota la TMA «a qualsevol nivell». Llegit al peu de la lletra, també a la capa G des de 1 000 ft sobre terra. Pregunta-ho a l'escola.</div>
+      </section>
+      <section aria-label="Pla de vol ATS" style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="lab" style="flex-grow: 1;">Pla de vol per a ENAIRE</span>
+          <label for="ctrl2" style="display: flex; align-items: center; gap: 8px; font-size: 14px;"><input id="ctrl2" type="checkbox" checked style="width: 22px; height: 22px; accent-color: #2a78d6;">Pujar a l'espai controlat</label>
+        </div>
+        <span style="font-size: 12px; color: #898781;">Exemple amb sostre a 6 500 ft: el pla del 10/10 no hi pujava. En àmbar, el que cal confirmar.</span>
+        <div style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 6px 12px; display: flex; flex-direction: column;"><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">7</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">[MATRÍCULA], sense guió</span><span style="font-size: 11px; color: #898781;">la del Perfil</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">8</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">V G</span><span style="font-size: 11px; color: #898781;">VFR, aviació general</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">9</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">BALL/L</span><span style="font-size: 11px; color: #898781;">globus, estela lleugera</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">10</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #fab219;">VY / ?</span><span style="font-size: 11px; color: #898781;">ràdio de 8,33 kHz. Transpondedor S o C: no està al Perfil</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">13</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">ZZZZ 0600</span><span style="font-size: 11px; color: #898781;">camp sense indicador, 08:00 en UTC</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">15</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #fab219;">? A065 DCT 4139N00112E DCT 4139N00114E DCT 4140N00116E</span><span style="font-size: 11px; color: #898781;">velocitat: un globus no en té, per confirmar amb l'ARO. Ruta de 30 en 30 min</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">16</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #fab219;">ZZZZ 0130 ?</span><span style="font-size: 11px; color: #898781;">destí desconegut: per confirmar amb l'ARO</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">18</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">DEP/TARREGA 4139N00109E DOF/261010 RMK/GLOBUS AIRE CALENT</span></span></div><div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #262624;"><span class="num" style="font-size: 12px; color: #898781;">19</span><span style="display: flex; flex-direction: column; gap: 1px;"><span class="num" style="font-size: 14px; color: #ffffff;">E/0200 P/2 A/[COLOR] C/[PILOT AL COMANDAMENT]</span><span style="font-size: 11px; color: #898781;">80 kg de propà a 40 kg/h</span></span></div></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+          <button style="height: 44px; border-radius: 10px; border: 0; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 600;">Copiar per a ICARO</button>
+          <a href="https://notampib.enaire.es" style="height: 44px; border-radius: 10px; border: 1px solid #45443f; color: #ffffff; font-size: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center;">Obrir ICARO ↗</a>
+        </div>
+        <div style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px;"><div style="display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 8px; font-size: 13px; line-height: 1.35;"><span class="num" style="color: #ffffff;">abans 07:00</span><span style="color: #dcdbd3;">Presentar-lo a ICARO, com a mínim 60 min abans</span></div><div style="display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 8px; font-size: 13px; line-height: 1.35;"><span class="num" style="color: #ffffff;">en vol</span><span style="color: #dcdbd3;">Barcelona Control 127,700 abans d'entrar</span></div><div style="display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 8px; font-size: 13px; line-height: 1.35;"><span class="num" style="color: #ffffff;">si tard</span><span style="color: #dcdbd3;">Més de 30 min de retard: DLA</span></div><div style="display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 8px; font-size: 13px; line-height: 1.35;"><span class="num" style="color: #ffffff;">en aterrar</span><span style="color: #dcdbd3;">ARR per telèfon a l'ARO, +34 918 603 561</span></div></div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

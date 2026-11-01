@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, camps d'emergència</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:4px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; position: relative; overflow: hidden;">
+  <div style="position: absolute; left: 0; top: 0; width: 1280px; height: 600px; overflow: hidden; background: #3a3426;">
+    <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto del ICGC al voltant del globus" style="position: absolute; left: -1022px; top: -962px; width: 2600px; height: 2100px;">
+    <img src="/_blob/c0c4fa5ab78ca1d819491c7b5e6a9981" alt="Terreny dins de l'abast: verd bo, groc regular, vermell dolent" style="position: absolute; left: -1022px; top: -962px; width: 2600px; height: 2100px; image-rendering: pixelated;">
+    <svg width="2600" height="2100" viewBox="0 0 1300 1050" style="position: absolute; left: -1022px; top: -962px;" role="img" aria-label="Zona a l'abast en 10 minuts, camps proposats i línies elèctriques">
+      <polyline points="936.5,727.7 950.6,720.7 964.6,709.0 980.9,703.5 1002.2,708.1 1018.3,703.8 1037.4,697.0 1057.5,689.6 1071.9,684.9 1083.8,681.4 1100.5,675.6 1121.1,668.4 1128.8,656.8 1147.6,657.4 1161.3,654.0 1170.2,651.8 1177.3,649.8" fill="none" stroke="#0b0b0b" stroke-opacity="0.5" stroke-width="5"></polyline><polyline points="936.5,727.7 950.6,720.7 964.6,709.0 980.9,703.5 1002.2,708.1 1018.3,703.8 1037.4,697.0 1057.5,689.6 1071.9,684.9 1083.8,681.4 1100.5,675.6 1121.1,668.4 1128.8,656.8 1147.6,657.4 1161.3,654.0 1170.2,651.8 1177.3,649.8" fill="none" stroke="#ff5a4f" stroke-width="2.5"></polyline><polyline points="270.5,769.0 293.4,763.7 308.8,760.1 322.7,755.3 330.9,753.6 345.6,749.2 362.6,744.2 378.2,739.5 393.7,735.0 411.1,729.8 428.0,724.9 442.0,720.8 457.6,716.3 485.9,704.3 501.1,688.5 510.5,681.5" fill="none" stroke="#0b0b0b" stroke-opacity="0.5" stroke-width="5"></polyline><polyline points="270.5,769.0 293.4,763.7 308.8,760.1 322.7,755.3 330.9,753.6 345.6,749.2 362.6,744.2 378.2,739.5 393.7,735.0 411.1,729.8 428.0,724.9 442.0,720.8 457.6,716.3 485.9,704.3 501.1,688.5 510.5,681.5" fill="none" stroke="#ff5a4f" stroke-width="2.5"></polyline>
+      <polygon points="746.1,630.9 950.2,673.6 948.2,582.6 872.7,569.4 821.0,562.4 746.2,562.0" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="5 4"></polygon>
+      <line x1="746.1" y1="630.9" x2="761" y2="616" stroke="#35d0ff" stroke-width="2"></line>
+      <circle cx="761" cy="616" r="10" fill="none" stroke="#35d0ff" stroke-width="2.5" stroke-dasharray=""></circle><circle cx="761" cy="616" r="5" fill="#35d0ff" stroke="#0b0b0b" stroke-width="1.2"></circle><text x="768" y="609" fill="#ffffff" font-family="IBM Plex Mono" font-size="9" font-weight="600" class="halo">1</text><circle cx="761" cy="580" r="10" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="3 2"></circle><circle cx="761" cy="580" r="5" fill="#ffffff" stroke="#0b0b0b" stroke-width="1.2"></circle><text x="768" y="573" fill="#ffffff" font-family="IBM Plex Mono" font-size="9" font-weight="600" class="halo">2</text><circle cx="780" cy="591" r="10" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="3 2"></circle><circle cx="780" cy="591" r="5" fill="#ffffff" stroke="#0b0b0b" stroke-width="1.2"></circle><text x="787" y="584" fill="#ffffff" font-family="IBM Plex Mono" font-size="9" font-weight="600" class="halo">3</text>
+      <g transform="translate(746.1 630.9) rotate(61)"><circle r="10" fill="#ffffff" fill-opacity="0.2"></circle><path d="M0,-7.5 L5,5.5 L0,2.5 L-5,5.5 Z" fill="#ffffff" stroke="#0b0b0b" stroke-width="1" stroke-linejoin="round"></path></g>
+    </svg>
+    <div style="position: absolute; left: 16px; top: 16px; display: flex; gap: 8px;">
+      <a href="Main.dc.html" style="background: rgba(26,26,25,.9); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: #ffffff; text-decoration: none;">‹ Mapa</a>
+      <div style="background: rgba(42,36,22,.95); border: 1px solid #6b5420; border-radius: 8px; padding: 9px 12px; font-size: 13px; color: #f0d79a;">Camps d'emergència · on pots aterrar en 10 min</div>
+    </div>
+    <div style="position: absolute; left: 16px; bottom: 14px; background: rgba(26,26,25,.9); border-radius: 8px; padding: 8px 12px; display: flex; gap: 14px; align-items: center; font-size: 12px; color: #c3c2b7;">
+      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 10px; background: rgb(70,190,100);"></span>bo</span>
+      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 10px; background: rgb(235,200,60);"></span>regular</span>
+      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 10px; background: rgb(200,70,60);"></span>dolent</span>
+      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 18px; height: 0; border-top: 2px dashed #ffffff;"></span>a l'abast</span>
+      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 18px; height: 3px; background: #ff5a4f;"></span>línies</span>
+      <span>Cobertes del sòl ICGC 2024 · ortofoto ICGC</span>
+    </div>
+  </div>
+  <div style="position: absolute; right: 16px; top: 16px; width: 380px; max-height: 568px; background: rgba(26,26,25,.95); border: 1px solid #2c2c2a; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;"><span class="lab">Camps a l'abast</span><span class="num" style="font-size: 11px; color: #898781;">recalculat fa 4 s</span></div>
+      <div style="border-radius: 10px; border: 2px solid #35d0ff; background: #1b2a33; padding: 9px 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 16px; font-weight: 600;">Camp 1 <span class="num" style="font-size: 14px; font-weight: 400; color: #c3c2b7;">047° · 210 m</span></span><span style="font-size: 12px; color: #0b0b0b; background: #35d0ff; border-radius: 8px; padding: 2px 8px; font-weight: 600;">Actiu</span></div>
+        <span class="num" style="font-size: 13px; color: #ffffff;">uns 2 min · vent de 50 m sobre el terreny</span>
+        <span class="num" style="font-size: 12px; color: #c3c2b7;">160 m fins a terreny no bo · línia a 2,1 km</span>
+      </div>
+      <div style="border-radius: 10px; border: 1px solid #2c2c2a; background: #222220; padding: 10px 12px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 16px; font-weight: 600;">Camp 2 <span class="num" style="font-size: 14px; font-weight: 400; color: #c3c2b7;">017° · 530 m</span></span><button style="height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #35d0ff; background: transparent; color: #ffffff; font-family: inherit; font-size: 13px;">Anar-hi</button></div>
+        <span class="num" style="font-size: 13px; color: #ffffff;">uns 7 min · vent de 10 m i 50 m sobre el terreny</span>
+        <span class="num" style="font-size: 12px; color: #c3c2b7;">160 m fins a terreny no bo · línia a 2,3 km</span>
+      </div>
+      <div style="border-radius: 10px; border: 1px solid #2c2c2a; background: #222220; padding: 10px 12px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 16px; font-weight: 600;">Camp 3 <span class="num" style="font-size: 14px; font-weight: 400; color: #c3c2b7;">041° · 520 m</span></span><button style="height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #35d0ff; background: transparent; color: #ffffff; font-family: inherit; font-size: 13px;">Anar-hi</button></div>
+        <span class="num" style="font-size: 13px; color: #ffffff;">uns 5 min · vent de 50 m sobre el terreny</span>
+        <span class="num" style="font-size: 12px; color: #c3c2b7;">160 m fins a terreny no bo · línia a 2,1 km</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.4; color: #898781;">Amb el vent que mesura el GPS a la teva altura i el previst a baix. Bo: 90 % obert en 500 m, gens de bosc ni urbà. No veu cables baixos, tanques ni bestiar: mira-ho tu.</span>
+  </div>
+  <div style="position: absolute; left: 0; top: 600px; width: 1280px; height: 200px; display: flex; border-top: 1px solid #2c2c2a;">
+    <div style="width: 190px; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 4px;">
+      <div class="lab">Altitud</div>
+      <div style="display: flex; align-items: baseline; gap: 6px;"><span class="num" style="font-size: 50px; font-weight: 500; line-height: 1.05;">1 540</span><span class="num" style="font-size: 18px; color: #c3c2b7;">ft</span></div>
+      <div style="font-size: 13px; color: #c3c2b7;">GPS, calibrat a terra</div>
+      <div class="num" style="font-size: 13px; color: #898781;">469 m</div>
+    </div>
+    <div style="width: 140px; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 4px;">
+      <div class="lab">Vario</div>
+      <div style="display: flex; align-items: baseline; gap: 6px;"><span class="num" style="font-size: 50px; font-weight: 500; line-height: 1.05;">+0,3</span></div>
+      <div class="num" style="font-size: 13px; color: #c3c2b7;">m/s, GPS</div>
+    </div>
+    <div style="width: 175px; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 4px;">
+      <div class="lab">Rumb i velocitat</div>
+      <div class="num" style="font-size: 50px; font-weight: 500; line-height: 1.05;">061°</div>
+      <div class="num" style="font-size: 22px;">4,3 <span style="font-size: 15px; color: #c3c2b7;">kt</span></div>
+    </div>
+    <div style="width: 135px; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 4px;">
+      <div class="lab">Temps de vol</div>
+      <div class="num" style="font-size: 50px; font-weight: 500; line-height: 1.05;">0:34</div>
+      <div class="num" style="font-size: 13px; color: #c3c2b7;">ara 08:34</div>
+    </div>
+    <div style="width: 220px; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: center; gap: 7px;">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#35d0ff" stroke-width="2"></circle><circle cx="6" cy="6" r="1.6" fill="#35d0ff"></circle></svg>
+        <span style="font-size: 13px; font-weight: 600; letter-spacing: .06em; color: #35d0ff;">CAMP 1</span>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 14px;">
+        <span class="num" style="font-size: 50px; font-weight: 500; line-height: 1.05;">047°</span>
+      </div>
+      <div class="num" style="font-size: 22px;">210 <span style="font-size: 15px; color: #c3c2b7;">m</span></div>
+      <div class="num" style="font-size: 13px; color: #c3c2b7;">camp d'emergència</div>
+    </div>
+    <div style="flex-grow: 1; padding: 16px 18px; border-right: 1px solid #2c2c2a; display: flex; flex-direction: column; gap: 6px; background: #1f2a33;">
+      <div class="lab" style="color: #f2c46a;">Emergència</div>
+      <div style="font-size: 24px; font-weight: 600; line-height: 1.2;">Baixa a 50 m sobre terra</div>
+      <div style="font-size: 17px; color: #c3c2b7; line-height: 1.3;">i aterra al camp 1</div>
+      <div style="flex-grow: 1;"></div>
+      <div style="font-size: 16px;">Hi arribes en uns <span class="num" style="color: #35d0ff; font-weight: 600;">2 min</span></div>
+    </div>
+    <div style="width: 116px; padding: 12px; display: flex; flex-direction: column; gap: 10px;">
+      <button aria-pressed="true" style="flex-grow: 1; border-radius: 10px; border: 2px solid #2a78d6; background: #1d2c40; color: #ffffff; font-family: inherit; font-size: 16px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg>
+        Mapa
+      </button>
+      <a href="TauletaVent.dc.html" style="flex-grow: 1; border-radius: 10px; border: 1px solid #2c2c2a; background: none; color: #c3c2b7; font-size: 16px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3"></path><path d="M3 12h16a3 3 0 1 1-3 3"></path><path d="M3 16h7"></path></svg>
+        Vent
+      </a>
+      <a href="TauletaVolMes.dc.html" style="height: 44px; flex-shrink: 0; border-radius: 10px; border: 1px solid #2c2c2a; color: #c3c2b7; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>Més</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

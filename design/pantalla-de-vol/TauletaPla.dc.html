@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, Pla</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:5px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; overflow: hidden;">
+
+  <nav aria-label="Seccions" style="width: 88px; height: 800px; flex-shrink: 0; box-sizing: border-box; background: #121211; border-right: 1px solid #2c2c2a; padding: 14px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+    <a href="TauletaPerfil.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg></span>
+      Perfil
+    </a>
+    <a href="TauletaPlans.dc.html" aria-current="page" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 600;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; background: #1d3352; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="M9 11h6M9 15h4"></path></svg></span>
+      Plans
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5l1.8 1.8L9 5"></path><path d="M4 12.5l1.8 1.8L9 11"></path><path d="M4 18.5l1.8 1.8L9 17"></path><path d="M12 7h8M12 13h8M12 19h8"></path></svg></span>
+      Operar
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg></span>
+      Competició
+    </a>
+    <a href="TauletaComencar.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg></span>
+      Vol
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"></path><path d="M5 20a2 2 0 0 0 2 2h12v-4"></path><path d="M9 7h6"></path></svg></span>
+      Registre
+    </a>
+    <span style="flex-grow: 1;"></span>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"></path></svg></span>
+      Ajustos
+    </a>
+  </nav>
+
+  <main style="flex-grow: 1; min-width: 0; box-sizing: border-box; padding: 14px 24px 18px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: flex-end; gap: 16px;">
+      <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+        <a href="TauletaPlans.dc.html" style="font-size: 14px; text-decoration: none;">‹ Plans</a>
+        <h1 style="margin: 0; font-size: 25px; font-weight: 600;">Tàrrega · dissabte 10/10/2026</h1>
+        <div class="num" style="font-size: 14px; color: #c3c2b7;">08:00 a 09:30 · Marc · M-65, C-1, MK-32 doble, 2 × M-40 · perfil baix</div>
+      </div>
+      <a style="height: 54px; padding: 0 16px; border-radius: 12px; border: 1px solid #45443f; color: #ffffff; font-size: 15px; text-decoration: none; display: flex; align-items: center; flex-shrink: 0;">PDF per a l'instructor</a>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;">
+        <a href="TauletaComencar.dc.html" style="height: 54px; padding: 0 22px; border-radius: 12px; background: #2a78d6; color: #ffffff; font-size: 18px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg>Començar vol</a>
+        <span style="font-size: 12px; color: #898781;">Baixa el mapa i el pronòstic i calibra l'altitud</span>
+      </div>
+    </div>
+
+    <div role="tablist" aria-label="Parts del pla" style="display: flex; gap: 2px; border-bottom: 1px solid #2c2c2a;">
+      <a href="TauletaPla.dc.html" role="tab" aria-selected="true" style="height: 40px; padding: 0 12px; border-bottom: 3px solid #2a78d6; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Resum</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Meteo</a>
+      <a href="TauletaPlaTrajectories.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Trajectòries</a>
+      <a href="TauletaPlaWaypoints.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Waypoints i zones</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Càrrega i combustible</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Emergència</a>
+      <a href="TauletaPlaEnaire.dc.html" role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Espai aeri i ENAIRE</a>
+      <a role="tab" aria-selected="false" style="height: 40px; padding: 0 12px; border-bottom: 3px solid transparent; color: #a9a79f; font-size: 14px; font-weight: 400; text-decoration: none; display: flex; align-items: center; box-sizing: border-box;">Comprovació del matí</a>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 0; display: flex; gap: 16px;">
+      <figure style="margin: 0; width: 560px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="position: relative; width: 560px; height: 452px; border-radius: 12px; overflow: hidden; background: #2c2c2a;">
+          <img src="/_blob/81fc07a526d1131ee13d8a04f183945b" alt="Ortofoto del ICGC al voltant de Tàrrega" style="position: absolute; left: 0; top: 0; width: 560px; height: 452px;">
+          <svg width="560" height="452" viewBox="0 0 1300 1050" style="position: absolute; left: 0; top: 0;" role="img" aria-label="Enlairament i zones d'aterratge A i B">
+            <polygon points="712.1,569.0 719.4,577.2 726.4,585.7 733.2,594.3 739.8,603.1 746.1,612.1 752.2,621.3 758.1,630.6 763.7,640.0 885.0,570.0 877.5,557.4 869.7,545.0 861.5,532.8 853.0,520.8 844.3,509.1 835.2,497.6 825.8,486.3 816.2,475.3" fill="#3ad16b" fill-opacity="0.28" stroke="#3ad16b" stroke-width="5"></polygon>
+            <text x="842" y="462" fill="#ffffff" font-family="IBM Plex Sans" font-size="36" font-weight="600" class="halo">ZONA A</text>
+            <polygon points="231.8,222.1 249.6,217.6 267.6,213.6 285.7,210.1 303.9,207.1 322.2,204.7 340.5,202.7 358.9,201.3 377.3,200.4 372.1,50.5 349.4,51.6 326.8,53.4 304.2,55.8 281.8,58.8 259.4,62.5 237.1,66.8 214.9,71.7 192.9,77.3" fill="#3ad16b" fill-opacity="0.28" stroke="#3ad16b" stroke-width="5"></polygon>
+            <text x="392" y="150" fill="#ffffff" font-family="IBM Plex Sans" font-size="36" font-weight="600" class="halo">ZONA B</text>
+            <circle cx="400" cy="850" r="14" fill="#ffffff" stroke="#0b0b0b" stroke-width="4"></circle>
+            <text x="426" y="900" fill="#ffffff" font-family="IBM Plex Sans" font-size="34" font-weight="600" class="halo">Enlairament 08:00</text>
+          </svg>
+        </div>
+        <figcaption style="font-size: 12px; color: #898781;">Ortofoto ICGC, CC BY 4.0. De 4 km a l'oest a 9 km a l'est de l'enlairament.</figcaption>
+      </figure>
+
+      <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <section aria-label="Estratègia" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 7px;">
+          <span class="lab">Estratègia</span>
+          <div style="font-size: 16px; font-weight: 600;">Vol baix i aproximacions cap al nord i el nord-est.</div>
+          <div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 10px; row-gap: 5px; font-size: 13px; line-height: 1.4; color: #dcdbd3;">
+            <span class="num" style="color: #ffffff;">08:00</span><span>M'enlairo i em quedo per sota de 100 m. Passo per sobre de l'autovia, a 0,5 km al nord, i d'una línia a 1,1 km.</span>
+            <span class="num" style="color: #898781;">baix</span><span>A 10 m vaig cap al nord i a 100 m cap al 063°, de 2 a 5 kt. Amb l'altura trio entre la zona A i la B.</span>
+            <span class="num" style="color: #898781;">alt</span><span>Per sobre de 100 m el vent gira a l'est: a 1 000 ft va cap al 076° a 7 kt, cap a Cervera. Hi pujo poc.</span>
+            <span class="num" style="color: #ffffff;">09:20</span><span>Aterro a la zona A o B, fins a les 09:30.</span>
+          </div>
+        </section>
+
+        <section aria-label="Aterratge" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px;">
+          <span class="lab">Aterratge</span>
+          <div style="font-size: 15px; font-weight: 500;">Final a les <span class="num">09:30</span>, de 4 a 10 km, entre el 320 i el 071°</div>
+          <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); row-gap: 4px; font-size: 13px; color: #dcdbd3;">
+            <span style="font-weight: 600; color: #3ad16b;">ZONA A</span><span class="num">048 a 060°, de 4,2 a 5,6 km. Camps de secà.</span>
+            <span style="font-weight: 600; color: #3ad16b;">ZONA B</span><span class="num">345 a 358°, de 6,5 a 8 km. Camps de secà.</span>
+          </div>
+          <div style="font-size: 13px; color: #c3c2b7;">Pel nord i el nord-est tanca la línia de 110 kV, de 8,5 a 12 km.</div>
+        </section>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+          <section aria-label="Càrrega" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+            <span class="lab">Càrrega a 1 200 m</span>
+            <div style="display: flex; align-items: baseline; gap: 6px;"><span class="num" style="font-size: 26px; font-weight: 500;">+47,5</span><span class="num" style="font-size: 14px; color: #c3c2b7;">kg de marge</span></div>
+            <span style="font-size: 12px; line-height: 1.4; color: #f0d79a;">Amb 195 kg de buit, que són d'un MK-21 doble. El MK-32 doble, pendent de la pàg. 0.1.</span>
+          </section>
+          <section aria-label="Combustible" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+            <span class="lab">Combustible</span>
+            <div style="display: flex; align-items: baseline; gap: 6px;"><span class="num" style="font-size: 26px; font-weight: 500;">80</span><span class="num" style="font-size: 14px; color: #c3c2b7;">kg de propà, 2 M-40</span></div>
+            <span class="num" style="font-size: 12px; line-height: 1.4; color: #c3c2b7;">Màxim 30 kg a les 08:45 i 40 kg a les 09:00.</span>
+          </section>
+        </div>
+
+        <section aria-label="Emergència" style="background: #2a1d1b; border: 1px solid #4d2f2a; border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px;">
+          <span class="lab" style="color: #d4a59c;">Emergència</span>
+          <span class="num" style="font-size: 13px; line-height: 1.45; color: #ecd9d4;">Sostre físic a 120 °C, 3 446 m. Classe G fins a 4 500 ft. Per sobre, TMA de Barcelona: 7700 i Barcelona 127,700.</span>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

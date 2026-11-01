@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, Afegir globus amb marques barrejades</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; overflow: hidden;">
+
+  <nav aria-label="Seccions" style="width: 88px; height: 800px; flex-shrink: 0; box-sizing: border-box; background: #121211; border-right: 1px solid #2c2c2a; padding: 14px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+    <a href="TauletaPerfil.dc.html" aria-current="page" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 600;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; background: #1d3352; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg></span>
+      Perfil
+    </a>
+    <a href="TauletaPlans.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="M9 11h6M9 15h4"></path></svg></span>
+      Plans
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5l1.8 1.8L9 5"></path><path d="M4 12.5l1.8 1.8L9 11"></path><path d="M4 18.5l1.8 1.8L9 17"></path><path d="M12 7h8M12 13h8M12 19h8"></path></svg></span>
+      Operar
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg></span>
+      Competició
+    </a>
+    <a href="TauletaComencar.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg></span>
+      Vol
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"></path><path d="M5 20a2 2 0 0 0 2 2h12v-4"></path><path d="M9 7h6"></path></svg></span>
+      Registre
+    </a>
+    <span style="flex-grow: 1;"></span>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"></path></svg></span>
+      Ajustos
+    </a>
+  </nav>
+
+  <main style="flex-grow: 1; min-width: 0; box-sizing: border-box; padding: 16px 24px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <a href="TauletaAfegirGlobus.dc.html" style="font-size: 14px; text-decoration: none;">‹ Afegir globus</a>
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px;">
+        <h1 style="margin: 0; font-size: 26px; font-weight: 600;">Afegir globus</h1>
+        <div style="font-size: 13px; color: #898781;">Exemple: envolupant Ultramagic amb cistella Kubicek</div>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 316px; gap: 14px; align-items: start;">
+
+      <section aria-label="Envolupant" style="display: flex; flex-direction: column; gap: 9px; min-width: 0;">
+        <span class="lab">1 · Envolupant</span>
+        <div role="group" aria-label="Marca de l'envolupant" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; background: #121211; border: 1px solid #2c2c2a; border-radius: 10px; padding: 3px;">
+          <button aria-pressed="true" style="height: 34px; border: 0; border-radius: 7px; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 13px; font-weight: 600;">Ultramagic</button>
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Cameron</button>
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Kubicek</button>
+        </div>
+        <span style="font-size: 12px; color: #898781;">MV04 r30 · sèrie M</span>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <button aria-pressed="false" style="font-family: inherit; height: 40px; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; align-items: center; justify-content: space-between; padding: 0 12px;"><span class="num" style="font-size: 15px;">M-56</span><span class="num" style="font-size: 13px; color: #898781;">1 590 m³</span></button>
+          <button aria-pressed="true" style="font-family: inherit; height: 40px; border-radius: 9px; border: 2px solid #2a78d6; background: #1d2c40; color: #ffffff; display: flex; align-items: center; justify-content: space-between; padding: 0 11px;"><span class="num" style="font-size: 15px; font-weight: 600;">M-65</span><span class="num" style="font-size: 13px; color: #c3c2b7;">1 840 m³</span></button>
+          <button aria-pressed="false" style="font-family: inherit; height: 40px; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; align-items: center; justify-content: space-between; padding: 0 12px;"><span class="num" style="font-size: 15px;">M-77</span><span class="num" style="font-size: 13px; color: #898781;">2 200 m³</span></button>
+        </div>
+        <span style="font-size: 12px; line-height: 1.4; color: #898781;">Els límits surten del manual de l'envolupant.</span>
+      </section>
+
+      <section aria-label="Cistella" style="display: flex; flex-direction: column; gap: 9px; min-width: 0;">
+        <span class="lab">2 · Cistella</span>
+        <div role="group" aria-label="Marca de la cistella" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; background: #121211; border: 1px solid #2c2c2a; border-radius: 10px; padding: 3px;">
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Ultramagic</button>
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Cameron</button>
+          <button aria-pressed="true" style="height: 34px; border: 0; border-radius: 7px; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 13px; font-weight: 600;">Kubicek</button>
+        </div>
+        <span style="font-size: 12px; color: #898781;">Kubicek FM Ed.3 Rev.9 §8.2 · masses típiques</span>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <button aria-pressed="false" style="font-family: inherit; text-align: left; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 7px 12px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span class="num" style="font-size: 15px;">K10</span><span class="num" style="font-size: 14px;">60 kg</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">86 × 116 cm</span></button>
+          <button aria-pressed="false" style="font-family: inherit; text-align: left; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 7px 12px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span class="num" style="font-size: 15px;">K10S</span><span class="num" style="font-size: 14px;">35 kg</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">86 × 116 cm</span></button>
+          <button aria-pressed="true" style="font-family: inherit; text-align: left; border-radius: 9px; border: 2px solid #2a78d6; background: #1d2c40; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 6px 11px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span class="num" style="font-size: 15px; font-weight: 600;">K11</span><span class="num" style="font-size: 14px;">70 kg</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">98 × 116 cm</span></button>
+          <button aria-pressed="false" style="font-family: inherit; text-align: left; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 7px 12px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span class="num" style="font-size: 15px;">K12</span><span class="num" style="font-size: 14px;">80 kg</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">116 × 116 cm</span></button>
+        </div>
+        <span style="font-size: 12px; color: #898781;">La massa real és a la placa de la cistella</span>
+      </section>
+
+      <section aria-label="Cremador" style="display: flex; flex-direction: column; gap: 9px; min-width: 0;">
+        <span class="lab">3 · Cremador</span>
+        <div role="group" aria-label="Marca del cremador" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; background: #121211; border: 1px solid #2c2c2a; border-radius: 10px; padding: 3px;">
+          <button aria-pressed="true" style="height: 34px; border: 0; border-radius: 7px; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 13px; font-weight: 600;">Ultramagic</button>
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Cameron</button>
+          <button aria-pressed="false" style="height: 34px; border: 0; border-radius: 7px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px;">Kubicek</button>
+        </div>
+        <span style="font-size: 12px; color: #898781;">MV04 §2.12 i p. 6.24, sense el bastidor</span>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <button aria-pressed="true" style="font-family: inherit; text-align: left; border-radius: 9px; border: 2px solid #2a78d6; background: #1d2c40; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 6px 11px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span style="font-size: 15px; font-weight: 600;">MK-32 doble</span><span style="font-size: 13px; color: #fab219;">sense massa</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">56 000 a 225 000 ft³</span></button>
+          <button aria-pressed="false" style="font-family: inherit; text-align: left; border-radius: 9px; border: 1px solid #2c2c2a; background: #222220; color: #ffffff; display: flex; flex-direction: column; gap: 1px; padding: 7px 12px;"><span style="display: flex; justify-content: space-between; width: 100%;"><span style="font-size: 15px;">MK-21 doble</span><span class="num" style="font-size: 14px;">24 kg</span></span><span class="num" style="font-size: 12px; color: #c3c2b7;">56 000 a 210 000 ft³</span></button>
+        </div>
+      </section>
+
+      <section aria-label="El teu globus" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
+        <span class="lab">4 · El teu globus</span>
+        <div style="font-size: 18px; font-weight: 600; line-height: 1.3;">M-65 amb cistella Kubicek K11 i MK-32 doble</div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto auto; column-gap: 10px; row-gap: 7px; align-items: center;">
+          <span style="font-size: 14px; color: #c3c2b7;">Envolupant</span><span class="num" style="font-size: 15px; text-align: right;">104 kg</span><span style="font-size: 11px; color: #fab219; border: 1px solid #6b5420; border-radius: 9px; padding: 1px 7px;">típica</span>
+          <span style="font-size: 14px; color: #c3c2b7;">Cistella</span><span class="num" style="font-size: 15px; text-align: right;">70 kg</span><span style="font-size: 11px; color: #fab219; border: 1px solid #6b5420; border-radius: 9px; padding: 1px 7px;">típica</span>
+          <label for="cremador-kg-b" style="font-size: 14px; color: #c3c2b7;">Cremador</label>
+          <input id="cremador-kg-b" placeholder="kg" style="width: 64px; height: 32px; border-radius: 7px; border: 1px solid #8a6a1f; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Mono', monospace; font-size: 15px; padding: 0 8px; text-align: right;">
+          <span style="font-size: 11px; color: #898781;">placa</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 8px; border-top: 1px solid #2c2c2a;">
+          <span style="font-size: 14px; color: #c3c2b7;">Buit, sense bombones</span>
+          <span class="num" style="font-size: 15px;">174 kg + cremador</span>
+        </div>
+        <span style="font-size: 12px; color: #898781;">Límits de l'envolupant, MV04</span>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto auto; column-gap: 10px; row-gap: 5px; align-items: baseline;">
+          <span style="font-size: 14px; color: #c3c2b7;">MTOM</span><span class="num" style="font-size: 15px; text-align: right;">638 kg</span><span class="num" style="font-size: 12px; color: #898781;">§5.5</span>
+          <span style="font-size: 14px; color: #c3c2b7;">Vent màxim</span><span class="num" style="font-size: 15px; text-align: right;">15 kt</span><span class="num" style="font-size: 12px; color: #898781;">§2.2</span>
+        </div>
+        <a href="TauletaPerfil.dc.html" style="height: 44px; border-radius: 10px; background: #2a78d6; color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center;">Desar el globus</a>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

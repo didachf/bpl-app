@@ -54,6 +54,9 @@ navegador, que se pueden correr con node.
 | Idioma | Catalán, como Operar y como los planes en PDF |
 | Aparatos | **La pantalla de vuelo sólo existe en la tablet.** Es una sola app con dos modos, no dos apps: cada aparato dice en Ajustes si es «Tauleta de vol» o «Telèfon». La primera vez se propone por el tamaño de pantalla y el piloto lo cambia si hace falta. El modo teléfono no enseña ni «Començar vol» ni la ruta `#/vol` |
 | Waypoints en el teléfono | Sí. Se crean, se editan y se borran en los dos aparatos, porque forman parte del plan. Navegar a ellos es sólo de la tablet |
+| Tema | **Sigue al ajuste de Android**, como el resto de la app. Sin botón propio en la pantalla de vuelo. Elegido el 11/10/2026. Las maquetas sólo enseñan el oscuro, así que el claro usa los tokens que ya tiene la app (el ámbar pasa a `#8a5a00`) |
+| Franja de cifras | **Abajo, a todo lo ancho**, como en las maquetas. Elegido el 11/10/2026 frente a una columna a la derecha, que dejaba la tabla sin sitio para sus columnas |
+| Botones Mapa y Vent | **Abajo a la derecha**, al final de la franja, dos botones con el activo marcado. Elegido el 11/10/2026 |
 
 ## 4. Ideas tomadas de otras apps
 

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Tauleta, Plans</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#5598e7}a:hover{color:#86b6ef}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#898781}
+.halo{paint-order:stroke;stroke:#0b0b0b;stroke-width:5px;stroke-linejoin:round}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; background: #1a1a19; color: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; overflow: hidden;">
+  <nav aria-label="Seccions" style="width: 88px; height: 800px; flex-shrink: 0; box-sizing: border-box; background: #121211; border-right: 1px solid #2c2c2a; padding: 14px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+    <a href="TauletaPerfil.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg></span>
+      Perfil
+    </a>
+    <a href="TauletaPlans.dc.html" aria-current="page" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 600;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; background: #1d3352; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="M9 11h6M9 15h4"></path></svg></span>
+      Plans
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5l1.8 1.8L9 5"></path><path d="M4 12.5l1.8 1.8L9 11"></path><path d="M4 18.5l1.8 1.8L9 17"></path><path d="M12 7h8M12 13h8M12 19h8"></path></svg></span>
+      Operar
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg></span>
+      Competició
+    </a>
+    <a href="TauletaComencar.dc.html" style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 3.8 3.3 6.6 4.6 8h4.8c1.3-1.4 4.6-4.2 4.6-8a7 7 0 0 0-7-7z"></path><path d="M9.6 17.5l.6 2.5h3.6l.6-2.5"></path></svg></span>
+      Vol
+    </a>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"></path><path d="M5 20a2 2 0 0 0 2 2h12v-4"></path><path d="M9 7h6"></path></svg></span>
+      Registre
+    </a>
+    <span style="flex-grow: 1;"></span>
+    <a style="width: 80px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #a9a79f; font-size: 12px; font-weight: 500;">
+      <span style="width: 54px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"></path></svg></span>
+      Ajustos
+    </a>
+  </nav>
+  <main style="flex-grow: 1; min-width: 0; box-sizing: border-box; padding: 18px 24px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <h1 style="margin: 0; font-size: 26px; font-weight: 600;">Plans</h1>
+      <a href="TauletaPlaNou.dc.html" style="height: 42px; padding: 0 18px; border-radius: 10px; background: #2a78d6; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center;">Pla nou</a>
+    </div>
+    <section aria-label="Meteo dels propers dies" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 600;">Meteo dels propers dies</h2>
+        <div role="group" style="display: flex; gap: 3px; background: #121211; border: 1px solid #2c2c2a; border-radius: 9px; padding: 3px;"><button aria-pressed="false" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; color: #c3c2b7; font-family: inherit; font-size: 13px; font-weight: 400;">Per llocs</button><button aria-pressed="true" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: #2a78d6; color: #ffffff; font-family: inherit; font-size: 13px; font-weight: 600;">Per dies</button></div>
+        <button style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #45443f; background: #1a1a19; color: #ffffff; font-family: inherit; font-size: 14px;">Tàrrega ▾</button>
+        <span style="flex-grow: 1;"></span>
+        <span style="font-size: 12px; color: #898781;">Vent a 10 m, mitjana i màxim entre models, cap a on va</span>
+        <a href="https://www.windy.com/" style="height: 36px; padding: 0 14px; border-radius: 8px; border: 1px solid #45443f; color: #ffffff; font-size: 14px; text-decoration: none; display: flex; align-items: center;">Obrir Windy ↗</a>
+      </div>
+      <div style="display: grid; grid-template-columns: 136px repeat(4, minmax(0, 1fr)) 76px 88px 56px 118px 96px; align-items: end; padding-bottom: 5px; border-bottom: 1px solid #2c2c2a;">
+        <span class="lab">Dia</span><span class="lab num" style="letter-spacing: 0;">07:00</span><span class="lab num" style="letter-spacing: 0;">08:00</span><span class="lab num" style="letter-spacing: 0;">09:00</span><span class="lab num" style="letter-spacing: 0;">10:00</span><span class="lab">Ràfega</span><span class="lab">Visibilitat</span><span class="lab">Pluja</span><span class="lab">Acabaries</span><span></span>
+      </div>
+        <div style="display: grid; grid-template-columns: 136px repeat(4, minmax(0, 1fr)) 76px 88px 56px 118px 96px; align-items: center; height: 54px; border-bottom: 1px solid #262624;">
+          <div style="display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 15px; font-weight: 500;">dl 12/10</span><span class="num" style="font-size: 11px; color: #898781;">sol 08:04 · de les 11:50</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(318 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,0 <span style="font-size: 12px; color: #898781;">a 3,9</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 318°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(310 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,1 <span style="font-size: 12px; color: #898781;">a 3,7</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 310°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(299 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,1 <span style="font-size: 12px; color: #898781;">a 3,9</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 299°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(291 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">1,5 <span style="font-size: 12px; color: #898781;">a 2,8</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 291°</span></div></div>
+          <span class="num" style="font-size: 15px;">6,0 kt</span>
+          <span class="num" style="font-size: 15px;">15,0 km</span>
+          <span style="font-size: 14px; color: #c3c2b7;">cap</span>
+          <span style="display: flex; flex-direction: column;"><span class="num" style="font-size: 15px;">2,7 km</span><span style="font-size: 11px; color: #898781;">tornant</span></span>
+          <a href="TauletaPlaNou.dc.html" style="height: 34px; border-radius: 8px; border: 1px solid #3b5c84; color: #ffffff; font-size: 13px; text-decoration: none; display: flex; align-items: center; justify-content: center;">Crear pla</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 136px repeat(4, minmax(0, 1fr)) 76px 88px 56px 118px 96px; align-items: center; height: 54px; border-bottom: 1px solid #262624;">
+          <div style="display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 15px; font-weight: 500;">dt 13/10</span><span class="num" style="font-size: 11px; color: #898781;">sol 08:05 · de les 13:05</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(274 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,7 <span style="font-size: 12px; color: #898781;">a 6,0</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 274°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(277 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,7 <span style="font-size: 12px; color: #898781;">a 5,7</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 277°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(285 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,1 <span style="font-size: 12px; color: #898781;">a 4,9</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 285°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(289 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">1,6 <span style="font-size: 12px; color: #898781;">a 4,2</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 289°</span></div></div>
+          <span class="num" style="font-size: 15px;">7,8 kt</span>
+          <span class="num" style="font-size: 15px;">13,5 km</span>
+          <span style="font-size: 14px; color: #c3c2b7;">cap</span>
+          <span style="display: flex; flex-direction: column;"><span class="num" style="font-size: 15px;">2,7 km</span><span style="font-size: 11px; color: #898781;">tornant</span></span>
+          <a href="TauletaPlaNou.dc.html" style="height: 34px; border-radius: 8px; border: 1px solid #3b5c84; color: #ffffff; font-size: 13px; text-decoration: none; display: flex; align-items: center; justify-content: center;">Crear pla</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 136px repeat(4, minmax(0, 1fr)) 76px 88px 56px 118px 96px; align-items: center; height: 54px; border-bottom: 1px solid #262624;">
+          <div style="display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 15px; font-weight: 500;">dc 14/10</span><span class="num" style="font-size: 11px; color: #898781;">sol 08:06 · de les 13:07</span></div>
+          <div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(291 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">2,9 <span style="font-size: 12px; color: #898781;">a 3,7</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 291°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(291 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">3,1 <span style="font-size: 12px; color: #898781;">a 3,3</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 291°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(286 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">2,7 <span style="font-size: 12px; color: #898781;">a 3,7</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 286°</span></div></div><div style="display: flex; align-items: center; gap: 7px;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="color: #ffffff; flex-shrink: 0;"><g transform="rotate(267 8 8)"><path d="M8 1 L12.5 9 L8.8 8.2 L8.8 15 L7.2 15 L7.2 8.2 L3.5 9 Z" fill="currentColor"></path></g></svg><div style="display: flex; flex-direction: column;"><span class="num" style="font-size: 16px;">1,6 <span style="font-size: 12px; color: #898781;">a 2,9</span></span><span class="num" style="font-size: 11px; color: #898781;">cap a 267°</span></div></div>
+          <span class="num" style="font-size: 15px;">6,6 kt</span>
+          <span class="num" style="font-size: 15px;">13,1 km</span>
+          <span style="font-size: 14px; color: #c3c2b7;">cap</span>
+          <span style="display: flex; flex-direction: column;"><span style="font-size: 13px; color: #fab219;">falten dades</span></span>
+          <a href="TauletaPlaNou.dc.html" style="height: 34px; border-radius: 8px; border: 1px solid #3b5c84; color: #ffffff; font-size: 13px; text-decoration: none; display: flex; align-items: center; justify-content: center;">Crear pla</a>
+        </div>
+      <div style="font-size: 12px; color: #898781;">Només dades. Cap casella arriba als 15 kt del manual. El teu mínim personal de vent no està posat. «Acabaries» és la mediana de 7 models, tornant o cap a la base.</div>
+    </section>
+    <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 14px; align-items: start;">
+    <section aria-label="Plans fets" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 600;">Plans fets</h2>
+        <a style="font-size: 14px;">Veure'ls tots, 11</a>
+      </div>
+      <a href="TauletaPla.dc.html" style="display: grid; grid-template-columns: 88px 120px minmax(0, 1fr) 40px 14px; align-items: center; height: 44px; border-bottom: 1px solid #2c2c2a; color: #ffffff; text-decoration: none;"><span class="num" style="font-size: 14px; color: #c3c2b7;">ds 10/10</span><span style="font-size: 15px; font-weight: 500;">Tàrrega</span><span class="num" style="font-size: 13px; color: #c3c2b7;">08:00 a 09:30 · baix · Marc</span><span style="font-size: 12px; color: #5598e7;">PDF</span><span style="color: #898781;">›</span></a>
+      <a style="display: grid; grid-template-columns: 88px 120px minmax(0, 1fr) 40px 14px; align-items: center; height: 44px; border-bottom: 1px solid #2c2c2a; color: #ffffff; text-decoration: none;"><span class="num" style="font-size: 14px; color: #c3c2b7;">ds 10/10</span><span style="font-size: 15px; font-weight: 500;">Agramunt</span><span class="num" style="font-size: 13px; color: #c3c2b7;">08:00 a 09:30 · creuer · Marc</span><span style="font-size: 12px; color: #5598e7;">PDF</span><span style="color: #898781;">›</span></a>
+      <a style="display: grid; grid-template-columns: 88px 120px minmax(0, 1fr) 40px 14px; align-items: center; height: 44px; border-bottom: 1px solid #2c2c2a; color: #ffffff; text-decoration: none;"><span class="num" style="font-size: 14px; color: #c3c2b7;">dv 09/10</span><span style="font-size: 15px; font-weight: 500;">Balaguer A</span><span class="num" style="font-size: 13px; color: #c3c2b7;">07:10 a 08:40 · baix · Marc</span><span style="font-size: 12px; color: #5598e7;">PDF</span><span style="color: #898781;">›</span></a>
+      <a style="display: grid; grid-template-columns: 88px 120px minmax(0, 1fr) 40px 14px; align-items: center; height: 44px; color: #ffffff; text-decoration: none;"><span class="num" style="font-size: 14px; color: #c3c2b7;">dc 07/10</span><span style="font-size: 15px; font-weight: 500;">Tàrrega</span><span class="num" style="font-size: 13px; color: #c3c2b7;">07:10 a 08:40 · pronto · Marc</span><span style="font-size: 12px; color: #5598e7;">PDF</span><span style="color: #898781;">›</span></a>
+    </section>
+    <section aria-label="Llocs d'enlairament" style="background: #222220; border: 1px solid #2c2c2a; border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 600;">Llocs d'enlairament</h2>
+        <a href="TauletaAfegirEnlairament.dc.html" style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #2a78d6; color: #ffffff; font-size: 14px; text-decoration: none; display: flex; align-items: center;">Afegir punt d'enlairament</a>
+      </div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 1px; column-gap: 10px; padding: 6px 0; border-bottom: 1px solid #2c2c2a;"><span style="font-size: 15px; font-weight: 500;">Tàrrega <span class="num" style="font-size: 12px; color: #898781; font-weight: 400;">380 m</span></span><span class="num" style="font-size: 12px; color: #9fb4c6; text-align: right;">5 plans</span><span class="num" style="font-size: 12px; color: #898781;">41,6561 N 1,1490 E</span><span style="font-size: 12px; color: #c3c2b7;">Dins el polígon industrial</span></div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 1px; column-gap: 10px; padding: 6px 0; border-bottom: 1px solid #2c2c2a;"><span style="font-size: 15px; font-weight: 500;">Agramunt <span class="num" style="font-size: 12px; color: #898781; font-weight: 400;">409 m</span></span><span class="num" style="font-size: 12px; color: #9fb4c6; text-align: right;">3 plans</span><span class="num" style="font-size: 12px; color: #898781;">41,7577 N 1,0871 E</span><span style="font-size: 12px; color: #fab219;">Accés sense posar</span></div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 1px; column-gap: 10px; padding: 6px 0; border-bottom: 1px solid #2c2c2a;"><span style="font-size: 15px; font-weight: 500;">Igualada <span class="num" style="font-size: 12px; color: #898781; font-weight: 400;">329 m</span></span><span class="num" style="font-size: 12px; color: #9fb4c6; text-align: right;">2 plans</span><span class="num" style="font-size: 12px; color: #898781;">41,5842 N 1,6528 E</span><span style="font-size: 12px; color: #fab219;">Accés sense posar</span></div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 1px; column-gap: 10px; padding: 6px 0;"><span style="font-size: 15px; font-weight: 500;">Balaguer A <span class="num" style="font-size: 12px; color: #898781; font-weight: 400;">249 m</span></span><span class="num" style="font-size: 12px; color: #9fb4c6; text-align: right;">1 pla</span><span class="num" style="font-size: 12px; color: #898781;">41,7782 N 0,8616 E</span><span style="font-size: 12px; color: #c3c2b7;">Mateix accés que el punt del 08/10</span></div>
+    </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

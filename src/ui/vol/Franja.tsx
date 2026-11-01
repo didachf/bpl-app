@@ -136,7 +136,7 @@ export function Franja({ sessio, actiu, vigent, relieve, ara, onMes, onMapa }: P
     <div style={marc}>
       <Casella ample={193}>
         <Lab>Altitud</Lab>
-        <div style="display: flex; align-items: baseline; gap: 6px;"><Gran>{altFt(pos.altM)}</Gran><span class="num muted" style="font-size: 18px;">ft</span></div>
+        <div style="display: flex; align-items: baseline; gap: 6px;"><Gran mida={44}>{altFt(pos.altM)}</Gran><span class="num muted" style="font-size: 18px;">ft</span></div>
         <div class="muted" style="font-size: 13px;">{sessio.correccioM !== null ? font : 'GPS sense calibrar'}</div>
         {linia4}
       </Casella>

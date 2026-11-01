@@ -89,16 +89,16 @@ export function Coordenades({ pos, onPunt, onTancar, onDesat }: PropsCoordenades
 
       {format === 'decimal' && (
         <div style="display: grid; grid-template-columns: 110px 1fr; gap: 8px 10px; align-items: center;">
-          <span class="lab">Latitud N</span>{inp(dec.lat, v => setDec({ ...dec, lat: v }), '41,6857')}{errorDe('lat')}
-          <span class="lab">Longitud E</span>{inp(dec.lon, v => setDec({ ...dec, lon: v }), '1,2115')}{errorDe('lon')}
+          <span class="lab">Latitud N</span>{inp(dec.lat, v => setDec(d => ({ ...d, lat: v })), '41,6857')}{errorDe('lat')}
+          <span class="lab">Longitud E</span>{inp(dec.lon, v => setDec(d => ({ ...d, lon: v })), '1,2115')}{errorDe('lon')}
           <span class="dim" style="font-size: 12px; grid-column: 1 / -1;">També s'hi pot enganxar «41.6857, 1.2115» de Google Maps, tot al camp de latitud.</span>
         </div>
       )}
       {format === 'dms' && (
         <div style="display: grid; grid-template-columns: 74px 56px 56px 78px 52px; gap: 8px 6px; align-items: center;">
-          <span class="lab">Latitud</span>{inp(dms.lg, v => setDms({ ...dms, lg: v }), '°')}{inp(dms.lm, v => setDms({ ...dms, lm: v }), "'")}{inp(dms.ls, v => setDms({ ...dms, ls: v }), '"')}{hemi(dms.lh, ['N', 'S'], v => setDms({ ...dms, lh: v }))}
+          <span class="lab">Latitud</span>{inp(dms.lg, v => setDms(d => ({ ...d, lg: v })), '°')}{inp(dms.lm, v => setDms(d => ({ ...d, lm: v })), "'")}{inp(dms.ls, v => setDms(d => ({ ...d, ls: v })), '"')}{hemi(dms.lh, ['N', 'S'], v => setDms(d => ({ ...d, lh: v })))}
           {errorDe('lat')}
-          <span class="lab">Longitud</span>{inp(dms.og, v => setDms({ ...dms, og: v }), '°')}{inp(dms.om, v => setDms({ ...dms, om: v }), "'")}{inp(dms.os, v => setDms({ ...dms, os: v }), '"')}{hemi(dms.oh, ['E', 'W'], v => setDms({ ...dms, oh: v }))}
+          <span class="lab">Longitud</span>{inp(dms.og, v => setDms(d => ({ ...d, og: v })), '°')}{inp(dms.om, v => setDms(d => ({ ...d, om: v })), "'")}{inp(dms.os, v => setDms(d => ({ ...d, os: v })), '"')}{hemi(dms.oh, ['E', 'W'], v => setDms(d => ({ ...d, oh: v })))}
           {errorDe('lon')}
         </div>
       )}
@@ -107,14 +107,14 @@ export function Coordenades({ pos, onPunt, onTancar, onDesat }: PropsCoordenades
           <span class="lab">Fus</span>
           <div style="display: flex; gap: 6px;">
             {[31, 30].map(f => (
-              <button key={f} type="button" aria-pressed={utm.fus === f} onClick={() => setUtm({ ...utm, fus: f })} class="num" style={`
+              <button key={f} type="button" aria-pressed={utm.fus === f} onClick={() => setUtm(u => ({ ...u, fus: f }))} class="num" style={`
                 height: 44px; flex: 1 1 0; border-radius: 8px; border: 1px solid ${utm.fus === f ? 'var(--accent)' : 'var(--border)'};
                 background: ${utm.fus === f ? 'var(--accent)' : 'var(--surface)'}; color: ${utm.fus === f ? 'var(--accent-text)' : 'var(--text)'}; font-size: 16px; cursor: pointer;
               `}>{f}</button>
             ))}
           </div>
-          <span class="lab">X, est</span>{inp(utm.x, v => setUtm({ ...utm, x: v }), '351 155')}{errorDe('x')}
-          <span class="lab">Y, nord</span>{inp(utm.y, v => setUtm({ ...utm, y: v }), '4 616 431')}{errorDe('y')}
+          <span class="lab">X, est</span>{inp(utm.x, v => setUtm(u => ({ ...u, x: v })), '351 155')}{errorDe('x')}
+          <span class="lab">Y, nord</span>{inp(utm.y, v => setUtm(u => ({ ...u, y: v })), '4 616 431')}{errorDe('y')}
           <span class="dim" style="font-size: 12px; grid-column: 1 / -1;">ETRS89, com als mapes de l'ICGC</span>
         </div>
       )}
@@ -136,7 +136,7 @@ export function Coordenades({ pos, onPunt, onTancar, onDesat }: PropsCoordenades
       )}
 
       <div style="flex-grow: 1;"></div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: sticky; bottom: -14px; background: var(--bg); padding: 8px 0 14px 0; margin-bottom: -14px;">
         <button type="button" disabled={punt === null} onClick={() => desar(false)} style="height: 52px; border-radius: 8px; border: 1px solid var(--border); background: none; color: var(--text); font: inherit; font-size: 15px; cursor: pointer;">Desar</button>
         <button type="button" disabled={punt === null} onClick={() => desar(true)} style="height: 52px; border-radius: 8px; border: 0; background: var(--accent); color: var(--accent-text); font: inherit; font-size: 15px; font-weight: 500; cursor: pointer;">Desar i activar</button>
       </div>

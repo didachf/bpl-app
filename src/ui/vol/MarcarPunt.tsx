@@ -153,10 +153,12 @@ export function MarcarPunt({ sessio, relieve, previsio, centre, editant, onZona,
         </span>
       </div>
       <div style="flex-grow: 1;"></div>
+      <div style="position: sticky; bottom: -14px; background: var(--bg); padding: 8px 0 14px 0; margin-bottom: -14px;">
       <button type="button" onClick={desar} disabled={tipus === 'altitud' && !(ft > 0)} style="
-        height: 52px; flex-shrink: 0; border-radius: 8px; border: 0; background: var(--accent); color: var(--accent-text);
+        width: 100%; height: 52px; flex-shrink: 0; border-radius: 8px; border: 0; background: var(--accent); color: var(--accent-text);
         font: inherit; font-size: 17px; font-weight: 500; cursor: pointer;
       ">{editant === null ? 'Desar i navegar-hi' : 'Desar'}</button>
+      </div>
     </div>
   )
 }

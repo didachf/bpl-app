@@ -1,5 +1,24 @@
 # Logbook BPL, estado
 
+## 01/11/2026, noche: la pantalla de vuelo en la tablet
+
+Dídac aprobó las seis maquetas de la fase 2 «tal como están». Hecha la pantalla de vuelo en dos planes
+(`2026-11-01-vol-logica.md` y `2026-11-01-vol-pantalla.md`, con sus cambios al final), sin push ni
+publicar. `#/vol` sólo en la tablet (modo del aparato en Ajustes), entrada desde Operar.
+
+* **Començar vol:** techo, pronóstico, relieve y ortofoto para volar sin cobertura, calibración de la
+  altitud en tierra (§6.2), y se abre con pronóstico y calibración.
+* **En vuelo:** mapa con la ortofoto guardada, traza por altitud, proyección sin waypoint, zona
+  alcanzable, plan por tramos (a ras en verde discontinuo), punto más cercano, tarjeta del plan,
+  avisos del motor, franja A o B, menú Més, salir y volver, acabar con confirmación.
+* **Waypoints** en el documento (esquema 3): lista, marcar al mapa con objetivo y resultado en
+  directo, coordenadas en decimal, grados minutos y segundos o UTM (contra PROJ al milímetro).
+* El motor corre en un worker cada 15 s y devuelve ahora el camino y el punto más cercano.
+* Comprobado en Chromium a 1 280 × 800 con GPS simulado, recorrido entero. Encontrado y
+  arreglado un fallo de verdad: mosaicos del ICGC que no contestan paraban la descarga 10 min.
+* 718 pruebas. **Siguiente:** que Dídac decida publicar para probarla en su tablet (push y Pages
+  son suyos). Parte 3: vista Vent, zonas, mejor izquierda y derecha, Camps, Acabar vol al Registre.
+
 ## 01/11/2026, noche: capa de datos de la pantalla de vuelo
 
 Todo lo que la pantalla de vuelo necesita por debajo, sin pantalla, en `src/services/vuelo/`.

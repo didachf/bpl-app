@@ -42,6 +42,8 @@ export function emptyDocument(): LogbookDoc {
     sites: SEEDED_SITES.map(s => ({ ...s })),
     people: [selfPerson()],
     flights: [],
+    waypoints: [],
+    waypointActiuId: null,
   }
 }
 

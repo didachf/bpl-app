@@ -1,7 +1,7 @@
 // src/domain/schema.ts
 import type { LogbookDoc } from './types'
 
-export const CURRENT_SCHEMA_VERSION = 2
+export const CURRENT_SCHEMA_VERSION = 3
 
 /** Lleva un documento de la version N a la N+1. */
 export type Migration = (doc: any) => any
@@ -20,6 +20,9 @@ export const MIGRATIONS: Record<number, Migration> = {
     pilot: { ...doc.pilot, personalWindLimitKt: null },
     balloons: (doc.balloons ?? []).map((b: any) => ({ ...b, maxSurfaceWindKt: null })),
   }),
+  // 2 -> 3: waypoints de la pantalla de vuelo (spec 10/10 §6.6), vacios y sin
+  // ninguno activo.
+  2: (doc: any) => ({ ...doc, schemaVersion: 3, waypoints: [], waypointActiuId: null }),
 }
 
 export type ValidationResult =

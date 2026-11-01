@@ -18,9 +18,12 @@ mar. Fusionado en `main`, sin push ni publicar.
 * 615 pruebas. Cada guarda nueva mutada y atada. Motor con relieve y el 10/10: unos 230 ms en node.
 * Con el relieve, Aterrar en la zona A ya no llega: 1 500 ft queda a 27 m del suelo, el plan sube a
   1 750 ft, baja y flota hasta 140 m del punto. Sin relieve decía 42 m manteniendo 1 500 ft.
-* **Siguiente:** las maquetas de la fase 2 (marcar el punto con su objetivo, la zona, «no s'hi arriba»),
-  con las cifras de `docs/prototipos/2026-11-01-objetivo/maquetas.json`. Para la pantalla, bajar y
-  guardar los mosaicos del relieve con el plan.
+* **Maquetas de la fase 2 hechas**, seis pantallas en una fila nueva del lienzo (versión 39), con las
+  órdenes, zonas y resultados reales del motor: marcar el punto con su objetivo (tablet y teléfono) y el
+  mapa en vuelo para Aterrar, Passar a 2 500 ft y «no s'hi arriba». Copia en `design/pantalla-de-vol/`,
+  generadas con `docs/prototipos/2026-11-01-objetivo/artboards.py`.
+* **Siguiente:** que Dídac las repase. Después, plan de la pantalla de vuelo (con las comprobaciones del
+  §12 del spec del 10/10, y bajar y guardar los mosaicos del relieve con el plan).
 
 ## 01/11/2026: objetivo de altura en el punto
 

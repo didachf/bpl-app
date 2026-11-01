@@ -3,8 +3,9 @@ import { calcularZona, fueraSeguro, poligono } from './zona'
 import { caminoDirecto, type PlanInterno } from './plan'
 import { construirTablas } from './vertical'
 import { fraccionesDirectas } from './oraculo'
-import { margenDe } from './objetivo'
-import { campoSintetico, rejillaUniforme } from './sintetico'
+import { margenDe, SIN_MARGEN } from './objetivo'
+import { maximo, techoPlano } from './relieve'
+import { campoSintetico, rejillaUniforme, relieveSintetico } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
 const aj: AjustesNav = { ...AJUSTES_POR_DEFECTO, altMinM: 0, altMaxM: 9999 }
@@ -185,5 +186,22 @@ describe('la salida del margen en el ultimo minuto de un cambio tambien cuenta',
     const y = cam[1][1] + f[1] * (cam[2][1] - cam[1][1])
     expect(y).toBeGreaterThan(10)
     expect(y).toBeLessThanOrEqual(Math.max(z.h[8][1], z.h[8][2]) + 1e-6)
+  })
+})
+
+describe('la zona con el relieve', () => {
+  // Solo F1 (500 m) al este a 5 m/s, y un cerro de 490 m de x = 2 000 a 3 000: F1 no vale encima.
+  const p0 = { lat0: 41.6, lon0: 1.6 }
+  const c = campoSintetico({ altM: [500], etiqueta: ['F1'] }, 20, () => [5, 0])
+  const rel = relieveSintetico(p0, -2000, -2000, 8000, 2000, 100, x => (x >= 2000 && x <= 3000 ? 490 : 280))
+  const sin = calcularZona(construirTablas(c, 1, rapido), 0)
+  const con = calcularZona(construirTablas(c, 1, rapido, SIN_MARGEN, { techo: techoPlano(rel, p0), maxM: maximo(rel) }), 0)
+  it('la cota exterior no cambia', () => {
+    for (let d = 0; d < sin.dirs.length; d++) for (let k = 0; k <= 20; k++) expect(con.h[d][k]).toBe(sin.h[d][k])
+  })
+  it('la zona pintada se acaba en el cerro y no reaparece detras', () => {
+    expect(poligono(con, 6).length).toBeGreaterThan(0)
+    for (let k = 7; k <= 20; k++) expect(poligono(con, k)).toEqual([])
+    expect(poligono(sin, 15).length).toBeGreaterThan(0)
   })
 })

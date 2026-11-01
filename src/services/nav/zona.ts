@@ -6,14 +6,19 @@
 // posiciones a mitad de un cambio de altitud tambien cuentan, para que la cota
 // exterior valga para cualquier plan. Con el margen de un objetivo (spec
 // 2026-11-01 §4.3) solo se marca lo que cae dentro: la programacion dinamica no
-// cambia, el margen solo decide que posiciones cuentan.
-import { fr, tr, type Tablas } from './vertical'
+// cambia, el margen solo decide que posiciones cuentan. Con relieve (spec
+// 2026-11-01-relieve §4.4) hay dos pasadas: la cota exterior sin el, y la zona que
+// se pinta podando lo que deja de valer sobre el terreno.
+import { fr, tr, vale, zComprobar, type Tablas } from './vertical'
 import { MINUTO_ENTERO } from './objetivo'
 import { envolvente } from './geo'
 import { DIRECCIONES, LLEGA_M, MAX_ALTITUDES, MIN_MANTENER } from './parametros'
 
 /** Leido una vez: con vitest cada lectura de una importacion pasa por un getter, y esta va en el bucle mas interno. */
 const ENTERO = MINUTO_ENTERO
+
+const DIRS: [number, number][] = Array.from({ length: DIRECCIONES }, (_, d) =>
+  [Math.cos((2 * Math.PI * d) / DIRECCIONES), Math.sin((2 * Math.PI * d) / DIRECCIONES)])
 
 export interface Zona {
   minutos: number
@@ -25,23 +30,33 @@ export interface Zona {
 }
 
 export function calcularZona(t: Tablas, b0: number): Zona {
+  const exterior = pasada(t, b0, false)
+  const pintada = t.techo === null ? exterior : pasada(t, b0, true)
+  return { minutos: t.c.minutos, dirs: DIRS, h: exterior.h, ext: pintada.ext }
+}
+
+/**
+ * Una pasada de la programacion dinamica en las 32 direcciones. Con `podar`, un estado que no vale
+ * sobre el terreno se descarta entero, y un cambio que pasa por una posicion que no vale no se hace:
+ * lo que queda se alcanza con planes validos, aunque a veces se quede corto.
+ */
+function pasada(t: Tablas, b0: number, podar: boolean): { h: Float64Array[]; ext: [number, number][][] } {
   const c = t.c
+  const altM = c.rejilla.altM
   const H = c.minutos
   const W = H + 1
   const B = c.rejilla.altM.length
   const T = MIN_MANTENER + 1 // minutos en la franja actual: 0, 1, o MIN_MANTENER o mas
   const S = B * MAX_ALTITUDES * T
   const st = (b: number, n: number, tm: number) => (b * MAX_ALTITUDES + (n - 1)) * T + tm
-  const dirs: [number, number][] = Array.from({ length: DIRECCIONES }, (_, d) =>
-    [Math.cos((2 * Math.PI * d) / DIRECCIONES), Math.sin((2 * Math.PI * d) / DIRECCIONES)])
-  const h = dirs.map(() => new Float64Array(W).fill(-Infinity))
+  const h = DIRS.map(() => new Float64Array(W).fill(-Infinity))
   const ext: [number, number][][] = Array.from({ length: W }, () => [])
   const V = Array.from({ length: W }, () => new Float64Array(S))
   const X = Array.from({ length: W }, () => new Float64Array(S))
   const Y = Array.from({ length: W }, () => new Float64Array(S))
 
   for (let d = 0; d < DIRECCIONES; d++) {
-    const [ux, uy] = dirs[d]
+    const [ux, uy] = DIRS[d]
     const hd = h[d]
     const ex = new Float64Array(W)
     const ey = new Float64Array(W)
@@ -72,6 +87,8 @@ export function calcularZona(t: Tablas, b0: number): Zona {
         const tm = s % T
         const n = (Math.floor(s / T) % MAX_ALTITUDES) + 1
         const b = Math.floor(s / (T * MAX_ALTITUDES))
+        // Donde esta el globo ahora es un hecho: solo se comprueba a partir del minuto 1.
+        if (podar && k > 0 && b !== t.iTerra && !vale(t, altM[b], x, y)) continue
         if (t.dentro[b]) marcar(k, x, y)
         if (k === H) continue
         const i = b * W + k
@@ -91,9 +108,17 @@ export function calcularZona(t: Tablas, b0: number): Zona {
             const ff = fr(t, b, b2, cl)
             let qx = x
             let qy = y
+            let valido = true
             for (let j = 0; j < tt.camino.length; j++) {
               const nx = x + tt.camino[j][0]
               const ny = y + tt.camino[j][1]
+              if (podar) {
+                const zc = zComprobar(t, b, b2, cl, j)
+                if (zc === zc && !vale(t, zc, nx, ny)) {
+                  valido = false
+                  break
+                }
+              }
               const f = ff[j]
               if (f === ENTERO) {
                 if (j < tt.camino.length - 1) marcar(k + 1 + j, nx, ny)
@@ -104,7 +129,7 @@ export function calcularZona(t: Tablas, b0: number): Zona {
               qx = nx
               qy = ny
             }
-            relajar(k + tt.minutos, st(b2, n + 1, 0), x + tt.dx, y + tt.dy)
+            if (valido) relajar(k + tt.minutos, st(b2, n + 1, 0), x + tt.dx, y + tt.dy)
           }
         }
       }
@@ -112,7 +137,7 @@ export function calcularZona(t: Tablas, b0: number): Zona {
     // Un minuto sin nada dentro del margen no tiene extremos.
     for (let k = 0; k <= H; k++) if (hd[k] > -Infinity) ext[k].push([ex[k], ey[k]])
   }
-  return { minutos: H, dirs, h, ext }
+  return { h, ext }
 }
 
 /** La zona interior de un minuto: la envolvente de sus extremos, sin repetidos. */

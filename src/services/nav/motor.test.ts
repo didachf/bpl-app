@@ -4,7 +4,8 @@ import type { Previsiones } from './perfil'
 import { parsePrevision } from './perfil'
 import { cargar1010, DESPEGUE_1010 } from './prueba-1010'
 import { aGeo, aPlano } from './geo'
-import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
+import { AJUSTES_POR_DEFECTO, type AjustesNav, type Objetivo } from './tipos'
+import { margenDe } from './objetivo'
 import { franjas, recortar } from './campo'
 import { franjaMasCercana } from './medidas'
 import { oraculo } from './oraculo'
@@ -116,4 +117,67 @@ describe('casos limite', () => {
     const r = navegar(entrada({ ahora: t, traza: [{ t, lat: pos.lat, lon: pos.lon, altM }] }))
     expect(r.avisos.some(a => a.startsWith('Horitzó escurçat a 30 min'))).toBe(true)
   })
+})
+
+describe('objetivo de altura con el 10/10', () => {
+  const rec = recortar(prev, franjas(aj.altMinM, aj.altMaxM, prev.elevM + 10), ahora, 60)
+  const b0 = franjaMasCercana(rec.campo.rejilla, altM)
+  const punto = aGeo(despegue, ZA[0], ZA[1])
+  const [ox, oy] = aPlano({ lat0: pos.lat, lon0: pos.lon }, punto.lat, punto.lon)
+  const casos: [string, Objetivo][] = [['aterrar', { tipo: 'aterrar' }], ['2 500 ft', { tipo: 'altitud', altM: 2500 * 0.3048 }]]
+
+  it('la rejilla empieza por terra', () => { expect(rec.campo.rejilla.etiqueta[0]).toBe('terra') })
+  it('sin objetivo, qualsevol', () => { expect(navegar(entrada()).objetivo).toEqual({ tipo: 'qualsevol' }) })
+
+  for (const [nom, obj] of casos) {
+    it(`${nom}: no peor que la fuerza bruta con el mismo margen`, () => {
+      const r = navegar(entrada({ objetivo: obj }))
+      const o = oraculo(rec.campo, rec.campo.nombres.length - 1, aj, b0, ox, oy, margenDe(obj, rec.campo.rejilla)!)
+      expect(r.objetivo).toEqual(obj)
+      expect(Number.isFinite(o.distM)).toBe(true)
+      expect(r.distanciaMinM!).toBeLessThanOrEqual(o.distM + 50)
+    })
+  }
+
+  it('aterrar: el plan acaba en terra, y si no fas res no baixes', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'aterrar' } }))
+    expect(r.plan[r.plan.length - 1].franja).toBe(0)
+    expect(r.ordenes.some(l => /^(Arribes a terra a .+ del punt a les \d\d:\d\d\.|El més a prop a terra: .+ a les \d\d:\d\d\.)$/.test(l))).toBe(true)
+    expect(r.siNoHaces).toBeNull()
+    expect(r.ordenes).toContain('Si no fas res, no baixes a terra.')
+  })
+  it('2 500 ft: el resumen dice la altura, y si no fas res no hi passes', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'altitud', altM: 2500 * 0.3048 } }))
+    expect(r.ordenes.some(l => /^(Passes a .+ del punt a 2 500 ft a les|El més a prop a 2 500 ft:)/.test(l))).toBe(true)
+    expect(r.siNoHaces).toBeNull()
+    expect(r.ordenes).toContain('Si no fas res, no hi passes a 2 500 ft.')
+  })
+  it('a la altura actual, si no fas res tiene distancia', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'altitud', altM: 1500 * 0.3048 } }))
+    expect(r.siNoHaces).not.toBeNull()
+  })
+  it('fuera del rango: no inventa plan', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'altitud', altM: 5000 * 0.3048 } }))
+    expect(r.estado).toBe('no-llega')
+    expect(r.distanciaMinM).toBeNull()
+    expect(r.plan).toEqual([])
+    expect(r.avisos.some(a => /^5 000 ft queda fora del rang de càlcul \(terra a .+ ft\)\.$/.test(a))).toBe(true)
+  })
+  it('ningun plan entra en el margen dentro del horizonte', () => {
+    const lento: AjustesNav = { ...aj, modos: { puja_lent: 0.05, puja_rapid: 0.05, baixa_lent: 0.05, baixa_rapid: 0.05 } }
+    const r = navegar(entrada({ ajustes: lento, objetivo: { tipo: 'altitud', altM: 3750 * 0.3048 } }))
+    expect(r.estado).toBe('no-llega')
+    expect(r.distanciaMinM).toBeNull()
+    expect(r.avisos).toContain("Cap pla hi passa a 3 750 ft dins de l'horitzó.")
+  })
+  it('aterrar, el mejor de tres por debajo de 2 s', () => {
+    let ms = Infinity
+    for (let i = 0; i < 3; i++) {
+      const t0 = performance.now()
+      navegar(entrada({ objetivo: { tipo: 'aterrar' } }))
+      ms = Math.min(ms, performance.now() - t0)
+    }
+    console.log(`motor con aterrar y el 10/10: ${ms.toFixed(0)} ms`)
+    expect(ms).toBeLessThan(2000)
+  }, 20000)
 })

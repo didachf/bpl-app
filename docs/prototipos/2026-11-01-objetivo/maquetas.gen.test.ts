@@ -5,14 +5,15 @@ import { it, expect } from 'vitest'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { navegar, type EntradaNav } from '../../../src/services/nav/motor'
 import { parsePrevision } from '../../../src/services/nav/perfil'
-import { cargar1010, DESPEGUE_1010 } from '../../../src/services/nav/prueba-1010'
+import { cargar1010, cargarRelieve1010, DESPEGUE_1010 } from '../../../src/services/nav/prueba-1010'
+import { maximo, sueloGeo, sueloPlano, techoPlano } from '../../../src/services/nav/relieve'
 import { aGeo, aPlano } from '../../../src/services/nav/geo'
 import { AJUSTES_POR_DEFECTO, type Objetivo } from '../../../src/services/nav/tipos'
 import { franjas, recortar } from '../../../src/services/nav/campo'
 import { franjaMasCercana } from '../../../src/services/nav/medidas'
 import { construirTablas, minutosTransito, velocidad } from '../../../src/services/nav/vertical'
 import { margenDe } from '../../../src/services/nav/objetivo'
-import { aproximacion, buscarPlan, caminoDirecto, caminoTabla, fracciones, type PlanInterno } from '../../../src/services/nav/plan'
+import { buscarPlan, caminoDirecto, caminoTabla, evaluar, fracciones, type PlanInterno } from '../../../src/services/nav/plan'
 import { LLEGA_M } from '../../../src/services/nav/parametros'
 
 const prev = parsePrevision(cargar1010())
@@ -23,6 +24,9 @@ const ahora = Date.parse('2026-10-10T06:34Z')
 const pos = aGeo(despegue, POS[0], POS[1])
 const altM = 1540 * 0.3048
 const aj = { ...AJUSTES_POR_DEFECTO, altMinM: 1500 * 0.3048, altMaxM: 3750 * 0.3048 }
+// El relieve real de la zona (spec 2026-11-01-relieve), en el plano del globo como el motor.
+const relieve = cargarRelieve1010()
+const planoGlobo = { lat0: pos.lat, lon0: pos.lon }
 
 const px = (x: number, y: number): [number, number] => [+(400 + x / 10).toFixed(1), +(850 - y / 10).toFixed(1)]
 const geoPx = (lat: number, lon: number) => px(...aPlano(despegue, lat, lon))
@@ -30,21 +34,24 @@ const geoPx = (lat: number, lon: number) => px(...aPlano(despegue, lat, lon))
 function entrada(punto: [number, number], objetivo: Objetivo, elevPuntoM?: number): EntradaNav {
   return {
     prevision: prev, traza: [{ t: ahora, lat: pos.lat, lon: pos.lon, altM }], ajustes: aj,
-    punto: aGeo(despegue, punto[0], punto[1]), ahora, incluirTerra: true, objetivo, elevPuntoM,
+    punto: aGeo(despegue, punto[0], punto[1]), ahora, incluirTerra: true, objetivo, elevPuntoM, relieve,
   }
 }
 
 /** El camino del plan que elige el motor, con la altitud de cada minuto, para pintarlo. */
 function camino(punto: [number, number], objetivo: Objetivo, elevPuntoM?: number) {
-  const terraM = objetivo.tipo === 'aterrar' && elevPuntoM !== undefined ? elevPuntoM + 10 : prev.elevM + 10
-  const vientoM = objetivo.tipo === 'aterrar' && elevPuntoM !== undefined ? prev.elevM + 10 : null
-  const c = recortar(prev, franjas(aj.altMinM, aj.altMaxM, terraM, vientoM), ahora, 60).campo
+  // Las mismas franjas que el motor con relieve: terra en el suelo de ahora o del punto, y por encima.
+  const g = aGeo(despegue, punto[0], punto[1])
+  const elevP = objetivo.tipo === 'aterrar' ? elevPuntoM ?? sueloGeo(relieve, g.lat, g.lon) : NaN
+  const terraM = (Number.isNaN(elevP) ? sueloPlano(relieve, planoGlobo)(0, 0) : elevP) + 10
+  const rej = franjas(Math.max(terraM, prev.elevM + 10) + 1.5, aj.altMaxM, terraM, prev.elevM + 10)
+  const c = recortar(prev, rej, ahora, 60).campo
   const m = margenDe(objetivo, c.rejilla)!
-  const t = construirTablas(c, c.nombres.length - 1, aj, m)
+  const t = construirTablas(c, c.nombres.length - 1, aj, m, { techo: techoPlano(relieve, planoGlobo), maxM: maximo(relieve) })
   const b0 = franjaMasCercana(c.rejilla, altM)
   const [ox, oy] = [punto[0] - POS[0], punto[1] - POS[1]]
   const quieto: PlanInterno = { franjas: [b0], clases: [], dur: [c.minutos] }
-  const aQ = aproximacion(caminoDirecto(c, c.nombres.length - 1, aj, quieto)!, ox, oy, fracciones(t, quieto))
+  const aQ = evaluar(t, quieto, caminoDirecto(c, c.nombres.length - 1, aj, quieto)!, ox, oy)
   const mejor = buscarPlan(t, b0, ox, oy)
   const cruza = mejor.distM <= LLEGA_M && aQ.distM > LLEGA_M
   const sinMejora = mejor.plan.franjas.length === 1 || (!cruza && mejor.distM > aQ.distM - LLEGA_M)

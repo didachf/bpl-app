@@ -309,3 +309,13 @@ describe('si no fas res, contra un cerro', () => {
     expect(r.avisos).toContain('Si no fas res, a les 08:10 passes a menys de 100 ft del terreny.')
   })
 })
+
+describe('si no fas res sin objetivo, cuando quedarse no vale', () => {
+  // El 10/10 con relieve: el globo va a 1 540 ft sobre suelo de 430 m, y la franja de 1 500 ft queda
+  // a 27 m del suelo, por debajo del minimo, desde el primer minuto.
+  it('lo dice con el terreno, no con terra', () => {
+    const r = navegar(entrada({ relieve: cargarRelieve1010() }))
+    expect(r.ordenes).toContain('Si no fas res, a les 08:35 passes a menys de 100 ft del terreny.')
+    expect(r.ordenes.some(l => l.includes('no hi passes a terra'))).toBe(false)
+  })
+})

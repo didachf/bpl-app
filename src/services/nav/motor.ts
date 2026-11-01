@@ -192,7 +192,10 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
   }
   if (sinMejora) resumen.push("Cap pla s'hi acosta més que quedar-te a aquesta altitud.")
   if (quietoPasa) resumen.push(`Si no fas res: ${distancia(aQuieto.distM)} a les ${hora(c.t0 + aQuieto.minuto * 60000)}.`)
-  else resumen.push(obj.tipo === 'aterrar' ? 'Si no fas res, no baixes a terra.' : `Si no fas res, no hi passes a ${et}.`)
+  else if (obj.tipo === 'aterrar') resumen.push('Si no fas res, no baixes a terra.')
+  else if (obj.tipo === 'altitud') resumen.push(`Si no fas res, no hi passes a ${et}.`)
+  // Sin objetivo, quedarse solo deja de contar por el terreno: el mismo texto que el aviso.
+  else resumen.push(`Si no fas res, a les ${hora(c.t0 + limQuieto * 60000)} passes a menys de ${alturaFt(e.ajustes.minSobreTerrenoM)} del terreny.`)
   if (dispersion.length > 1) {
     const ds = dispersion.map(x => x.distanciaMinM)
     const [dmin, dmax] = [distancia(Math.min(...ds)), distancia(Math.max(...ds))]

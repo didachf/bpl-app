@@ -4,6 +4,10 @@ Fecha: 30/10/2026. Amplía el spec de la pantalla de vuelo (`2026-10-10-pantalla
 en §6.4 (viento medido) y §6.8 (optimizador). Para el cálculo manda éste. Lo que se pinta sigue en
 el del 10/10, salvo lo nuevo de §8 de éste, que necesitará maquetas antes de programarse.
 
+**Enmendado el 01/11/2026** por `2026-11-01-objetivo-de-altura-design.md`: cada punto lleva un
+objetivo de altura (Aterrar, Passar a X ft o Qualsevol altura), y la distancia y la zona sólo
+cuentan dentro de su margen. Afecta a §6.3, §6.4, §6.5, §7 y §8.
+
 ## 1. Objetivo
 
 El piloto, 30/10/2026: marcar un punto en el mapa y que la app, con todos los datos medidos en

@@ -61,7 +61,10 @@ function avanzarParte(
   const d = distSegmento(pax, pay, pbx, pby, ox, oy)
   if (d < s.m) {
     s.m = d
-    s.mk = Math.round(k - 1 + (Math.hypot(pax - ox, pay - oy) < Math.hypot(pbx - ox, pby - oy) ? f[0] : f[1]))
+    // El minuto en que acaba el trozo, para que el corte de las ordenes incluya el cambio que lleva
+    // al punto. Solo si el trozo empieza con el minuto y su inicio es lo mas cerca, el de antes.
+    const alInicio = f[0] === 0 && Math.hypot(pax - ox, pay - oy) < Math.hypot(pbx - ox, pby - oy)
+    s.mk = alInicio ? k - 1 : k
   }
 }
 

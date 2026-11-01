@@ -112,9 +112,13 @@ describe('aproximacion con margen', () => {
     expect(aproximacion(cam, 150, 10, [null, [0.5, 1]]).distM).toBeCloseTo(10)
     expect(aproximacion(cam, 150, 10, [null, [0.8, 1]]).distM).toBeCloseTo(Math.hypot(30, 10))
   })
-  it('el minuto es el del extremo del trozo mas cercano', () => {
+  // Las ordenes se cortan en ese minuto: si el trozo de dentro esta a mitad de un cambio, el minuto
+  // tiene que ser el del final del trozo, o el corte deja fuera el cambio que lleva al punto.
+  it('el minuto es el del final del trozo, salvo que el trozo empiece el minuto y su inicio sea lo mas cerca', () => {
     expect(aproximacion(cam, 150, 10, [null, [0.8, 1]]).minuto).toBe(2)
-    expect(aproximacion(cam, 150, 10, [[0, 0.2], null]).minuto).toBe(0)
+    expect(aproximacion(cam, 150, 10, [[0, 0.2], null]).minuto).toBe(1)
+    expect(aproximacion(cam, 150, 10, [[0.1, 0.2], null]).minuto).toBe(1)
+    expect(aproximacion(cam, -50, 10, [[0, 0.2], null]).minuto).toBe(0)
   })
   it('sin nada dentro, infinito', () => {
     expect(aproximacion(cam, 150, 10, [null, null]).distM).toBe(Infinity)

@@ -1438,3 +1438,28 @@ git commit -m "docs: capa de datos de la pantalla de vuelo, specs y estado"
 ```
 
 - [ ] **Step 5: Cerrar la rama** con `superpowers:finishing-a-development-branch`. Fusionar en `main` en local lo decido yo, como el 01/11. Sin push ni publicar.
+
+---
+
+## Cambios durante la ejecución
+
+1. **Tarea 9, el worker no sale en `dist/assets`** con el build normal: nada de la app importa
+   todavía `crearCalculadorNavegador`, así que el módulo no entra en el grafo. Comprobado con
+   un import temporal en `main.tsx` (sin commit): sale `nav.worker-*.js`, 24 KB. Saldrá solo
+   cuando la pantalla lo importe.
+2. **`dist/` está en el repositorio** y sólo cambia al publicar (último commit, el del 10/10).
+   El build de la tarea 9 lo tocó y se devolvió a como estaba. Las comprobaciones de la tarea
+   10 se hicieron con builds en el scratchpad (`--outDir`), no en `dist/`.
+3. **Tarea 10, paso 1, la caja del eval tenía x e y cambiadas** respecto a `relieve.py` (allí
+   `geo(x, y)` es este y norte). La primera vuelta comparó cajas distintas. Con la caja bien,
+   diferencia 0 en los 29 145 nodos. El código no cambió.
+4. **Tarea 10, paso 3, ampliado:** además del mosaico inventado servido de la caché, se
+   comprobó que un mosaico real visto con conexión (`<img crossOrigin>`) queda en la caché
+   `mosaicos`. Workbox lo guarda en segundo plano: tarda un momento en aparecer.
+5. **Tarea 9, paso 3:** la primera vuelta de la suite dio 1 fallo en 652, justo después del
+   build. No se reprodujo en once vueltas más, dos con un build en paralelo. No se sabe cuál
+   fue: la salida se cortó con `tail`. Las candidatas son las tres pruebas de tiempo de
+   `motor.test.ts` (20 s de límite).
+6. Mutaciones de más, no previstas en el plan: el corte al cancelar y el «ya está» de
+   `bajarMosaicos`, y el «gana el último» del calculador. Las tres detectadas.
+7. Chromium para pruebas no estaba instalado: `install-browser chrome-for-testing`.

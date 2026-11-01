@@ -34,6 +34,11 @@ de elevación de open-meteo) en el despegue de Tàrrega, bajo el globo, en la zo
 diferencias de 0 a 3 m. Una zona de vuelo de 30 × 30 km son unos 25 mosaicos, menos de 3 MB, que la
 tablet baja con el plan y guarda para volar sin cobertura (fase 2, pantalla).
 
+En la app (plan `2026-11-01-datos-de-vuelo`, `src/services/vuelo/`): 20 km alrededor del despegue,
+36 mosaicos y unos 3,6 MB, rejilla de 100 m (400 × 400 nodos), en la caché `mosaicos` con la
+ortofoto. Comprobado en Chromium el 01/11/2026: la rejilla del 10/10 sale idéntica a
+`relieve_10-10.json` en sus 29 145 nodos, y se monta en 15 ms con los mosaicos ya leídos.
+
 El motor no baja nada: recibe una rejilla regular en grados.
 
 ```ts

@@ -5,7 +5,7 @@
 // 2 min sobre acumulados y transitos ya calculados, refinado de 1 min y eleccion.
 import { idx, type Campo } from './campo'
 import { envolvente } from './geo'
-import { fr, modoDe, tr, transito, vale, velocidad, zComprobar, type Tablas } from './vertical'
+import { fr, minutosTransito, modoDe, tr, transito, vale, velocidad, zComprobar, type Tablas } from './vertical'
 import { MINUTO_ENTERO, type Frac } from './objetivo'
 import type { AjustesNav, Tramo } from './tipos'
 import {
@@ -189,6 +189,52 @@ export function caminoTabla(t: Tablas, p: PlanInterno): Camino | null {
     k = fin
   }
   return out
+}
+
+/** El camino de las tablas con la altitud al final de cada minuto, para pintarlo. */
+export function caminoConAltura(t: Tablas, p: PlanInterno, aj: AjustesNav): { x: number; y: number; z: number }[] | null {
+  const c = t.c
+  const cam = caminoTabla(t, p)
+  if (cam === null) return null
+  const z: number[] = [c.rejilla.altM[p.franjas[0]]]
+  for (let i = 0; i < p.franjas.length; i++) {
+    const b = p.franjas[i]
+    if (i > 0) {
+      const a = p.franjas[i - 1]
+      const vel = velocidad(aj, c.rejilla.altM[b] > c.rejilla.altM[a], p.clases[i - 1])
+      const n = minutosTransito(c, a, b, vel)
+      for (let j = 1; j <= n; j++) {
+        const dz = Math.min(Math.abs(c.rejilla.altM[b] - c.rejilla.altM[a]), vel * 60 * j)
+        z.push(c.rejilla.altM[a] + Math.sign(c.rejilla.altM[b] - c.rejilla.altM[a]) * dz)
+      }
+    }
+    const fin = i === p.franjas.length - 1 ? c.minutos : z.length - 1 + p.dur[i]
+    while (z.length - 1 < fin) z.push(c.rejilla.altM[b])
+  }
+  return cam.map(([x, y], k) => ({ x, y, z: z[Math.min(k, z.length - 1)] }))
+}
+
+/**
+ * El punto del camino mas cercano a (ox, oy) dentro del margen del objetivo,
+ * sobre el trozo de cada minuto y hasta donde el plan vale (como `evaluar`).
+ */
+export function masCercaEnMargen(t: Tablas, p: PlanInterno, cam: Camino, ox: number, oy: number): [number, number] | null {
+  const fr = fracciones(t, p)
+  const hasta = Math.min(fr.length, limite(t, p, cam) - 1, cam.length - 1)
+  let mejor: [number, number] | null = null
+  let dmin = Infinity
+  for (let k = 0; k < hasta; k++) {
+    const f = fr[k]
+    if (f === null) continue
+    const paso = (f[1] - f[0]) / 200 || 1
+    for (let s = f[0]; s <= f[1] + 1e-9; s += paso) {
+      const x = cam[k][0] + s * (cam[k + 1][0] - cam[k][0])
+      const y = cam[k][1] + s * (cam[k + 1][1] - cam[k][1])
+      const d = Math.hypot(x - ox, y - oy)
+      if (d < dmin) { dmin = d; mejor = [x, y] }
+    }
+  }
+  return mejor
 }
 
 /**

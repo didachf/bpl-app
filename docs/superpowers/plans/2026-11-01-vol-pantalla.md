@@ -430,3 +430,40 @@ Ajustar la prueba de `colorAltitud` si el reparto en cuatro escalones da otro co
 ### Task 10: Cierre
 
 - [ ] Todo en verde, `tsc` limpio, «Cambios durante la ejecución», STATUS, y fusionar en `main` en local. Sin push ni publicar: eso lo decide Dídac, y con esto ya hay algo que probar en la tablet.
+
+---
+
+## Cambios durante la ejecución
+
+1. **Tarea 1.** El camino que devuelve el motor llega hasta el punto más cercano y no hasta el
+   final del horizonte, como las maquetas. El punto más cercano se busca sólo hasta donde el plan
+   vale por el terreno (como `evaluar`): la mutación que lo quitaba sobrevivía con el 10/10 y hubo
+   que añadir una prueba con el cerro sintético.
+2. **Tareas 3 y 4.** El tema claro de los colores de navegación y la clase `.sobre-mapa` para lo
+   que va encima de la ortofoto. La banda «Vol en marxa» y la entrada desde Operar van en la tarea 4,
+   cuando ya existe el proveedor. La entrada desde el final del Últim xequeig no se hizo: queda Operar.
+3. **Tarea 5.** Començar ensena cada fase en cuanto acaba (`prepararVol` con `alPrevisio` y
+   `alRelleu`), y se puede calibrar y abrir la pantalla mientras baja la ortofoto. La ventana del
+   pronóstico dice «de demà» si acaba otro día.
+4. **Comprobación en Chromium, fallo de verdad:** cuatro mosaicos del ICGC no contestaron y Chrome
+   los dio por perdidos a los 10 min, con los cuatro huecos de descarga ocupados y la pantalla
+   parada en «Baixant…». Ahora cada mosaico tiene 15 s y open-meteo 20 s, con prueba.
+5. **Comprobación en Chromium, otros:** Leaflet saltaba al quitar capas de un mapa ya quitado
+   (`retirar`), las costuras entre mosaicos con zoom fraccionario (zoom entero), la altitud de la
+   franja A pisaba «ft» (44 px), el botón de guardar quedaba bajo la franja con el paso de altitud
+   (fijo abajo, defecto 4 de la especificación), y los campos de coordenadas perdían valores con
+   cambios seguidos (actualización funcional).
+6. La franja B lleva «Més» aunque la maqueta no: sin él no se puede acabar el vuelo sin waypoint
+   activo. CAMPS no sale y Vent sale desactivado con «Aviat» (decisión del plan).
+7. La línea de altura sobre el terreno va en ámbar por debajo de 300 ft, y en gris por encima.
+8. Recorrido comprobado con GPS simulado (`gps_terra.json` y `gps_vol.json`): Començar con
+   pronóstico real (una petición), relieve y 1 764 mosaicos (49 MB en menos de 20 s), calibración
+   (−46 m), mapa sin waypoint, Marcar al mapa con Aterrar y Passar a 2 500 ft, guardar y navegar,
+   Coordenades en grados minutos y segundos, borrar el activo (§6.9: desaparece todo lo del
+   waypoint), Més, Sortir a l'app con la banda y vuelta, y Acabar vol con confirmación. Sin errores
+   de la app en la consola.
+9. **Sin comprobar:** el tema oscuro en pantalla (son los colores de las maquetas), la tablet de
+   verdad (necesita publicar) y el GPS real. Con la traza simulada, el plan hacia el mismo punto
+   cambia mucho de un minuto a otro («No s'hi arriba» y luego 2 m): el viento medido de una traza
+   sintética es el mismo a todas las alturas. Hay que mirarlo con un vuelo de verdad.
+10. 718 pruebas.

@@ -319,3 +319,42 @@ describe('si no fas res sin objetivo, cuando quedarse no vale', () => {
     expect(r.ordenes.some(l => l.includes('no hi passes a terra'))).toBe(false)
   })
 })
+
+describe('el camino y el punto mas cercano', () => {
+  const casos: [string, Objetivo][] = [
+    ['aterrar', { tipo: 'aterrar' }],
+    ['2 500 ft', { tipo: 'altitud', altM: 2500 * 0.3048 }],
+    ['qualsevol', { tipo: 'qualsevol' }],
+  ]
+  const punto = aGeo(despegue, ZA[0], ZA[1])
+  const res = new Map(casos.map(([n, objetivo]) => [n, navegar(entrada({ objetivo, relieve: cargarRelieve1010() }))]))
+
+  for (const [n] of casos) {
+    it(`${n}: el punto mas cercano esta a la distancia que dice el motor`, () => {
+      const r = res.get(n)!
+      expect(r.masCerca).not.toBe(null)
+      const [x, y] = aPlano({ lat0: punto.lat, lon0: punto.lon }, r.masCerca!.lat, r.masCerca!.lon)
+      expect(Math.abs(Math.hypot(x, y) - r.distanciaMinM!)).toBeLessThan(1)
+    })
+    it(`${n}: el camino empieza en el globo, un punto por minuto`, () => {
+      const r = res.get(n)!
+      expect(r.camino[0].lat).toBeCloseTo(pos.lat, 6)
+      expect(r.camino[0].lon).toBeCloseTo(pos.lon, 6)
+      expect(r.camino.length).toBeGreaterThan(10)
+    })
+  }
+
+  it('aterrar acaba a ras, y passar a 2 500 ft pasa por 2 500 ft', () => {
+    const a = res.get('aterrar')!
+    expect(a.camino[a.camino.length - 1].aRas).toBe(true)
+    expect(a.camino[0].aRas).toBe(false)
+    const p = res.get('2 500 ft')!
+    expect(p.camino.some(c => Math.abs(c.altM - 2500 * 0.3048) < 40)).toBe(true)
+  })
+
+  it('sin punto no hay camino ni punto mas cercano', () => {
+    const r = navegar(entrada({ punto: null }))
+    expect(r.camino).toEqual([])
+    expect(r.masCerca).toBe(null)
+  })
+})

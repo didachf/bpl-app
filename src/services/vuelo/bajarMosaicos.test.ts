@@ -79,3 +79,15 @@ describe('bajar mosaicos', () => {
     expect(vistos).toEqual([1, 2, 3, 4, 5, 6])
   })
 })
+
+describe('una peticion que no contesta', () => {
+  it('cuenta como fallida al pasar el limite, y las demas siguen', async () => {
+    const { a } = almacenEnMemoria()
+    // La primera no contesta nunca, salvo que la corten.
+    const f = ((u: string | URL | Request, init?: RequestInit) => String(u).endsWith('0.png')
+      ? new Promise<Response>((_, ko) => init?.signal?.addEventListener('abort', () => ko(new DOMException('corta', 'AbortError'))))
+      : Promise.resolve(new Response('x'))) as typeof fetch
+    const p = await bajarMosaicos(urls(3), a, { fetch: f, limitMs: 30 })
+    expect(p).toMatchObject({ hechos: 3, bajados: 2, fallidos: 1 })
+  })
+})

@@ -15,9 +15,17 @@ export interface OpcionesBajar {
   alProgreso?: (p: Progreso) => void
   senal?: AbortSignal
   aLaVez?: number
+  /** Una peticion que no contesta en este tiempo cuenta como fallida. */
+  limitMs?: number
 }
 
 export const A_LA_VEZ = 4
+/**
+ * Comprobado en Chromium el 01/11/2026: cuatro mosaicos del ICGC no contestaron
+ * y Chrome tardo 10 min en darlos por perdidos, con los cuatro huecos ocupados y
+ * la descarga parada. Con un limite, fallan y las demas siguen.
+ */
+export const LIMIT_MS = 15_000
 
 export async function bajarMosaicos(urls: string[], almacen: Almacen, o: OpcionesBajar = {}): Promise<Progreso> {
   const f = o.fetch ?? fetch
@@ -30,7 +38,8 @@ export async function bajarMosaicos(urls: string[], almacen: Almacen, o: Opcione
       return
     }
     try {
-      const r = await f(url, { signal: o.senal })
+      const limit = AbortSignal.timeout(o.limitMs ?? LIMIT_MS)
+      const r = await f(url, { signal: o.senal === undefined ? limit : AbortSignal.any([o.senal, limit]) })
       if (!r.ok) {
         p.fallidos++
         return

@@ -9,6 +9,9 @@ export type IconName =
   | 'derecha' | 'izquierda' | 'abajo' | 'arriba'
   | 'inicio' | 'lista' | 'viento' | 'checklist' | 'ajustes'
   | 'globo' | 'persona' | 'lapiz' | 'papelera' | 'nube'
+  // Pantalla de vuelo, de design/pantalla-de-vol/ESPEC_TAULETA.md §0.
+  | 'camps' | 'waypoint' | 'centrar' | 'mapa' | 'vent' | 'mes' | 'tancar' | 'marcar' | 'coordenades'
+  | 'parar' | 'enrere'
 
 const TRAZOS: Record<IconName, string> = {
   check: 'M20 6 9 17l-5-5',
@@ -32,6 +35,18 @@ const TRAZOS: Record<IconName, string> = {
   lapiz: 'M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16Z',
   papelera: 'M4 7h16 M9 7V5h6v2 M6 7l1 13h10l1-13 M10 11v6 M14 11v6',
   nube: 'M7 18a4 4 0 0 1 .6-8 5.5 5.5 0 0 1 10.5 1.7A3.5 3.5 0 0 1 17.5 18Z',
+  camps: 'M3 20h18 M5 20l3-9h8l3 9 M12 4v4 M10 6h4',
+  waypoint: 'M12 21s-6-5.4-6-11a6 6 0 0 1 12 0c0 5.6-6 11-6 11z M12 7.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Z',
+  centrar: 'M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z M12 2v4 M12 18v4 M2 12h4 M18 12h4',
+  mapa: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z M9 4v14 M15 6v14',
+  vent: 'M3 8h11a3 3 0 1 0-3-3 M3 12h16a3 3 0 1 1-3 3 M3 16h7',
+  // Tres puntos: trazos de largo casi nulo con punta redonda, a falta de relleno.
+  mes: 'M5 12h.01 M12 12h.01 M19 12h.01',
+  tancar: 'M6 6l12 12 M18 6L6 18',
+  marcar: 'M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z M12 2v5 M12 17v5 M2 12h5 M17 12h5',
+  coordenades: 'M4 9h16 M4 15h16 M10 3 8 21 M16 3l-2 18',
+  parar: 'M8 6h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z',
+  enrere: 'M15 5l-7 7 7 7',
 }
 
 export interface IconProps {

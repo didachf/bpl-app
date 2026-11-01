@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   aproximacion, aTramos, buscarPlan, caminoDirecto, caminoTabla, candidatas, debeSustituir, elegir, evaluar, fracciones,
-  limite, type Evaluado, type PlanInterno,
+  limite, masCercaEnMargen, type Evaluado, type PlanInterno,
 } from './plan'
 import { fraccionesDirectas, oraculo } from './oraculo'
 import { margenDe, SIN_MARGEN } from './objetivo'
@@ -257,6 +257,11 @@ describe('el relieve', () => {
   it('la distancia solo cuenta hasta alli', () => {
     // mantener F1 hacia (5 000, 0): lo mas cerca valido es el minuto 6, a 1 800 m
     expect(evaluar(t, mantener(1), caminoTabla(t, mantener(1))!, 5000, 0).distM).toBeCloseTo(3200, 6)
+  })
+  it('el punto mas cercano tambien, en el minuto 6 (1 800 m) y no encima del punto', () => {
+    const [x, y] = masCercaEnMargen(t, mantener(1), caminoTabla(t, mantener(1))!, 5000, 0)!
+    expect(x).toBeCloseTo(1800, 6)
+    expect(y).toBeCloseTo(0, 6)
   })
   it('la busqueda pasa el cerro por encima o a ras', () => {
     const e = buscarPlan(t, 1, 5000, 0)

@@ -12,7 +12,9 @@ import { franjaMasCercana, medidasGps } from './medidas'
 import { corregirCampo } from './correccion'
 import { construirTablas } from './vertical'
 import { calcularZona, fueraSeguro, poligono } from './zona'
-import { aTramos, buscarPlan, caminoDirecto, caminoTabla, evaluar, limite, type PlanInterno } from './plan'
+import {
+  aTramos, buscarPlan, caminoConAltura, caminoDirecto, caminoTabla, evaluar, limite, masCercaEnMargen, type PlanInterno,
+} from './plan'
 import { maximo, sueloGeo, sueloPlano, techoPlano, type Terreno } from './relieve'
 import { alturaFt, distancia, hora, ordenes } from './ordenes'
 import { margenDe, SIN_MARGEN, tocaRango } from './objetivo'
@@ -54,6 +56,7 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
     estado, objetivo: obj, plan: [], distanciaMinM: null, horaMin: null, siNoHaces: null, dispersion: [],
     fueraSeguro: false, zona: [], ordenes: [], avisos, calculadoA: iso(e.ahora),
     previsionDe: e.prevision.horas.length > 0 ? iso(e.prevision.horas[0]) : null,
+    camino: [], masCerca: null,
   })
 
   const actual = e.traza[e.traza.length - 1]
@@ -202,8 +205,18 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
     resumen.push(dmin === dmax ? `Amb tots els models, ${dmin}.` : `Amb cada model, entre ${dmin} i ${dmax}.`)
   }
 
+  // Para pintar: el camino hasta el punto mas cercano, y ese punto (spec de la pantalla, O11 y O12).
+  const camTabla = caminoTabla(t, elegido.plan)!
+  const mc = masCercaEnMargen(t, elegido.plan, camTabla, ox, oy)
+  const zTerra = t.iTerra >= 0 ? c.rejilla.altM[t.iTerra] : null
+  const camino = (caminoConAltura(t, elegido.plan, e.ajustes) ?? [])
+    .slice(0, Math.max(1, Math.ceil(elegido.minuto)) + 1)
+    .map(({ x, y, z }) => ({ ...aGeo(plano, x, y), altM: z, aRas: zTerra !== null && Math.abs(z - zTerra) < 1 }))
+
   return {
     ...vacio(llega ? 'llega' : 'no-llega'),
+    camino,
+    masCerca: mc === null ? null : aGeo(plano, mc[0], mc[1]),
     plan: tramos,
     distanciaMinM: elegido.distM,
     horaMin: iso(horaMs),

@@ -28,7 +28,8 @@ export default defineConfig({
         start_url: BASE,
         scope: BASE,
         display: 'standalone',
-        orientation: 'portrait',
+        // 'any' y no 'portrait': la tablet vuela apaisada (spec 10/10 §7.4).
+        orientation: 'any',
         background_color: '#1a1a19',
         theme_color: '#1a1a19',
         icons: [

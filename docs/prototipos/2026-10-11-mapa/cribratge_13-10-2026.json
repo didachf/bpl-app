@@ -1,0 +1,5511 @@
+{
+ "fecha": "2026-10-13",
+ "generat": "2026-10-11 13:05 CEST",
+ "llocs": {
+  "agramunt": {
+   "lat": 41.7577,
+   "lon": 1.0871,
+   "elev": 409.0,
+   "sol": {
+    "sunrise": "2026-10-13T08:05",
+    "sunset": "2026-10-13T19:17"
+   },
+   "superficie": [
+    {
+     "h": "06:00",
+     "min": 2.8,
+     "med": 4.15,
+     "max": 5.8,
+     "dir": 59,
+     "gmed": 6.2,
+     "gmax": 9.7,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 600,
+     "n_boira": 1,
+     "low_max": 55,
+     "cape_max": 0,
+     "t_med": 14.5,
+     "alt": {
+      "80m": {
+       "med": 5.8,
+       "max": 10.8,
+       "dir": 83
+      },
+      "925hPa": {
+       "med": 2.5,
+       "max": 3.6,
+       "dir": 163
+      },
+      "850hPa": {
+       "med": 4.9,
+       "max": 5.9,
+       "dir": 264
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.8,
+      "gfs_seamless": 3.2,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 5.8,
+      "ecmwf_ifs025": 5.2,
+      "meteofrance_arome_france": 5.2,
+      "meteofrance_arome_france_hd": 4.2
+     },
+     "wg_models": {
+      "icon_eu": 4.9,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 6.4,
+      "meteofrance_arpege_europe": 8.2,
+      "ecmwf_ifs025": 9.7,
+      "meteofrance_arome_france": 8.2,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "07:00",
+     "min": 3.0,
+     "med": 4.15,
+     "max": 5.5,
+     "dir": 58,
+     "gmed": 6.3,
+     "gmax": 8.7,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 560,
+     "n_boira": 1,
+     "low_max": 58,
+     "cape_max": 0,
+     "t_med": 14.2,
+     "alt": {
+      "80m": {
+       "med": 4.3,
+       "max": 11.4,
+       "dir": 81
+      },
+      "925hPa": {
+       "med": 1.8,
+       "max": 3.3,
+       "dir": 151
+      },
+      "850hPa": {
+       "med": 5.4,
+       "max": 6.9,
+       "dir": 273
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.0,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 5.5,
+      "ecmwf_ifs025": 4.5,
+      "meteofrance_arome_france": 4.6,
+      "meteofrance_arome_france_hd": 4.2
+     },
+     "wg_models": {
+      "icon_eu": 5.2,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 6.6,
+      "meteofrance_arpege_europe": 7.6,
+      "ecmwf_ifs025": 8.7,
+      "meteofrance_arome_france": 7.6,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "08:00",
+     "min": 3.1,
+     "med": 3.85,
+     "max": 5.5,
+     "dir": 57,
+     "gmed": 6.2,
+     "gmax": 8.0,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 820,
+     "n_boira": 1,
+     "low_max": 55,
+     "cape_max": 0,
+     "t_med": 13.9,
+     "alt": {
+      "80m": {
+       "med": 4.9,
+       "max": 10.8,
+       "dir": 82
+      },
+      "925hPa": {
+       "med": 1.7,
+       "max": 3.3,
+       "dir": 294
+      },
+      "850hPa": {
+       "med": 5.5,
+       "max": 7.4,
+       "dir": 279
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.1,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 5.5,
+      "ecmwf_ifs025": 3.8,
+      "meteofrance_arome_france": 4.9,
+      "meteofrance_arome_france_hd": 4.3
+     },
+     "wg_models": {
+      "icon_eu": 5.4,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 6.4,
+      "meteofrance_arpege_europe": 7.2,
+      "ecmwf_ifs025": 8.0,
+      "meteofrance_arome_france": 6.4,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "09:00",
+     "min": 2.7,
+     "med": 3.2,
+     "max": 5.5,
+     "dir": 56,
+     "gmed": 5.6,
+     "gmax": 7.6,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 480,
+     "n_boira": 1,
+     "low_max": 54,
+     "cape_max": 0,
+     "t_med": 14.9,
+     "alt": {
+      "80m": {
+       "med": 4.9,
+       "max": 10.6,
+       "dir": 80
+      },
+      "925hPa": {
+       "med": 1.8,
+       "max": 3.5,
+       "dir": 305
+      },
+      "850hPa": {
+       "med": 5.8,
+       "max": 7.1,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.7,
+      "gfs_seamless": 3.2,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 5.5,
+      "ecmwf_ifs025": 3.3,
+      "meteofrance_arome_france_hd": 3.9
+     },
+     "wg_models": {
+      "icon_eu": 5.2,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 5.6,
+      "meteofrance_arpege_europe": 7.2,
+      "ecmwf_ifs025": 7.6,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "10:00",
+     "min": 1.6,
+     "med": 2.5,
+     "max": 5.5,
+     "dir": 55,
+     "gmed": 4.9,
+     "gmax": 8.4,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 19460,
+     "n_boira": 0,
+     "low_max": 37,
+     "cape_max": 0,
+     "t_med": 16.6,
+     "alt": {
+      "80m": {
+       "med": 3.5,
+       "max": 10.1,
+       "dir": 79
+      },
+      "925hPa": {
+       "med": 1.9,
+       "max": 3.9,
+       "dir": 253
+      },
+      "850hPa": {
+       "med": 5.5,
+       "max": 7.4,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.9,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 1.6,
+      "ukmo_global_deterministic_10km": 2.1,
+      "meteofrance_arpege_europe": 5.5,
+      "ecmwf_ifs025": 2.5,
+      "meteofrance_arome_france_hd": 3.5
+     },
+     "wg_models": {
+      "icon_eu": 4.9,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 8.4,
+      "ecmwf_ifs025": 7.6,
+      "meteofrance_arome_france_hd": 5.8
+     }
+    },
+    {
+     "h": "11:00",
+     "min": 0.5,
+     "med": 1.7,
+     "max": 5.2,
+     "dir": 66,
+     "gmed": 4.7,
+     "gmax": 9.5,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 27,
+     "cape_max": 0,
+     "t_med": 18.9,
+     "alt": {
+      "80m": {
+       "med": 2.1,
+       "max": 7.1,
+       "dir": 76
+      },
+      "925hPa": {
+       "med": 1.9,
+       "max": 4.3,
+       "dir": 240
+      },
+      "850hPa": {
+       "med": 5.3,
+       "max": 7.4,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.5,
+      "gfs_seamless": 2.0,
+      "gem_seamless": 0.8,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 5.2,
+      "ecmwf_ifs025": 1.7,
+      "meteofrance_arome_france_hd": 2.3
+     },
+     "wg_models": {
+      "icon_eu": 3.9,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 9.5,
+      "ecmwf_ifs025": 7.8,
+      "meteofrance_arome_france_hd": 5.8
+     }
+    },
+    {
+     "h": "12:00",
+     "min": 0.3,
+     "med": 1.35,
+     "max": 2.5,
+     "dir": 178,
+     "gmed": 5.45,
+     "gmax": 8.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 11,
+     "cape_max": 10,
+     "t_med": 20.8,
+     "alt": {
+      "80m": {
+       "med": 1.1,
+       "max": 3.0,
+       "dir": 185
+      },
+      "925hPa": {
+       "med": 1.9,
+       "max": 5.0,
+       "dir": 236
+      },
+      "850hPa": {
+       "med": 4.7,
+       "max": 7.6,
+       "dir": 276
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.4,
+      "gfs_seamless": 1.3,
+      "gem_seamless": 1.2,
+      "ukmo_global_deterministic_10km": 2.5,
+      "meteofrance_arpege_europe": 2.2,
+      "ecmwf_ifs025": 0.3
+     },
+     "wg_models": {
+      "icon_eu": 4.1,
+      "gfs_seamless": 0.6,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 6.8,
+      "meteofrance_arpege_europe": 8.9,
+      "ecmwf_ifs025": 8.6
+     }
+    },
+    {
+     "h": "13:00",
+     "min": 2.1,
+     "med": 3.6,
+     "max": 4.2,
+     "dir": 229,
+     "gmed": 8.15,
+     "gmax": 10.3,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 23,
+     "cape_max": 30,
+     "t_med": 22.1,
+     "alt": {
+      "80m": {
+       "med": 3.0,
+       "max": 4.5,
+       "dir": 236
+      },
+      "925hPa": {
+       "med": 2.8,
+       "max": 5.9,
+       "dir": 231
+      },
+      "850hPa": {
+       "med": 4.0,
+       "max": 7.6,
+       "dir": 276
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.8,
+      "gfs_seamless": 3.9,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 4.2,
+      "ecmwf_ifs025": 2.1
+     },
+     "wg_models": {
+      "icon_eu": 6.6,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 9.9,
+      "meteofrance_arpege_europe": 10.3,
+      "ecmwf_ifs025": 9.7
+     }
+    },
+    {
+     "h": "14:00",
+     "min": 3.1,
+     "med": 4.5,
+     "max": 5.1,
+     "dir": 245,
+     "gmed": 8.65,
+     "gmax": 11.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 30,
+     "cape_max": 40,
+     "t_med": 23.1,
+     "alt": {
+      "80m": {
+       "med": 3.9,
+       "max": 5.1,
+       "dir": 244
+      },
+      "925hPa": {
+       "med": 3.9,
+       "max": 6.3,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 3.6,
+       "max": 7.1,
+       "dir": 275
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.1,
+      "gfs_seamless": 4.9,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 5.0,
+      "ecmwf_ifs025": 3.3
+     },
+     "wg_models": {
+      "icon_eu": 7.2,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 4.3,
+      "ukmo_global_deterministic_10km": 11.9,
+      "meteofrance_arpege_europe": 11.9,
+      "ecmwf_ifs025": 10.1
+     }
+    },
+    {
+     "h": "15:00",
+     "min": 2.9,
+     "med": 4.8,
+     "max": 5.4,
+     "dir": 248,
+     "gmed": 8.25,
+     "gmax": 12.6,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 23,
+     "cape_max": 40,
+     "t_med": 23.9,
+     "alt": {
+      "80m": {
+       "med": 4.4,
+       "max": 5.8,
+       "dir": 245
+      },
+      "925hPa": {
+       "med": 4.2,
+       "max": 6.1,
+       "dir": 235
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 5.7,
+       "dir": 261
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 4.5,
+      "gem_seamless": 5.1,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 5.4,
+      "ecmwf_ifs025": 2.9
+     },
+     "wg_models": {
+      "icon_eu": 7.4,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 5.1,
+      "ukmo_global_deterministic_10km": 11.9,
+      "meteofrance_arpege_europe": 12.6,
+      "ecmwf_ifs025": 9.1
+     }
+    },
+    {
+     "h": "16:00",
+     "min": 2.1,
+     "med": 4.35,
+     "max": 5.4,
+     "dir": 251,
+     "gmed": 7.6,
+     "gmax": 12.6,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 11,
+     "cape_max": 30,
+     "t_med": 24.5,
+     "alt": {
+      "80m": {
+       "med": 4.6,
+       "max": 5.8,
+       "dir": 249
+      },
+      "925hPa": {
+       "med": 4.0,
+       "max": 5.4,
+       "dir": 239
+      },
+      "850hPa": {
+       "med": 2.8,
+       "max": 8.1,
+       "dir": 223
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.4,
+      "gfs_seamless": 4.2,
+      "gem_seamless": 5.4,
+      "ukmo_global_deterministic_10km": 4.5,
+      "meteofrance_arpege_europe": 5.1,
+      "ecmwf_ifs025": 2.1
+     },
+     "wg_models": {
+      "icon_eu": 7.4,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 10.9,
+      "meteofrance_arpege_europe": 12.6,
+      "ecmwf_ifs025": 7.8
+     }
+    },
+    {
+     "h": "17:00",
+     "min": 1.3,
+     "med": 3.7,
+     "max": 4.7,
+     "dir": 258,
+     "gmed": 7.1,
+     "gmax": 11.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 7,
+     "cape_max": 20,
+     "t_med": 24.4,
+     "alt": {
+      "80m": {
+       "med": 4.2,
+       "max": 5.2,
+       "dir": 259
+      },
+      "925hPa": {
+       "med": 3.9,
+       "max": 4.8,
+       "dir": 245
+      },
+      "850hPa": {
+       "med": 2.4,
+       "max": 9.8,
+       "dir": 184
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.5,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 4.7,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 4.1,
+      "ecmwf_ifs025": 1.3
+     },
+     "wg_models": {
+      "icon_eu": 7.2,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 5.2,
+      "ukmo_global_deterministic_10km": 9.3,
+      "meteofrance_arpege_europe": 11.9,
+      "ecmwf_ifs025": 7.0
+     }
+    },
+    {
+     "h": "18:00",
+     "min": 1.1,
+     "med": 3.05,
+     "max": 3.5,
+     "dir": 257,
+     "gmed": 7.1,
+     "gmax": 10.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 4,
+     "cape_max": 20,
+     "t_med": 23.8,
+     "alt": {
+      "80m": {
+       "med": 3.5,
+       "max": 4.1,
+       "dir": 268
+      },
+      "925hPa": {
+       "med": 3.4,
+       "max": 4.1,
+       "dir": 242
+      },
+      "850hPa": {
+       "med": 3.0,
+       "max": 9.6,
+       "dir": 169
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.7,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 3.3,
+      "meteofrance_arpege_europe": 3.2,
+      "ecmwf_ifs025": 1.1
+     },
+     "wg_models": {
+      "icon_eu": 7.0,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 4.3,
+      "ukmo_global_deterministic_10km": 7.2,
+      "meteofrance_arpege_europe": 10.1,
+      "ecmwf_ifs025": 8.0
+     }
+    },
+    {
+     "h": "19:00",
+     "min": 1.6,
+     "med": 2.05,
+     "max": 3.9,
+     "dir": 234,
+     "gmed": 4.95,
+     "gmax": 9.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 6,
+     "cape_max": 10,
+     "t_med": 21.9,
+     "alt": {
+      "80m": {
+       "med": 2.5,
+       "max": 2.9,
+       "dir": 265
+      },
+      "925hPa": {
+       "med": 2.5,
+       "max": 3.5,
+       "dir": 232
+      },
+      "850hPa": {
+       "med": 2.7,
+       "max": 8.1,
+       "dir": 172
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.6,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 1.7,
+      "ukmo_global_deterministic_10km": 2.9,
+      "meteofrance_arpege_europe": 2.4,
+      "ecmwf_ifs025": 3.9
+     },
+     "wg_models": {
+      "icon_eu": 5.4,
+      "gfs_seamless": 1.9,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 4.5,
+      "meteofrance_arpege_europe": 7.8,
+      "ecmwf_ifs025": 9.7
+     }
+    },
+    {
+     "h": "20:00",
+     "min": 1.0,
+     "med": 2.05,
+     "max": 5.6,
+     "dir": 174,
+     "gmed": 2.9,
+     "gmax": 10.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      2,
+      0
+     ],
+     "pg": [
+      0,
+      4,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 23560,
+     "n_boira": 0,
+     "low_max": 11,
+     "cape_max": 10,
+     "t_med": 20.2,
+     "alt": {
+      "80m": {
+       "med": 2.2,
+       "max": 2.5,
+       "dir": 210
+      },
+      "925hPa": {
+       "med": 2.2,
+       "max": 2.8,
+       "dir": 214
+      },
+      "850hPa": {
+       "med": 2.6,
+       "max": 6.9,
+       "dir": 178
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.0,
+      "gfs_seamless": 2.8,
+      "gem_seamless": 1.4,
+      "ukmo_global_deterministic_10km": 2.7,
+      "meteofrance_arpege_europe": 1.4,
+      "ecmwf_ifs025": 5.6
+     },
+     "wg_models": {
+      "icon_eu": 2.7,
+      "gfs_seamless": 1.9,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 4.9,
+      "ecmwf_ifs025": 10.7
+     }
+    },
+    {
+     "h": "21:00",
+     "min": 2.0,
+     "med": 3.9,
+     "max": 6.4,
+     "dir": 149,
+     "gmed": 5.05,
+     "gmax": 9.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 22740,
+     "n_boira": 0,
+     "low_max": 14,
+     "cape_max": 10,
+     "t_med": 18.9,
+     "alt": {
+      "80m": {
+       "med": 5.8,
+       "max": 9.9,
+       "dir": 158
+      },
+      "925hPa": {
+       "med": 2.0,
+       "max": 2.7,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 3.8,
+       "max": 5.9,
+       "dir": 172
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.0,
+      "gfs_seamless": 5.5,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 6.4,
+      "ecmwf_ifs025": 4.7
+     },
+     "wg_models": {
+      "icon_eu": 4.1,
+      "gfs_seamless": 6.0,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 9.1,
+      "ecmwf_ifs025": 9.7
+     }
+    }
+   ]
+  },
+  "tarrega": {
+   "lat": 41.656127,
+   "lon": 1.149041,
+   "elev": 380.0,
+   "sol": {
+    "sunrise": "2026-10-13T08:05",
+    "sunset": "2026-10-13T19:17"
+   },
+   "superficie": [
+    {
+     "h": "06:00",
+     "min": 2.1,
+     "med": 3.5,
+     "max": 6.3,
+     "dir": 91,
+     "gmed": 4.95,
+     "gmax": 8.0,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 14200,
+     "n_boira": 0,
+     "low_max": 55,
+     "cape_max": 0,
+     "t_med": 14.8,
+     "alt": {
+      "80m": {
+       "med": 1.8,
+       "max": 5.7,
+       "dir": 101
+      },
+      "925hPa": {
+       "med": 1.3,
+       "max": 5.1,
+       "dir": 229
+      },
+      "850hPa": {
+       "med": 5.4,
+       "max": 6.0,
+       "dir": 265
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.8,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 6.3,
+      "ecmwf_ifs025": 3.2,
+      "meteofrance_arome_france": 3.5,
+      "meteofrance_arome_france_hd": 4.8
+     },
+     "wg_models": {
+      "icon_eu": 6.2,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 4.5,
+      "meteofrance_arpege_europe": 8.0,
+      "ecmwf_ifs025": 5.4,
+      "meteofrance_arome_france": 4.3,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "07:00",
+     "min": 1.9,
+     "med": 3.7,
+     "max": 6.0,
+     "dir": 94,
+     "gmed": 5.05,
+     "gmax": 7.8,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 13500,
+     "n_boira": 0,
+     "low_max": 55,
+     "cape_max": 0,
+     "t_med": 14.6,
+     "alt": {
+      "80m": {
+       "med": 2.8,
+       "max": 6.2,
+       "dir": 115
+      },
+      "925hPa": {
+       "med": 1.4,
+       "max": 4.6,
+       "dir": 240
+      },
+      "850hPa": {
+       "med": 6.2,
+       "max": 6.9,
+       "dir": 274
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.9,
+      "gfs_seamless": 1.9,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 6.0,
+      "ecmwf_ifs025": 3.1,
+      "meteofrance_arome_france": 4.1,
+      "meteofrance_arome_france_hd": 5.1
+     },
+     "wg_models": {
+      "icon_eu": 6.4,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 7.8,
+      "ecmwf_ifs025": 5.4,
+      "meteofrance_arome_france": 4.3,
+      "meteofrance_arome_france_hd": 6.0
+     }
+    },
+    {
+     "h": "08:00",
+     "min": 2.3,
+     "med": 3.7,
+     "max": 5.7,
+     "dir": 97,
+     "gmed": 5.4,
+     "gmax": 7.2,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 13720,
+     "n_boira": 0,
+     "low_max": 55,
+     "cape_max": 0,
+     "t_med": 14.6,
+     "alt": {
+      "80m": {
+       "med": 3.8,
+       "max": 6.2,
+       "dir": 130
+      },
+      "925hPa": {
+       "med": 1.5,
+       "max": 4.8,
+       "dir": 255
+      },
+      "850hPa": {
+       "med": 5.9,
+       "max": 7.5,
+       "dir": 280
+      }
+     },
+     "ws_models": {
+      "icon_eu": 4.0,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 5.7,
+      "ecmwf_ifs025": 2.7,
+      "meteofrance_arome_france": 3.9,
+      "meteofrance_arome_france_hd": 5.3
+     },
+     "wg_models": {
+      "icon_eu": 6.4,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 5.4,
+      "meteofrance_arpege_europe": 7.2,
+      "ecmwf_ifs025": 5.4,
+      "meteofrance_arome_france": 4.3,
+      "meteofrance_arome_france_hd": 6.6
+     }
+    },
+    {
+     "h": "09:00",
+     "min": 1.9,
+     "med": 3.1,
+     "max": 4.9,
+     "dir": 105,
+     "gmed": 5.6,
+     "gmax": 6.6,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 17280,
+     "n_boira": 0,
+     "low_max": 49,
+     "cape_max": 0,
+     "t_med": 15.7,
+     "alt": {
+      "80m": {
+       "med": 4.3,
+       "max": 5.4,
+       "dir": 136
+      },
+      "925hPa": {
+       "med": 1.2,
+       "max": 4.1,
+       "dir": 243
+      },
+      "850hPa": {
+       "med": 5.8,
+       "max": 8.1,
+       "dir": 279
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.4,
+      "gfs_seamless": 1.9,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 2.5,
+      "meteofrance_arpege_europe": 4.9,
+      "ecmwf_ifs025": 1.9,
+      "meteofrance_arome_france_hd": 4.0
+     },
+     "wg_models": {
+      "icon_eu": 6.6,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 6.4,
+      "ecmwf_ifs025": 5.6,
+      "meteofrance_arome_france_hd": 6.6
+     }
+    },
+    {
+     "h": "10:00",
+     "min": 0.7,
+     "med": 1.6,
+     "max": 4.2,
+     "dir": 109,
+     "gmed": 4.9,
+     "gmax": 6.2,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 20820,
+     "n_boira": 0,
+     "low_max": 42,
+     "cape_max": 0,
+     "t_med": 17.6,
+     "alt": {
+      "80m": {
+       "med": 3.0,
+       "max": 4.9,
+       "dir": 149
+      },
+      "925hPa": {
+       "med": 1.5,
+       "max": 3.0,
+       "dir": 230
+      },
+      "850hPa": {
+       "med": 5.6,
+       "max": 8.1,
+       "dir": 278
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.8,
+      "gfs_seamless": 0.7,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 1.6,
+      "meteofrance_arpege_europe": 4.2,
+      "ecmwf_ifs025": 1.0,
+      "meteofrance_arome_france_hd": 2.2
+     },
+     "wg_models": {
+      "icon_eu": 5.6,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 6.0,
+      "ecmwf_ifs025": 6.2,
+      "meteofrance_arome_france_hd": 4.9
+     }
+    },
+    {
+     "h": "11:00",
+     "min": 0.4,
+     "med": 1.0,
+     "max": 2.5,
+     "dir": 256,
+     "gmed": 4.5,
+     "gmax": 7.0,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 27,
+     "cape_max": 0,
+     "t_med": 19.7,
+     "alt": {
+      "80m": {
+       "med": 1.2,
+       "max": 2.8,
+       "dir": 210
+      },
+      "925hPa": {
+       "med": 1.9,
+       "max": 2.7,
+       "dir": 221
+      },
+      "850hPa": {
+       "med": 5.5,
+       "max": 7.5,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.1,
+      "gfs_seamless": 0.6,
+      "gem_seamless": 0.6,
+      "ukmo_global_deterministic_10km": 1.0,
+      "meteofrance_arpege_europe": 1.4,
+      "ecmwf_ifs025": 0.4,
+      "meteofrance_arome_france_hd": 2.5
+     },
+     "wg_models": {
+      "icon_eu": 4.5,
+      "gfs_seamless": 1.0,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 5.6,
+      "ecmwf_ifs025": 7.0,
+      "meteofrance_arome_france_hd": 5.8
+     }
+    },
+    {
+     "h": "12:00",
+     "min": 1.6,
+     "med": 2.45,
+     "max": 3.1,
+     "dir": 271,
+     "gmed": 5.6,
+     "gmax": 8.4,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 13,
+     "cape_max": 10,
+     "t_med": 21.2,
+     "alt": {
+      "80m": {
+       "med": 2.2,
+       "max": 3.6,
+       "dir": 258
+      },
+      "925hPa": {
+       "med": 2.4,
+       "max": 3.5,
+       "dir": 230
+      },
+      "850hPa": {
+       "med": 5.1,
+       "max": 7.6,
+       "dir": 270
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.6,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 3.1,
+      "ecmwf_ifs025": 1.6
+     },
+     "wg_models": {
+      "icon_eu": 5.6,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 5.6,
+      "meteofrance_arpege_europe": 7.4,
+      "ecmwf_ifs025": 8.4
+     }
+    },
+    {
+     "h": "13:00",
+     "min": 2.9,
+     "med": 3.6,
+     "max": 5.0,
+     "dir": 271,
+     "gmed": 7.8,
+     "gmax": 11.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 21,
+     "cape_max": 20,
+     "t_med": 22.5,
+     "alt": {
+      "80m": {
+       "med": 3.5,
+       "max": 5.2,
+       "dir": 264
+      },
+      "925hPa": {
+       "med": 3.4,
+       "max": 4.8,
+       "dir": 238
+      },
+      "850hPa": {
+       "med": 4.2,
+       "max": 7.9,
+       "dir": 262
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.1,
+      "gfs_seamless": 4.5,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 3.3,
+      "meteofrance_arpege_europe": 5.0,
+      "ecmwf_ifs025": 2.9
+     },
+     "wg_models": {
+      "icon_eu": 7.0,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 4.5,
+      "ukmo_global_deterministic_10km": 8.6,
+      "meteofrance_arpege_europe": 11.1,
+      "ecmwf_ifs025": 9.9
+     }
+    },
+    {
+     "h": "14:00",
+     "min": 3.3,
+     "med": 4.45,
+     "max": 4.9,
+     "dir": 273,
+     "gmed": 9.05,
+     "gmax": 11.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 27,
+     "cape_max": 30,
+     "t_med": 23.5,
+     "alt": {
+      "80m": {
+       "med": 4.4,
+       "max": 4.6,
+       "dir": 266
+      },
+      "925hPa": {
+       "med": 3.9,
+       "max": 5.9,
+       "dir": 247
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 7.6,
+       "dir": 248
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 4.9,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 4.5,
+      "meteofrance_arpege_europe": 4.4,
+      "ecmwf_ifs025": 3.8
+     },
+     "wg_models": {
+      "icon_eu": 7.4,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 5.1,
+      "ukmo_global_deterministic_10km": 10.7,
+      "meteofrance_arpege_europe": 11.1,
+      "ecmwf_ifs025": 10.9
+     }
+    },
+    {
+     "h": "15:00",
+     "min": 3.6,
+     "med": 4.65,
+     "max": 5.6,
+     "dir": 278,
+     "gmed": 9.25,
+     "gmax": 11.3,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 21,
+     "cape_max": 30,
+     "t_med": 24.1,
+     "alt": {
+      "80m": {
+       "med": 4.8,
+       "max": 5.2,
+       "dir": 269
+      },
+      "925hPa": {
+       "med": 4.2,
+       "max": 5.9,
+       "dir": 255
+      },
+      "850hPa": {
+       "med": 2.8,
+       "max": 6.4,
+       "dir": 226
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.6,
+      "gfs_seamless": 4.9,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 4.6,
+      "ecmwf_ifs025": 4.0
+     },
+     "wg_models": {
+      "icon_eu": 7.6,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 10.9,
+      "meteofrance_arpege_europe": 11.3,
+      "ecmwf_ifs025": 11.1
+     }
+    },
+    {
+     "h": "16:00",
+     "min": 3.6,
+     "med": 4.4,
+     "max": 6.0,
+     "dir": 283,
+     "gmed": 8.75,
+     "gmax": 11.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 9,
+     "cape_max": 30,
+     "t_med": 24.5,
+     "alt": {
+      "80m": {
+       "med": 4.8,
+       "max": 5.8,
+       "dir": 272
+      },
+      "925hPa": {
+       "med": 4.9,
+       "max": 5.4,
+       "dir": 261
+      },
+      "850hPa": {
+       "med": 2.9,
+       "max": 7.4,
+       "dir": 200
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.6,
+      "gfs_seamless": 4.5,
+      "gem_seamless": 6.0,
+      "ukmo_global_deterministic_10km": 4.3,
+      "meteofrance_arpege_europe": 5.0,
+      "ecmwf_ifs025": 3.7
+     },
+     "wg_models": {
+      "icon_eu": 7.6,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 5.8,
+      "ukmo_global_deterministic_10km": 9.9,
+      "meteofrance_arpege_europe": 11.7,
+      "ecmwf_ifs025": 10.7
+     }
+    },
+    {
+     "h": "17:00",
+     "min": 2.7,
+     "med": 3.85,
+     "max": 5.6,
+     "dir": 285,
+     "gmed": 7.95,
+     "gmax": 11.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 14,
+     "cape_max": 20,
+     "t_med": 24.4,
+     "alt": {
+      "80m": {
+       "med": 4.5,
+       "max": 5.8,
+       "dir": 281
+      },
+      "925hPa": {
+       "med": 4.5,
+       "max": 5.6,
+       "dir": 268
+      },
+      "850hPa": {
+       "med": 2.8,
+       "max": 7.6,
+       "dir": 187
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.8,
+      "gfs_seamless": 3.4,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 4.7,
+      "ecmwf_ifs025": 2.7
+     },
+     "wg_models": {
+      "icon_eu": 7.2,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 5.8,
+      "ukmo_global_deterministic_10km": 8.7,
+      "meteofrance_arpege_europe": 11.7,
+      "ecmwf_ifs025": 10.3
+     }
+    },
+    {
+     "h": "18:00",
+     "min": 0.5,
+     "med": 3.15,
+     "max": 4.7,
+     "dir": 269,
+     "gmed": 6.9,
+     "gmax": 10.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 16,
+     "cape_max": 10,
+     "t_med": 24.0,
+     "alt": {
+      "80m": {
+       "med": 4.2,
+       "max": 5.1,
+       "dir": 278
+      },
+      "925hPa": {
+       "med": 4.0,
+       "max": 4.7,
+       "dir": 259
+      },
+      "850hPa": {
+       "med": 2.8,
+       "max": 6.4,
+       "dir": 182
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.0,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 4.7,
+      "ukmo_global_deterministic_10km": 3.3,
+      "meteofrance_arpege_europe": 3.9,
+      "ecmwf_ifs025": 0.5
+     },
+     "wg_models": {
+      "icon_eu": 6.8,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 5.1,
+      "ukmo_global_deterministic_10km": 7.0,
+      "meteofrance_arpege_europe": 10.7,
+      "ecmwf_ifs025": 10.3
+     }
+    },
+    {
+     "h": "19:00",
+     "min": 2.7,
+     "med": 3.1,
+     "max": 5.6,
+     "dir": 204,
+     "gmed": 5.1,
+     "gmax": 10.3,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 39,
+     "cape_max": 10,
+     "t_med": 22.4,
+     "alt": {
+      "80m": {
+       "med": 4.1,
+       "max": 5.9,
+       "dir": 233
+      },
+      "925hPa": {
+       "med": 4.1,
+       "max": 4.9,
+       "dir": 220
+      },
+      "850hPa": {
+       "med": 2.9,
+       "max": 4.4,
+       "dir": 185
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.9,
+      "gfs_seamless": 5.6,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 2.9,
+      "meteofrance_arpege_europe": 3.3,
+      "ecmwf_ifs025": 3.9
+     },
+     "wg_models": {
+      "icon_eu": 5.1,
+      "gfs_seamless": 5.1,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 4.9,
+      "meteofrance_arpege_europe": 8.9,
+      "ecmwf_ifs025": 10.3
+     }
+    },
+    {
+     "h": "20:00",
+     "min": 1.7,
+     "med": 5.35,
+     "max": 7.0,
+     "dir": 165,
+     "gmed": 8.25,
+     "gmax": 10.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      2,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 23240,
+     "n_boira": 0,
+     "low_max": 27,
+     "cape_max": 0,
+     "t_med": 20.2,
+     "alt": {
+      "80m": {
+       "med": 8.0,
+       "max": 9.9,
+       "dir": 168
+      },
+      "925hPa": {
+       "med": 3.6,
+       "max": 6.5,
+       "dir": 189
+      },
+      "850hPa": {
+       "med": 3.2,
+       "max": 3.9,
+       "dir": 313
+      }
+     },
+     "ws_models": {
+      "icon_eu": 4.6,
+      "gfs_seamless": 6.4,
+      "gem_seamless": 1.7,
+      "ukmo_global_deterministic_10km": 2.7,
+      "meteofrance_arpege_europe": 7.0,
+      "ecmwf_ifs025": 6.1
+     },
+     "wg_models": {
+      "icon_eu": 7.4,
+      "gfs_seamless": 9.1,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 9.5,
+      "ecmwf_ifs025": 10.1
+     }
+    },
+    {
+     "h": "21:00",
+     "min": 3.5,
+     "med": 4.85,
+     "max": 10.4,
+     "dir": 151,
+     "gmed": 7.2,
+     "gmax": 15.4,
+     "n10": 1,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 22520,
+     "n_boira": 0,
+     "low_max": 27,
+     "cape_max": 0,
+     "t_med": 19.3,
+     "alt": {
+      "80m": {
+       "med": 7.4,
+       "max": 14.5,
+       "dir": 153
+      },
+      "925hPa": {
+       "med": 2.4,
+       "max": 5.5,
+       "dir": 176
+      },
+      "850hPa": {
+       "med": 3.4,
+       "max": 3.9,
+       "dir": 359
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.9,
+      "gfs_seamless": 5.7,
+      "gem_seamless": 4.3,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 10.4,
+      "ecmwf_ifs025": 5.4
+     },
+     "wg_models": {
+      "icon_eu": 7.2,
+      "gfs_seamless": 7.2,
+      "gem_seamless": 5.4,
+      "ukmo_global_deterministic_10km": 5.2,
+      "meteofrance_arpege_europe": 15.4,
+      "ecmwf_ifs025": 9.3
+     }
+    }
+   ]
+  },
+  "igualada": {
+   "lat": 41.5842,
+   "lon": 1.6528,
+   "elev": 329.0,
+   "sol": {
+    "sunrise": "2026-10-13T08:03",
+    "sunset": "2026-10-13T19:15"
+   },
+   "superficie": [
+    {
+     "h": "06:00",
+     "min": 1.4,
+     "med": 2.4,
+     "max": 4.4,
+     "dir": 335,
+     "gmed": 3.4,
+     "gmax": 5.8,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 480,
+     "n_boira": 2,
+     "low_max": 99,
+     "cape_max": 10,
+     "t_med": 15.1,
+     "alt": {
+      "80m": {
+       "med": 2.1,
+       "max": 3.2,
+       "dir": 6
+      },
+      "925hPa": {
+       "med": 4.6,
+       "max": 7.8,
+       "dir": 206
+      },
+      "850hPa": {
+       "med": 6.9,
+       "max": 7.6,
+       "dir": 251
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.4,
+      "gfs_seamless": 1.4,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 1.6,
+      "meteofrance_arpege_europe": 4.4,
+      "ecmwf_ifs025": 2.4,
+      "meteofrance_arome_france": 2.4,
+      "meteofrance_arome_france_hd": 2.4
+     },
+     "wg_models": {
+      "icon_eu": 5.2,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 2.7,
+      "meteofrance_arpege_europe": 5.8,
+      "ecmwf_ifs025": 4.1,
+      "meteofrance_arome_france": 3.5,
+      "meteofrance_arome_france_hd": 3.3
+     }
+    },
+    {
+     "h": "07:00",
+     "min": 1.4,
+     "med": 2.2,
+     "max": 4.8,
+     "dir": 340,
+     "gmed": 4.2,
+     "gmax": 7.0,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 40,
+     "n_boira": 1,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 15.3,
+     "alt": {
+      "80m": {
+       "med": 2.3,
+       "max": 5.0,
+       "dir": 6
+      },
+      "925hPa": {
+       "med": 5.1,
+       "max": 7.8,
+       "dir": 210
+      },
+      "850hPa": {
+       "med": 6.8,
+       "max": 7.4,
+       "dir": 260
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.1,
+      "gfs_seamless": 1.8,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 1.4,
+      "meteofrance_arpege_europe": 4.8,
+      "ecmwf_ifs025": 2.5,
+      "meteofrance_arome_france": 2.3,
+      "meteofrance_arome_france_hd": 2.7
+     },
+     "wg_models": {
+      "icon_eu": 5.4,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 2.7,
+      "meteofrance_arpege_europe": 7.0,
+      "ecmwf_ifs025": 4.1,
+      "meteofrance_arome_france": 4.3,
+      "meteofrance_arome_france_hd": 4.3
+     }
+    },
+    {
+     "h": "08:00",
+     "min": 1.4,
+     "med": 2.2,
+     "max": 4.4,
+     "dir": 339,
+     "gmed": 4.1,
+     "gmax": 7.2,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 60,
+     "n_boira": 2,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 15.4,
+     "alt": {
+      "80m": {
+       "med": 2.6,
+       "max": 5.3,
+       "dir": 350
+      },
+      "925hPa": {
+       "med": 5.6,
+       "max": 8.5,
+       "dir": 216
+      },
+      "850hPa": {
+       "med": 6.4,
+       "max": 8.1,
+       "dir": 271
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.3,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 1.4,
+      "meteofrance_arpege_europe": 4.4,
+      "ecmwf_ifs025": 2.3,
+      "meteofrance_arome_france": 1.9,
+      "meteofrance_arome_france_hd": 3.0
+     },
+     "wg_models": {
+      "icon_eu": 5.1,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 1.7,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 7.2,
+      "ecmwf_ifs025": 4.3,
+      "meteofrance_arome_france": 3.9,
+      "meteofrance_arome_france_hd": 4.3
+     }
+    },
+    {
+     "h": "09:00",
+     "min": 1.2,
+     "med": 2.0,
+     "max": 4.0,
+     "dir": 354,
+     "gmed": 4.3,
+     "gmax": 6.6,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 5240,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 16.3,
+     "alt": {
+      "80m": {
+       "med": 3.1,
+       "max": 4.7,
+       "dir": 11
+      },
+      "925hPa": {
+       "med": 5.5,
+       "max": 8.7,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 6.8,
+       "max": 7.9,
+       "dir": 281
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.1,
+      "gfs_seamless": 2.0,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 1.2,
+      "meteofrance_arpege_europe": 4.0,
+      "ecmwf_ifs025": 1.9,
+      "meteofrance_arome_france_hd": 1.7
+     },
+     "wg_models": {
+      "icon_eu": 4.3,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 3.3,
+      "meteofrance_arpege_europe": 6.6,
+      "ecmwf_ifs025": 4.5,
+      "meteofrance_arome_france_hd": 4.3
+     }
+    },
+    {
+     "h": "10:00",
+     "min": 1.2,
+     "med": 1.4,
+     "max": 3.5,
+     "dir": 11,
+     "gmed": 3.5,
+     "gmax": 6.2,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 14440,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 17.4,
+     "alt": {
+      "80m": {
+       "med": 2.1,
+       "max": 4.7,
+       "dir": 21
+      },
+      "925hPa": {
+       "med": 5.2,
+       "max": 8.7,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 6.4,
+       "max": 7.9,
+       "dir": 284
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.4,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 1.4,
+      "ukmo_global_deterministic_10km": 1.2,
+      "meteofrance_arpege_europe": 3.5,
+      "ecmwf_ifs025": 1.2,
+      "meteofrance_arome_france_hd": 1.2
+     },
+     "wg_models": {
+      "icon_eu": 4.1,
+      "gfs_seamless": 1.4,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 6.2,
+      "ecmwf_ifs025": 4.7,
+      "meteofrance_arome_france_hd": 2.7
+     }
+    },
+    {
+     "h": "11:00",
+     "min": 0.4,
+     "med": 1.2,
+     "max": 2.6,
+     "dir": 40,
+     "gmed": 4.1,
+     "gmax": 6.6,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 21620,
+     "n_boira": 0,
+     "low_max": 99,
+     "cape_max": 0,
+     "t_med": 19.3,
+     "alt": {
+      "80m": {
+       "med": 0.9,
+       "max": 3.7,
+       "dir": 45
+      },
+      "925hPa": {
+       "med": 5.0,
+       "max": 8.5,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 6.1,
+       "max": 8.1,
+       "dir": 287
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.0,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 0.4,
+      "ukmo_global_deterministic_10km": 1.2,
+      "meteofrance_arpege_europe": 2.6,
+      "ecmwf_ifs025": 0.4,
+      "meteofrance_arome_france_hd": 1.2
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 0.6,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 6.6,
+      "ecmwf_ifs025": 5.6,
+      "meteofrance_arome_france_hd": 4.1
+     }
+    },
+    {
+     "h": "12:00",
+     "min": 1.0,
+     "med": 1.75,
+     "max": 2.5,
+     "dir": 156,
+     "gmed": 5.25,
+     "gmax": 8.0,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 23440,
+     "n_boira": 0,
+     "low_max": 47,
+     "cape_max": 10,
+     "t_med": 21.1,
+     "alt": {
+      "80m": {
+       "med": 2.2,
+       "max": 2.3,
+       "dir": 163
+      },
+      "925hPa": {
+       "med": 4.7,
+       "max": 7.4,
+       "dir": 216
+      },
+      "850hPa": {
+       "med": 5.9,
+       "max": 8.6,
+       "dir": 286
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.8,
+      "gfs_seamless": 2.5,
+      "gem_seamless": 1.7,
+      "ukmo_global_deterministic_10km": 1.4,
+      "meteofrance_arpege_europe": 1.0,
+      "ecmwf_ifs025": 1.8
+     },
+     "wg_models": {
+      "icon_eu": 5.1,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 5.4,
+      "meteofrance_arpege_europe": 6.0,
+      "ecmwf_ifs025": 8.0
+     }
+    },
+    {
+     "h": "13:00",
+     "min": 1.6,
+     "med": 2.75,
+     "max": 3.9,
+     "dir": 179,
+     "gmed": 6.1,
+     "gmax": 10.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 43,
+     "cape_max": 30,
+     "t_med": 22.4,
+     "alt": {
+      "80m": {
+       "med": 3.1,
+       "max": 3.8,
+       "dir": 179
+      },
+      "925hPa": {
+       "med": 4.5,
+       "max": 5.9,
+       "dir": 206
+      },
+      "850hPa": {
+       "med": 5.5,
+       "max": 9.1,
+       "dir": 280
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.9,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 1.6,
+      "meteofrance_arpege_europe": 2.6,
+      "ecmwf_ifs025": 3.9
+     },
+     "wg_models": {
+      "icon_eu": 5.2,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 7.0,
+      "meteofrance_arpege_europe": 9.7,
+      "ecmwf_ifs025": 10.9
+     }
+    },
+    {
+     "h": "14:00",
+     "min": 1.9,
+     "med": 4.2,
+     "max": 5.7,
+     "dir": 171,
+     "gmed": 7.3,
+     "gmax": 13.2,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      4,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 58,
+     "cape_max": 40,
+     "t_med": 23.6,
+     "alt": {
+      "80m": {
+       "med": 4.3,
+       "max": 5.1,
+       "dir": 170
+      },
+      "925hPa": {
+       "med": 4.8,
+       "max": 5.4,
+       "dir": 195
+      },
+      "850hPa": {
+       "med": 5.1,
+       "max": 9.1,
+       "dir": 273
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.7,
+      "gfs_seamless": 4.3,
+      "gem_seamless": 4.3,
+      "ukmo_global_deterministic_10km": 1.9,
+      "meteofrance_arpege_europe": 4.1,
+      "ecmwf_ifs025": 5.7
+     },
+     "wg_models": {
+      "icon_eu": 6.2,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 5.2,
+      "ukmo_global_deterministic_10km": 8.4,
+      "meteofrance_arpege_europe": 11.9,
+      "ecmwf_ifs025": 13.2
+     }
+    },
+    {
+     "h": "15:00",
+     "min": 2.7,
+     "med": 5.3,
+     "max": 6.6,
+     "dir": 166,
+     "gmed": 9.2,
+     "gmax": 14.6,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      8,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.1,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 75,
+     "cape_max": 40,
+     "t_med": 24.4,
+     "alt": {
+      "80m": {
+       "med": 6.0,
+       "max": 6.4,
+       "dir": 163
+      },
+      "925hPa": {
+       "med": 5.2,
+       "max": 6.2,
+       "dir": 182
+      },
+      "850hPa": {
+       "med": 4.7,
+       "max": 9.6,
+       "dir": 283
+      }
+     },
+     "ws_models": {
+      "icon_eu": 4.3,
+      "gfs_seamless": 6.2,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 2.7,
+      "meteofrance_arpege_europe": 5.0,
+      "ecmwf_ifs025": 6.6
+     },
+     "wg_models": {
+      "icon_eu": 9.1,
+      "gfs_seamless": 4.9,
+      "gem_seamless": 6.0,
+      "ukmo_global_deterministic_10km": 9.3,
+      "meteofrance_arpege_europe": 12.6,
+      "ecmwf_ifs025": 14.6
+     }
+    },
+    {
+     "h": "16:00",
+     "min": 3.5,
+     "med": 5.95,
+     "max": 9.8,
+     "dir": 167,
+     "gmed": 11.15,
+     "gmax": 15.4,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      20,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.1,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 30,
+     "t_med": 24.1,
+     "alt": {
+      "80m": {
+       "med": 7.2,
+       "max": 9.9,
+       "dir": 164
+      },
+      "925hPa": {
+       "med": 6.8,
+       "max": 7.8,
+       "dir": 172
+      },
+      "850hPa": {
+       "med": 4.7,
+       "max": 10.0,
+       "dir": 297
+      }
+     },
+     "ws_models": {
+      "icon_eu": 5.9,
+      "gfs_seamless": 9.8,
+      "gem_seamless": 6.0,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 5.4,
+      "ecmwf_ifs025": 7.0
+     },
+     "wg_models": {
+      "icon_eu": 12.4,
+      "gfs_seamless": 5.4,
+      "gem_seamless": 6.4,
+      "ukmo_global_deterministic_10km": 9.9,
+      "meteofrance_arpege_europe": 13.0,
+      "ecmwf_ifs025": 15.4
+     }
+    },
+    {
+     "h": "17:00",
+     "min": 4.1,
+     "med": 6.35,
+     "max": 9.4,
+     "dir": 167,
+     "gmed": 11.45,
+     "gmax": 15.2,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      2,
+      0
+     ],
+     "pg": [
+      0,
+      22,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.1,
+     "pp": [
+      0,
+      6,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 74,
+     "cape_max": 30,
+     "t_med": 23.5,
+     "alt": {
+      "80m": {
+       "med": 8.4,
+       "max": 9.7,
+       "dir": 166
+      },
+      "925hPa": {
+       "med": 7.4,
+       "max": 8.5,
+       "dir": 171
+      },
+      "850hPa": {
+       "med": 4.8,
+       "max": 9.8,
+       "dir": 311
+      }
+     },
+     "ws_models": {
+      "icon_eu": 6.5,
+      "gfs_seamless": 9.4,
+      "gem_seamless": 6.2,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 5.6,
+      "ecmwf_ifs025": 6.8
+     },
+     "wg_models": {
+      "icon_eu": 14.2,
+      "gfs_seamless": 6.0,
+      "gem_seamless": 6.6,
+      "ukmo_global_deterministic_10km": 9.9,
+      "meteofrance_arpege_europe": 13.0,
+      "ecmwf_ifs025": 15.2
+     }
+    },
+    {
+     "h": "18:00",
+     "min": 3.9,
+     "med": 5.8,
+     "max": 8.1,
+     "dir": 165,
+     "gmed": 10.95,
+     "gmax": 14.8,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      6,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 53,
+     "cape_max": 30,
+     "t_med": 22.5,
+     "alt": {
+      "80m": {
+       "med": 8.1,
+       "max": 11.0,
+       "dir": 163
+      },
+      "925hPa": {
+       "med": 7.2,
+       "max": 9.6,
+       "dir": 174
+      },
+      "850hPa": {
+       "med": 4.2,
+       "max": 8.6,
+       "dir": 324
+      }
+     },
+     "ws_models": {
+      "icon_eu": 5.3,
+      "gfs_seamless": 8.1,
+      "gem_seamless": 5.8,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 7.1,
+      "ecmwf_ifs025": 5.8
+     },
+     "wg_models": {
+      "icon_eu": 13.8,
+      "gfs_seamless": 5.6,
+      "gem_seamless": 7.4,
+      "ukmo_global_deterministic_10km": 8.7,
+      "meteofrance_arpege_europe": 14.8,
+      "ecmwf_ifs025": 13.2
+     }
+    },
+    {
+     "h": "19:00",
+     "min": 3.0,
+     "med": 4.8,
+     "max": 6.6,
+     "dir": 162,
+     "gmed": 9.15,
+     "gmax": 15.0,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 22840,
+     "n_boira": 0,
+     "low_max": 54,
+     "cape_max": 30,
+     "t_med": 21.1,
+     "alt": {
+      "80m": {
+       "med": 7.4,
+       "max": 10.1,
+       "dir": 161
+      },
+      "925hPa": {
+       "med": 6.9,
+       "max": 10.8,
+       "dir": 178
+      },
+      "850hPa": {
+       "med": 5.2,
+       "max": 7.2,
+       "dir": 342
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.0,
+      "gfs_seamless": 6.6,
+      "gem_seamless": 5.1,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 6.4,
+      "ecmwf_ifs025": 4.5
+     },
+     "wg_models": {
+      "icon_eu": 11.1,
+      "gfs_seamless": 6.4,
+      "gem_seamless": 8.0,
+      "ukmo_global_deterministic_10km": 6.8,
+      "meteofrance_arpege_europe": 15.0,
+      "ecmwf_ifs025": 10.3
+     }
+    },
+    {
+     "h": "20:00",
+     "min": 2.5,
+     "med": 3.3,
+     "max": 5.4,
+     "dir": 161,
+     "gmed": 6.6,
+     "gmax": 12.8,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 20720,
+     "n_boira": 0,
+     "low_max": 54,
+     "cape_max": 20,
+     "t_med": 19.3,
+     "alt": {
+      "80m": {
+       "med": 5.9,
+       "max": 9.2,
+       "dir": 159
+      },
+      "925hPa": {
+       "med": 5.8,
+       "max": 11.1,
+       "dir": 180
+      },
+      "850hPa": {
+       "med": 5.6,
+       "max": 6.9,
+       "dir": 353
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.0,
+      "gfs_seamless": 4.1,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 2.5,
+      "meteofrance_arpege_europe": 5.4,
+      "ecmwf_ifs025": 3.1
+     },
+     "wg_models": {
+      "icon_eu": 5.8,
+      "gfs_seamless": 5.6,
+      "gem_seamless": 7.4,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 12.8,
+      "ecmwf_ifs025": 7.6
+     }
+    },
+    {
+     "h": "21:00",
+     "min": 1.8,
+     "med": 2.3,
+     "max": 3.8,
+     "dir": 170,
+     "gmed": 4.9,
+     "gmax": 10.5,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 18400,
+     "n_boira": 0,
+     "low_max": 64,
+     "cape_max": 10,
+     "t_med": 18.1,
+     "alt": {
+      "80m": {
+       "med": 5.1,
+       "max": 7.1,
+       "dir": 169
+      },
+      "925hPa": {
+       "med": 5.4,
+       "max": 9.9,
+       "dir": 184
+      },
+      "850hPa": {
+       "med": 5.2,
+       "max": 6.9,
+       "dir": 5
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.8,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 2.1,
+      "meteofrance_arpege_europe": 3.8,
+      "ecmwf_ifs025": 1.9
+     },
+     "wg_models": {
+      "icon_eu": 5.6,
+      "gfs_seamless": 4.7,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 10.5,
+      "ecmwf_ifs025": 5.1
+     }
+    }
+   ]
+  },
+  "manresa": {
+   "lat": 41.7286,
+   "lon": 1.8238,
+   "elev": 243.0,
+   "sol": {
+    "sunrise": "2026-10-13T08:02",
+    "sunset": "2026-10-13T19:14"
+   },
+   "superficie": [
+    {
+     "h": "06:00",
+     "min": 1.0,
+     "med": 1.65,
+     "max": 2.7,
+     "dir": 7,
+     "gmed": 2.8,
+     "gmax": 3.7,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 2460,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 16.1,
+     "alt": {
+      "80m": {
+       "med": 2.5,
+       "max": 4.9,
+       "dir": 0
+      },
+      "925hPa": {
+       "med": 4.4,
+       "max": 7.0,
+       "dir": 221
+      },
+      "850hPa": {
+       "med": 7.2,
+       "max": 7.9,
+       "dir": 260
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.3,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 1.9,
+      "meteofrance_arpege_europe": 1.4,
+      "ecmwf_ifs025": 1.4,
+      "meteofrance_arome_france": 1.6,
+      "meteofrance_arome_france_hd": 1.0
+     },
+     "wg_models": {
+      "icon_eu": 3.5,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 3.7,
+      "meteofrance_arpege_europe": 1.9,
+      "ecmwf_ifs025": 3.3,
+      "meteofrance_arome_france": 2.5,
+      "meteofrance_arome_france_hd": 1.6
+     }
+    },
+    {
+     "h": "07:00",
+     "min": 0.7,
+     "med": 1.55,
+     "max": 2.5,
+     "dir": 11,
+     "gmed": 2.7,
+     "gmax": 3.5,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 1580,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 15.9,
+     "alt": {
+      "80m": {
+       "med": 2.3,
+       "max": 4.9,
+       "dir": 4
+      },
+      "925hPa": {
+       "med": 4.4,
+       "max": 6.7,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 7.2,
+       "max": 7.9,
+       "dir": 266
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.4,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 1.4,
+      "ecmwf_ifs025": 0.7,
+      "meteofrance_arome_france": 1.6,
+      "meteofrance_arome_france_hd": 1.5
+     },
+     "wg_models": {
+      "icon_eu": 3.5,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 2.9,
+      "ecmwf_ifs025": 2.3,
+      "meteofrance_arome_france": 2.5,
+      "meteofrance_arome_france_hd": 2.3
+     }
+    },
+    {
+     "h": "08:00",
+     "min": 0.6,
+     "med": 1.65,
+     "max": 2.5,
+     "dir": 8,
+     "gmed": 2.5,
+     "gmax": 3.5,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 1860,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 15.7,
+     "alt": {
+      "80m": {
+       "med": 2.5,
+       "max": 5.1,
+       "dir": 1
+      },
+      "925hPa": {
+       "med": 4.8,
+       "max": 7.0,
+       "dir": 228
+      },
+      "850hPa": {
+       "med": 6.9,
+       "max": 8.1,
+       "dir": 270
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.8,
+      "gfs_seamless": 2.5,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 1.4,
+      "ecmwf_ifs025": 0.6,
+      "meteofrance_arome_france": 1.6,
+      "meteofrance_arome_france_hd": 1.5
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 3.5,
+      "meteofrance_arpege_europe": 2.5,
+      "ecmwf_ifs025": 1.9,
+      "meteofrance_arome_france": 3.1,
+      "meteofrance_arome_france_hd": 2.3
+     }
+    },
+    {
+     "h": "09:00",
+     "min": 0.4,
+     "med": 1.6,
+     "max": 2.9,
+     "dir": 6,
+     "gmed": 2.9,
+     "gmax": 3.7,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 5880,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 16.2,
+     "alt": {
+      "80m": {
+       "med": 2.7,
+       "max": 4.9,
+       "dir": 6
+      },
+      "925hPa": {
+       "med": 4.0,
+       "max": 7.2,
+       "dir": 246
+      },
+      "850hPa": {
+       "med": 6.9,
+       "max": 8.1,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.5,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 1.6,
+      "meteofrance_arpege_europe": 1.8,
+      "ecmwf_ifs025": 0.4,
+      "meteofrance_arome_france_hd": 1.0
+     },
+     "wg_models": {
+      "icon_eu": 2.9,
+      "gfs_seamless": 2.5,
+      "gem_seamless": 2.9,
+      "ukmo_global_deterministic_10km": 3.7,
+      "meteofrance_arpege_europe": 3.5,
+      "ecmwf_ifs025": 2.7,
+      "meteofrance_arome_france_hd": 2.3
+     }
+    },
+    {
+     "h": "10:00",
+     "min": 0.3,
+     "med": 1.4,
+     "max": 2.3,
+     "dir": 8,
+     "gmed": 3.9,
+     "gmax": 4.9,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 18940,
+     "n_boira": 0,
+     "low_max": 100,
+     "cape_max": 0,
+     "t_med": 17.2,
+     "alt": {
+      "80m": {
+       "med": 2.1,
+       "max": 3.3,
+       "dir": 4
+      },
+      "925hPa": {
+       "med": 3.0,
+       "max": 7.2,
+       "dir": 249
+      },
+      "850hPa": {
+       "med": 6.9,
+       "max": 8.0,
+       "dir": 280
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.3,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 1.4,
+      "meteofrance_arpege_europe": 2.1,
+      "ecmwf_ifs025": 0.3,
+      "meteofrance_arome_france_hd": 1.4
+     },
+     "wg_models": {
+      "icon_eu": 2.5,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 4.9,
+      "ecmwf_ifs025": 3.9,
+      "meteofrance_arome_france_hd": 3.3
+     }
+    },
+    {
+     "h": "11:00",
+     "min": 0.0,
+     "med": 0.8,
+     "max": 1.9,
+     "dir": 349,
+     "gmed": 3.5,
+     "gmax": 5.4,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 22720,
+     "n_boira": 0,
+     "low_max": 56,
+     "cape_max": 0,
+     "t_med": 18.5,
+     "alt": {
+      "80m": {
+       "med": 1.0,
+       "max": 2.1,
+       "dir": 344
+      },
+      "925hPa": {
+       "med": 2.0,
+       "max": 7.2,
+       "dir": 251
+      },
+      "850hPa": {
+       "med": 6.8,
+       "max": 8.3,
+       "dir": 282
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.3,
+      "gfs_seamless": 1.2,
+      "gem_seamless": 1.9,
+      "ukmo_global_deterministic_10km": 1.2,
+      "meteofrance_arpege_europe": 0.8,
+      "ecmwf_ifs025": 0.0,
+      "meteofrance_arome_france_hd": 0.8
+     },
+     "wg_models": {
+      "icon_eu": 1.7,
+      "gfs_seamless": 0.4,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 4.1,
+      "meteofrance_arpege_europe": 4.9,
+      "ecmwf_ifs025": 5.4,
+      "meteofrance_arome_france_hd": 3.5
+     }
+    },
+    {
+     "h": "12:00",
+     "min": 0.4,
+     "med": 0.7,
+     "max": 1.4,
+     "dir": 232,
+     "gmed": 2.9,
+     "gmax": 6.8,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 23880,
+     "n_boira": 0,
+     "low_max": 43,
+     "cape_max": 10,
+     "t_med": 21.0,
+     "alt": {
+      "80m": {
+       "med": 0.8,
+       "max": 1.2,
+       "dir": 216
+      },
+      "925hPa": {
+       "med": 2.4,
+       "max": 6.5,
+       "dir": 232
+      },
+      "850hPa": {
+       "med": 6.3,
+       "max": 9.4,
+       "dir": 282
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.7,
+      "gfs_seamless": 1.4,
+      "gem_seamless": 0.4,
+      "ukmo_global_deterministic_10km": 1.0,
+      "meteofrance_arpege_europe": 0.4,
+      "ecmwf_ifs025": 0.7
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 4.3,
+      "meteofrance_arpege_europe": 2.5,
+      "ecmwf_ifs025": 6.8
+     }
+    },
+    {
+     "h": "13:00",
+     "min": 0.3,
+     "med": 1.05,
+     "max": 2.5,
+     "dir": 183,
+     "gmed": 3.7,
+     "gmax": 8.4,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 33,
+     "cape_max": 10,
+     "t_med": 22.8,
+     "alt": {
+      "80m": {
+       "med": 1.6,
+       "max": 2.2,
+       "dir": 191
+      },
+      "925hPa": {
+       "med": 3.3,
+       "max": 5.9,
+       "dir": 221
+      },
+      "850hPa": {
+       "med": 5.8,
+       "max": 10.8,
+       "dir": 281
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.1,
+      "gfs_seamless": 2.5,
+      "gem_seamless": 1.0,
+      "ukmo_global_deterministic_10km": 0.8,
+      "meteofrance_arpege_europe": 0.3,
+      "ecmwf_ifs025": 1.7
+     },
+     "wg_models": {
+      "icon_eu": 4.1,
+      "gfs_seamless": 2.3,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 2.5,
+      "ecmwf_ifs025": 8.4
+     }
+    },
+    {
+     "h": "14:00",
+     "min": 0.8,
+     "med": 1.85,
+     "max": 3.5,
+     "dir": 165,
+     "gmed": 4.8,
+     "gmax": 10.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 36,
+     "cape_max": 20,
+     "t_med": 24.1,
+     "alt": {
+      "80m": {
+       "med": 2.6,
+       "max": 3.0,
+       "dir": 171
+      },
+      "925hPa": {
+       "med": 3.6,
+       "max": 5.6,
+       "dir": 212
+      },
+      "850hPa": {
+       "med": 5.3,
+       "max": 11.3,
+       "dir": 275
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.4,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 1.6,
+      "ukmo_global_deterministic_10km": 0.8,
+      "meteofrance_arpege_europe": 2.1,
+      "ecmwf_ifs025": 2.9
+     },
+     "wg_models": {
+      "icon_eu": 4.5,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 7.8,
+      "ecmwf_ifs025": 10.1
+     }
+    },
+    {
+     "h": "15:00",
+     "min": 0.8,
+     "med": 3.0,
+     "max": 4.5,
+     "dir": 167,
+     "gmed": 5.35,
+     "gmax": 12.8,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 53,
+     "cape_max": 20,
+     "t_med": 24.8,
+     "alt": {
+      "80m": {
+       "med": 3.5,
+       "max": 4.1,
+       "dir": 170
+      },
+      "925hPa": {
+       "med": 4.0,
+       "max": 6.1,
+       "dir": 198
+      },
+      "850hPa": {
+       "med": 4.7,
+       "max": 9.6,
+       "dir": 273
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.8,
+      "gfs_seamless": 3.6,
+      "gem_seamless": 2.7,
+      "ukmo_global_deterministic_10km": 1.4,
+      "meteofrance_arpege_europe": 3.3,
+      "ecmwf_ifs025": 4.5
+     },
+     "wg_models": {
+      "icon_eu": 3.9,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 5.8,
+      "meteofrance_arpege_europe": 10.1,
+      "ecmwf_ifs025": 12.8
+     }
+    },
+    {
+     "h": "16:00",
+     "min": 2.2,
+     "med": 4.1,
+     "max": 6.3,
+     "dir": 166,
+     "gmed": 6.2,
+     "gmax": 15.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      27,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 49,
+     "cape_max": 20,
+     "t_med": 25.4,
+     "alt": {
+      "80m": {
+       "med": 4.8,
+       "max": 6.0,
+       "dir": 167
+      },
+      "925hPa": {
+       "med": 4.8,
+       "max": 6.5,
+       "dir": 186
+      },
+      "850hPa": {
+       "med": 4.2,
+       "max": 7.6,
+       "dir": 273
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.2,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 4.5,
+      "ukmo_global_deterministic_10km": 2.3,
+      "meteofrance_arpege_europe": 4.8,
+      "ecmwf_ifs025": 6.3
+     },
+     "wg_models": {
+      "icon_eu": 4.9,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 5.6,
+      "ukmo_global_deterministic_10km": 6.8,
+      "meteofrance_arpege_europe": 11.9,
+      "ecmwf_ifs025": 15.9
+     }
+    },
+    {
+     "h": "17:00",
+     "min": 3.1,
+     "med": 5.5,
+     "max": 7.2,
+     "dir": 164,
+     "gmed": 7.6,
+     "gmax": 17.5,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      55,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 53,
+     "cape_max": 20,
+     "t_med": 25.4,
+     "alt": {
+      "80m": {
+       "med": 6.5,
+       "max": 7.4,
+       "dir": 168
+      },
+      "925hPa": {
+       "med": 5.6,
+       "max": 7.4,
+       "dir": 176
+      },
+      "850hPa": {
+       "med": 3.6,
+       "max": 6.4,
+       "dir": 279
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.6,
+      "gfs_seamless": 5.4,
+      "gem_seamless": 6.0,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 5.6,
+      "ecmwf_ifs025": 7.2
+     },
+     "wg_models": {
+      "icon_eu": 6.4,
+      "gfs_seamless": 3.9,
+      "gem_seamless": 7.4,
+      "ukmo_global_deterministic_10km": 7.8,
+      "meteofrance_arpege_europe": 12.2,
+      "ecmwf_ifs025": 17.5
+     }
+    },
+    {
+     "h": "18:00",
+     "min": 3.9,
+     "med": 6.8,
+     "max": 8.8,
+     "dir": 166,
+     "gmed": 8.95,
+     "gmax": 16.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      39,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 54,
+     "cape_max": 20,
+     "t_med": 24.1,
+     "alt": {
+      "80m": {
+       "med": 9.4,
+       "max": 12.6,
+       "dir": 168
+      },
+      "925hPa": {
+       "med": 7.2,
+       "max": 8.5,
+       "dir": 176
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 4.8,
+       "dir": 301
+      }
+     },
+     "ws_models": {
+      "icon_eu": 4.5,
+      "gfs_seamless": 8.7,
+      "gem_seamless": 7.0,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 8.8,
+      "ecmwf_ifs025": 6.6
+     },
+     "wg_models": {
+      "icon_eu": 7.6,
+      "gfs_seamless": 7.2,
+      "gem_seamless": 9.3,
+      "ukmo_global_deterministic_10km": 8.6,
+      "meteofrance_arpege_europe": 16.1,
+      "ecmwf_ifs025": 16.9
+     }
+    },
+    {
+     "h": "19:00",
+     "min": 4.7,
+     "med": 5.85,
+     "max": 7.8,
+     "dir": 172,
+     "gmed": 9.7,
+     "gmax": 17.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      6,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 58,
+     "cape_max": 30,
+     "t_med": 22.4,
+     "alt": {
+      "80m": {
+       "med": 8.7,
+       "max": 11.8,
+       "dir": 176
+      },
+      "925hPa": {
+       "med": 7.4,
+       "max": 9.1,
+       "dir": 177
+      },
+      "850hPa": {
+       "med": 4.0,
+       "max": 4.9,
+       "dir": 332
+      }
+     },
+     "ws_models": {
+      "icon_eu": 4.7,
+      "gfs_seamless": 7.6,
+      "gem_seamless": 6.6,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 7.8,
+      "ecmwf_ifs025": 5.1
+     },
+     "wg_models": {
+      "icon_eu": 8.7,
+      "gfs_seamless": 8.6,
+      "gem_seamless": 10.1,
+      "ukmo_global_deterministic_10km": 9.3,
+      "meteofrance_arpege_europe": 17.1,
+      "ecmwf_ifs025": 15.0
+     }
+    },
+    {
+     "h": "20:00",
+     "min": 3.3,
+     "med": 4.85,
+     "max": 5.9,
+     "dir": 172,
+     "gmed": 9.1,
+     "gmax": 14.6,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      2,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 65,
+     "cape_max": 20,
+     "t_med": 21.1,
+     "alt": {
+      "80m": {
+       "med": 7.2,
+       "max": 9.0,
+       "dir": 172
+      },
+      "925hPa": {
+       "med": 6.7,
+       "max": 9.3,
+       "dir": 178
+      },
+      "850hPa": {
+       "med": 4.6,
+       "max": 5.9,
+       "dir": 351
+      }
+     },
+     "ws_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 4.8,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 4.9,
+      "meteofrance_arpege_europe": 5.9,
+      "ecmwf_ifs025": 3.5
+     },
+     "wg_models": {
+      "icon_eu": 8.0,
+      "gfs_seamless": 3.7,
+      "gem_seamless": 8.9,
+      "ukmo_global_deterministic_10km": 9.3,
+      "meteofrance_arpege_europe": 14.6,
+      "ecmwf_ifs025": 12.4
+     }
+    },
+    {
+     "h": "21:00",
+     "min": 1.7,
+     "med": 3.5,
+     "max": 4.3,
+     "dir": 170,
+     "gmed": 7.0,
+     "gmax": 10.7,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 23100,
+     "n_boira": 0,
+     "low_max": 61,
+     "cape_max": 10,
+     "t_med": 19.9,
+     "alt": {
+      "80m": {
+       "med": 5.2,
+       "max": 6.8,
+       "dir": 176
+      },
+      "925hPa": {
+       "med": 5.7,
+       "max": 8.3,
+       "dir": 186
+      },
+      "850hPa": {
+       "med": 4.5,
+       "max": 5.9,
+       "dir": 356
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.7,
+      "gfs_seamless": 4.0,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 4.3,
+      "meteofrance_arpege_europe": 3.9,
+      "ecmwf_ifs025": 2.3
+     },
+     "wg_models": {
+      "icon_eu": 5.8,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 8.2,
+      "meteofrance_arpege_europe": 10.7,
+      "ecmwf_ifs025": 9.1
+     }
+    }
+   ]
+  },
+  "balaguer": {
+   "lat": 41.7782,
+   "lon": 0.8616,
+   "elev": 249.0,
+   "sol": {
+    "sunrise": "2026-10-13T08:06",
+    "sunset": "2026-10-13T19:18"
+   },
+   "superficie": [
+    {
+     "h": "06:00",
+     "min": 1.9,
+     "med": 4.55,
+     "max": 7.8,
+     "dir": 49,
+     "gmed": 7.2,
+     "gmax": 10.9,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 13040,
+     "n_boira": 0,
+     "low_max": 19,
+     "cape_max": 0,
+     "t_med": 16.0,
+     "alt": {
+      "80m": {
+       "med": 9.3,
+       "max": 12.7,
+       "dir": 66
+      },
+      "925hPa": {
+       "med": 1.7,
+       "max": 6.9,
+       "dir": 84
+      },
+      "850hPa": {
+       "med": 3.4,
+       "max": 5.9,
+       "dir": 266
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.9,
+      "gfs_seamless": 3.2,
+      "gem_seamless": 4.5,
+      "ukmo_global_deterministic_10km": 3.7,
+      "meteofrance_arpege_europe": 6.3,
+      "ecmwf_ifs025": 4.6,
+      "meteofrance_arome_france": 6.5,
+      "meteofrance_arome_france_hd": 7.8
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 4.9,
+      "ukmo_global_deterministic_10km": 6.0,
+      "meteofrance_arpege_europe": 8.4,
+      "ecmwf_ifs025": 8.7,
+      "meteofrance_arome_france": 9.5,
+      "meteofrance_arome_france_hd": 10.9
+     }
+    },
+    {
+     "h": "07:00",
+     "min": 1.9,
+     "med": 4.1,
+     "max": 7.8,
+     "dir": 46,
+     "gmed": 6.9,
+     "gmax": 10.9,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 9360,
+     "n_boira": 0,
+     "low_max": 33,
+     "cape_max": 0,
+     "t_med": 15.6,
+     "alt": {
+      "80m": {
+       "med": 8.5,
+       "max": 12.6,
+       "dir": 67
+      },
+      "925hPa": {
+       "med": 1.5,
+       "max": 5.9,
+       "dir": 80
+      },
+      "850hPa": {
+       "med": 3.2,
+       "max": 6.9,
+       "dir": 270
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.9,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 4.3,
+      "ukmo_global_deterministic_10km": 3.7,
+      "meteofrance_arpege_europe": 6.2,
+      "ecmwf_ifs025": 3.9,
+      "meteofrance_arome_france": 6.8,
+      "meteofrance_arome_france_hd": 7.8
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 4.5,
+      "ukmo_global_deterministic_10km": 6.4,
+      "meteofrance_arpege_europe": 8.4,
+      "ecmwf_ifs025": 7.4,
+      "meteofrance_arome_france": 8.9,
+      "meteofrance_arome_france_hd": 10.9
+     }
+    },
+    {
+     "h": "08:00",
+     "min": 1.8,
+     "med": 4.0,
+     "max": 7.6,
+     "dir": 42,
+     "gmed": 6.6,
+     "gmax": 10.7,
+     "n10": 0,
+     "n": 8,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 8,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 9000,
+     "n_boira": 0,
+     "low_max": 43,
+     "cape_max": 0,
+     "t_med": 15.6,
+     "alt": {
+      "80m": {
+       "med": 8.0,
+       "max": 12.0,
+       "dir": 63
+      },
+      "925hPa": {
+       "med": 0.9,
+       "max": 3.7,
+       "dir": 76
+      },
+      "850hPa": {
+       "med": 3.7,
+       "max": 7.1,
+       "dir": 270
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.8,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 5.7,
+      "ecmwf_ifs025": 3.3,
+      "meteofrance_arome_france": 6.3,
+      "meteofrance_arome_france_hd": 7.6
+     },
+     "wg_models": {
+      "icon_eu": 3.3,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 6.4,
+      "meteofrance_arpege_europe": 8.4,
+      "ecmwf_ifs025": 6.8,
+      "meteofrance_arome_france": 9.1,
+      "meteofrance_arome_france_hd": 10.7
+     }
+    },
+    {
+     "h": "09:00",
+     "min": 1.7,
+     "med": 3.1,
+     "max": 6.4,
+     "dir": 46,
+     "gmed": 5.8,
+     "gmax": 10.3,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 10340,
+     "n_boira": 0,
+     "low_max": 30,
+     "cape_max": 0,
+     "t_med": 16.1,
+     "alt": {
+      "80m": {
+       "med": 6.0,
+       "max": 10.8,
+       "dir": 64
+      },
+      "925hPa": {
+       "med": 0.9,
+       "max": 2.2,
+       "dir": 58
+      },
+      "850hPa": {
+       "med": 4.8,
+       "max": 6.4,
+       "dir": 269
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.7,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 3.1,
+      "meteofrance_arpege_europe": 4.4,
+      "ecmwf_ifs025": 3.0,
+      "meteofrance_arome_france_hd": 6.4
+     },
+     "wg_models": {
+      "icon_eu": 2.9,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 5.8,
+      "meteofrance_arpege_europe": 7.6,
+      "ecmwf_ifs025": 7.2,
+      "meteofrance_arome_france_hd": 10.3
+     }
+    },
+    {
+     "h": "10:00",
+     "min": 1.1,
+     "med": 3.0,
+     "max": 5.8,
+     "dir": 62,
+     "gmed": 5.1,
+     "gmax": 9.3,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 22700,
+     "n_boira": 0,
+     "low_max": 13,
+     "cape_max": 0,
+     "t_med": 18.3,
+     "alt": {
+      "80m": {
+       "med": 4.9,
+       "max": 10.4,
+       "dir": 66
+      },
+      "925hPa": {
+       "med": 2.0,
+       "max": 2.4,
+       "dir": 80
+      },
+      "850hPa": {
+       "med": 4.8,
+       "max": 6.8,
+       "dir": 274
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.1,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 2.1,
+      "meteofrance_arpege_europe": 3.5,
+      "ecmwf_ifs025": 3.0,
+      "meteofrance_arome_france_hd": 5.8
+     },
+     "wg_models": {
+      "icon_eu": 2.9,
+      "gfs_seamless": 3.3,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 6.2,
+      "ecmwf_ifs025": 8.4,
+      "meteofrance_arome_france_hd": 9.3
+     }
+    },
+    {
+     "h": "11:00",
+     "min": 0.7,
+     "med": 2.3,
+     "max": 5.4,
+     "dir": 93,
+     "gmed": 5.4,
+     "gmax": 9.9,
+     "n10": 0,
+     "n": 7,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 7,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 13,
+     "cape_max": 10,
+     "t_med": 20.5,
+     "alt": {
+      "80m": {
+       "med": 3.1,
+       "max": 7.7,
+       "dir": 84
+      },
+      "925hPa": {
+       "med": 2.0,
+       "max": 3.5,
+       "dir": 123
+      },
+      "850hPa": {
+       "med": 4.2,
+       "max": 7.0,
+       "dir": 277
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.7,
+      "gfs_seamless": 2.1,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 5.4,
+      "ecmwf_ifs025": 2.7,
+      "meteofrance_arome_france_hd": 4.3
+     },
+     "wg_models": {
+      "icon_eu": 2.5,
+      "gfs_seamless": 1.7,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 5.4,
+      "meteofrance_arpege_europe": 9.9,
+      "ecmwf_ifs025": 9.1,
+      "meteofrance_arome_france_hd": 8.9
+     }
+    },
+    {
+     "h": "12:00",
+     "min": 1.3,
+     "med": 2.45,
+     "max": 4.3,
+     "dir": 152,
+     "gmed": 6.05,
+     "gmax": 9.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 12,
+     "cape_max": 20,
+     "t_med": 22.1,
+     "alt": {
+      "80m": {
+       "med": 2.4,
+       "max": 4.6,
+       "dir": 150
+      },
+      "925hPa": {
+       "med": 2.5,
+       "max": 4.3,
+       "dir": 220
+      },
+      "850hPa": {
+       "med": 3.4,
+       "max": 6.9,
+       "dir": 282
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.4,
+      "gfs_seamless": 2.0,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 2.9,
+      "meteofrance_arpege_europe": 4.3,
+      "ecmwf_ifs025": 1.3
+     },
+     "wg_models": {
+      "icon_eu": 4.1,
+      "gfs_seamless": 0.8,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 8.0,
+      "meteofrance_arpege_europe": 9.9,
+      "ecmwf_ifs025": 9.3
+     }
+    },
+    {
+     "h": "13:00",
+     "min": 1.5,
+     "med": 3.75,
+     "max": 4.8,
+     "dir": 198,
+     "gmed": 7.65,
+     "gmax": 11.5,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 17,
+     "cape_max": 40,
+     "t_med": 23.3,
+     "alt": {
+      "80m": {
+       "med": 3.3,
+       "max": 4.2,
+       "dir": 203
+      },
+      "925hPa": {
+       "med": 2.8,
+       "max": 5.2,
+       "dir": 219
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 6.6,
+       "dir": 297
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.3,
+      "gfs_seamless": 3.8,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 4.7,
+      "meteofrance_arpege_europe": 4.8,
+      "ecmwf_ifs025": 1.5
+     },
+     "wg_models": {
+      "icon_eu": 5.8,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 11.5,
+      "meteofrance_arpege_europe": 10.9,
+      "ecmwf_ifs025": 9.5
+     }
+    },
+    {
+     "h": "14:00",
+     "min": 2.5,
+     "med": 4.2,
+     "max": 5.8,
+     "dir": 217,
+     "gmed": 7.95,
+     "gmax": 13.8,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 22,
+     "cape_max": 50,
+     "t_med": 24.3,
+     "alt": {
+      "80m": {
+       "med": 3.8,
+       "max": 4.9,
+       "dir": 215
+      },
+      "925hPa": {
+       "med": 3.6,
+       "max": 5.6,
+       "dir": 214
+      },
+      "850hPa": {
+       "med": 3.8,
+       "max": 6.2,
+       "dir": 313
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.5,
+      "gfs_seamless": 4.7,
+      "gem_seamless": 3.7,
+      "ukmo_global_deterministic_10km": 5.8,
+      "meteofrance_arpege_europe": 5.2,
+      "ecmwf_ifs025": 3.1
+     },
+     "wg_models": {
+      "icon_eu": 6.2,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 13.8,
+      "meteofrance_arpege_europe": 12.1,
+      "ecmwf_ifs025": 9.7
+     }
+    },
+    {
+     "h": "15:00",
+     "min": 2.5,
+     "med": 4.1,
+     "max": 6.0,
+     "dir": 222,
+     "gmed": 8.45,
+     "gmax": 14.2,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 17,
+     "cape_max": 50,
+     "t_med": 25.2,
+     "alt": {
+      "80m": {
+       "med": 3.7,
+       "max": 5.3,
+       "dir": 217
+      },
+      "925hPa": {
+       "med": 3.5,
+       "max": 5.6,
+       "dir": 221
+      },
+      "850hPa": {
+       "med": 3.9,
+       "max": 5.7,
+       "dir": 322
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.5,
+      "gfs_seamless": 4.3,
+      "gem_seamless": 3.5,
+      "ukmo_global_deterministic_10km": 6.0,
+      "meteofrance_arpege_europe": 5.5,
+      "ecmwf_ifs025": 3.9
+     },
+     "wg_models": {
+      "icon_eu": 6.4,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 4.1,
+      "ukmo_global_deterministic_10km": 14.2,
+      "meteofrance_arpege_europe": 12.4,
+      "ecmwf_ifs025": 10.5
+     }
+    },
+    {
+     "h": "16:00",
+     "min": 2.5,
+     "med": 4.2,
+     "max": 5.8,
+     "dir": 226,
+     "gmed": 8.85,
+     "gmax": 13.4,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 7,
+     "cape_max": 40,
+     "t_med": 25.8,
+     "alt": {
+      "80m": {
+       "med": 3.4,
+       "max": 5.3,
+       "dir": 222
+      },
+      "925hPa": {
+       "med": 3.1,
+       "max": 5.4,
+       "dir": 225
+      },
+      "850hPa": {
+       "med": 4.0,
+       "max": 5.2,
+       "dir": 331
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.5,
+      "gfs_seamless": 4.1,
+      "gem_seamless": 3.1,
+      "ukmo_global_deterministic_10km": 5.8,
+      "meteofrance_arpege_europe": 5.4,
+      "ecmwf_ifs025": 4.3
+     },
+     "wg_models": {
+      "icon_eu": 6.0,
+      "gfs_seamless": 3.5,
+      "gem_seamless": 3.9,
+      "ukmo_global_deterministic_10km": 13.4,
+      "meteofrance_arpege_europe": 12.4,
+      "ecmwf_ifs025": 11.7
+     }
+    },
+    {
+     "h": "17:00",
+     "min": 2.0,
+     "med": 3.65,
+     "max": 5.1,
+     "dir": 234,
+     "gmed": 8.65,
+     "gmax": 12.1,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24140,
+     "n_boira": 0,
+     "low_max": 1,
+     "cape_max": 40,
+     "t_med": 25.6,
+     "alt": {
+      "80m": {
+       "med": 2.8,
+       "max": 3.6,
+       "dir": 231
+      },
+      "925hPa": {
+       "med": 2.8,
+       "max": 5.0,
+       "dir": 228
+      },
+      "850hPa": {
+       "med": 3.3,
+       "max": 6.9,
+       "dir": 9
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.0,
+      "gfs_seamless": 3.4,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 5.1,
+      "meteofrance_arpege_europe": 3.9,
+      "ecmwf_ifs025": 4.2
+     },
+     "wg_models": {
+      "icon_eu": 5.6,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 3.3,
+      "ukmo_global_deterministic_10km": 11.7,
+      "meteofrance_arpege_europe": 12.1,
+      "ecmwf_ifs025": 11.7
+     }
+    },
+    {
+     "h": "18:00",
+     "min": 1.6,
+     "med": 2.7,
+     "max": 3.7,
+     "dir": 246,
+     "gmed": 6.35,
+     "gmax": 9.9,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 24020,
+     "n_boira": 0,
+     "low_max": 0,
+     "cape_max": 50,
+     "t_med": 24.9,
+     "alt": {
+      "80m": {
+       "med": 1.9,
+       "max": 3.4,
+       "dir": 238
+      },
+      "925hPa": {
+       "med": 2.9,
+       "max": 4.3,
+       "dir": 226
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 7.9,
+       "dir": 114
+      }
+     },
+     "ws_models": {
+      "icon_eu": 1.6,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 3.7,
+      "meteofrance_arpege_europe": 2.3,
+      "ecmwf_ifs025": 3.2
+     },
+     "wg_models": {
+      "icon_eu": 4.5,
+      "gfs_seamless": 2.9,
+      "gem_seamless": 2.5,
+      "ukmo_global_deterministic_10km": 8.2,
+      "meteofrance_arpege_europe": 9.7,
+      "ecmwf_ifs025": 9.9
+     }
+    },
+    {
+     "h": "19:00",
+     "min": 0.8,
+     "med": 1.7,
+     "max": 2.7,
+     "dir": 249,
+     "gmed": 3.5,
+     "gmax": 7.2,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 21340,
+     "n_boira": 0,
+     "low_max": 1,
+     "cape_max": 60,
+     "t_med": 23.2,
+     "alt": {
+      "80m": {
+       "med": 2.2,
+       "max": 3.4,
+       "dir": 225
+      },
+      "925hPa": {
+       "med": 2.5,
+       "max": 3.7,
+       "dir": 209
+      },
+      "850hPa": {
+       "med": 3.7,
+       "max": 8.1,
+       "dir": 126
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.8,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 1.7,
+      "meteofrance_arpege_europe": 1.0,
+      "ecmwf_ifs025": 1.7
+     },
+     "wg_models": {
+      "icon_eu": 3.1,
+      "gfs_seamless": 2.5,
+      "gem_seamless": 2.3,
+      "ukmo_global_deterministic_10km": 3.9,
+      "meteofrance_arpege_europe": 7.0,
+      "ecmwf_ifs025": 7.2
+     }
+    },
+    {
+     "h": "20:00",
+     "min": 0.4,
+     "med": 1.1,
+     "max": 1.6,
+     "dir": 331,
+     "gmed": 1.5,
+     "gmax": 5.4,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 18680,
+     "n_boira": 0,
+     "low_max": 0,
+     "cape_max": 60,
+     "t_med": 21.5,
+     "alt": {
+      "80m": {
+       "med": 1.9,
+       "max": 3.9,
+       "dir": 196
+      },
+      "925hPa": {
+       "med": 2.8,
+       "max": 3.0,
+       "dir": 186
+      },
+      "850hPa": {
+       "med": 3.5,
+       "max": 7.9,
+       "dir": 133
+      }
+     },
+     "ws_models": {
+      "icon_eu": 0.4,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 1.2,
+      "ukmo_global_deterministic_10km": 0.6,
+      "meteofrance_arpege_europe": 1.6,
+      "ecmwf_ifs025": 1.0
+     },
+     "wg_models": {
+      "icon_eu": 1.2,
+      "gfs_seamless": 1.6,
+      "gem_seamless": 1.4,
+      "ukmo_global_deterministic_10km": 1.0,
+      "meteofrance_arpege_europe": 4.1,
+      "ecmwf_ifs025": 5.4
+     }
+    },
+    {
+     "h": "21:00",
+     "min": 0.8,
+     "med": 2.2,
+     "max": 5.3,
+     "dir": 84,
+     "gmed": 2.9,
+     "gmax": 7.6,
+     "n10": 0,
+     "n": 6,
+     "pw": [
+      0,
+      0,
+      0
+     ],
+     "pg": [
+      0,
+      0,
+      0
+     ],
+     "pr": 0,
+     "prn": 6,
+     "pr_max": 0.0,
+     "pp": [
+      0,
+      0,
+      0
+     ],
+     "vis_min": 18940,
+     "n_boira": 0,
+     "low_max": 4,
+     "cape_max": 40,
+     "t_med": 20.6,
+     "alt": {
+      "80m": {
+       "med": 3.0,
+       "max": 10.2,
+       "dir": 145
+      },
+      "925hPa": {
+       "med": 2.7,
+       "max": 2.9,
+       "dir": 172
+      },
+      "850hPa": {
+       "med": 2.8,
+       "max": 6.4,
+       "dir": 112
+      }
+     },
+     "ws_models": {
+      "icon_eu": 2.2,
+      "gfs_seamless": 3.1,
+      "gem_seamless": 1.7,
+      "ukmo_global_deterministic_10km": 0.8,
+      "meteofrance_arpege_europe": 5.3,
+      "ecmwf_ifs025": 2.2
+     },
+     "wg_models": {
+      "icon_eu": 3.1,
+      "gfs_seamless": 2.7,
+      "gem_seamless": 2.1,
+      "ukmo_global_deterministic_10km": 1.0,
+      "meteofrance_arpege_europe": 7.6,
+      "ecmwf_ifs025": 5.6
+     }
+    }
+   ]
+  }
+ }
+}

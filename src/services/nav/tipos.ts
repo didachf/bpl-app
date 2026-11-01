@@ -31,15 +31,24 @@ export interface AjustesNav {
   altMinM: number
   altMaxM: number
   horizonteMin: number
+  /** Minimo sobre el terreno bajo el recorrido, salvo a ras (spec 2026-11-01-relieve §2). */
+  minSobreTerrenoM: number
 }
 
 export const AJUSTES_POR_DEFECTO: Omit<AjustesNav, 'altMinM' | 'altMaxM'> = {
   modos: { puja_lent: 0.5, puja_rapid: 2.75, baixa_lent: 0.5, baixa_rapid: 4 },
   rangos: { puja_lent: [0, 1], puja_rapid: [2.5, 3], baixa_lent: [0, 1], baixa_rapid: [3, 5] },
   horizonteMin: 60,
+  minSobreTerrenoM: 100 * 0.3048,
 }
 
 export interface Punto { lat: number; lon: number }
+
+/**
+ * Elevacion del suelo en m sobre el mar (spec 2026-11-01-relieve §3). Filas de sur a norte desde
+ * lat0, columnas de oeste a este desde lon0, al menos 2 x 2.
+ */
+export interface Relieve { lat0: number; lon0: number; dLat: number; dLon: number; nLat: number; nLon: number; elevM: number[] }
 
 /**
  * El objetivo de altura en el punto (spec 2026-11-01): aterrar (franja terra),

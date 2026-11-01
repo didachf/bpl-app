@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { construirTablas, minutosTransito, modoDe, tr, transito, vientoEn } from './vertical'
+import { construirTablas, fr, minutosTransito, modoDe, tr, transito, vientoEn } from './vertical'
 import { campoSintetico, rejillaUniforme } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
@@ -42,5 +42,29 @@ describe('construirTablas', () => {
   it('el transito que no cabe en el horizonte es null', () => {
     expect(tr(t, 3, 0, 0, 55)).toBeNull()
     expect(tr(t, 3, 0, 0, 52)).not.toBeNull()
+  })
+})
+
+describe('tablas con margen', () => {
+  const dos: AjustesNav = {
+    ...AJUSTES_POR_DEFECTO, altMinM: 0, altMaxM: 9999, modos: { puja_lent: 2, puja_rapid: 2, baixa_lent: 2, baixa_rapid: 2 },
+  }
+  const c = campoSintetico({ altM: [500, 800], etiqueta: ['a', 'b'] }, 10, () => [1, 0])
+  it('sin margen, todo dentro y minutos enteros', () => {
+    const t = construirTablas(c, 1, dos)
+    expect(t.dentro).toEqual([true, true])
+    expect(fr(t, 0, 1, 0)).toEqual([[0, 1], [0, 1], [0, 1]])
+  })
+  it('con margen, que franjas estan dentro y la parte de cada minuto de cada cambio', () => {
+    // 300 m a 2 m/s son 150 s, 3 minutos. Dentro de 25 s a 75 s.
+    const t = construirTablas(c, 1, dos, [550, 650])
+    expect(t.dentro).toEqual([false, false])
+    const f = fr(t, 0, 1, 0)
+    expect(f).toHaveLength(3)
+    expect(f[0]![0]).toBeCloseTo(25 / 60, 9)
+    expect(f[0]![1]).toBe(1)
+    expect(f[1]![0]).toBe(0)
+    expect(f[1]![1]).toBeCloseTo(15 / 60, 9)
+    expect(f[2]).toBeNull()
   })
 })

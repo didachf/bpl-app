@@ -6,6 +6,7 @@
 import { idx, type Campo } from './campo'
 import type { AjustesNav, Modo } from './tipos'
 import { PASO_INTEGRACION_S } from './parametros'
+import { enMargen, fracMinutos, SIN_MARGEN, type Frac, type Margen } from './objetivo'
 
 /** Viento del campo `f` a una altitud cualquiera en el minuto `k`, lineal entre franjas. */
 export function vientoEn(c: Campo, f: number, altM: number, k: number): [number, number] {
@@ -82,11 +83,17 @@ export interface Tablas {
   py: Float64Array
   /** filas[(b * B + b2) * 2 + clase][k0], null si no cabe en el horizonte. */
   filas: (Transito | null)[][]
+  /** El margen del objetivo (spec 2026-11-01) y si cada franja esta dentro. */
+  margen: Margen
+  dentro: boolean[]
+  /** frac[(b * B + b2) * 2 + clase][j]: la parte del minuto j del cambio dentro del margen. */
+  frac: Frac[][]
 }
 
-export function construirTablas(c: Campo, f: number, aj: AjustesNav): Tablas {
+export function construirTablas(c: Campo, f: number, aj: AjustesNav, margen: Margen = SIN_MARGEN): Tablas {
   const B = c.rejilla.altM.length
   const H = c.minutos
+  const altM = c.rejilla.altM
   const px = new Float64Array(B * (H + 1))
   const py = new Float64Array(B * (H + 1))
   for (let b = 0; b < B; b++) {
@@ -97,20 +104,29 @@ export function construirTablas(c: Campo, f: number, aj: AjustesNav): Tablas {
     }
   }
   const filas: (Transito | null)[][] = []
+  const frac: Frac[][] = []
   for (let b = 0; b < B; b++) {
     for (let b2 = 0; b2 < B; b2++) {
       for (let cl = 0; cl < 2; cl++) {
         const fila: (Transito | null)[] = new Array<Transito | null>(H + 1).fill(null)
+        let fm: Frac[] = []
         if (b !== b2) {
-          const vel = velocidad(aj, c.rejilla.altM[b2] > c.rejilla.altM[b], cl)
+          const vel = velocidad(aj, altM[b2] > altM[b], cl)
           const m = minutosTransito(c, b, b2, vel)
           for (let k0 = 0; k0 + m <= H; k0++) fila[k0] = transito(c, f, b, b2, vel, k0)
+          fm = fracMinutos(altM[b], altM[b2], vel, m, margen)
         }
         filas.push(fila)
+        frac.push(fm)
       }
     }
   }
-  return { c, f, px, py, filas }
+  return { c, f, px, py, filas, margen, dentro: altM.map(z => enMargen(z, margen)), frac }
+}
+
+/** La parte de cada minuto del cambio de b a b2 en la clase cl que cae dentro del margen. */
+export function fr(t: Tablas, b: number, b2: number, cl: number): Frac[] {
+  return t.frac[(b * t.c.rejilla.altM.length + b2) * 2 + cl]
 }
 
 /** El transito de b a b2 en la clase cl saliendo en el minuto k0, o null. */

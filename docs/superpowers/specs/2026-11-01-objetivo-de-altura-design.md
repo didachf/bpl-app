@@ -122,7 +122,8 @@ existen todavía en el código, así que no hay nada que migrar).
 | Aterrar, llega bajando | «Baixa ràpid (3 a 5 m/s) fins a terra, i hi arribes al punt.» |
 | Aterrar, flotando | «Manté terra fins al punt, cap a 078° a 3 kt (previst).» |
 | Si no fas res, fuera del margen | «Si no fas res, no hi passes a 2 000 ft.» o «Si no fas res, no baixes a terra.» |
-| Fuera del rango | «2 000 ft queda fora del rang de càlcul (1 500 a 3 500 ft).» |
+| Fuera del rango | «5 000 ft queda fora del rang de càlcul (terra a 3 750 ft).» Las etiquetas son las de la rejilla, que empieza por terra cuando la franja está |
+| Aterrar sin franja terra | «Falta la franja terra: no es pot calcular l'aterratge.» |
 | Ningún plan entra | «Cap pla hi passa a 2 000 ft dins de l'horitzó.» |
 | Qualsevol | Los del 30/10, sin cambios |
 

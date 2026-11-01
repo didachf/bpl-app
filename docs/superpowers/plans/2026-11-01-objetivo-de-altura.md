@@ -1363,3 +1363,25 @@ Expected: todo verde. Apuntar el número de pruebas.
 git add docs/superpowers/specs/2026-11-01-objetivo-de-altura-design.md STATUS.md docs/superpowers/plans/2026-11-01-objetivo-de-altura.md
 git commit -m "docs: STATUS y spec con el objetivo de altura"
 ```
+
+---
+
+## Cambios durante la ejecución, 01/11/2026
+
+* **Una cuenta del plan estaba mal, no el código.** En la prueba «lo de fuera del margen no cuenta»
+  esperaba 250 m y el motor dio 200: el mejor plan baja despacio desde la franja 2, que cruza dos
+  pasos de 10 s con viento al norte, y no desde la 1. La prueba se corrigió a 200 m con la cuenta
+  escrita al lado.
+* **Mutación de cada guarda nueva.** Tres mutaciones de `plan.ts` (mantener A fuera, tránsito a B
+  entero, refinado sin margen) y una de `zona.ts` (salida del margen en el último minuto de un
+  cambio) sobrevivían a las pruebas del plan. Se añadieron tres pruebas: un caso a mano donde sólo lo
+  de fuera del margen pasa por el punto, la distancia devuelta igual a la de su plan reevaluado con el
+  margen, y la salida del margen en el último minuto de una subida. Después de reestructurar, las diez
+  mutaciones se detectan.
+* **Rendimiento.** Pasar la parte del minuto a `avanzar` en todos los segmentos hacía la búsqueda un
+  50 % más lenta sin objetivo. Ahora mantener una franja usa el `avanzar` de antes, y si la franja está
+  fuera del margen se salta el bucle entero. Sólo los tránsitos usan `avanzarParte`. `MINUTO_ENTERO` se
+  lee una vez por módulo en `plan.ts` y `zona.ts`, porque con vitest cada lectura de una importación
+  pasa por un getter.
+* **Texto de fuera del rango** con las etiquetas de la rejilla («terra a 3 750 ft»), y fila nueva en
+  §6 del spec para Aterrar sin franja terra.

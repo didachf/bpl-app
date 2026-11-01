@@ -1,5 +1,28 @@
 # Logbook BPL, estado
 
+## 01/11/2026: objetivo de altura en el punto
+
+El motor del 30/10 está fusionado en `main`. Y nuevo, en la rama `objetivo-altura` (worktree
+`~/code/bpl-app-objetivo`), sin fusionar ni publicar: cada punto lleva un objetivo de altura,
+**Aterrar** (el que saldrá por defecto en la pantalla), **Passar a X ft** o **Qualsevol altura**, y la
+distancia y la zona sólo cuentan dentro de su margen. Spec
+`docs/superpowers/specs/2026-11-01-objetivo-de-altura-design.md`, plan
+`docs/superpowers/plans/2026-11-01-objetivo-de-altura.md` con sus cambios al final. Sin pantalla.
+
+* Con el 10/10 hacia la zona A: con Qualsevol el plan pasa por el punto **subiendo** a 2 250 ft (4 m);
+  con Aterrar, mantener 1 500 ft 3 min, bajar rápido a terra y flotar hasta el punto (48 m, 08:46);
+  con 2 500 ft pasa por el punto a esa altura subiendo (10 m).
+* 573 pruebas, 53 nuevas. Cada guarda nueva se ha mutado y alguna prueba la detecta. `tsc -b` y
+  `npm run build` limpios.
+* Tiempo del motor en node con el 10/10: unos 250 ms sin objetivo y 150 a 200 ms con Aterrar, con la
+  máquina cargada (`main` en las mismas condiciones, unos 200). Por debajo del límite de 2 s de la
+  prueba. El objetivo de 1 s en la tablet se mide en la fase 2.
+* **Siguiente:** fusionar (preguntarle) y fase 2, maquetas antes de código: marcar el punto con su
+  objetivo, la zona alcanzable según el objetivo y el punto más cercano. Después la pantalla de vuelo.
+* Observación: la búsqueda guarda los 40 planes más cercanos por distancia, y con muchos empates
+  exactos (sólo pasa con campos sintéticos) puede quedarse fuera el de menos cambios. Lo que ve el
+  piloto no cambia, porque las órdenes se cortan al pasar por el punto. Anotado, sin tocar.
+
 ## 30/10/2026: motor de navegación a un punto, fase 1
 
 **En la rama `motor-navegacion`** (worktree `~/code/bpl-app-motor`), sin fusionar con `main` y sin

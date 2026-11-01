@@ -444,18 +444,24 @@ Mientras la pantalla de vuelo está abierta, la pantalla del aparato se mantiene
 
 Al pulsar «Començar vol», antes de despegar:
 1. **El pronóstico**, a IndexedDB, como ahora.
-2. **La ortofoto.** Los mosaicos del ICGC se sirven con CORS abierto, unos 28 KB cada uno,
-   medidos el 10/10/2026 en
-   `geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.jpeg`.
+2. **La ortofoto.** Los mosaicos del Mapa base del ICGC se sirven con CORS abierto, unos
+   31 KB cada uno, medidos el 01/11/2026 en
+   `geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto/MON3857NW/{z}/{x}/{y}.png`
+   (llegan en JPEG aunque la URL diga png). El servicio que se midió el 10/10,
+   `icc_mapesmultibase/noutm`, está retirado desde el 28/02/2025 y sigue contestando sin
+   garantía. Ver §12.1.
    `ESTIMATE` del peso:
    * de z12 a z15 en 15 km a la redonda, unos 1 500 mosaicos y unos 42 MB
    * z16 en 3 km alrededor del despegue, unos 200 mosaicos y unos 6 MB
 
    Se guardan en la Cache API, con la persistencia de almacenamiento que ya pide la app. Se
    mide de verdad al construirlo y la pantalla dice cuánto ha bajado.
+3. **El relieve.** Los mosaicos Terrarium z12 de AWS Terrain Tiles de la zona del plan (spec
+   `2026-11-01-relieve-design.md`), unos 100 KB cada uno, a la Cache API con la ortofoto.
 
 `WARNING:` la ortofoto del ICGC cubre sólo Cataluña. Los vuelos de empresa en otras regiones
-necesitarán otra fuente, por ejemplo el PNOA del IGN. Queda fuera de este spec.
+necesitarán otra fuente, por ejemplo el PNOA del IGN. Queda fuera de este spec. (01/11/2026:
+según el ICGC, su Mapa base ya completa el resto de España con el PNOA, ver §12.1.)
 
 ## 9. Fuera de este spec
 
@@ -545,6 +551,79 @@ En la tablet de verdad:
    de 1 min, y si caben en 1 s en la tablet. Si no caben, se poda (por ejemplo, altitudes
    sólo dentro del rango y tiempos más gruesos lejos del punto) antes de bajar el número de
    altitudes.
+
+### 12.1 Resultado, 01/11/2026
+
+**1. ICGC.** El esquema es **XYZ**, fila 0 arriba: la matriz GRID3857 empieza en
+(−20037508,34, +20037508,34) y el mosaico 12/2066/1526 cae en Igualada. Lo del z15 del 10/10
+no era el esquema.
+
+`WARNING:` el servicio de §8 del 10/10 (`icc_mapesmultibase/noutm/wmts/`) está en la lista de
+obsolescencia del ICGC: anunciado el 20/06/2024, retirado el 28/02/2025, sustituido por el
+**Servei Mapa base**
+(https://www.icgc.cat/ca/Geoinformacio-i-mapes/Obsolescencia-daplicacions-productes-i-serveis).
+Sigue contestando, pero no hay que construir sobre él. El nuevo:
+`https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto/MON3857NW/{z}/{x}/{y}.png`,
+mismo origen y esquema XYZ (así lo usa el ejemplo de Leaflet del propio ICGC), CORS abierto,
+JPEG de 256 px y unos 31 KB, `Cache-Control` de 3 días. Comprobado con dos mosaicos.
+
+Condiciones: **CC BY 4.0**, sin clave ni registro. Atribución que pide el ICGC: «Ortofoto de
+Catalunya 1:5.000 de l'Institut Cartogràfic i Geològic de Catalunya (ICGC), sota una llicència
+CC BY 4.0», con la fecha de la última actualización. No hay cláusula que permita ni prohíba
+guardar mosaicos para usarlos sin conexión. Lo único es que «un ús excepcionalment alt» puede
+ralentizar o cortar el servicio y que el ICGC puede bloquear un mal uso
+(https://www.icgc.cat/ca/LICGC/Informacio-publica/Transparencia/Reutilitzacio-de-la-informacio).
+Unos 1 700 mosaicos una vez por vuelo, de uno en uno y no en paralelo, queda lejos de eso. Si
+algún día molesta, el ICGC ofrece la ortofoto entera en GeoPackage por año.
+
+Fuera de Cataluña, según la documentación del ICGC (https://openicgc.github.io/), el Mapa base
+pone el PNOA del IGN en España de z14 a z20, y fuera de España EOxCloudless, que es
+**CC BY-NC-SA**, no comercial. Sin comprobar con un mosaico.
+
+**2. open-meteo.** El peso de una petición, del código del servidor
+(`Sources/App/Helper/Writer/ForecastApiResult.swift`, `calculateQueryWeight`):
+
+```
+peso = max(variables / 10, variables / 10 × días / 14) × puntos   (mínimo 1 por punto)
+variables = variables pedidas × modelos
+```
+
+* La petición de §5.1: 42 variables × 7 modelos = 294, **29,4 llamadas**. Por debajo de 14
+  días el tiempo no cuenta: pedir 3 h cuesta lo mismo que pedir dos días. Así que se pide **el
+  día de vuelo entero de una vez**, y el refresco de §5.5 sólo sirve para traer una pasada nueva
+  de los modelos.
+* La de ahora en `openmeteo.ts` (17 × 6): 10,2. Separar los modelos en llamadas sueltas no
+  ahorra nada, porque cada una pasa del mínimo de 1. El «98 contra 270» del 02/09 no cuadra con
+  esta regla, y el comentario del código queda corregido.
+* Límites gratuitos, por IP: 600 por minuto, 5 000 por hora, 10 000 por día. El contador
+  diario se pone a cero a medianoche UTC. Un 429 no cuenta.
+* Un vuelo con la petición antes de despegar y refresco cada 30 min son unas 5 peticiones,
+  unas 150 llamadas. En vuelo la tablet sale por el teléfono, con otra IP que la de casa.
+* `WARNING:` **una rejilla con todo no cabe.** 91 puntos con siete modelos y 42 variables son
+  2 675 llamadas, más de cuatro veces el límite por minuto. Si algún día hace falta viento en
+  rejilla, se pide con pocos niveles y pocos modelos, y se reparte en el tiempo.
+* El servidor tiene cabeceras `X-RateLimit-*` en el código, pero la API gratuita no las devolvió
+  el 01/11/2026 con la petición de §5.1. El peso sale de la fórmula, no de una medida.
+* `WARNING:` el plan gratuito es **sólo para uso no comercial**: «Private or non-profit
+  websites or apps that do not have subscriptions or advertising»
+  (https://open-meteo.com/en/terms). La app de un piloto privado entra. Si la usa la empresa
+  para sus vuelos, hará falta el plan de pago.
+
+**3. Chrome en Android da elipsoide.** `LocationProviderAdapter.java` pasa
+`location.getAltitude()` tal cual, que Android define como «meters above the WGS84 reference
+ellipsoid», y no usa `getMslAltitudeMeters()` ni `AltitudeConverter`
+(https://source.chromium.org/chromium/chromium/src/+/main:services/device/geolocation/android/java/src/org/chromium/device/geolocation/LocationProviderAdapter.java).
+La calibración en tierra de §6.2 se queda como está. Dos cosas nuevas:
+* `altitudeAccuracy` llega siempre **nula** en Chrome de Android, porque Chromium no pasa
+  `getVerticalAccuracyMeters()`. No sirve para filtrar puntos malos ni para el variómetro.
+* La elevación del despegue para calibrar, si el plan no trae una medida, sale del relieve
+  (EU-DEM en Cataluña, a 3 m de GLO-90 donde se contrastó). Un GNSS de Samsung que se aparte
+  del contrato de Android se vería en esa misma calibración, que sigue en las pruebas de §11.
+
+**4. El optimizador.** Ya existe (spec `2026-10-30-motor-navegacion-design.md`): pasos de 2 min
+afinados a 1 min y tres altitudes, y con el relieve unos 230 ms en node con el 10/10.
+`ESTIMATE`: en la tablet, entre dos y tres veces más, por debajo de 1 s. Se mide en la tablet de
+verdad cuando el motor corra en su Web Worker.
 
 ## 13. Notas para la pieza 5, pruebas de competición
 

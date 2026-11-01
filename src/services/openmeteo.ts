@@ -8,8 +8,10 @@
 //  - **Cada coordenada consume cuota por separado.** Por eso aqui se pide UN
 //    punto. La rejilla de 49 del script de deriva es fase 2 y necesitara su
 //    propio presupuesto.
-//  - Los seis modelos en UNA llamada cuestan unas 98 unidades; en seis
-//    llamadas sueltas, unas 270. Se agrupan.
+//  - El peso, del codigo del servidor (01/11/2026): variables x modelos / 10,
+//    con un minimo de 1 por punto, y el tiempo no cuenta por debajo de 14
+//    dias. Esta peticion pesa 10,2 llamadas, agrupada o en seis sueltas. Se
+//    agrupa para que sea una sola peticion.
 //  - Con `models=`, las claves de la respuesta llevan sufijo del modelo.
 //  - `ecmwf_ifs025` no tiene 900 hPa y **no da error**: devuelve 200, nulos y
 //    la unidad "undefined".

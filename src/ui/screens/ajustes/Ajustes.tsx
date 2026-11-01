@@ -1,5 +1,7 @@
 // src/ui/screens/ajustes/Ajustes.tsx
+import { useState } from 'preact/hooks'
 import { currency } from '../../../domain/currency'
+import { aparell, desarAparell, type Aparell } from '../../aparell'
 import { Icon } from '../../components/Icon'
 import { NavRow } from '../../components/Field'
 import { Screen, SectionTitle } from '../../components/Screen'
@@ -34,6 +36,39 @@ const RESUMEN: Record<string, string> = {
   subiendo: 'Subiendo...',
   conflicto: 'Conflicto sin resolver',
   error: 'Con error',
+}
+
+/**
+ * El modo de este aparato, guardado en el propio aparato y no en el documento
+ * (spec 10/10 §7.4). La pantalla de vuelo solo existe en la tablet.
+ */
+function ModoAparato() {
+  const [modo, setModo] = useState<Aparell>(() => aparell())
+  const elegir = (a: Aparell) => { desarAparell(a); setModo(a) }
+  const boton = (a: Aparell, texto: string) => (
+    <button
+      type="button"
+      aria-pressed={modo === a}
+      onClick={() => elegir(a)}
+      style={`
+        flex: 1 1 0; height: 40px; border: 0; border-radius: 7px; font: inherit; font-size: 15px;
+        background: ${modo === a ? 'var(--accent)' : 'transparent'};
+        color: ${modo === a ? 'var(--accent-text)' : 'var(--muted)'};
+        font-weight: ${modo === a ? 600 : 400};
+      `}
+    >{texto}</button>
+  )
+  return (
+    <div style="padding: 0 20px;">
+      <div style="display: flex; gap: 6px; background: var(--surface); border-radius: 10px; padding: 4px;">
+        {boton('tauleta', 'Tablet')}
+        {boton('telefon', 'Teléfono')}
+      </div>
+      <div class="dim" style="font-size: 13px; margin-top: 8px;">
+        La pantalla de vuelo solo está en la tablet. Cada aparato guarda el suyo.
+      </div>
+    </div>
+  )
 }
 
 export function Ajustes() {
@@ -91,6 +126,9 @@ export function Ajustes() {
           href={hrefOf({ name: 'ajustesPiloto' })}
         />
       </div>
+
+      <SectionTitle>Este aparato</SectionTitle>
+      <ModoAparato />
 
       <SectionTitle>Lo que esta app no comprueba</SectionTitle>
       <NoComprobado />

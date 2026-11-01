@@ -14,7 +14,9 @@ import { Copia } from './ui/screens/ajustes/Copia'
 import { Globos } from './ui/screens/ajustes/Globos'
 import { MisDatos } from './ui/screens/ajustes/MisDatos'
 import { Personas } from './ui/screens/ajustes/Personas'
+import { aparell } from './ui/aparell'
 import { aplicarVersionNueva, pedirAlmacenamientoPersistente, vigilarVersiones } from './ui/install'
+import { Vol } from './ui/vol/Vol'
 import { useRoute } from './ui/router'
 import { StoreProvider, useStore } from './ui/state'
 
@@ -34,6 +36,8 @@ function Ruta() {
     case 'ajustesCampos': return <Campos />
     case 'ajustesPersonas': return <Personas />
     case 'ajustesCopia': return <Copia />
+    // En el telefono la ruta no existe: un enlace viejo lleva a Inicio (spec 10/10 §7).
+    case 'vol': return aparell() === 'tauleta' ? <Vol /> : <Inicio />
   }
 }
 

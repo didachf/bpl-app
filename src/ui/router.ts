@@ -21,6 +21,8 @@ export type Route =
   | { name: 'ajustesCampos' }
   | { name: 'ajustesPersonas' }
   | { name: 'ajustesCopia' }
+  /** La pantalla de vuelo, solo en la tablet (spec 10/10 §7). */
+  | { name: 'vol' }
 
 const AJUSTES: Record<string, Route> = {
   piloto: { name: 'ajustesPiloto' },
@@ -62,6 +64,7 @@ export function parseHash(hash: string): Route {
     if (partes[0] === 'cerrar') return { name: 'cerrar' }
     if (partes[0] === 'planificar') return { name: 'planificar' }
     if (partes[0] === 'operar') return { name: 'operar' }
+    if (partes[0] === 'vol') return { name: 'vol' }
   }
 
   return { name: 'inicio' }
@@ -83,6 +86,7 @@ export function hrefOf(r: Route): string {
     case 'ajustesCampos': return '#/ajustes/campos'
     case 'ajustesPersonas': return '#/ajustes/personas'
     case 'ajustesCopia': return '#/ajustes/copia'
+    case 'vol': return '#/vol'
   }
 }
 

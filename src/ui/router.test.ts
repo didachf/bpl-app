@@ -12,6 +12,7 @@ describe('parseHash', () => {
     expect(parseHash('#/vuelos')).toEqual({ name: 'vuelos' })
     expect(parseHash('#/planificar')).toEqual({ name: 'planificar' })
     expect(parseHash('#/operar')).toEqual({ name: 'operar' })
+    expect(parseHash('#/vol')).toEqual({ name: 'vol' })
     expect(parseHash('#/ajustes')).toEqual({ name: 'ajustes' })
   })
 
@@ -59,6 +60,7 @@ describe('hrefOf', () => {
       { name: 'ajustesPersonas' }, { name: 'ajustesCopia' },
       { name: 'detalle', flightId: 'f7' },
       { name: 'checklist', id: 'pre-despegue' },
+      { name: 'vol' },
     ] as const
     for (const r of rutas) expect(parseHash(hrefOf(r))).toEqual(r)
   })

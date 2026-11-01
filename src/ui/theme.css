@@ -21,6 +21,13 @@
   --warn-border: #5a4423;
   --danger: #d03b3b;
   --danger-border: #4a2020;
+  /* Navegacion, de las maquetas de la pantalla de vuelo (design/pantalla-de-vol/ESPEC_TAULETA.md). */
+  --nav: #35d0ff;
+  --nav-bg: #1f2a33;
+  --nav-lab: #8fd8f5;
+  --nav-pressed: #1d2c40;
+  --nav-border: #3c4f5c;
+  --zona: #3ad16b;
   --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
@@ -42,7 +49,27 @@
     --warn-border: #d9c9a4;
     --danger: #a32020;
     --danger-border: #e0c4c4;
+    /* El cian de la maqueta da 1,6 de contraste sobre claro: aqui se oscurece. */
+    --nav: #006d93;
+    --nav-bg: #e3eef4;
+    --nav-lab: #00597a;
+    --nav-pressed: #dbe7f6;
+    --nav-border: #a9c3d2;
+    --zona: #1d8a40;
   }
+}
+
+/* Lo que va encima de la ortofoto se ve igual en los dos temas: una ficha clara
+   sobre la foto no se lee. */
+.sobre-mapa {
+  background: rgba(26, 26, 25, .9);
+  color: #ffffff;
+  --muted: #c3c2b7;
+  --dim: #898781;
+  --nav: #35d0ff;
+  --nav-lab: #8fd8f5;
+  --zona: #3ad16b;
+  --warn: #fab219;
 }
 
 * { box-sizing: border-box; }

@@ -197,3 +197,30 @@ describe('candidatas con margen', () => {
     expect(candidatas(construirTablas(c, 1, rapido, m), 0, 1000, 0)).toContain(19)
   })
 })
+
+describe('lo de fuera del margen no cuenta, en ningun tramo', () => {
+  // 10 min. Franja 0 en calma (el margen), franjas 1 y 2 al norte a 5 m/s, cambios de un minuto.
+  // Manteniendo la 1 o cambiando a la 2 se pasa por (0, 2950), pero fuera del margen. Dentro, lo
+  // mas al norte es llegar a la franja 0 en el minuto 10 bajando despacio desde la 2, que cruza dos
+  // pasos de 10 s con viento al norte: 250 + 300 x 8 + 100 = 2 750 m.
+  const c = campoSintetico(rejillaUniforme(3, 500), 10, b => (b === 0 ? [0, 0] : [0, 5]))
+  const t = construirTablas(c, 1, rapido, margenDe({ tipo: 'altitud', altM: 500 }, c.rejilla)!)
+  it('lo mas cerca dentro del margen son 200 m', () => {
+    expect(buscarPlan(t, 0, 0, 2950).distM).toBeCloseTo(200, 3)
+  })
+})
+
+describe('la distancia que devuelve la busqueda es la de su plan con el margen', () => {
+  const c = campoSintetico(rejillaUniforme(5, 500), 60, (b, k) =>
+    [Math.cos(b * 1.3 + k / 20) * 5, Math.sin(b * 1.3 + k / 20) * 5])
+  for (const b of [0, 4]) {
+    it(`margen en la franja ${b}`, () => {
+      const t = construirTablas(c, 1, aj, margenDe({ tipo: 'altitud', altM: 500 + b * 76.2 }, c.rejilla)!)
+      for (const [ox, oy] of [[-3000, 4000], [2500, 1500], [-1000, -4000]]) {
+        const e = buscarPlan(t, 2, ox, oy)
+        const r = aproximacion(caminoTabla(t, e.plan)!, ox, oy, fracciones(t, e.plan))
+        expect(r.distM).toBeCloseTo(e.distM, 6)
+      }
+    })
+  }
+})

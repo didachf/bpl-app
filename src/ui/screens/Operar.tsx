@@ -10,6 +10,8 @@
 // de Ultramagic, y cada paso lleva su fuente. El aviso de pendiente de validar
 // no se quita hasta que el JSON diga validado, y eso lo decide el piloto.
 import { CONTENIDO, porGrupo, progreso } from '../../ops/checklist'
+import { aparell } from '../aparell'
+import { useVol } from '../vol/VolProvider'
 import { Icon } from '../components/Icon'
 import { Notice } from '../components/Notice'
 import { Screen } from '../components/Screen'
@@ -22,10 +24,30 @@ const PENDIENTE: { titulo: string; fuente: string; grave?: boolean }[] = [
   { titulo: 'Emergències', fuente: 'Secció 3, línies elèctriques i FDS', grave: true },
 ]
 
+/** L'entrada a la pantalla de vol, nomes a la tauleta (spec 10/10 §7). */
+function EntradaVol() {
+  const { sessio } = useVol()
+  if (aparell() !== 'tauleta') return null
+  return (
+    <a
+      href={hrefOf({ name: 'vol' })}
+      style="
+        display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px;
+        border-radius: 10px; background: var(--accent); color: var(--accent-text);
+        text-decoration: none; font-size: 17px; font-weight: 500;
+      "
+    >
+      <Icon name="mapa" size={22} width={2} />
+      {sessio === null ? 'Començar vol' : 'Vol en marxa · Tornar al vol'}
+    </a>
+  )
+}
+
 export function Operar() {
   return (
     <Screen title="Operar" tab="operar">
       <div style="padding: 0 20px 24px 20px; display: flex; flex-direction: column; gap: 16px;">
+        <EntradaVol />
         {!CONTENIDO.validado && (
           <Notice tone="warn" title="Pendent de validar">
             Passos dictats pel pilot el 08/10/2026 i creuats amb el MV04 r30. Cada pas porta

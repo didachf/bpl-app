@@ -8,8 +8,12 @@
 // 2026-11-01 §4.3) solo se marca lo que cae dentro: la programacion dinamica no
 // cambia, el margen solo decide que posiciones cuentan.
 import { fr, tr, type Tablas } from './vertical'
+import { MINUTO_ENTERO } from './objetivo'
 import { envolvente } from './geo'
 import { DIRECCIONES, LLEGA_M, MAX_ALTITUDES, MIN_MANTENER } from './parametros'
+
+/** Leido una vez: con vitest cada lectura de una importacion pasa por un getter, y esta va en el bucle mas interno. */
+const ENTERO = MINUTO_ENTERO
 
 export interface Zona {
   minutos: number
@@ -91,7 +95,9 @@ export function calcularZona(t: Tablas, b0: number): Zona {
               const nx = x + tt.camino[j][0]
               const ny = y + tt.camino[j][1]
               const f = ff[j]
-              if (f !== null) {
+              if (f === ENTERO) {
+                if (j < tt.camino.length - 1) marcar(k + 1 + j, nx, ny)
+              } else if (f !== null) {
                 if (f[0] > 0) marcar(k + 1 + j, qx + f[0] * (nx - qx), qy + f[0] * (ny - qy))
                 if (f[1] < 1 || j < tt.camino.length - 1) marcar(k + 1 + j, qx + f[1] * (nx - qx), qy + f[1] * (ny - qy))
               }

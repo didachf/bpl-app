@@ -12,6 +12,9 @@ import {
   LLEGA_M, MAX_CANDIDATAS, MAX_FRANJAS_TODAS, MEJORA_ABSOLUTA_M, MEJORA_RELATIVA, MIN_MANTENER, TOP_PLANES,
 } from './parametros'
 
+/** Leido una vez: con vitest cada lectura de una importacion pasa por un getter, y esta va en un bucle caliente. */
+const ENTERO = MINUTO_ENTERO
+
 /** franjas[0] es la actual. dur[i] es lo que se mantiene franjas[i]. La ultima va hasta el horizonte. */
 export interface PlanInterno { franjas: number[]; clases: number[]; dur: number[] }
 export interface Evaluado { plan: PlanInterno; distM: number; minuto: number }
@@ -28,25 +31,37 @@ export function distSegmento(ax: number, ay: number, bx: number, by: number, ox:
 
 interface Min { m: number; mk: number }
 
-/** Recorta el segmento al trozo de dentro del margen y apunta si pasa mas cerca. */
-function avanzar(
-  s: Min, ax: number, ay: number, bx: number, by: number, k: number, ox: number, oy: number, f: Frac = MINUTO_ENTERO,
-): void {
-  if (f === null) return
-  const s0 = f[0]
-  const s1 = f[1]
-  if (f !== MINUTO_ENTERO) {
-    const ex = bx - ax
-    const ey = by - ay
-    bx = ax + s1 * ex
-    by = ay + s1 * ey
-    ax += s0 * ex
-    ay += s0 * ey
-  }
+function avanzar(s: Min, ax: number, ay: number, bx: number, by: number, k: number, ox: number, oy: number): void {
   const d = distSegmento(ax, ay, bx, by, ox, oy)
   if (d < s.m) {
     s.m = d
-    s.mk = Math.round(k - 1 + (Math.hypot(ax - ox, ay - oy) < Math.hypot(bx - ox, by - oy) ? s0 : s1))
+    s.mk = Math.hypot(ax - ox, ay - oy) < Math.hypot(bx - ox, by - oy) ? k - 1 : k
+  }
+}
+
+/**
+ * Lo mismo con solo la parte `f` del segmento, la de dentro del margen. Va aparte de
+ * `avanzar` porque mantener una franja cuenta el minuto entero o nada, y ese es el
+ * bucle mas caliente de la busqueda.
+ */
+function avanzarParte(
+  s: Min, ax: number, ay: number, bx: number, by: number, k: number, ox: number, oy: number, f: Frac,
+): void {
+  if (f === null) return
+  if (f === ENTERO) {
+    avanzar(s, ax, ay, bx, by, k, ox, oy)
+    return
+  }
+  const ex = bx - ax
+  const ey = by - ay
+  const pax = ax + f[0] * ex
+  const pay = ay + f[0] * ey
+  const pbx = ax + f[1] * ex
+  const pby = ay + f[1] * ey
+  const d = distSegmento(pax, pay, pbx, pby, ox, oy)
+  if (d < s.m) {
+    s.m = d
+    s.mk = Math.round(k - 1 + (Math.hypot(pax - ox, pay - oy) < Math.hypot(pbx - ox, pby - oy) ? f[0] : f[1]))
   }
 }
 
@@ -57,7 +72,7 @@ function avanzar(
 export function aproximacion(cam: Camino, ox: number, oy: number, fr?: Frac[]): { distM: number; minuto: number } {
   const s: Min = { m: Infinity, mk: 0 }
   for (let k = 1; k < cam.length; k++) {
-    avanzar(s, cam[k - 1][0], cam[k - 1][1], cam[k][0], cam[k][1], k, ox, oy, fr === undefined ? MINUTO_ENTERO : fr[k - 1])
+    avanzarParte(s, cam[k - 1][0], cam[k - 1][1], cam[k][0], cam[k][1], k, ox, oy, fr === undefined ? MINUTO_ENTERO : fr[k - 1])
   }
   return { distM: s.m, minuto: s.mk }
 }
@@ -183,7 +198,6 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
   const W = H + 1
   const px = t.px
   const py = t.py
-  const en = (b: number): Frac => (t.dentro[b] ? MINUTO_ENTERO : null)
   const cand = candidatas(t, b0, ox, oy)
   const top: Evaluado[] = []
   const meter = (plan: PlanInterno, distM: number, minuto: number) => {
@@ -194,15 +208,17 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
   }
 
   // Mantener la actual: el minimo acumulado sirve a todos los planes que salen de ella.
-  // La posicion del minuto 0 la cubre el primer segmento de lo que siga.
+  // La posicion del minuto 0 la cubre el primer segmento de lo que siga. Una franja
+  // mantenida fuera del margen no cuenta nada (spec 2026-11-01 §4.1).
   const minB = new Float64Array(W).fill(Infinity)
   const argB = new Int32Array(W)
-  const f0 = en(b0)
-  const s0: Min = { m: Infinity, mk: 0 }
-  for (let k = 1; k <= H; k++) {
-    avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], px[b0 * W + k], py[b0 * W + k], k, ox, oy, f0)
-    minB[k] = s0.m
-    argB[k] = s0.mk
+  if (t.dentro[b0]) {
+    const s0: Min = { m: Infinity, mk: 0 }
+    for (let k = 1; k <= H; k++) {
+      avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], px[b0 * W + k], py[b0 * W + k], k, ox, oy)
+      minB[k] = s0.m
+      argB[k] = s0.mk
+    }
   }
   meter({ franjas: [b0], clases: [], dur: [H] }, minB[H], argB[H])
 
@@ -211,7 +227,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
     const sy = py[b0 * W + d0]
     for (const A of cand) {
       if (A === b0) continue
-      const fA = en(A)
+      const dentroA = t.dentro[A]
       for (let ca = 0; ca < 2; ca++) {
         const ta = tr(t, b0, A, ca, d0)
         if (ta === null) continue
@@ -222,7 +238,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
         for (let j = 0; j < ta.camino.length; j++) {
           const x = sx + ta.camino[j][0]
           const y = sy + ta.camino[j][1]
-          avanzar(sA, lx, ly, x, y, d0 + 1 + j, ox, oy, ra[j])
+          avanzarParte(sA, lx, ly, x, y, d0 + 1 + j, ox, oy, ra[j])
           lx = x
           ly = y
         }
@@ -233,7 +249,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
           const x = ax + px[A * W + k]
           const y = ay + py[A * W + k]
           if (k > kA) {
-            avanzar(sA, lx, ly, x, y, k, ox, oy, fA)
+            if (dentroA) avanzar(sA, lx, ly, x, y, k, ox, oy)
             lx = x
             ly = y
           }
@@ -241,7 +257,6 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
           if (dA < MIN_MANTENER || dA % 2 !== 0 || k >= H) continue
           for (const Bf of cand) {
             if (Bf === A) continue
-            const fB = en(Bf)
             for (let cb = 0; cb < 2; cb++) {
               const tb = tr(t, A, Bf, cb, k)
               if (tb === null) continue
@@ -252,19 +267,21 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
               for (let j = 0; j < tb.camino.length; j++) {
                 const nx = x + tb.camino[j][0]
                 const ny = y + tb.camino[j][1]
-                avanzar(sB, mx, my, nx, ny, k + 1 + j, ox, oy, rb[j])
+                avanzarParte(sB, mx, my, nx, ny, k + 1 + j, ox, oy, rb[j])
                 mx = nx
                 my = ny
               }
               const kB = k + tb.minutos
-              const bx = mx - px[Bf * W + kB]
-              const by = my - py[Bf * W + kB]
-              for (let kk = kB + 1; kk <= H; kk++) {
-                const nx = bx + px[Bf * W + kk]
-                const ny = by + py[Bf * W + kk]
-                avanzar(sB, mx, my, nx, ny, kk, ox, oy, fB)
-                mx = nx
-                my = ny
+              if (t.dentro[Bf]) {
+                const bx = mx - px[Bf * W + kB]
+                const by = my - py[Bf * W + kB]
+                for (let kk = kB + 1; kk <= H; kk++) {
+                  const nx = bx + px[Bf * W + kk]
+                  const ny = by + py[Bf * W + kk]
+                  avanzar(sB, mx, my, nx, ny, kk, ox, oy)
+                  mx = nx
+                  my = ny
+                }
               }
               meter({ franjas: [b0, A, Bf], clases: [ca, cb], dur: [d0, dA, H - kB] }, sB.m, sB.mk)
             }

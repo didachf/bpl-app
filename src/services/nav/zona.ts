@@ -4,8 +4,10 @@
 // hacia delante, exacta, con estado (franja, altitudes usadas, minutos en la
 // actual). Una pasada da el extremo de todos los minutos a la vez. Las
 // posiciones a mitad de un cambio de altitud tambien cuentan, para que la cota
-// exterior valga para cualquier plan.
-import { tr, type Tablas } from './vertical'
+// exterior valga para cualquier plan. Con el margen de un objetivo (spec
+// 2026-11-01 §4.3) solo se marca lo que cae dentro: la programacion dinamica no
+// cambia, el margen solo decide que posiciones cuentan.
+import { fr, tr, type Tablas } from './vertical'
 import { envolvente } from './geo'
 import { DIRECCIONES, LLEGA_M, MAX_ALTITUDES, MIN_MANTENER } from './parametros'
 
@@ -63,11 +65,11 @@ export function calcularZona(t: Tablas, b0: number): Zona {
         if (V[k][s] === -Infinity) continue
         const x = X[k][s]
         const y = Y[k][s]
-        marcar(k, x, y)
-        if (k === H) continue
         const tm = s % T
         const n = (Math.floor(s / T) % MAX_ALTITUDES) + 1
         const b = Math.floor(s / (T * MAX_ALTITUDES))
+        if (t.dentro[b]) marcar(k, x, y)
+        if (k === H) continue
         const i = b * W + k
         // De la actual se sale al minuto 0 o tras MIN_MANTENER, como en plan.ts: el primer minuto
         // mantenido cuenta desde cero.
@@ -79,13 +81,30 @@ export function calcularZona(t: Tablas, b0: number): Zona {
           for (let cl = 0; cl < 2; cl++) {
             const tt = tr(t, b, b2, cl, k)
             if (tt === null) continue
-            for (let j = 0; j < tt.camino.length - 1; j++) marcar(k + 1 + j, x + tt.camino[j][0], y + tt.camino[j][1])
+            // Solo lo que cae dentro del margen. Un trozo de minuto se marca en el minuto en que
+            // acaba, y la cota exterior de fueraSeguro mira los dos extremos de cada minuto. Con el
+            // minuto entero, cada posicion intermedia en su minuto, y la ultima la marca la llegada.
+            const ff = fr(t, b, b2, cl)
+            let qx = x
+            let qy = y
+            for (let j = 0; j < tt.camino.length; j++) {
+              const nx = x + tt.camino[j][0]
+              const ny = y + tt.camino[j][1]
+              const f = ff[j]
+              if (f !== null) {
+                if (f[0] > 0) marcar(k + 1 + j, qx + f[0] * (nx - qx), qy + f[0] * (ny - qy))
+                if (f[1] < 1 || j < tt.camino.length - 1) marcar(k + 1 + j, qx + f[1] * (nx - qx), qy + f[1] * (ny - qy))
+              }
+              qx = nx
+              qy = ny
+            }
             relajar(k + tt.minutos, st(b2, n + 1, 0), x + tt.dx, y + tt.dy)
           }
         }
       }
     }
-    for (let k = 0; k <= H; k++) ext[k].push([ex[k], ey[k]])
+    // Un minuto sin nada dentro del margen no tiene extremos.
+    for (let k = 0; k <= H; k++) if (hd[k] > -Infinity) ext[k].push([ex[k], ey[k]])
   }
   return { minutos: H, dirs, h, ext }
 }

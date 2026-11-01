@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest'
 import { calcularZona, fueraSeguro, poligono } from './zona'
 import { caminoDirecto, type PlanInterno } from './plan'
 import { construirTablas } from './vertical'
+import { fraccionesDirectas } from './oraculo'
+import { margenDe } from './objetivo'
 import { campoSintetico, rejillaUniforme } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
@@ -78,5 +80,110 @@ describe('la cota exterior contiene todos los planes de la fuerza bruta', () => 
     }
     expect(planes).toBeGreaterThan(100)
     expect(peor).toBeLessThanOrEqual(1e-6)
+  })
+})
+
+describe('zona con margen', () => {
+  const r = { altM: [300, 500, 576.2, 652.4], etiqueta: ['terra', 'F1', 'F2', 'F3'] }
+  const c = campoSintetico(r, 30, (b, k) => [Math.cos(b * 1.7 + k / 9) * 5, Math.sin(b * 1.1 + k / 13) * 5])
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 0.5, puja_rapid: 2.75, baixa_lent: 0.5, baixa_rapid: 4 } }
+  const zq = calcularZona(construirTablas(c, 1, lento), 2)
+  const m = margenDe({ tipo: 'aterrar' }, r)!
+  const za = calcularZona(construirTablas(c, 1, lento, m), 2)
+
+  it('el minuto 0, en la franja 2, no tiene zona de aterrar', () => {
+    expect(poligono(za, 0)).toEqual([])
+    expect(za.h[0][0]).toBe(-Infinity)
+  })
+  it('dentro de la de qualsevol, minuto a minuto', () => {
+    for (let k = 1; k <= 30; k++) {
+      for (let d = 0; d < za.dirs.length; d++) {
+        expect(za.h[d][k]).toBeLessThanOrEqual(Math.max(zq.h[d][k - 1], zq.h[d][k]) + 1e-6)
+      }
+    }
+  })
+  /** Lo peor que un trozo de minuto dentro del margen de la fuerza bruta sale de la cota, y cuantos hay. */
+  function contencion(b0: number, mg: [number, number]): { trozos: number; peor: number } {
+    const z = calcularZona(construirTablas(c, 1, lento, mg), b0)
+    let trozos = 0
+    let peor = -Infinity
+    for (let h0 = 0; h0 <= 10; h0 += 2) {
+      for (let A = 0; A < 4; A++) {
+        if (A === b0) continue
+        for (let ca = 0; ca < 2; ca++) {
+          for (let hA = 2; hA <= 8; hA += 2) {
+            for (let B = 0; B < 4; B++) {
+              if (B === A) continue
+              for (let cb = 0; cb < 2; cb++) {
+                const p: PlanInterno = { franjas: [b0, A, B], clases: [ca, cb], dur: [h0, hA, 0] }
+                const cam = caminoDirecto(c, 1, lento, p)
+                if (cam === null) continue
+                const fr = fraccionesDirectas(c, lento, p, mg)
+                for (let k = 0; k < 30; k++) {
+                  const f = fr[k]
+                  if (f === null) continue
+                  trozos++
+                  for (const s of f) {
+                    const x = cam[k][0] + s * (cam[k + 1][0] - cam[k][0])
+                    const y = cam[k][1] + s * (cam[k + 1][1] - cam[k][1])
+                    for (let d = 0; d < z.dirs.length; d++) {
+                      const tope = Math.max(z.h[d][k], z.h[d][k + 1])
+                      peor = Math.max(peor, x * z.dirs[d][0] + y * z.dirs[d][1] - tope)
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return { trozos, peor }
+  }
+  it('la cota exterior contiene todo lo que la fuerza bruta pasa en terra', () => {
+    const r = contencion(2, m)
+    expect(r.trozos).toBeGreaterThan(100)
+    expect(r.peor).toBeLessThanOrEqual(1e-6)
+  })
+  it('y todo lo que pasa cruzando 500 m, al entrar y al salir del margen a mitad de minuto', () => {
+    const r = contencion(3, margenDe({ tipo: 'altitud', altM: 500 }, c.rejilla)!)
+    expect(r.trozos).toBeGreaterThan(100)
+    expect(r.peor).toBeLessThanOrEqual(1e-6)
+  })
+})
+
+describe('un punto que se pasa en altura pero donde no se puede aterrizar', () => {
+  // Terra hacia el oeste a 5 m/s y lo demas hacia el este a 5 m/s, 30 min, desde 576,2 m.
+  // Manteniendo la franja se llega a 9 000 m al este. A terra se baja como pronto en 70 s a 4 m/s,
+  // asi que lo mas al este que se esta en terra es bajando en el minuto 28: unos 8 530 m.
+  const r = { altM: [300, 500, 576.2, 652.4], etiqueta: ['terra', 'F1', 'F2', 'F3'] }
+  const c = campoSintetico(r, 30, b => (b === 0 ? [-5, 0] : [5, 0]))
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 0.5, puja_rapid: 2.75, baixa_lent: 0.5, baixa_rapid: 4 } }
+  const zq = calcularZona(construirTablas(c, 1, lento), 2)
+  const za = calcularZona(construirTablas(c, 1, lento, margenDe({ tipo: 'aterrar' }, r)!), 2)
+  it('a cualquier altura se alcanza', () => { expect(fueraSeguro(zq, 8800, 0)).toBe(false) })
+  it('en terra no, y se sabe', () => { expect(fueraSeguro(za, 8800, 0)).toBe(true) })
+  it('en el minuto 1 todavia no se puede estar en terra', () => {
+    expect(za.h.every(hd => hd[1] === -Infinity)).toBe(true)
+  })
+})
+
+describe('la salida del margen en el ultimo minuto de un cambio tambien cuenta', () => {
+  // Desde terra subiendo rapido (2,75 m/s) a 576,2 m, el globo cruza 500 m entre los 59 y los 87 s,
+  // en el ultimo minuto del cambio. Por encima de 500 m el viento va al norte, asi que el punto donde
+  // sale del margen es lo mas al norte que se esta a 500 m entre los minutos 1 y 2.
+  const r = { altM: [300, 500, 576.2], etiqueta: ['terra', 'F1', 'F2'] }
+  const c = campoSintetico(r, 10, b => (b === 2 ? [0, 5] : [0, 0]))
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 0.5, puja_rapid: 2.75, baixa_lent: 0.5, baixa_rapid: 4 } }
+  const mg = margenDe({ tipo: 'altitud', altM: 500 }, r)!
+  const z = calcularZona(construirTablas(c, 1, lento, mg), 0)
+  it('la cota cubre el punto de salida', () => {
+    const p: PlanInterno = { franjas: [0, 2], clases: [1], dur: [0, 0] }
+    const cam = caminoDirecto(c, 1, lento, p)!
+    const f = fraccionesDirectas(c, lento, p, mg)[1]!
+    expect(f[1]).toBeLessThan(1)
+    const y = cam[1][1] + f[1] * (cam[2][1] - cam[1][1])
+    expect(y).toBeGreaterThan(10)
+    expect(y).toBeLessThanOrEqual(Math.max(z.h[8][1], z.h[8][2]) + 1e-6)
   })
 })

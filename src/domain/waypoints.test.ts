@@ -1,6 +1,6 @@
 // src/domain/waypoints.test.ts
 import { describe, it, expect } from 'vitest'
-import { activar, afegirWaypoint, canviarNom, canviarObjectiu, esborrarWaypoint, nomNou, waypointActiu } from './waypoints'
+import { activar, afegirWaypoint, canviarNom, canviarObjectiu, canviarPosicio, esborrarWaypoint, nomNou, waypointActiu } from './waypoints'
 import { makeDoc } from './fixtures'
 import type { Waypoint } from './types'
 
@@ -43,5 +43,12 @@ describe('waypoints', () => {
     let d = afegirWaypoint(afegirWaypoint(makeDoc(), wp('a', 'WP1')), wp('b', 'WP2'))
     d = esborrarWaypoint(activar(d, 'a'), 'b')
     expect(waypointActiu(d)?.id).toBe('a')
+  })
+})
+
+describe('mover un waypoint', () => {
+  it('cambia solo su posicion', () => {
+    const d = canviarPosicio(afegirWaypoint(makeDoc(), wp('a', 'WP1')), 'a', 41.7, 1.3)
+    expect(d.waypoints[0]).toMatchObject({ id: 'a', nom: 'WP1', lat: 41.7, lon: 1.3, objectiu: { tipo: 'aterrar' } })
   })
 })

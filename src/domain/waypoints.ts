@@ -27,6 +27,10 @@ export function canviarObjectiu(doc: LogbookDoc, id: string, objectiu: ObjectiuW
   return cambiar(doc, id, w => ({ ...w, objectiu }))
 }
 
+export function canviarPosicio(doc: LogbookDoc, id: string, lat: number, lon: number): LogbookDoc {
+  return cambiar(doc, id, w => ({ ...w, lat, lon }))
+}
+
 /** Borrar el activo lo desactiva en la misma operacion (§6.9). */
 export function esborrarWaypoint(doc: LogbookDoc, id: string): LogbookDoc {
   return {

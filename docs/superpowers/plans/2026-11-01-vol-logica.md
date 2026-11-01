@@ -1173,3 +1173,18 @@ git commit -m "feat(ui): modo del aparato y ultimo techo en el propio aparato"
 - [ ] **Step 1:** `npm test 2>&1 | grep -E 'Tests |×'`, `npx tsc -b && git checkout -- tsconfig.tsbuildinfo`. Todo en verde.
 - [ ] **Step 2:** «Cambios durante la ejecución» al final de este plan, STATUS con una línea en la sección del día, commit `docs: logica de la pantalla de vuelo`.
 - [ ] **Step 3:** `superpowers:finishing-a-development-branch`, fusionar en `main` en local, quitar el worktree. Sin push ni publicar.
+
+---
+
+## Cambios durante la ejecución
+
+1. El código de cada tarea se sacó del plan con un script. Para ver fallar cada prueba antes de
+   implementar, se apartó el módulo, se corrió la prueba (no encuentra el import) y se devolvió.
+   Además, cada guarda se mutó: todas las mutaciones fallan alguna prueba.
+2. Tarea 4: las pruebas de la migración 1 a 2 llevaban hasta la versión actual. Ahora piden la
+   2 (`migrate(v1, 2)`), y «la versión actual es la 3» va en el bloque nuevo. Tres pruebas de la
+   interfaz (`incomplete`, `newFlight`, `select`) construyen el documento a mano y necesitaban
+   los dos campos nuevos para `tsc`.
+3. Tarea 4: se escribió la migración antes de su prueba. La mutación (quitar la migración 2 a 3)
+   tumba tres pruebas, la nueva incluida.
+4. 696 pruebas, 44 nuevas.

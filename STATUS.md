@@ -21,6 +21,10 @@ ni publicar, y sin tocar `dist/`, que sólo cambia al publicar.
   tras un build y no se repitió en once vueltas más, dos con carga: sin causa conocida.
 * **Siguiente:** su repaso de las seis maquetas, y después la pantalla, que ya tiene debajo
   todo esto. La capa de Leaflet tendrá que pedir los mosaicos con `crossOrigin: true`.
+* **Más tarde, la lógica de la pantalla** (plan `docs/superpowers/plans/2026-11-01-vol-logica.md`): coordenadas
+  en los tres formatos (UTM contra PROJ al milímetro), rumbo y distancia, calibración, rumbo, velocidad y
+  vario del GPS, waypoints en el documento (esquema 3), sesión de vuelo y plan vigente. 696 pruebas.
+  Dídac aprobó las seis maquetas de la fase 2 tal como están. Siguiente: la pantalla, parte 2.
 
 ## 01/11/2026, noche: las comprobaciones del §12 del 10/10
 

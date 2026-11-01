@@ -16,8 +16,10 @@ publicar. `#/vol` sólo en la tablet (modo del aparato en Ajustes), entrada desd
 * El motor corre en un worker cada 15 s y devuelve ahora el camino y el punto más cercano.
 * Comprobado en Chromium a 1 280 × 800 con GPS simulado, recorrido entero. Encontrado y
   arreglado un fallo de verdad: mosaicos del ICGC que no contestan paraban la descarga 10 min.
-* 718 pruebas. **Siguiente:** que Dídac decida publicar para probarla en su tablet (push y Pages
-  son suyos). Parte 3: vista Vent, zonas, mejor izquierda y derecha, Camps, Acabar vol al Registre.
+* 718 pruebas. **Publicada en Pages el 01/11/2026** («publish it»), y el código subido a GitHub. Antes
+  de subirlo se cambiaron en las maquetas y prototipos los datos personales (pesos, licencia, nombres
+  de los instructores) por otros inventados: Marc y Pere, 80, 75 y 70 kg, «[LLICÈNCIA]».
+* **Siguiente:** lo que vea Dídac en su tablet. Parte 3: vista Vent, zonas, mejor izquierda y derecha, Camps, Acabar vol al Registre.
 
 ## 01/11/2026, noche: capa de datos de la pantalla de vuelo
 

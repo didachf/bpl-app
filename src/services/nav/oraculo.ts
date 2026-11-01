@@ -4,11 +4,14 @@
 // mantenerla de 2 a 20, ir a B y mantenerla hasta el horizonte, de 2 en 2 min.
 // Con un margen (spec 2026-11-01), la distancia solo cuenta dentro, con sus
 // fracciones calculadas aqui sin las tablas, para no compartir errores con ellas.
+// Con relieve, cada plan cuenta hasta donde deja de valer, con la misma regla que
+// `limite` pero calculada aqui (spec 2026-11-01-relieve §4.3).
 import type { Campo } from './campo'
 import { aproximacion, caminoDirecto, type Evaluado, type PlanInterno } from './plan'
 import { minutosTransito, velocidad } from './vertical'
 import { enMargen, fracMinutos, MINUTO_ENTERO, SIN_MARGEN, type Frac, type Margen } from './objetivo'
 import type { AjustesNav } from './tipos'
+import type { Terreno } from './relieve'
 
 export function fraccionesDirectas(c: Campo, aj: AjustesNav, p: PlanInterno, m: Margen): Frac[] {
   const H = c.minutos
@@ -28,14 +31,48 @@ export function fraccionesDirectas(c: Campo, aj: AjustesNav, p: PlanInterno, m: 
   return out.slice(0, H)
 }
 
+/** El primer minuto en que el plan deja de valer, sin tablas: la misma regla que `limite`. */
+export function limiteDirecto(
+  c: Campo, aj: AjustesNav, p: PlanInterno, cam: [number, number][], terreno: Terreno | null,
+): number {
+  const H = c.minutos
+  if (terreno === null) return H + 1
+  const z = c.rejilla.altM
+  const it = c.rejilla.etiqueta.indexOf('terra')
+  const ok = (alt: number, k: number) => !(alt < terreno.techo(cam[k][0], cam[k][1]) + aj.minSobreTerrenoM - 1e-6)
+  let k = 0
+  for (let i = 0; i < p.franjas.length; i++) {
+    const b = p.franjas[i]
+    if (i > 0) {
+      const a = p.franjas[i - 1]
+      const vel = velocidad(aj, z[b] > z[a], p.clases[i - 1])
+      const n = minutosTransito(c, a, b, vel)
+      for (let j = 1; j <= n; j++) {
+        if (++k > H) return H + 1
+        const alt = z[a] + Math.sign(z[b] - z[a]) * Math.min(Math.abs(z[b] - z[a]), vel * 60 * j)
+        const comprobar = a !== it && b !== it ? true : j === n && b !== it
+        if (comprobar && !ok(alt, k)) return k
+      }
+    }
+    const fin = i === p.franjas.length - 1 ? H : k + p.dur[i]
+    while (k < fin) {
+      k++
+      if (b !== it && !ok(z[b], k)) return k
+    }
+  }
+  return H + 1
+}
+
 export function oraculo(
   c: Campo, f: number, aj: AjustesNav, b0: number, ox: number, oy: number, m: Margen = SIN_MARGEN,
+  terreno: Terreno | null = null,
 ): Evaluado {
   const r: { mejor: Evaluado | null } = { mejor: null }
   const probar = (plan: PlanInterno) => {
     const cam = caminoDirecto(c, f, aj, plan)
     if (cam === null) return
-    const a = aproximacion(cam, ox, oy, fraccionesDirectas(c, aj, plan, m))
+    const lim = limiteDirecto(c, aj, plan, cam, terreno)
+    const a = aproximacion(cam.slice(0, lim), ox, oy, fraccionesDirectas(c, aj, plan, m).slice(0, lim - 1))
     if (r.mejor === null || a.distM < r.mejor.distM) r.mejor = { plan, distM: a.distM, minuto: a.minuto }
   }
   const B = c.rejilla.altM.length

@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import {
-  aproximacion, aTramos, buscarPlan, caminoDirecto, caminoTabla, candidatas, debeSustituir, elegir, fracciones,
-  type Evaluado, type PlanInterno,
+  aproximacion, aTramos, buscarPlan, caminoDirecto, caminoTabla, candidatas, debeSustituir, elegir, evaluar, fracciones,
+  limite, type Evaluado, type PlanInterno,
 } from './plan'
 import { fraccionesDirectas, oraculo } from './oraculo'
-import { margenDe } from './objetivo'
+import { margenDe, SIN_MARGEN } from './objetivo'
 import { construirTablas, type Tablas } from './vertical'
-import { campoSintetico, rejillaUniforme } from './sintetico'
+import { campoSintetico, rejillaUniforme, relieveSintetico } from './sintetico'
+import { maximo, techoPlano } from './relieve'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
 const aj: AjustesNav = { ...AJUSTES_POR_DEFECTO, altMinM: 0, altMaxM: 9999 }
@@ -227,4 +228,49 @@ describe('la distancia que devuelve la busqueda es la de su plan con el margen',
       }
     })
   }
+})
+
+describe('el relieve', () => {
+  // terra, F1 a 500 m y F2 a 576,2 m, todo al este a 5 m/s. Suelo a 280 m salvo un cerro de 490 m
+  // de x = 2 000 a 3 000. F1 no vale sobre el cerro (490 + 30,5 > 500), F2 si. Cambios de un minuto.
+  const p0 = { lat0: 41.6, lon0: 1.6 }
+  const rej = { altM: [300, 500, 576.2], etiqueta: ['terra', 'F1', 'F2'] }
+  const c = campoSintetico(rej, 30, () => [5, 0])
+  const rel = relieveSintetico(p0, -2000, -2000, 8000, 2000, 100, x => (x >= 2000 && x <= 3000 ? 490 : 280))
+  const terreno = { techo: techoPlano(rel, p0), maxM: maximo(rel) }
+  const t = construirTablas(c, 1, rapido, SIN_MARGEN, terreno)
+  const mantener = (b: number): PlanInterno => ({ franjas: [b], clases: [], dur: [30] })
+  it('mantener F1 deja de valer al llegar al cerro, en el minuto 7 (2 100 m)', () => {
+    expect(limite(t, mantener(1), caminoTabla(t, mantener(1))!)).toBe(7)
+  })
+  it('mantener F2 vale entero, y terra tambien', () => {
+    for (const b of [0, 2]) expect(limite(t, mantener(b), caminoTabla(t, mantener(b))!)).toBe(31)
+  })
+  it('bajar de F2 a F1 sobre el cerro no vale', () => {
+    const p: PlanInterno = { franjas: [2, 1], clases: [1], dur: [8, 0] }
+    expect(limite(t, p, caminoTabla(t, p)!)).toBe(9)
+  })
+  it('subir de terra a F1 sobre el cerro tampoco', () => {
+    const p: PlanInterno = { franjas: [0, 1], clases: [1], dur: [8, 0] }
+    expect(limite(t, p, caminoTabla(t, p)!)).toBe(9)
+  })
+  it('la distancia solo cuenta hasta alli', () => {
+    // mantener F1 hacia (5 000, 0): lo mas cerca valido es el minuto 6, a 1 800 m
+    expect(evaluar(t, mantener(1), caminoTabla(t, mantener(1))!, 5000, 0).distM).toBeCloseTo(3200, 6)
+  })
+  it('la busqueda pasa el cerro por encima o a ras', () => {
+    const e = buscarPlan(t, 1, 5000, 0)
+    expect(e.distM).toBeLessThanOrEqual(50)
+    expect(limite(t, e.plan, caminoTabla(t, e.plan)!)).toBeGreaterThan(e.minuto)
+  })
+  it('no peor que la fuerza bruta con el mismo relieve, y con la misma cuenta', () => {
+    const c3 = campoSintetico(rej, 40, (b, k) => [Math.cos(b * 1.3 + k / 20) * 5, Math.sin(b * 1.3 + k / 20) * 5])
+    const t3 = construirTablas(c3, 1, aj, SIN_MARGEN, terreno)
+    for (const [ox, oy] of [[3000, 1000], [-1500, 2500], [4000, -2000]]) {
+      const e = buscarPlan(t3, 1, ox, oy)
+      const o = oraculo(c3, 1, aj, 1, ox, oy, SIN_MARGEN, terreno)
+      expect(e.distM).toBeLessThanOrEqual(o.distM + 50)
+      expect(evaluar(t3, e.plan, caminoTabla(t3, e.plan)!, ox, oy).distM).toBeCloseTo(e.distM, 6)
+    }
+  })
 })

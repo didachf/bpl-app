@@ -5,7 +5,7 @@
 // 2 min sobre acumulados y transitos ya calculados, refinado de 1 min y eleccion.
 import { idx, type Campo } from './campo'
 import { envolvente } from './geo'
-import { fr, modoDe, tr, transito, velocidad, type Tablas } from './vertical'
+import { fr, modoDe, tr, transito, vale, velocidad, zComprobar, type Tablas } from './vertical'
 import { MINUTO_ENTERO, type Frac } from './objetivo'
 import type { AjustesNav, Tramo } from './tipos'
 import {
@@ -92,6 +92,41 @@ export function fracciones(t: Tablas, p: PlanInterno): Frac[] {
     while (out.length < fin) out.push(f)
   }
   return out.slice(0, H)
+}
+
+/**
+ * El primer minuto en que el plan deja de valer sobre el terreno, H + 1 si vale entero
+ * (spec 2026-11-01-relieve §4.3). `cam` es su camino, con las mismas tablas.
+ */
+export function limite(t: Tablas, p: PlanInterno, cam: Camino): number {
+  const H = t.c.minutos
+  const z = t.c.rejilla.altM
+  let k = 0
+  for (let i = 0; i < p.franjas.length; i++) {
+    const b = p.franjas[i]
+    if (i > 0) {
+      const a = p.franjas[i - 1]
+      const n = fr(t, a, b, p.clases[i - 1]).length
+      for (let j = 0; j < n; j++) {
+        if (++k > H) return H + 1
+        const zc = zComprobar(t, a, b, p.clases[i - 1], j)
+        if (zc === zc && !vale(t, zc, cam[k][0], cam[k][1])) return k
+      }
+    }
+    const fin = i === p.franjas.length - 1 ? H : k + p.dur[i]
+    while (k < fin) {
+      k++
+      if (b !== t.iTerra && !vale(t, z[b], cam[k][0], cam[k][1])) return k
+    }
+  }
+  return H + 1
+}
+
+/** La distancia y el minuto de un plan, contando solo hasta donde vale. */
+export function evaluar(t: Tablas, p: PlanInterno, cam: Camino, ox: number, oy: number): Evaluado & { limite: number } {
+  const lim = limite(t, p, cam)
+  const a = aproximacion(cam.slice(0, lim), ox, oy, fracciones(t, p).slice(0, lim - 1))
+  return { plan: p, distM: a.distM, minuto: a.minuto, limite: lim }
 }
 
 /** Simulacion directa, sin tablas: para la dispersion entre modelos y como oraculo. */
@@ -201,6 +236,9 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
   const W = H + 1
   const px = t.px
   const py = t.py
+  const altM = c.rejilla.altM
+  // Terra y lo que queda por encima del suelo mas alto no se comprueban (spec 2026-11-01-relieve §4.3).
+  const libre = (b: number) => b === t.iTerra || altM[b] >= t.alturaLibre
   const cand = candidatas(t, b0, ox, oy)
   const top: Evaluado[] = []
   const meter = (plan: PlanInterno, distM: number, minuto: number) => {
@@ -212,25 +250,33 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
 
   // Mantener la actual: el minimo acumulado sirve a todos los planes que salen de ella.
   // La posicion del minuto 0 la cubre el primer segmento de lo que siga. Una franja
-  // mantenida fuera del margen no cuenta nada (spec 2026-11-01 §4.1).
+  // mantenida fuera del margen no cuenta nada (spec 2026-11-01 §4.1). Se mantiene hasta la
+  // primera posicion que no vale sobre el terreno, y solo se sale antes de ella.
   const minB = new Float64Array(W).fill(Infinity)
   const argB = new Int32Array(W)
-  if (t.dentro[b0]) {
-    const s0: Min = { m: Infinity, mk: 0 }
-    for (let k = 1; k <= H; k++) {
-      avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], px[b0 * W + k], py[b0 * W + k], k, ox, oy)
-      minB[k] = s0.m
-      argB[k] = s0.mk
+  const s0: Min = { m: Infinity, mk: 0 }
+  const libre0 = libre(b0)
+  let lim0 = H + 1
+  for (let k = 1; k <= H; k++) {
+    const x = px[b0 * W + k]
+    const y = py[b0 * W + k]
+    if (!libre0 && !vale(t, altM[b0], x, y)) {
+      lim0 = k
+      break
     }
+    if (t.dentro[b0]) avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], x, y, k, ox, oy)
+    minB[k] = s0.m
+    argB[k] = s0.mk
   }
-  meter({ franjas: [b0], clases: [], dur: [H] }, minB[H], argB[H])
+  meter({ franjas: [b0], clases: [], dur: [H] }, minB[lim0 - 1], argB[lim0 - 1])
 
-  for (let d0 = 0; d0 < H; d0 += 2) {
+  for (let d0 = 0; d0 < H && d0 < lim0; d0 += 2) {
     const sx = px[b0 * W + d0]
     const sy = py[b0 * W + d0]
     for (const A of cand) {
       if (A === b0) continue
       const dentroA = t.dentro[A]
+      const libreA = libre(A)
       for (let ca = 0; ca < 2; ca++) {
         const ta = tr(t, b0, A, ca, d0)
         if (ta === null) continue
@@ -238,20 +284,31 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
         const sA: Min = { m: minB[d0], mk: argB[d0] }
         let lx = sx
         let ly = sy
+        let okA = true
         for (let j = 0; j < ta.camino.length; j++) {
           const x = sx + ta.camino[j][0]
           const y = sy + ta.camino[j][1]
+          const zc = zComprobar(t, b0, A, ca, j)
+          if (zc === zc && !vale(t, zc, x, y)) {
+            okA = false
+            break
+          }
           avanzarParte(sA, lx, ly, x, y, d0 + 1 + j, ox, oy, ra[j])
           lx = x
           ly = y
         }
         const kA = d0 + ta.minutos
+        if (!okA) {
+          meter({ franjas: [b0, A], clases: [ca], dur: [d0, H - kA] }, sA.m, sA.mk)
+          continue
+        }
         const ax = sx + ta.dx - px[A * W + kA]
         const ay = sy + ta.dy - py[A * W + kA]
         for (let k = kA; k <= H; k++) {
           const x = ax + px[A * W + k]
           const y = ay + py[A * W + k]
           if (k > kA) {
+            if (!libreA && !vale(t, altM[A], x, y)) break
             if (dentroA) avanzar(sA, lx, ly, x, y, k, ox, oy)
             lx = x
             ly = y
@@ -260,6 +317,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
           if (dA < MIN_MANTENER || dA % 2 !== 0 || k >= H) continue
           for (const Bf of cand) {
             if (Bf === A) continue
+            const libreB = libre(Bf)
             for (let cb = 0; cb < 2; cb++) {
               const tb = tr(t, A, Bf, cb, k)
               if (tb === null) continue
@@ -267,20 +325,27 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
               const sB: Min = { m: sA.m, mk: sA.mk }
               let mx = x
               let my = y
+              let okB = true
               for (let j = 0; j < tb.camino.length; j++) {
                 const nx = x + tb.camino[j][0]
                 const ny = y + tb.camino[j][1]
+                const zc = zComprobar(t, A, Bf, cb, j)
+                if (zc === zc && !vale(t, zc, nx, ny)) {
+                  okB = false
+                  break
+                }
                 avanzarParte(sB, mx, my, nx, ny, k + 1 + j, ox, oy, rb[j])
                 mx = nx
                 my = ny
               }
               const kB = k + tb.minutos
-              if (t.dentro[Bf]) {
+              if (okB && t.dentro[Bf]) {
                 const bx = mx - px[Bf * W + kB]
                 const by = my - py[Bf * W + kB]
                 for (let kk = kB + 1; kk <= H; kk++) {
                   const nx = bx + px[Bf * W + kk]
                   const ny = by + py[Bf * W + kk]
+                  if (!libreB && !vale(t, altM[Bf], nx, ny)) break
                   avanzar(sB, mx, my, nx, ny, kk, ox, oy)
                   mx = nx
                   my = ny
@@ -310,7 +375,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
         vistos.add(clave)
         const cam = caminoTabla(t, p)
         if (cam === null) continue
-        const a = aproximacion(cam, ox, oy, fracciones(t, p))
+        const a = evaluar(t, p, cam, ox, oy)
         meter(p, a.distM, a.minuto)
       }
     }

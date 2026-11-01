@@ -181,3 +181,70 @@ describe('objetivo de altura con el 10/10', () => {
     expect(ms).toBeLessThan(2000)
   }, 20000)
 })
+
+describe('aterrar en el suelo del punto (spec 2026-11-01 §3)', () => {
+  // Con el 10/10 el suelo de la zona A esta a 440 m y el del despegue a 380 (GLO-90 por open-meteo).
+  const ELEV_ZA = 440
+  const punto = aGeo(despegue, ZA[0], ZA[1])
+  const [ox, oy] = aPlano({ lat0: pos.lat, lon0: pos.lon }, punto.lat, punto.lon)
+  it('sin la elevacion del punto, terra al pronostico, y lo dice', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'aterrar' } }))
+    expect(r.avisos).toContain("Sense l'elevació del punt: terra a l'elevació del pronòstic.")
+  })
+  it('con ella, no peor que la fuerza bruta con terra en el suelo del punto', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'aterrar' }, elevPuntoM: ELEV_ZA }))
+    expect(r.avisos.some(a => a.startsWith("Sense l'elevació"))).toBe(false)
+    const rej = franjas(aj.altMinM, aj.altMaxM, ELEV_ZA + 10, prev.elevM + 10)
+    const rec = recortar(prev, rej, ahora, 60)
+    expect(rec.campo.rejilla.altM[0]).toBe(ELEV_ZA + 10)
+    const b0 = franjaMasCercana(rec.campo.rejilla, altM)
+    const o = oraculo(rec.campo, rec.campo.nombres.length - 1, aj, b0, ox, oy, margenDe({ tipo: 'aterrar' }, rec.campo.rejilla)!)
+    expect(r.distanciaMinM!).toBeLessThanOrEqual(o.distM + 50)
+  })
+  it('el viento de terra sigue siendo el de 10 m del pronostico', () => {
+    const rej = franjas(aj.altMinM, aj.altMaxM, ELEV_ZA + 10, prev.elevM + 10)
+    const a = recortar(prev, rej, ahora, 60).campo
+    const b = recortar(prev, franjas(aj.altMinM, aj.altMaxM, prev.elevM + 10), ahora, 60).campo
+    expect(a.u[a.nombres.length - 1][0]).toBeCloseTo(b.u[b.nombres.length - 1][0], 9)
+  })
+  it('si el suelo del punto llega al minimo del rango, no calcula el aterrizaje', () => {
+    const r = navegar(entrada({ objetivo: { tipo: 'aterrar' }, elevPuntoM: 450 }))
+    expect(r.estado).toBe('no-llega')
+    expect(r.distanciaMinM).toBeNull()
+    expect(r.avisos).toContain("El terreny del punt (1 476 ft) arriba al mínim del rang (1 500 ft): no es pot calcular l'aterratge.")
+  })
+  it('la elevacion del punto no cambia nada si no se aterriza', () => {
+    const o: Objetivo = { tipo: 'altitud', altM: 2500 * 0.3048 }
+    expect(navegar(entrada({ objetivo: o, elevPuntoM: ELEV_ZA })).ordenes).toEqual(navegar(entrada({ objetivo: o })).ordenes)
+  })
+})
+
+describe('la ultima bajada dura lo que hay hasta el suelo del punto', () => {
+  // Pronostico con el suelo a 0 m: calma a ras y 5 m/s al este desde 100 m. Todos los modos a
+  // 0,5 m/s. El punto esta a 6 025 m al este y su suelo a 290 m: desde 1 000 ft (304,8 m) quedan
+  // 4,8 m hasta terra, un minuto. Con terra al pronostico (10 m) serian 295 m, diez minutos.
+  const h0 = Date.parse('2026-10-10T06:00Z')
+  const perfil = [{ altM: 0, u: 0, v: 0 }, { altM: 10, u: 0, v: 0 }, { altM: 100, u: 5, v: 0 }, { altM: 3000, u: 5, v: 0 }]
+  const prevS: Previsiones = { elevM: 0, horas: [h0, h0 + 7200000], modelos: ['a'], perfiles: [[perfil, perfil]] }
+  const o = { lat0: 41.6, lon0: 1.6 }
+  const lento: AjustesNav = {
+    ...AJUSTES_POR_DEFECTO, altMinM: 1000 * 0.3048, altMaxM: 1250 * 0.3048,
+    modos: { puja_lent: 0.5, puja_rapid: 0.5, baixa_lent: 0.5, baixa_rapid: 0.5 },
+  }
+  const base: EntradaNav = {
+    prevision: prevS, traza: [{ t: h0, lat: 41.6, lon: 1.6, altM: 1000 * 0.3048 }], ajustes: lento,
+    punto: aGeo(o, 6025, 0), ahora: h0, objetivo: { tipo: 'aterrar' },
+  }
+  const bajada = (r: ReturnType<typeof navegar>) => {
+    const t = r.plan.find(x => x.tipo === 'cambiar' && x.franja === 0)!
+    return t.finMin - t.inicioMin
+  }
+  it('con el suelo del punto, un minuto, y llega', () => {
+    const r = navegar({ ...base, elevPuntoM: 290 })
+    expect(r.estado).toBe('llega')
+    expect(bajada(r)).toBe(1)
+  })
+  it('sin el, la bajada larga hasta el suelo del pronostico', () => {
+    expect(bajada(navegar(base))).toBeGreaterThanOrEqual(9)
+  })
+})

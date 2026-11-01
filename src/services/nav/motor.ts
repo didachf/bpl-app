@@ -4,7 +4,7 @@
 // y decide con `debeSustituir` si lo cambia.
 import { QUALSEVOL, type AjustesNav, type Objetivo, type Punto, type PuntoTraza, type ResultadoNavegacion, type Tramo } from './tipos'
 import type { Previsiones } from './perfil'
-import { franjas, recortar } from './campo'
+import { FRANJA_M, franjas, recortar } from './campo'
 import { aGeo, aPlano, type Plano } from './geo'
 import { franjaMasCercana, medidasGps } from './medidas'
 import { corregirCampo } from './correccion'
@@ -28,6 +28,8 @@ export interface EntradaNav {
   despegue?: number
   /** El objetivo de altura en el punto (spec 2026-11-01). Sin el, qualsevol. */
   objetivo?: Objetivo
+  /** Elevacion del suelo bajo el punto, m sobre el mar. Con Aterrar, terra va ahi (spec 2026-11-01 §3). */
+  elevPuntoM?: number
 }
 
 /** Los puntos de la traza desde el despegue, si se sabe. */
@@ -36,6 +38,8 @@ export function trazaEnVuelo(traza: PuntoTraza[], despegue: number | undefined):
 }
 
 const PASO_ZONA_MIN = 5
+/** Terra es el viento a 10 m de los modelos (spec 10/10 §5.2). */
+const TERRA_SOBRE_SUELO_M = 10
 
 export function navegar(e: EntradaNav): ResultadoNavegacion {
   const iso = (ms: number) => new Date(ms).toISOString()
@@ -56,8 +60,25 @@ export function navegar(e: EntradaNav): ResultadoNavegacion {
   if (edadMin >= 1) avisos.push(`Darrera posició de fa ${edadMin} min.`)
 
   const plano: Plano = { lat0: actual.lat, lon0: actual.lon }
-  const terraM = e.incluirTerra || obj.tipo === 'aterrar' ? e.prevision.elevM + 10 : null
-  const r = recortar(e.prevision, franjas(e.ajustes.altMinM, e.ajustes.altMaxM, terraM), e.ahora, e.ajustes.horizonteMin)
+  // Terra va a la elevacion del pronostico mas 10 m. Al aterrizar en un punto de elevacion conocida,
+  // va a la de su suelo, con el viento a 10 m del pronostico, que es el de ras.
+  const terraPronM = e.prevision.elevM + TERRA_SOBRE_SUELO_M
+  let terraM = e.incluirTerra || obj.tipo === 'aterrar' ? terraPronM : null
+  let terraVientoM: number | null = null
+  if (obj.tipo === 'aterrar' && e.punto !== null) {
+    if (e.elevPuntoM === undefined) {
+      avisos.push("Sense l'elevació del punt: terra a l'elevació del pronòstic.")
+    } else {
+      const minM = Math.ceil(e.ajustes.altMinM / FRANJA_M - 1e-9) * FRANJA_M
+      if (e.elevPuntoM + TERRA_SOBRE_SUELO_M >= minM - 1) {
+        avisos.push(`El terreny del punt (${alturaFt(e.elevPuntoM)}) arriba al mínim del rang (${alturaFt(minM)}): no es pot calcular l'aterratge.`)
+        return vacio('no-llega')
+      }
+      terraM = e.elevPuntoM + TERRA_SOBRE_SUELO_M
+      terraVientoM = terraPronM
+    }
+  }
+  const r = recortar(e.prevision, franjas(e.ajustes.altMinM, e.ajustes.altMaxM, terraM, terraVientoM), e.ahora, e.ajustes.horizonteMin)
   if (r.fuera.length > 0) avisos.push(`Franges sense previsió, fora del càlcul: ${r.fuera.join(', ')}.`)
   if (r.campo.rejilla.altM.length === 0 || r.campo.minutos === 0) {
     avisos.push('Sense previsió per calcular.')

@@ -1,5 +1,27 @@
 # Logbook BPL, estado
 
+## 01/11/2026, tarde: el motor sabe del relieve
+
+Al preparar las maquetas de la fase 2 con el 10/10 salió que el motor no sabía dónde estaba el suelo:
+de 380 m en el despegue a 430 bajo el globo y hasta 535 al este, con el mínimo del rango (1 500 ft,
+457 m) bajo tierra en 77 de 143 puntos, y terra 40 m bajo el suelo. Decidido con el piloto: **mínimo
+de 100 ft sobre el terreno bajo el recorrido** (editable), terra a ras también de paso, techo sobre el
+mar. Fusionado en `main`, sin push ni publicar.
+
+* Spec `docs/superpowers/specs/2026-11-01-relieve-design.md`, plan `docs/superpowers/plans/2026-11-01-relieve.md`.
+* Relieve: AWS Terrain Tiles (Terrarium z12, unos 29 m), contrastado con GLO-90 a menos de 3 m. El del
+  10/10 para pruebas en `docs/prototipos/2026-10-10-vuelo/relieve_10-10.json`.
+* Terra al suelo de ahora o del punto con el viento de ras, franjas justo por encima, cada plan cortado
+  donde deja de valer, zona pintada en una segunda pasada que poda, aviso de «si no fas res» contra el
+  terreno. Dos fallos corregidos por el camino: el minuto del paso redondeado al inicio de una bajada
+  (se perdía la orden de bajar) y el texto de «si no fas res» sin objetivo.
+* 615 pruebas. Cada guarda nueva mutada y atada. Motor con relieve y el 10/10: unos 230 ms en node.
+* Con el relieve, Aterrar en la zona A ya no llega: 1 500 ft queda a 27 m del suelo, el plan sube a
+  1 750 ft, baja y flota hasta 140 m del punto. Sin relieve decía 42 m manteniendo 1 500 ft.
+* **Siguiente:** las maquetas de la fase 2 (marcar el punto con su objetivo, la zona, «no s'hi arriba»),
+  con las cifras de `docs/prototipos/2026-11-01-objetivo/maquetas.json`. Para la pantalla, bajar y
+  guardar los mosaicos del relieve con el plan.
+
 ## 01/11/2026: objetivo de altura en el punto
 
 El motor del 30/10 y esto están fusionados en `main` el mismo 01/11, sin publicar (no hay pantalla

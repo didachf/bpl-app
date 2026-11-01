@@ -100,7 +100,7 @@ function escenario(punto: [number, number], objetivo: Objetivo, elevPuntoM?: num
   // El motor proyecta en un plano centrado en el globo y aqui en el del despegue: unos cm de diferencia.
   if (r.distanciaMinM !== null) expect(Math.abs(k.distM - r.distanciaMinM)).toBeLessThan(1)
   return {
-    objetivo, elevPuntoM, estado: r.estado, distanciaMinM: r.distanciaMinM, horaMin: r.horaMin,
+    objetivo, elevPuntoM, estado: r.estado, distanciaMinM: r.distanciaMinM, horaMin: r.horaMin, tramos: r.plan,
     fueraSeguro: r.fueraSeguro, ordenes: r.ordenes, avisos: r.avisos, siNoHaces: r.siNoHaces,
     dispersion: r.dispersion, punto: px(...punto), puntoGeo: aGeo(despegue, punto[0], punto[1]),
     zona: r.zona.map(p => p.map(q => geoPx(q.lat, q.lon))), ...k,

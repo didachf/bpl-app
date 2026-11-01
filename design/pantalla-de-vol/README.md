@@ -29,3 +29,13 @@ El campo en color de `TauletaMeteo` es `/_blob/bb7dcef90db97983a13c96fd2407e23d`
 El 11/10/2026 se probó un mapa de viento propio estilo Windy (`TauletaMeteo`, ya retirada; `camp_vent.py` y `camp_925hPa_0800.jpg` quedan como prueba) y Dídac eligió abrir Windy directamente. La columna «Acabaries» de `TauletaPlans` sale de `dies_resum.json`.
 
 `TauletaEmergencia` usa `/_blob/c0c4fa5ab78ca1d819491c7b5e6a9981`, aquí `apte_fan.png`: aptitud del terreno (cubiertas ICGC 2024, criterio del buscador del Mac) dentro de la zona alcanzable en 10 min desde la posición de `Main`, calculada con `docs/prototipos/2026-10-11-mapa/emergencia.py` y el viento del plan del 10/10.
+
+**01/11/2026, fila nueva «Fase 2 · objectiu d'altura al punt i zona, amb el relleu»**, seis pantallas:
+`TauletaPuntAterrar` y `TauletaPuntPassar` (marcar un punto con su objetivo: Aterrar, Passar a ___ ft con
+pasos de 250 ft, Qualsevol altura), `MobilPuntObjectiu` (lo mismo en el teléfono, dentro del plan),
+`TauletaMapaAterrar`, `TauletaMapaPassar` y `TauletaMapaNoArriba` (en vuelo: la zona según el objetivo, el
+plan por pasos, a ras en verde discontinuo, el punto más cercano y el aviso de terreno). Las órdenes, las
+zonas, los caminos y los resultados son los del motor con el viento real del 10/10 y el relieve real
+(`docs/prototipos/2026-11-01-objetivo/maquetas.json`). Las genera
+`docs/prototipos/2026-11-01-objetivo/artboards.py`. La franja de cifras (1 540 ft, vario, rumbo, tiempo)
+sigue siendo la ilustrativa de `Main`, y «127 ft sobre el terreny» sale del relieve bajo el globo.

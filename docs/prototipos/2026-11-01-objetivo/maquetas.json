@@ -16,6 +16,36 @@
   "estado": "no-llega",
   "distanciaMinM": 137.49741065427378,
   "horaMin": "2026-10-10T06:45:00.000Z",
+  "tramos": [
+   {
+    "tipo": "cambiar",
+    "franja": 2,
+    "modo": "puja_rapid",
+    "inicioMin": 0,
+    "finMin": 1
+   },
+   {
+    "tipo": "mantener",
+    "franja": 2,
+    "modo": null,
+    "inicioMin": 1,
+    "finMin": 3
+   },
+   {
+    "tipo": "cambiar",
+    "franja": 0,
+    "modo": "baixa_rapid",
+    "inicioMin": 3,
+    "finMin": 4
+   },
+   {
+    "tipo": "mantener",
+    "franja": 0,
+    "modo": null,
+    "inicioMin": 4,
+    "finMin": 11
+   }
+  ],
   "fueraSeguro": false,
   "ordenes": [
    "Ara, puja ràpid (2,5 a 3 m/s) fins a 1 750 ft.",
@@ -734,6 +764,29 @@
   "estado": "llega",
   "distanciaMinM": 20.93986974076467,
   "horaMin": "2026-10-10T06:45:00.000Z",
+  "tramos": [
+   {
+    "tipo": "cambiar",
+    "franja": 0,
+    "modo": "baixa_rapid",
+    "inicioMin": 0,
+    "finMin": 1
+   },
+   {
+    "tipo": "mantener",
+    "franja": 0,
+    "modo": null,
+    "inicioMin": 1,
+    "finMin": 9
+   },
+   {
+    "tipo": "cambiar",
+    "franja": 5,
+    "modo": "puja_rapid",
+    "inicioMin": 9,
+    "finMin": 11
+   }
+  ],
   "fueraSeguro": false,
   "ordenes": [
    "Ara, baixa ràpid (3 a 5 m/s) fins a terra.",
@@ -1458,13 +1511,36 @@
   "estado": "llega",
   "distanciaMinM": 0.8614170352191189,
   "horaMin": "2026-10-10T06:45:00.000Z",
+  "tramos": [
+   {
+    "tipo": "cambiar",
+    "franja": 0,
+    "modo": "baixa_rapid",
+    "inicioMin": 0,
+    "finMin": 1
+   },
+   {
+    "tipo": "mantener",
+    "franja": 0,
+    "modo": null,
+    "inicioMin": 1,
+    "finMin": 9
+   },
+   {
+    "tipo": "cambiar",
+    "franja": 3,
+    "modo": "puja_rapid",
+    "inicioMin": 9,
+    "finMin": 11
+   }
+  ],
   "fueraSeguro": false,
   "ordenes": [
    "Ara, baixa ràpid (3 a 5 m/s) fins a terra.",
    "Manté terra 8 min, cap a 011° a 2 kt (previst).",
    "Puja ràpid (2,5 a 3 m/s) cap a 2 000 ft, i passes pel punt pujant.",
    "Passes a 1 m del punt a les 08:45.",
-   "Si no fas res, no hi passes a terra.",
+   "Si no fas res, a les 08:35 passes a menys de 100 ft del terreny.",
    "Amb cada model, entre 17 m i 340 m."
   ],
   "avisos": [
@@ -2103,6 +2179,29 @@
   "estado": "no-llega",
   "distanciaMinM": 1517.562529541691,
   "horaMin": "2026-10-10T06:46:00.000Z",
+  "tramos": [
+   {
+    "tipo": "cambiar",
+    "franja": 10,
+    "modo": "puja_rapid",
+    "inicioMin": 0,
+    "finMin": 5
+   },
+   {
+    "tipo": "mantener",
+    "franja": 10,
+    "modo": null,
+    "inicioMin": 5,
+    "finMin": 9
+   },
+   {
+    "tipo": "cambiar",
+    "franja": 0,
+    "modo": "baixa_rapid",
+    "inicioMin": 9,
+    "finMin": 12
+   }
+  ],
   "fueraSeguro": true,
   "ordenes": [
    "Ara, puja ràpid (2,5 a 3 m/s) fins a 3 750 ft.",

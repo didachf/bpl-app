@@ -27,25 +27,36 @@ export async function relieveDeZona(
   return rejillaTerrarium(caja, PASO_RELIEVE_M, lat, (x, y) => pix.get(`${x}/${y}`) ?? null)
 }
 
-export async function prepararVol(
-  lat: number, lon: number, ahora: number,
-  alProgreso?: (f: Fase, p: Progreso | null) => void, senal?: AbortSignal,
-): Promise<Preparado> {
+export interface AvisosPreparacio {
+  /** Al empezar cada fase con null, y con cada mosaico bajado. */
+  alProgreso?: (f: Fase, p: Progreso | null) => void
+  /** En cuanto se tiene la prevision, sin esperar a los mapas. */
+  alPrevisio?: (o: Obtenida) => void
+  /** Con el relieve ya montado. */
+  alRelleu?: (r: Relieve | null) => void
+  senal?: AbortSignal
+}
+
+export async function prepararVol(lat: number, lon: number, ahora: number, o: AvisosPreparacio = {}): Promise<Preparado> {
   const avisos: string[] = []
-  alProgreso?.('previsio', null)
+  o.alProgreso?.('previsio', null)
   const prevision = await obtenerPrevision(lat, lon, ahora)
   if (prevision.error !== null) avisos.push(prevision.error)
+  o.alPrevisio?.(prevision)
 
   let relieve: Relieve | null = null
+  o.alProgreso?.('relleu', null)
   try {
-    relieve = await relieveDeZona(lat, lon, p => alProgreso?.('relleu', p), senal)
+    relieve = await relieveDeZona(lat, lon, p => o.alProgreso?.('relleu', p), o.senal)
   } catch (e) {
     if (!(e instanceof FaltaMosaico)) throw e
     avisos.push(`Sense relleu: ${e.message}.`)
   }
+  o.alRelleu?.(relieve)
 
   const urls = mosaicosOrto(lat, lon).map(m => urlDe(URL_ORTO, m))
-  const orto = await bajarMosaicos(urls, await almacenCache(), { alProgreso: p => alProgreso?.('ortofoto', p), senal })
+  o.alProgreso?.('ortofoto', { total: urls.length, hechos: 0, bajados: 0, yaEstaban: 0, fallidos: 0, bytes: 0 })
+  const orto = await bajarMosaicos(urls, await almacenCache(), { alProgreso: p => o.alProgreso?.('ortofoto', p), senal: o.senal })
   if (orto.fallidos > 0) avisos.push(`No s'han pogut baixar ${orto.fallidos} de ${orto.total} trossos de l'ortofoto.`)
   return { prevision, relieve, orto, avisos }
 }

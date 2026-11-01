@@ -15,7 +15,7 @@ import type { Sessio } from '../../services/vuelo/sessio'
 import type { Waypoint } from '../../domain/types'
 import { Icon } from '../components/Icon'
 import { colorAltitud, horaLocal, marquesCadaCinc, trossosCami } from './presentacio'
-import { useLeaflet } from './useLeaflet'
+import { retirar, useLeaflet } from './useLeaflet'
 
 export type ModeMapa = 'vol' | 'llista' | 'marcar' | 'coordenades'
 
@@ -209,7 +209,7 @@ export function MapaVol(p: PropsMapa) {
     }
     L.marker([pos.lat, pos.lon], { icon: globus(rv?.rumbo ?? 0), zIndexOffset: 1000, interactive: false }).addTo(g)
     g.addTo(mapa)
-    return () => { g.remove() }
+    return () => { retirar(mapa, g) }
   }, [mapa, p.zona, r, p.waypoints, p.actiu, p.mode, p.puntNou?.p.lat, p.puntNou?.p.lon, p.puntNou?.nom, p.sessio.traza.length])
 
   const boto = (titol: string, fill: ComponentChildren, accio: () => void) => (

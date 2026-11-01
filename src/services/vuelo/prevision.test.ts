@@ -50,3 +50,11 @@ describe('la peticion de la pantalla de vuelo', () => {
     await expect(pedirPrevision(41, 1, 0, f(500))).rejects.toThrow('500')
   })
 })
+
+describe('open-meteo que no contesta', () => {
+  it('se corta al limite y lo dice', async () => {
+    const f = ((_u: string | URL | Request, init?: RequestInit) =>
+      new Promise<Response>((_, ko) => init?.signal?.addEventListener('abort', () => ko(new DOMException('corta', 'AbortError'))))) as typeof fetch
+    await expect(pedirPrevision(41, 1, 0, f, 30)).rejects.toThrow('open-meteo no contesta')
+  })
+})

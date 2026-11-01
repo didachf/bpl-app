@@ -40,12 +40,19 @@ export class CuotaAgotada extends Error {}
 
 /** POST y no GET: 42 variables por siete modelos no caben en una URL. */
 export async function pedirPrevision(
-  lat: number, lon: number, ahora: number, f: typeof fetch = fetch,
+  lat: number, lon: number, ahora: number, f: typeof fetch = fetch, limitMs = 20_000,
 ): Promise<RespuestaOpenMeteo> {
+  // Con poca cobertura una peticion puede no contestar nunca: se corta y se dice.
   const res = await f(URL_API, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(cuerpoPrevision(lat, lon, ahora)).toString(),
+    signal: AbortSignal.timeout(limitMs),
+  }).catch((e: unknown) => {
+    if (e instanceof DOMException && (e.name === 'TimeoutError' || e.name === 'AbortError')) {
+      throw new Error(`open-meteo no contesta en ${Math.round(limitMs / 1000)} s.`)
+    }
+    throw e
   })
   if (res.status === 429) throw new CuotaAgotada("open-meteo ha rebutjat la petició per quota. Torna-ho a provar d'aquí a un minut.")
   if (!res.ok) throw new Error(`open-meteo ha respost ${res.status}`)

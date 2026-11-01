@@ -14,16 +14,23 @@ import type { Progreso } from '../../services/vuelo/bajarMosaicos'
 import { calibracion, CALIBRACION_S } from '../../services/vuelo/gps'
 import { RADIO_ORTO_DETALLE_M } from '../../services/vuelo/mapasDeVuelo'
 import { prepararVol, type Fase, type Preparado } from '../../services/vuelo/preparar'
+import type { Obtenida } from '../../services/vuelo/previsionGuardada'
 import { waypointActiu } from '../../domain/waypoints'
 import { desarSostre, ultimSostre } from '../aparell'
 import { Icon } from '../components/Icon'
 import { useDoc } from '../state'
 import { altFt, horaLocal } from './presentacio'
-import { useLeaflet } from './useLeaflet'
+import { retirar, useLeaflet } from './useLeaflet'
 import { useVol } from './VolProvider'
 
 const MENYS = '−'
 const signe = (v: number) => `${v < 0 ? MENYS : '+'}${Math.abs(Math.round(v))}`
+
+/** De que hora a que hora llega el pronostico, con «de demà» si acaba otro dia. */
+function finestra(h0: number, h1: number): string {
+  const altreDia = new Date(h0).toDateString() !== new Date(h1).toDateString()
+  return `${horaLocal(h0)} a ${horaLocal(h1)}${altreDia ? ' de demà' : ''}`
+}
 
 function Tarja({ estat, titol, children }: { estat: 'fet' | 'encurs' | 'pendent'; titol: string; children?: ComponentChildren }) {
   return (
@@ -55,14 +62,14 @@ const Sub = ({ children }: { children: ComponentChildren }) =>
 
 function MapaPreparacio({ lat, lon }: { lat: number; lon: number }) {
   const nodo = useRef<HTMLDivElement>(null)
-  const mapa = useLeaflet(nodo, { lat, lon }, 11.5)
+  const mapa = useLeaflet(nodo, { lat, lon }, 13)
   useEffect(() => {
     if (mapa === null) return
     const capa = L.layerGroup([
       L.circle([lat, lon], { radius: RADIO_ORTO_DETALLE_M, color: '#ffffff', weight: 3, dashArray: '10 8', fillColor: '#ffffff', fillOpacity: 0.06 }),
       L.circleMarker([lat, lon], { radius: 10, color: '#0b0b0b', weight: 3, fillColor: '#ffffff', fillOpacity: 1 }),
     ]).addTo(mapa)
-    return () => { capa.remove() }
+    return () => { retirar(mapa, capa) }
   }, [mapa, lat, lon])
   return (
     <div style="position: relative; width: 640px; height: 100%; background: #3a3426; flex-shrink: 0;">
@@ -101,7 +108,10 @@ export function Comencar() {
   const sostreM = Number(sostreTxt.replace(',', '.'))
   const sostreValid = sostreTxt.trim() !== '' && Number.isFinite(sostreM) && sostreM > 0
 
-  const relieve: Relieve | null = preparat?.relieve ?? null
+  // Cada fase se ensena en cuanto acaba: la ortofoto puede seguir bajando mientras se calibra.
+  const [obtinguda, setObtinguda] = useState<Obtenida | null>(null)
+  const [relleu, setRelleu] = useState<Relieve | null | undefined>(undefined)
+  const relieve: Relieve | null = relleu ?? null
   const terrenyRelleu = relieve !== null && despegue !== null ? sueloGeo(relieve, despegue.lat, despegue.lon) : NaN
   const terrenyM = Number.isFinite(terrenyRelleu) ? terrenyRelleu : Number(terrenyTxt.replace(',', '.'))
   const terrenyValid = Number.isFinite(terrenyM) && (Number.isFinite(terrenyRelleu) || terrenyTxt.trim() !== '')
@@ -113,9 +123,9 @@ export function Comencar() {
   const gpsM = gpsMitja.length === 0 ? null : gpsMitja.reduce((s, m) => s + m.altElipM!, 0) / gpsMitja.length
 
   const prev = useMemo(() => {
-    const g = preparat?.prevision.guardada
+    const g = obtinguda?.guardada
     return g == null ? null : { p: parsePrevision(g.respuesta), pedidaEn: g.pedidaEn }
-  }, [preparat])
+  }, [obtinguda])
 
   const actiu = waypointActiu(doc)
 
@@ -125,9 +135,12 @@ export function Comencar() {
     setDespegue(posicio)
     setError(null)
     try {
-      const r = await prepararVol(posicio.lat, posicio.lon, Date.now(), (f, p) => setFase({ f, p }))
+      const r = await prepararVol(posicio.lat, posicio.lon, Date.now(), {
+        alProgreso: (f, p) => setFase({ f, p }),
+        alPrevisio: setObtinguda,
+        alRelleu: rl => { setRelleu(rl); setIniciCal(Date.now()) },
+      })
       setPreparat(r)
-      setIniciCal(Date.now())
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     }
@@ -156,13 +169,13 @@ export function Comencar() {
 
         {errorGps !== null && <div style="color: var(--warn); font-size: 14px;">{errorGps}</div>}
 
-        {preparat === null && (
+        {fase === null && (
           <>
             <label style="display: flex; flex-direction: column; gap: 6px;">
               <span class="lab">Sostre</span>
               <div style="display: flex; align-items: center; gap: 10px;">
                 <input
-                  inputMode="decimal" value={sostreTxt} placeholder="metres sobre el mar"
+                  inputMode="decimal" value={sostreTxt} placeholder="p. ex. 1200"
                   onInput={e => setSostreTxt((e.target as HTMLInputElement).value)}
                   class="num"
                   style="height: 44px; width: 180px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 0 12px; font-size: 16px;"
@@ -186,12 +199,12 @@ export function Comencar() {
 
         {fase !== null && (
           <>
-            <Tarja estat={prev !== null ? 'fet' : fase.f === 'previsio' ? 'encurs' : 'pendent'} titol="Pronòstic">
+            <Tarja estat={prev !== null ? 'fet' : obtinguda === null ? 'encurs' : 'pendent'} titol="Pronòstic">
               {prev !== null
                 ? <Sub>{prev.p.modelos.length} models, baixat a les <span class="num">{horaLocal(prev.pedidaEn)}</span> al punt d'enlairament</Sub>
-                : preparat !== null ? <Sub>Sense pronòstic: {preparat.prevision.error}</Sub> : <Sub>Baixant…</Sub>}
+                : obtinguda !== null ? <Sub>Sense pronòstic: {obtinguda.error}</Sub> : <Sub>Baixant…</Sub>}
             </Tarja>
-            <Tarja estat={preparat !== null ? 'fet' : fase.f === 'ortofoto' ? 'encurs' : 'pendent'} titol="Mapa sense cobertura">
+            <Tarja estat={preparat !== null ? 'fet' : fase.f === 'previsio' ? 'pendent' : 'encurs'} titol="Mapa sense cobertura">
               {orto !== null && <Barra fraccio={orto.total === 0 ? 1 : orto.hechos / orto.total} color={preparat !== null ? 'var(--ok)' : 'var(--accent)'} />}
               {orto !== null && (
                 <Sub>
@@ -201,8 +214,10 @@ export function Comencar() {
                 </Sub>
               )}
               {fase.f === 'relleu' && <Sub>Baixant el relleu…</Sub>}
+              {relleu === null && <Sub>Sense relleu: el pla no sabrà on és el terreny.</Sub>}
+              {fase.f === 'ortofoto' && preparat === null && <Sub>Pots calibrar i obrir la pantalla mentre acaba.</Sub>}
             </Tarja>
-            {preparat !== null && (
+            {relleu !== undefined && (
               <Tarja estat={cal !== null ? 'fet' : 'encurs'} titol="Calibrant l'altitud a terra">
                 <Sub>Deixa la cistella quieta a terra. <span class="num">{segonsCal} s</span> de <span class="num">{CALIBRACION_S}</span></Sub>
                 <Barra fraccio={segonsCal / CALIBRACION_S} color={cal !== null ? 'var(--ok)' : 'var(--accent)'} />
@@ -219,16 +234,16 @@ export function Comencar() {
                 </div>
               </Tarja>
             )}
-            {preparat?.avisos.filter(a => a !== preparat.prevision.error).map(a => (
+            {preparat?.avisos.filter(a => a !== preparat.prevision.error && !a.startsWith('Sense relleu')).map(a => (
               <div key={a} style="color: var(--warn); font-size: 14px;">{a}</div>
             ))}
           </>
         )}
 
-        {preparat !== null && (
+        {obtinguda !== null && relleu !== undefined && (
           <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px;">
             {[
-              ['Finestra', prev === null ? '–' : `${horaLocal(prev.p.horas[0])} a ${horaLocal(prev.p.horas[prev.p.horas.length - 1])}`],
+              ['Finestra', prev === null ? '–' : finestra(prev.p.horas[0], prev.p.horas[prev.p.horas.length - 1])],
               ['Sostre', `${Math.round(sostreM)} m · ${altFt(sostreM)} ft`],
               ['Optimitzador', terrenyValid ? `${altFt(terrenyM + 250 * PIE_M)} a ${altFt(sostreM)} ft` : '–'],
               ...(actiu === null ? [] : [['Waypoint actiu', actiu.nom]]),
@@ -241,7 +256,7 @@ export function Comencar() {
         )}
 
         <div style="flex-grow: 1;"></div>
-        {preparat !== null && (
+        {obtinguda !== null && relleu !== undefined && (
           <>
             <button
               type="button" disabled={!potObrir} onClick={() => obrir(cal!.correccionM)}

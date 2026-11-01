@@ -16,9 +16,11 @@ import { MisDatos } from './ui/screens/ajustes/MisDatos'
 import { Personas } from './ui/screens/ajustes/Personas'
 import { aparell } from './ui/aparell'
 import { aplicarVersionNueva, pedirAlmacenamientoPersistente, vigilarVersiones } from './ui/install'
-import { Vol } from './ui/vol/Vol'
-import { useRoute } from './ui/router'
+import { hrefOf, useRoute } from './ui/router'
 import { StoreProvider, useStore } from './ui/state'
+import { tempsVol } from './ui/vol/presentacio'
+import { Vol } from './ui/vol/Vol'
+import { useVol, VolProvider } from './ui/vol/VolProvider'
 
 function Ruta() {
   const ruta = useRoute()
@@ -61,8 +63,37 @@ function BarraVersion({ onAplicar }: { onAplicar: () => void }) {
   )
 }
 
+/**
+ * Barra de vuelo en marcha, fuera de la pantalla de vuelo: el GPS sigue
+ * grabando, y desde aqui se vuelve (maqueta TauletaVolMes, «Sortir a l'app»).
+ */
+function BarraVol({ inici }: { inici: number }) {
+  const [ara, setAra] = useState(Date.now())
+  useEffect(() => {
+    const r = setInterval(() => setAra(Date.now()), 30_000)
+    return () => clearInterval(r)
+  }, [])
+  return (
+    <a
+      href={hrefOf({ name: 'vol' })}
+      style="
+        display: flex; align-items: center; gap: 12px; flex-shrink: 0; text-decoration: none;
+        padding: calc(10px + env(safe-area-inset-top)) 20px 10px 20px;
+        background: var(--nav-bg); border-bottom: 1px solid var(--border); color: var(--text);
+      "
+    >
+      <span class="lbl" style="flex-grow: 1;">
+        Vol en marxa · <span class="num">{tempsVol(ara - inici)}</span>
+      </span>
+      <span style="color: var(--nav); font-weight: 600;">Tornar al vol</span>
+    </a>
+  )
+}
+
 function Contenido() {
   const { arranque, flush } = useStore()
+  const { sessio } = useVol()
+  const ruta = useRoute()
   const [hayVersionNueva, setHayVersionNueva] = useState(false)
 
   useEffect(() => {
@@ -75,21 +106,25 @@ function Contenido() {
   }
 
   const pantalla = arranque === 'sin_documento' ? <PrimerUso /> : <Ruta />
+  const volFora = sessio !== null && ruta.name !== 'vol'
 
-  if (!hayVersionNueva) return pantalla
+  if (!hayVersionNueva && !volFora) return pantalla
 
   return (
     <div style="display: flex; flex-direction: column; height: 100dvh; overflow: hidden;">
-      <BarraVersion
-        onAplicar={() => {
-          void flush().then(() => aplicarVersionNueva())
-        }}
-      />
+      {hayVersionNueva && (
+        <BarraVersion
+          onAplicar={() => {
+            void flush().then(() => aplicarVersionNueva())
+          }}
+        />
+      )}
+      {volFora && <BarraVol inici={sessio.enlairatA ?? sessio.iniciadaA} />}
       <div style="flex-grow: 1; min-height: 0;">{pantalla}</div>
     </div>
   )
 }
 
 export function App() {
-  return <StoreProvider><Contenido /></StoreProvider>
+  return <StoreProvider><VolProvider><Contenido /></VolProvider></StoreProvider>
 }

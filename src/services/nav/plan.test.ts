@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import {
-  aproximacion, aTramos, buscarPlan, caminoDirecto, caminoTabla, debeSustituir, elegir, type PlanInterno,
+  aproximacion, aTramos, buscarPlan, caminoDirecto, caminoTabla, candidatas, debeSustituir, elegir, fracciones,
+  type Evaluado, type PlanInterno,
 } from './plan'
-import { oraculo } from './oraculo'
-import { construirTablas } from './vertical'
+import { fraccionesDirectas, oraculo } from './oraculo'
+import { margenDe } from './objetivo'
+import { construirTablas, type Tablas } from './vertical'
 import { campoSintetico, rejillaUniforme } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
@@ -101,5 +103,97 @@ describe('debeSustituir', () => {
     expect(debeSustituir(1000, 850)).toBe(false)
     expect(debeSustituir(5000, 4800)).toBe(true)
     expect(debeSustituir(5000, 4850)).toBe(false)
+  })
+})
+
+describe('aproximacion con margen', () => {
+  const cam: [number, number][] = [[0, 0], [100, 0], [200, 0]]
+  it('solo el trozo de dentro cuenta', () => {
+    expect(aproximacion(cam, 150, 10, [null, [0.5, 1]]).distM).toBeCloseTo(10)
+    expect(aproximacion(cam, 150, 10, [null, [0.8, 1]]).distM).toBeCloseTo(Math.hypot(30, 10))
+  })
+  it('el minuto es el del extremo del trozo mas cercano', () => {
+    expect(aproximacion(cam, 150, 10, [null, [0.8, 1]]).minuto).toBe(2)
+    expect(aproximacion(cam, 150, 10, [[0, 0.2], null]).minuto).toBe(0)
+  })
+  it('sin nada dentro, infinito', () => {
+    expect(aproximacion(cam, 150, 10, [null, null]).distM).toBe(Infinity)
+  })
+})
+
+describe('fracciones', () => {
+  const c = campoSintetico(rejillaUniforme(3, 500), 20, () => [1, 0])
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 1, puja_rapid: 1, baixa_lent: 1, baixa_rapid: 1 } }
+  const m = margenDe({ tipo: 'altitud', altM: 576.2 }, c.rejilla)!
+  const t = construirTablas(c, 1, lento, m)
+  // 0 a 2 a 1 m/s: 152,4 m, 160 s con los pasos de 10 s, 3 minutos. Dentro de 38,1 s a 114,3 s.
+  const p: PlanInterno = { franjas: [0, 2], clases: [0], dur: [4, 0] }
+  it('con tablas y sin ellas, lo mismo', () => {
+    expect(fracciones(t, p)).toEqual(fraccionesDirectas(c, lento, p, m))
+  })
+  it('mantener fuera, cruzar la franja 1, mantener fuera', () => {
+    const f = fracciones(t, p)
+    expect(f).toHaveLength(20)
+    expect(f.slice(0, 4)).toEqual([null, null, null, null])
+    expect(f[4]![0]).toBeCloseTo(38.1 / 60, 6)
+    expect(f[4]![1]).toBe(1)
+    expect(f[5]![0]).toBe(0)
+    expect(f[5]![1]).toBeCloseTo(114.3 / 60 - 1, 6)
+    expect(f[6]).toBeNull()
+    expect(f.slice(7)).toEqual(new Array(13).fill(null))
+  })
+})
+
+describe('buscarPlan con margen', () => {
+  // franja 0 al este y franja 1 al norte, cambios de un minuto. El punto (3050, 2700) se alcanza
+  // de dos maneras: al este y despues al norte (pasando en la franja 1), o al norte y despues al
+  // este (pasando en la franja 0).
+  const c = campoSintetico(rejillaUniforme(2, 500), 60, b => (b === 0 ? [5, 0] : [0, 5]))
+  // Muchos planes empatan a 0 m y la busqueda guarda los 40 mejores por distancia, asi que lo que se
+  // comprueba es lo que vera el piloto: el ultimo tramo de las ordenes, cortadas al pasar por el punto.
+  const ultimo = (t: Tablas, e: Evaluado) => {
+    const tr = aTramos(t, e.plan, Math.max(1, e.minuto))
+    return tr[tr.length - 1]
+  }
+  it('pasar a la franja 0: el plan acaba en ella', () => {
+    const t = construirTablas(c, 1, rapido, margenDe({ tipo: 'altitud', altM: 500 }, c.rejilla)!)
+    const e = buscarPlan(t, 0, 3050, 2700)
+    expect(e.distM).toBeLessThanOrEqual(50)
+    expect(e.plan.franjas).toEqual([0, 1, 0])
+  })
+  it('pasar a la franja 1: pasa por el punto en ella', () => {
+    const t = construirTablas(c, 1, rapido, margenDe({ tipo: 'altitud', altM: 576.2 }, c.rejilla)!)
+    const e = buscarPlan(t, 0, 3050, 2700)
+    expect(e.distM).toBeLessThanOrEqual(50)
+    expect(ultimo(t, e).franja).toBe(1)
+  })
+  it('aterrar: pasa por el punto en terra', () => {
+    const r = { altM: [300, 500, 576.2], etiqueta: ['terra', 'F1', 'F2'] }
+    const c2 = campoSintetico(r, 60, b => (b === 0 ? [-1, 0] : b === 1 ? [0, 5] : [5, 0]))
+    const t = construirTablas(c2, 1, rapido, margenDe({ tipo: 'aterrar' }, r)!)
+    const e = buscarPlan(t, 2, 3000, 0)
+    expect(e.distM).toBeLessThanOrEqual(50)
+    expect(ultimo(t, e).franja).toBe(0)
+  })
+  it('no peor que la fuerza bruta con el mismo margen', () => {
+    const c3 = campoSintetico(rejillaUniforme(5, 500), 60, (b, k) =>
+      [Math.cos(b * 1.3 + k / 20) * 5, Math.sin(b * 1.3 + k / 20) * 5])
+    const m = margenDe({ tipo: 'altitud', altM: 500 + 4 * 76.2 }, c3.rejilla)!
+    const e = buscarPlan(construirTablas(c3, 1, aj, m), 2, -3000, 4000)
+    const o = oraculo(c3, 1, aj, 2, -3000, 4000, m)
+    expect(e.distM).toBeLessThanOrEqual(o.distM + 50)
+  })
+})
+
+describe('candidatas con margen', () => {
+  // 20 franjas: la 19 no esta en la envolvente ni alineada con el punto
+  const esquinas: [number, number][] = [[-3, 3], [-3, -3], [3, 3], [3, -3]]
+  const c = campoSintetico(rejillaUniforme(20, 500), 20, b => (b < 4 ? [1, 0] : b === 19 ? [-1, 0] : esquinas[b % 4]))
+  it('sin margen, la 19 no entra', () => {
+    expect(candidatas(construirTablas(c, 1, rapido), 0, 1000, 0)).not.toContain(19)
+  })
+  it('con el margen en la 19, entra siempre', () => {
+    const m = margenDe({ tipo: 'altitud', altM: 500 + 19 * 76.2 }, c.rejilla)!
+    expect(candidatas(construirTablas(c, 1, rapido, m), 0, 1000, 0)).toContain(19)
   })
 })

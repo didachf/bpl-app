@@ -5,7 +5,8 @@
 // 2 min sobre acumulados y transitos ya calculados, refinado de 1 min y eleccion.
 import { idx, type Campo } from './campo'
 import { envolvente } from './geo'
-import { modoDe, tr, transito, velocidad, type Tablas } from './vertical'
+import { fr, modoDe, tr, transito, velocidad, type Tablas } from './vertical'
+import { MINUTO_ENTERO, type Frac } from './objetivo'
 import type { AjustesNav, Tramo } from './tipos'
 import {
   LLEGA_M, MAX_CANDIDATAS, MAX_FRANJAS_TODAS, MEJORA_ABSOLUTA_M, MEJORA_RELATIVA, MIN_MANTENER, TOP_PLANES,
@@ -27,19 +28,52 @@ export function distSegmento(ax: number, ay: number, bx: number, by: number, ox:
 
 interface Min { m: number; mk: number }
 
-function avanzar(s: Min, ax: number, ay: number, bx: number, by: number, k: number, ox: number, oy: number): void {
+/** Recorta el segmento al trozo de dentro del margen y apunta si pasa mas cerca. */
+function avanzar(
+  s: Min, ax: number, ay: number, bx: number, by: number, k: number, ox: number, oy: number, f: Frac = MINUTO_ENTERO,
+): void {
+  if (f === null) return
+  const s0 = f[0]
+  const s1 = f[1]
+  if (f !== MINUTO_ENTERO) {
+    const ex = bx - ax
+    const ey = by - ay
+    bx = ax + s1 * ex
+    by = ay + s1 * ey
+    ax += s0 * ex
+    ay += s0 * ey
+  }
   const d = distSegmento(ax, ay, bx, by, ox, oy)
   if (d < s.m) {
     s.m = d
-    s.mk = Math.hypot(ax - ox, ay - oy) < Math.hypot(bx - ox, by - oy) ? k - 1 : k
+    s.mk = Math.round(k - 1 + (Math.hypot(ax - ox, ay - oy) < Math.hypot(bx - ox, by - oy) ? s0 : s1))
   }
 }
 
-/** La distancia minima de un camino al punto, por segmentos, y el minuto en que pasa. */
-export function aproximacion(cam: Camino, ox: number, oy: number): { distM: number; minuto: number } {
-  const s: Min = { m: Math.hypot(cam[0][0] - ox, cam[0][1] - oy), mk: 0 }
-  for (let k = 1; k < cam.length; k++) avanzar(s, cam[k - 1][0], cam[k - 1][1], cam[k][0], cam[k][1], k, ox, oy)
+/**
+ * La distancia minima de un camino al punto, por segmentos, y el minuto en que pasa.
+ * `fr[k]` es la parte del segmento del minuto k al k+1 dentro del margen; sin ella, todo.
+ */
+export function aproximacion(cam: Camino, ox: number, oy: number, fr?: Frac[]): { distM: number; minuto: number } {
+  const s: Min = { m: Infinity, mk: 0 }
+  for (let k = 1; k < cam.length; k++) {
+    avanzar(s, cam[k - 1][0], cam[k - 1][1], cam[k][0], cam[k][1], k, ox, oy, fr === undefined ? MINUTO_ENTERO : fr[k - 1])
+  }
   return { distM: s.m, minuto: s.mk }
+}
+
+/** La parte de cada minuto del plan dentro del margen de las tablas (spec 2026-11-01 §4.1). */
+export function fracciones(t: Tablas, p: PlanInterno): Frac[] {
+  const H = t.c.minutos
+  const out: Frac[] = []
+  for (let i = 0; i < p.franjas.length && out.length < H; i++) {
+    const b = p.franjas[i]
+    if (i > 0) out.push(...fr(t, p.franjas[i - 1], b, p.clases[i - 1]))
+    const fin = i === p.franjas.length - 1 ? H : out.length + p.dur[i]
+    const f = t.dentro[b] ? MINUTO_ENTERO : null
+    while (out.length < fin) out.push(f)
+  }
+  return out.slice(0, H)
 }
 
 /** Simulacion directa, sin tablas: para la dispersion entre modelos y como oraculo. */
@@ -127,6 +161,10 @@ export function candidatas(t: Tablas, b0: number, ox: number, oy: number): numbe
   const H = c.minutos
   const medio: [number, number][] = todas.map(b => [t.px[idx(c, b, H)], t.py[idx(c, b, H)]])
   const set = new Set<number>([b0])
+  // Las franjas del margen del objetivo entran siempre (spec 2026-11-01 §4.2).
+  if (Number.isFinite(t.margen[0]) || Number.isFinite(t.margen[1])) {
+    for (const b of todas) if (t.dentro[b]) set.add(b)
+  }
   for (let d = -3; d <= 3; d++) if (b0 + d >= 0 && b0 + d < B) set.add(b0 + d)
   for (const b of envolvente(medio)) set.add(b)
   const r = Math.hypot(ox, oy) || 1
@@ -145,6 +183,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
   const W = H + 1
   const px = t.px
   const py = t.py
+  const en = (b: number): Frac => (t.dentro[b] ? MINUTO_ENTERO : null)
   const cand = candidatas(t, b0, ox, oy)
   const top: Evaluado[] = []
   const meter = (plan: PlanInterno, distM: number, minuto: number) => {
@@ -155,12 +194,13 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
   }
 
   // Mantener la actual: el minimo acumulado sirve a todos los planes que salen de ella.
-  const minB = new Float64Array(W)
+  // La posicion del minuto 0 la cubre el primer segmento de lo que siga.
+  const minB = new Float64Array(W).fill(Infinity)
   const argB = new Int32Array(W)
-  const s0: Min = { m: Math.hypot(ox, oy), mk: 0 }
-  minB[0] = s0.m
+  const f0 = en(b0)
+  const s0: Min = { m: Infinity, mk: 0 }
   for (let k = 1; k <= H; k++) {
-    avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], px[b0 * W + k], py[b0 * W + k], k, ox, oy)
+    avanzar(s0, px[b0 * W + k - 1], py[b0 * W + k - 1], px[b0 * W + k], py[b0 * W + k], k, ox, oy, f0)
     minB[k] = s0.m
     argB[k] = s0.mk
   }
@@ -171,16 +211,18 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
     const sy = py[b0 * W + d0]
     for (const A of cand) {
       if (A === b0) continue
+      const fA = en(A)
       for (let ca = 0; ca < 2; ca++) {
         const ta = tr(t, b0, A, ca, d0)
         if (ta === null) continue
+        const ra = fr(t, b0, A, ca)
         const sA: Min = { m: minB[d0], mk: argB[d0] }
         let lx = sx
         let ly = sy
         for (let j = 0; j < ta.camino.length; j++) {
           const x = sx + ta.camino[j][0]
           const y = sy + ta.camino[j][1]
-          avanzar(sA, lx, ly, x, y, d0 + 1 + j, ox, oy)
+          avanzar(sA, lx, ly, x, y, d0 + 1 + j, ox, oy, ra[j])
           lx = x
           ly = y
         }
@@ -191,7 +233,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
           const x = ax + px[A * W + k]
           const y = ay + py[A * W + k]
           if (k > kA) {
-            avanzar(sA, lx, ly, x, y, k, ox, oy)
+            avanzar(sA, lx, ly, x, y, k, ox, oy, fA)
             lx = x
             ly = y
           }
@@ -199,16 +241,18 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
           if (dA < MIN_MANTENER || dA % 2 !== 0 || k >= H) continue
           for (const Bf of cand) {
             if (Bf === A) continue
+            const fB = en(Bf)
             for (let cb = 0; cb < 2; cb++) {
               const tb = tr(t, A, Bf, cb, k)
               if (tb === null) continue
+              const rb = fr(t, A, Bf, cb)
               const sB: Min = { m: sA.m, mk: sA.mk }
               let mx = x
               let my = y
               for (let j = 0; j < tb.camino.length; j++) {
                 const nx = x + tb.camino[j][0]
                 const ny = y + tb.camino[j][1]
-                avanzar(sB, mx, my, nx, ny, k + 1 + j, ox, oy)
+                avanzar(sB, mx, my, nx, ny, k + 1 + j, ox, oy, rb[j])
                 mx = nx
                 my = ny
               }
@@ -218,7 +262,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
               for (let kk = kB + 1; kk <= H; kk++) {
                 const nx = bx + px[Bf * W + kk]
                 const ny = by + py[Bf * W + kk]
-                avanzar(sB, mx, my, nx, ny, kk, ox, oy)
+                avanzar(sB, mx, my, nx, ny, kk, ox, oy, fB)
                 mx = nx
                 my = ny
               }
@@ -246,7 +290,7 @@ export function buscarPlan(t: Tablas, b0: number, ox: number, oy: number): Evalu
         vistos.add(clave)
         const cam = caminoTabla(t, p)
         if (cam === null) continue
-        const a = aproximacion(cam, ox, oy)
+        const a = aproximacion(cam, ox, oy, fracciones(t, p))
         meter(p, a.distM, a.minuto)
       }
     }

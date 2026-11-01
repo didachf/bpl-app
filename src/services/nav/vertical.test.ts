@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { construirTablas, fr, minutosTransito, modoDe, tr, transito, vientoEn } from './vertical'
+import { construirTablas, fr, minutosTransito, modoDe, tr, transito, vale, vientoEn, zComprobar, zTr } from './vertical'
 import { campoSintetico, rejillaUniforme } from './sintetico'
 import { AJUSTES_POR_DEFECTO, type AjustesNav } from './tipos'
 
@@ -66,5 +66,28 @@ describe('tablas con margen', () => {
     expect(f[1]![0]).toBe(0)
     expect(f[1]![1]).toBeCloseTo(15 / 60, 9)
     expect(f[2]).toBeNull()
+  })
+})
+
+describe('tablas con terreno', () => {
+  const dos: AjustesNav = {
+    ...AJUSTES_POR_DEFECTO, altMinM: 0, altMaxM: 9999, modos: { puja_lent: 2, puja_rapid: 2, baixa_lent: 2, baixa_rapid: 2 },
+  }
+  const c = campoSintetico({ altM: [300, 500, 800], etiqueta: ['terra', 'a', 'b'] }, 10, () => [1, 0])
+  // suelo a 400 m al oeste y a 700 m al este; minimo 30,48 m
+  const t = construirTablas(c, 1, dos, undefined, { techo: x => (x < 0 ? 400 : 700), maxM: 700 })
+  it('la altitud de cada minuto de un cambio', () => { expect(zTr(t, 1, 2, 0)).toEqual([620, 740, 800]) })
+  it('terra se conoce', () => { expect(t.iTerra).toBe(0) })
+  it('por encima del suelo mas alto mas el minimo, siempre vale', () => { expect(vale(t, 800, 5, 0)).toBe(true) })
+  it('por debajo, segun el suelo de alli', () => {
+    expect(vale(t, 500, -5, 0)).toBe(true)
+    expect(vale(t, 500, 5, 0)).toBe(false)
+  })
+  it('sin terreno, todo vale', () => { expect(vale(construirTablas(c, 1, dos), 0, 5, 0)).toBe(true) })
+  it('que se comprueba en cada minuto de un cambio', () => {
+    expect(zComprobar(t, 1, 2, 0, 0)).toBe(620)
+    expect(zComprobar(t, 0, 2, 0, 0)).toBeNaN()
+    expect(zComprobar(t, 0, 2, 0, zTr(t, 0, 2, 0).length - 1)).toBe(800)
+    expect(zComprobar(t, 2, 0, 0, zTr(t, 2, 0, 0).length - 1)).toBeNaN()
   })
 })

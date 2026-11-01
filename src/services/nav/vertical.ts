@@ -7,6 +7,7 @@ import { idx, type Campo } from './campo'
 import type { AjustesNav, Modo } from './tipos'
 import { PASO_INTEGRACION_S } from './parametros'
 import { enMargen, fracMinutos, SIN_MARGEN, type Frac, type Margen } from './objetivo'
+import type { Suelo, Terreno } from './relieve'
 
 /** Viento del campo `f` a una altitud cualquiera en el minuto `k`, lineal entre franjas. */
 export function vientoEn(c: Campo, f: number, altM: number, k: number): [number, number] {
@@ -88,9 +89,20 @@ export interface Tablas {
   dentro: boolean[]
   /** frac[(b * B + b2) * 2 + clase][j]: la parte del minuto j del cambio dentro del margen. */
   frac: Frac[][]
+  /** El techo del suelo en el plano y el minimo sobre el (spec 2026-11-01-relieve §4.3). Sin relieve, null. */
+  techo: Suelo | null
+  minM: number
+  /** Por encima de esta altitud siempre vale: el suelo mas alto mas el minimo. -Infinity sin relieve. */
+  alturaLibre: number
+  /** La franja terra, o -1. */
+  iTerra: number
+  /** altTr[(b * B + b2) * 2 + clase][j]: la altitud al final del minuto j del cambio. */
+  altTr: number[][]
 }
 
-export function construirTablas(c: Campo, f: number, aj: AjustesNav, margen: Margen = SIN_MARGEN): Tablas {
+export function construirTablas(
+  c: Campo, f: number, aj: AjustesNav, margen: Margen = SIN_MARGEN, terreno: Terreno | null = null,
+): Tablas {
   const B = c.rejilla.altM.length
   const H = c.minutos
   const altM = c.rejilla.altM
@@ -105,23 +117,33 @@ export function construirTablas(c: Campo, f: number, aj: AjustesNav, margen: Mar
   }
   const filas: (Transito | null)[][] = []
   const frac: Frac[][] = []
+  const altTr: number[][] = []
   for (let b = 0; b < B; b++) {
     for (let b2 = 0; b2 < B; b2++) {
       for (let cl = 0; cl < 2; cl++) {
         const fila: (Transito | null)[] = new Array<Transito | null>(H + 1).fill(null)
         let fm: Frac[] = []
+        let zt: number[] = []
         if (b !== b2) {
           const vel = velocidad(aj, altM[b2] > altM[b], cl)
           const m = minutosTransito(c, b, b2, vel)
           for (let k0 = 0; k0 + m <= H; k0++) fila[k0] = transito(c, f, b, b2, vel, k0)
           fm = fracMinutos(altM[b], altM[b2], vel, m, margen)
+          const dz = altM[b2] - altM[b]
+          zt = Array.from({ length: m }, (_, j) => altM[b] + Math.sign(dz) * Math.min(Math.abs(dz), vel * 60 * (j + 1)))
         }
         filas.push(fila)
         frac.push(fm)
+        altTr.push(zt)
       }
     }
   }
-  return { c, f, px, py, filas, margen, dentro: altM.map(z => enMargen(z, margen)), frac }
+  return {
+    c, f, px, py, filas, margen, dentro: altM.map(z => enMargen(z, margen)), frac,
+    techo: terreno?.techo ?? null, minM: aj.minSobreTerrenoM,
+    alturaLibre: terreno === null ? -Infinity : terreno.maxM + aj.minSobreTerrenoM,
+    iTerra: c.rejilla.etiqueta.indexOf('terra'), altTr,
+  }
 }
 
 /** La parte de cada minuto del cambio de b a b2 en la clase cl que cae dentro del margen. */
@@ -132,4 +154,25 @@ export function fr(t: Tablas, b: number, b2: number, cl: number): Frac[] {
 /** El transito de b a b2 en la clase cl saliendo en el minuto k0, o null. */
 export function tr(t: Tablas, b: number, b2: number, cl: number, k0: number): Transito | null {
   return t.filas[(b * t.c.rejilla.altM.length + b2) * 2 + cl][k0] ?? null
+}
+
+export function zTr(t: Tablas, b: number, b2: number, cl: number): number[] {
+  return t.altTr[(b * t.c.rejilla.altM.length + b2) * 2 + cl]
+}
+
+/**
+ * La altitud que hay que comprobar al final del minuto j del cambio de b a b2, o NaN si ninguna. Entre
+ * franjas, la de cada minuto. Saliendo de terra o yendo a ella, solo la llegada a una franja que no es
+ * terra (spec 2026-11-01-relieve §4.3).
+ */
+export function zComprobar(t: Tablas, b: number, b2: number, cl: number, j: number): number {
+  const zt = zTr(t, b, b2, cl)
+  if (b !== t.iTerra && b2 !== t.iTerra) return zt[j]
+  return j === zt.length - 1 && b2 !== t.iTerra ? zt[j] : NaN
+}
+
+/** Si la altitud z en (x, y) queda al menos el minimo sobre el techo del suelo. Sin suelo conocido, vale. */
+export function vale(t: Tablas, z: number, x: number, y: number): boolean {
+  if (z >= t.alturaLibre) return true
+  return !(z < t.techo!(x, y) + t.minM - 1e-6)
 }

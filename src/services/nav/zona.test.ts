@@ -205,3 +205,17 @@ describe('la zona con el relieve', () => {
     expect(poligono(sin, 15).length).toBeGreaterThan(0)
   })
 })
+
+describe('la zona pintada no entra en un cambio que pasa bajo el minimo', () => {
+  // Un cerro de 490 m en 1 km alrededor del globo. F2 (576,2 m) en calma, F1 (500 m) al norte, y
+  // bajadas a 0,5 m/s. Bajando de F2 a F1, el primer minuto acaba a 546 m (vale) y el segundo a 516 m
+  // (no vale: 490 + 30,5), unos 240 m al norte. Eso no se pinta.
+  const p0 = { lat0: 41.6, lon0: 1.6 }
+  const c = campoSintetico({ altM: [500, 576.2], etiqueta: ['F1', 'F2'] }, 10, b => (b === 0 ? [0, 5] : [0, 0]))
+  const lento: AjustesNav = { ...aj, modos: { puja_lent: 0.5, puja_rapid: 0.5, baixa_lent: 0.5, baixa_rapid: 0.5 } }
+  const rel = relieveSintetico(p0, -3000, -3000, 3000, 3000, 100, (x, y) => (Math.hypot(x, y) <= 1000 ? 490 : 280))
+  const z = calcularZona(construirTablas(c, 1, lento, SIN_MARGEN, { techo: techoPlano(rel, p0), maxM: maximo(rel) }), 1)
+  it('a partir del minuto 2, nada mas al norte que el primer minuto de la bajada', () => {
+    for (let k = 2; k <= 10; k++) for (const [, y] of poligono(z, k)) expect(y).toBeLessThan(100)
+  })
+})

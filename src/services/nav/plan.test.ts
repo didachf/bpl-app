@@ -274,3 +274,21 @@ describe('el relieve', () => {
     }
   })
 })
+
+describe('pasar a F1 por encima del cerro no se puede', () => {
+  // El mismo cerro y todo al este, sin terra: bajar a terra o subir de ella cruza 500 m a ras, y eso
+  // vale (spec 2026-11-01-relieve §4.3). Con el objetivo en F1 (500 m), sobre el cerro solo cuenta
+  // F1, que alli no vale: lo mas cerca de (2 550, 0) a F1 es antes del cerro (1 800 m) o despues.
+  const p0 = { lat0: 41.6, lon0: 1.6 }
+  const rej = { altM: [500, 576.2], etiqueta: ['F1', 'F2'] }
+  const c = campoSintetico(rej, 30, () => [5, 0])
+  const rel = relieveSintetico(p0, -2000, -2000, 8000, 2000, 100, x => (x >= 2000 && x <= 3000 ? 490 : 280))
+  const t = construirTablas(c, 1, rapido, margenDe({ tipo: 'altitud', altM: 500 }, rej)!, { techo: techoPlano(rel, p0), maxM: maximo(rel) })
+  for (const b0 of [1, 0]) {
+    it(`saliendo de ${rej.etiqueta[b0]}: ni bajando sobre el cerro ni manteniendo F1 encima`, () => {
+      const e = buscarPlan(t, b0, 2550, 0)
+      expect(e.distM).toBeGreaterThan(400)
+      expect(evaluar(t, e.plan, caminoTabla(t, e.plan)!, 2550, 0).distM).toBeCloseTo(e.distM, 6)
+    })
+  }
+})

@@ -1,5 +1,25 @@
 # Logbook BPL, estado
 
+## 01/11/2026, noche: las comprobaciones del §12 del 10/10
+
+Hechas las cuatro, sin esperar al repaso de las maquetas porque no dependen de ellas. Resultado
+en §12.1 del spec `2026-10-10-pantalla-de-vuelo-design.md`, con sus fuentes:
+
+* **ICGC:** XYZ. El servicio de ortofoto del spec está **retirado desde el 28/02/2025** (sigue
+  contestando). El que vale es el Mapa base, `servei/catalunya/mapa-base/wmts/orto/MON3857NW`,
+  comprobado: CORS abierto, unos 31 KB por mosaico, CC BY 4.0, sin cláusula contra guardarlos.
+* **open-meteo:** la petición de siete modelos pesa 29,4 llamadas (fórmula del servidor). El
+  tiempo no cuenta bajo 14 días, así que se pide el día entero de una vez. Uso no comercial.
+  El comentario de `openmeteo.ts` con «98 contra 270» estaba mal y queda corregido.
+* **Chrome en Android:** elipsoide, del código de Chromium. `altitudeAccuracy` siempre nula.
+  La calibración en tierra se queda.
+* **Optimizador:** 230 ms en node. En la tablet, `ESTIMATE` por debajo de 1 s, a medir con el
+  Web Worker.
+* Relieve: los mosaicos de AWS tienen CORS abierto, unos 100 KB, EU-DEM en Cataluña, con su
+  atribución de Copernicus.
+
+**Siguiente, sin cambios:** su repaso de las seis maquetas, y después el plan de la pantalla.
+
 ## 01/11/2026, tarde: el motor sabe del relieve
 
 Al preparar las maquetas de la fase 2 con el 10/10 salió que el motor no sabía dónde estaba el suelo:

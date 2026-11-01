@@ -41,6 +41,14 @@ export const AJUSTES_POR_DEFECTO: Omit<AjustesNav, 'altMinM' | 'altMaxM'> = {
 
 export interface Punto { lat: number; lon: number }
 
+/**
+ * El objetivo de altura en el punto (spec 2026-11-01): aterrar (franja terra),
+ * pasar a una altitud sobre el mar, o a cualquier altura.
+ */
+export type Objetivo = { tipo: 'aterrar' } | { tipo: 'altitud'; altM: number } | { tipo: 'qualsevol' }
+
+export const QUALSEVOL: Objetivo = { tipo: 'qualsevol' }
+
 export interface Tramo {
   tipo: 'mantener' | 'cambiar'
   /** La franja que se mantiene, o a la que se va. */
@@ -54,6 +62,8 @@ export type Estado = 'llega' | 'no-llega' | 'sin-punto' | 'sin-datos'
 
 export interface ResultadoNavegacion {
   estado: Estado
+  /** El objetivo con el que se ha calculado. */
+  objetivo: Objetivo
   plan: Tramo[]
   distanciaMinM: number | null
   horaMin: string | null
